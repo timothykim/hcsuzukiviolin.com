@@ -1,0 +1,144 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: #efedd8;
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+	font-size: 0.8em;
+	background: #efedd8 url(images/body_bg.png) repeat-y 50% 0px;
+}
+
+/* @group Top Header */
+
+div#banner {
+	background: url(images/head_title_index.png) repeat-x 50% 0px;
+	height: 185px;
+	display: block;
+}
+
+div#title h1, div#title small {
+	display: none;
+}
+
+/* @end */
+
+/* @group Toolbar */
+
+div#toolbar_wrapper {
+	background: url(images/menu_bar.png) repeat-x;
+	margin: 0;
+	padding: 0;
+	height: 70px;
+}
+
+div#toolbar {
+	width: 800px;
+	margin: 0 auto;
+	padding-top: 18px;
+}
+
+div#toolbar #menu {
+	float: left;
+}
+
+div#toolbar #menu ul {
+	padding: 0;
+	margin: 0;
+}
+
+div#toolbar #menu li {
+	display: inline;
+	margin-right: 20px;
+	font-size: 18px;
+	color: white;
+}
+
+div#toolbar #login {
+	text-align: right;
+	font-size: 10px;
+}
+
+
+div#logged_in {
+	padding-top: 5px;
+	font-size: 12px;
+	color: white;
+}
+
+div#toolbar #login a {
+	color: white;
+}
+
+
+div#toolbar #login p {
+	display: inline;
+}
+
+div#toolbar #login label {
+	color: white;
+}
+div#toolbar #login input.text {
+	width: 60px;
+	font-size: 10px;
+	height: 13px;
+	padding-left: 5px;
+	text-align: left;
+}
+
+div#toolbar #login input.submit {
+	font-size: 12px;
+	font-weight: bold;
+	color: #633c1c;
+}
+
+/* @end */
+
+
+/* @group body */
+
+div#body {
+	padding: 0 50px 50px 20px;
+	width: 700px;
+	margin: 0px auto;
+	background-color: white;
+}
+
+div#body h2 {
+	
+}
+
+
+/* @end */
+
+
+/* global form */
+input.text {
+	border: 1px solid #706961;
+	padding: 2px;
+}
+
+div.form_box {
+	border: 3px solid #a4cfff;
+	padding: 20px;
+	width: 500px;
+}
+
+
+/* flash */
+div.notice {
+	border: 2px dotted #a22320;
+	width: 600px;
+	padding: 10px;
+	color: #a21200;
+	font-weight: bold;
+	background-color: #fffde8;
+}
+
+div.errorExplanation {
+	font-size: 10px;
+	border: 2px dotted #a22320;
+	padding: 10px;
+	color: #a21200;
+	font-weight: bold;
+	background-color: #fffde8;
+}
+

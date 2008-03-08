@@ -1,0 +1,5 @@
+
+/account		=>	account overview
+	/login		=>	login screen
+	/logout		=>	logout script
+	/

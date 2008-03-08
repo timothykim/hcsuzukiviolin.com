@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>Hannah Choi's Suzuki Violin Studio</title>
+		
+		<%= stylesheet_link_tag(get_current_theme_css()) %>
+	</head>
+
+	<body>
+		<div id="frame">
+			<div id="banner">
+				<div id="title">
+					<h1>Hannah Choi's Suzuki Violin Studio</h1>
+				</div>
+			</div>
+			
+			<div id="toolbar_wrapper">
+			<div id="toolbar">
+				<!-- TODO -->
+				<div id="menu">
+					<ul>
+						<li>Menu1</li>
+						<li>Menu2</li>
+						<li>Menu3</li>
+					</ul>
+				</div>
+				
+				<!-- login form -->
+				<div id="login">
+					<% unless current_page?(:controller => 'account', :action => 'signup') -%>
+						<% if logged_in? -%>
+							<div id="logged_in">
+								Welcome, <strong><%= current_user.firstname + " " + current_user.lastname %></strong>!
+								<%= "|" if current_user.is_admin %>
+								<%= link_to "Admin", { :controller => "admin", :action => "index" } if current_user.is_admin %>
+								| <%= link_to "Settings", { :controller => "account", :action => "index" } %>
+								| <%= link_to "Logout", { :controller => "account", :action => "logout" } %>
+							</div>
+						<% else -%>
+							<div id="login_form">
+								<% form_tag "/account/login" do -%>
+								<p><label for="login">Email: </label> <%= text_field_tag 'login', nil, :class => 'text' %></p>
+
+								<p><label for="password">Password: </label> <%= password_field_tag 'password', nil, :class => 'text' %></p>
+
+
+								<p><%= check_box_tag 'remember_me' %> <label for="remember_me">Remember me</label></p>
+
+								<p><%= submit_tag 'Log in', :class => 'submit' %></p>
+
+								<p><%= link_to "Sign up!", { :controller => "account", :action => "signup" } %></p>
+								<% end -%>
+							</div>
+						<% end -%>
+					<% end -%>
+				</div>
+			</div>
+			</div>
+			
+			<div id="body">
+				<%= yield %>
+			</div>
+		</div>
+	</body>
+</html>
