@@ -8,7 +8,4 @@ class AdminController < ApplicationController
     
   end
   
-  def users
-
-  end
 end

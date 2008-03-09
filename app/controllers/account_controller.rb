@@ -47,12 +47,28 @@ class AccountController < ApplicationController
     return unless request.post?
     @user.save!
     self.current_user = @user
-    redirect_back_or_default(:controller => '/account', :action => 'index')
+    redirect_back_or_default(:controller => '/account', :action => 'activate')
     flash[:notice] = "Thanks for signing up!"
   rescue ActiveRecord::RecordInvalid
     render :action => 'signup'
   end
   
+  def settings
+    @user = self.current_user
+    
+    return unless params[:user]
+    
+    if @user.email == params[:user][:email] and params[:user][:email_confirmation] == ""
+      params[:user][:email_confirmation] = params[:user][:email]
+    end
+    
+    if @user.update_attributes(params[:user])
+      flash[:notice] = 'User was successfully updated.'
+    else
+      render :action => "settings"
+    end
+  end
+
   def logout
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token

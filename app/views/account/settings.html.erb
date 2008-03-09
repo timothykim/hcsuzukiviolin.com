@@ -1,0 +1,31 @@
+<h1>Editing Your Personal Information</h1>
+
+<%= render(@p) %>
+
+<div class="form_box">
+	<%= error_messages_for :user %>
+
+<% form_for @user, :url => { :action => "settings" } do |f| %>
+	<%= f.hidden_field :id %>
+
+	<p><%= label(:user, :firstname, "First Name") %><br/>
+	<%= f.text_field :firstname, :class => "text" %></p>
+
+	<p><%= label(:user, :lastname, "Last Name") %><br/>
+	<%= f.text_field :lastname, :class => "text" %></p>
+
+	<p><%= label(:user, :email, "Email") %><br/>
+	<%= f.text_field :email, :class => "text" %></p>
+
+	<p><%= label(:user, :email_confirmation, "Email Confirmation") %><br/>
+	<%= f.text_field :email_confirmation, :class => "text" %></p>
+
+	<p><%= label(:user, :password, "Password") %><br/>
+	<%= f.password_field :password, :class => "text" %> <small>fill only to change the password</small></p>
+
+	<p><%= label(:user, :password_confirmation, "Password Confirmation") %><br/>
+	<%= f.password_field :password_confirmation, :class => "text" %></p>
+
+    <p><%= f.submit "Update" %></p>
+<% end %>
+</div>
