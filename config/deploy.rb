@@ -1,15 +1,26 @@
-set :application, "set your application name here"
-set :repository,  "set your repository location here"
+set :application, "studio"
+set :repository,  "git@github.com:highwind/hc-suzuki-studio.git"
+set :domain, "kgfamily.com"
 
-# If you aren't deploying to /u/apps/#{application} on the target
-# servers (which is the default), you can specify the actual location
-# via the :deploy_to variable:
-# set :deploy_to, "/var/www/#{application}"
+set :scm, :git
+set :deploy_via, :remote_cache
 
-# If you aren't using Subversion to manage your source code, specify
-# your SCM below:
-# set :scm, :subversion
+ssh_options[:paranoid] = false
 
-role :app, "your app-server here"
-role :web, "your web-server here"
-role :db,  "your db-server here", :primary => true
+set :user, "kgfamily"
+set :use_sudo, false
+
+set :deploy_to, "/home/kgfamily/rails/#{application}"
+
+
+role :app, domain
+role :web, domain
+role :db,  domain, :primary => true
+
+
+deploy.task :default do
+  transaction do
+    update_code
+    symlink
+  end
+end
