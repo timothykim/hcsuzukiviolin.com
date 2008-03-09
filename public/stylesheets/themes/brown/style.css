@@ -5,7 +5,13 @@ body {
 	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
 	font-size: 0.8em;
 	background: #efedd8 url(images/body_bg.png) repeat-y 50% 0px;
+	color: #505050;
 }
+
+a { color: #db8300; text-decoration: none; }
+a:visited { color: #db8300; }
+a:hover { color: #f90;  }
+
 
 /* @group Top Header */
 
@@ -28,6 +34,7 @@ div#toolbar_wrapper {
 	margin: 0;
 	padding: 0;
 	height: 70px;
+	color: white;
 }
 
 div#toolbar {
@@ -50,6 +57,11 @@ div#toolbar #menu li {
 	margin-right: 20px;
 	font-size: 18px;
 	color: white;
+}
+
+div#toolbar #menu a {
+	color: white;
+	text-decoration: none;
 }
 
 div#toolbar #login {
@@ -77,7 +89,6 @@ div#toolbar #login label {
 	color: white;
 }
 div#toolbar #login input.text {
-	width: 60px;
 	font-size: 10px;
 	height: 13px;
 	padding-left: 5px;
@@ -111,15 +122,21 @@ div#body h2 {
 
 
 /* global form */
-input.text {
+div.form_box input.text {
 	border: 1px solid #706961;
-	padding: 2px;
+	padding: 5px;
+	font-size: 12pt;
 }
 
 div.form_box {
 	border: 3px solid #a4cfff;
 	padding: 20px;
 	width: 500px;
+}
+
+div.form_box label {
+	font-size: 13pt;
+	color: #973b28;
 }
 
 

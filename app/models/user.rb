@@ -57,6 +57,11 @@ class User < ActiveRecord::Base
     save(false)
   end
 
+
+  def get_name
+    self.firstname + " " + self.lastname
+  end
+
   protected
     # before filter 
     def encrypt_password

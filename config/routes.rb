@@ -1,7 +1,17 @@
 ActionController::Routing::Routes.draw do |map|
-  # The priority is based upon order of creation: first created -> highest priority.
-
+  
+  
   map.root  :controller => "display"
+  
+  #admin stuff
+  map.connect '/admin/users', :controller => '/admin/users', :action => 'index'
+  map.connect '/admin/users/:user_id', :controller => '/admin/users', :action => 'show', :user_id => /\d*/
+  map.connect '/admin/users/:action', :controller => '/admin/users'
+  map.connect '/admin/users/:id/:action', :controller => '/admin/users'
+  map.resources :users, :path_prefix => '/admin'
+
+
+  # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
@@ -33,5 +43,4 @@ ActionController::Routing::Routes.draw do |map|
 
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
 end

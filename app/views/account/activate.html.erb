@@ -1,1 +1,5 @@
-<p>Your account hasn't been activated yet. Please come back when your account has been approved.</p>
+<h2>Thank you for singing up, <%= current_user.get_name %>!</h2>
+<p>Your account hasn't been activated yet.</p>
+<p>You will receive a email notification when your account has been activated.</p>
+<p>Come back when you receive an email!</p>
+<p><%= link_to "Go Back Home", :controller => '/display', :action => 'index' %></p>

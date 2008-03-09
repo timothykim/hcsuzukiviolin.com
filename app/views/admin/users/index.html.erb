@@ -1,0 +1,61 @@
+<h1>User List</h1>
+
+<table>
+  <thead>
+  <tr>
+	<th>Name</th>
+	<th>Email</th>
+	<th>User Level</th>
+	<th>Actions</th>
+  </tr>
+  </thead>
+<% for user in @users %>
+  <tr>
+    <td><strong><%= user.firstname + " " + user.lastname %></strong></td>
+    <td><%= user.email %></td>
+
+    <td><%= "Admin" if user.is_admin -%></td>
+    <td><% if user.is_admin -%>
+			
+		<% elsif user.activated -%>
+			<div id="activated<%= user.id %>">
+				<%= link_to_remote 'Deactivate',
+					:url => {:action => 'deactivate', :id => user.id},
+					:success => "$('deactivated" + user.id.to_s + "').show(); $('activated" + user.id.to_s + "').hide();",
+					:failure => "alert('There was an error.');"
+				%>
+			</div>
+			<div id="deactivated<%= user.id %>" style="display: none;">
+				<%= link_to_remote 'Activate',
+					:url => {:action => 'activate', :id => user.id},
+					:success => "$('deactivated" + user.id.to_s + "').hide(); $('activated" + user.id.to_s + "').show(); ",
+					:failure => "alert('There was an error.');"
+				%>
+			</div>
+		<% else -%>
+			<div id="activated<%= user.id %>" style="display: none;">
+				<%= link_to_remote 'Deactivate',
+					:url => {:action => 'deactivate', :id => user.id},
+					:success => "$('deactivated" + user.id.to_s + "').show(); $('activated" + user.id.to_s + "').hide();",
+					:failure => "alert('There was an error.');"
+				%>
+			</div>
+			<div id="deactivated<%= user.id %>">
+				<%= link_to_remote 'Activate',
+					:url => {:action => 'activate', :id => user.id},
+					:success => "$('deactivated" + user.id.to_s + "').hide(); $('activated" + user.id.to_s + "').show(); ",
+					:failure => "alert('There was an error.');"
+				%>
+			</div>
+		<% end %>
+	</td>
+    <td><%= link_to 'Show', user %></td>
+    <td><%= link_to 'Edit', edit_user_path(user) %></td>
+    <td><%= link_to 'Delete', {:action => 'destroy', :id => user.id } , :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New user', new_user_path %>
