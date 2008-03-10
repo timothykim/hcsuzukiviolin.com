@@ -5,7 +5,9 @@ class CreateOptions < ActiveRecord::Migration
       t.column :value,  :string
     end
     
-    Option.create :name => "theme", :value => "brown"
+    Option.create :name => "Site name", :value => "Hannah Choi's Suzuki Violin Studio"
+    Option.create :name => "Theme", :value => "brown"
+
   end
 
   def self.down

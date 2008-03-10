@@ -2,7 +2,8 @@ module OptionDictionary
   
   def option name
     {
-      :theme => 'theme',
+      :theme => 'Theme',
+      :sitename => 'Site Name'
     }[name]
   end
 end
