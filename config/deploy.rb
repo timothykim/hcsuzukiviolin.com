@@ -3,7 +3,7 @@ set :repository,  "git@github.com:highwind/hc-suzuki-studio.git"
 set :domain, "kgfamily.com"
 
 set :scm, :git
-set :deploy_via, :remote_cache
+set :scm_command, "/home/kgfamily/bin/git"
 
 ssh_options[:paranoid] = false
 
