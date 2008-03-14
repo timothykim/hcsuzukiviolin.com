@@ -8,7 +8,7 @@
 		
 		<%= javascript_include_tag :defaults %>
 		
-		<%= conditional_render_partial "addphotos" %>
+		<%= conditional_render_partial "addphotos" if controller.action_name == "addphotos" %>
 		
 		<%= stylesheet_link_tag(get_current_theme_css()) %>
 		

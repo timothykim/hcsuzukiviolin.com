@@ -1,3 +1,4 @@
+
 # Be sure to restart your server when you modify this file
 
 # Uncomment below to force Rails into production mode when
@@ -40,6 +41,8 @@ Rails::Initializer.run do |config|
     :session_key => '_studio_session',
     :secret      => '666104e125ea8034450eec04ccd8f1c629ab97439318b38c1d018eb6acc0758bc6292fc6dd599c95edf3bb71f80053420c838323464a59fdcce3da9831b3182e'
   }
+  
+  config.action_controller.session_store = :p_store
 
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
@@ -57,3 +60,23 @@ Rails::Initializer.run do |config|
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
 end
+
+
+
+
+# The following code is a work-around for the Flash 8 bug that prevents our multiple file uploader
+# from sending the _session_id.  Here, we hack the Session#initialize method and force the session_id
+# to load from the query string via the request uri. (Tested on Lighttpd, Mongrel, Apache)
+class CGI::Session
+  alias original_initialize initialize
+    def initialize(request, option = {})
+      if option['swfupload'] == true
+        tmp = request.env_table["REQUEST_URI"][0..-1].match(/[?&]swfupload_sid=(.+)(&|$)/)
+        if tmp and tmp[1]
+          option['session_id'] = tmp[1]
+        end
+      end
+    original_initialize(request, option)
+  end
+end
+

@@ -34,8 +34,6 @@ ActiveRecord::Schema.define(:version => 5) do
     t.string   "content_type"
     t.string   "filename"
     t.integer  "size"
-    t.integer  "parent_id"
-    t.string   "thumbnail"
     t.integer  "width"
     t.integer  "height"
     t.datetime "created_at"
