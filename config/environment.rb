@@ -67,6 +67,8 @@ end
 # The following code is a work-around for the Flash 8 bug that prevents our multiple file uploader
 # from sending the _session_id.  Here, we hack the Session#initialize method and force the session_id
 # to load from the query string via the request uri. (Tested on Lighttpd, Mongrel, Apache)
+
+
 class CGI::Session
   alias original_initialize initialize
     def initialize(request, option = {})

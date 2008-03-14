@@ -2,7 +2,8 @@ class PhotobookController < DisplayController
   
   
   before_filter :login_required
-  session :swfupload => true
+  session :swfupload => true, :only => :processuploads
+  session :cookie_only => false, :only => :processuploads
   
   def new
     @album = Album.new
@@ -27,11 +28,7 @@ class PhotobookController < DisplayController
   end
   
   def processuploads
-    
-    
-    
     @album = Album.find(params[:id])
-    @album.photos.create(params)
     
     render :layout => false
   end
