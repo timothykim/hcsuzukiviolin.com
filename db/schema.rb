@@ -9,11 +9,37 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 3) do
+ActiveRecord::Schema.define(:version => 5) do
+
+  create_table "albums", :force => true do |t|
+    t.string   "name",         :limit => 80
+    t.integer  "user_id"
+    t.integer  "key_photo_id"
+    t.boolean  "is_public",                  :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "photos_count",               :default => 0,     :null => false
+  end
 
   create_table "options", :force => true do |t|
     t.string "name"
     t.string "value"
+  end
+
+  create_table "photos", :force => true do |t|
+    t.string   "name",         :limit => 80
+    t.text     "caption"
+    t.integer  "album_id"
+    t.integer  "user_id"
+    t.string   "content_type"
+    t.string   "filename"
+    t.integer  "size"
+    t.integer  "parent_id"
+    t.string   "thumbnail"
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
@@ -29,6 +55,8 @@ ActiveRecord::Schema.define(:version => 3) do
     t.datetime "remember_token_expires_at"
     t.boolean  "is_admin",                                :default => false
     t.boolean  "activated",                               :default => false
+    t.integer  "albums_count",                            :default => 0,     :null => false
+    t.integer  "photos_count",                            :default => 0,     :null => false
   end
 
 end

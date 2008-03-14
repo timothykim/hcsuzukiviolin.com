@@ -70,6 +70,25 @@ div#toolbar #login {
 }
 
 
+
+p#login_email label, p#login_password label {
+	display: none;
+}
+
+p#login_email {
+	padding-left: 22px;
+	padding-bottom: 10px;
+	background: url(images/icon_email.png) no-repeat;
+}
+
+p#login_password {
+	margin-left: 10px;
+	padding-left: 15px;
+	padding-bottom: 10px;
+	background: url(images/icon_key.png) no-repeat;
+}
+
+
 div#logged_in {
 	padding-top: 5px;
 	font-size: 12px;
@@ -90,9 +109,10 @@ div#toolbar #login label {
 }
 div#toolbar #login input.text {
 	font-size: 10px;
-	height: 13px;
+	height: 15px;
 	padding-left: 5px;
 	text-align: left;
+	border: 1px solid #706961;
 }
 
 div#toolbar #login input.submit {
