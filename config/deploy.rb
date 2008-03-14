@@ -1,5 +1,5 @@
 set :application, "studio"
-set :repository,  "git@github.com:highwind/hc-suzuki-studio.git"
+set :repository,  "git://github.com/highwind/hc-suzuki-studio.git"
 set :domain, "kgfamily.com"
 
 set :scm, :git

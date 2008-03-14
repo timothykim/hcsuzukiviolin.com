@@ -11,6 +11,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :path_prefix => '/admin'
 
 
+  #album stuff
+  map.resources :albums
+
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

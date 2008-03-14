@@ -7,7 +7,13 @@
 		<title>Hannah Choi's Suzuki Violin Studio - <%= controller.action_name %></title>
 		
 		<%= javascript_include_tag :defaults %>
+		
+		<%= conditional_render_partial "addphotos" %>
+		
 		<%= stylesheet_link_tag(get_current_theme_css()) %>
+		
+		
+		
 	</head>
 
 	<body>
@@ -40,15 +46,11 @@
 								| <%= link_to "Settings", { :controller => "/account", :action => "settings" } %>
 								| <%= link_to "Logout", { :controller => "/account", :action => "logout" } %>
 							</div>
-						<% else -%>
-							<div id="login_tease">
-								<a href="#" onclick="$('login_tease').hide(); new Effect.Appear('login_form');">Log in</a>
-							</div>
-							<div id="login_form" style="display: none;">
+						<% else -%>							<div id="login_form">
 								<% form_tag "/account/login" do -%>
-								<p><label for="login">Email: </label> <%= text_field_tag 'login', nil, :class => 'text', :size => 15 %></p>
+								<p id="login_email"><label for="login">Email: </label> <%= text_field_tag 'login', nil, :class => 'text', :size => 5, :onfocus => "this.size = 15;", :onblur => "if (this.value == '') this.size = 5;" %></p>
 
-								<p> &nbsp; <label for="password">Password: </label> <%= password_field_tag 'password', nil, :class => 'text', :size => 5 %></p>
+								<p id="login_password"> &nbsp; <label for="password">Password: </label> <%= password_field_tag 'password', nil, :class => 'text', :size => 5 %></p>
 
 
 								<p><%= check_box_tag 'remember_me' %> <label for="remember_me">Remember me</label></p>
