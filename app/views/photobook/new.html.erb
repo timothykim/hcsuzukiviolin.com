@@ -1,0 +1,15 @@
+<h1>New Photobook</h1>
+
+<div class="form_box">
+	<%= error_messages_for :album %>
+
+<% form_for @album, :url => { :action => "create" } do |f| -%>
+
+	<p><%= label(:album, :name, "Photobook Name") %><br/>
+	<%= f.text_field :name, :class => "text" %></p>
+
+	<p><%= f.check_box :is_public %> <%= label(:album, :is_public, "Open book") %><br /><small>Open book means anyone can add photos to this photobook.</small></p>
+
+    <p><%= f.submit "Create" %></p>
+<% end %>
+</div>
