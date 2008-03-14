@@ -9,7 +9,7 @@
 	window.onload = function() {
 		var settings = {
 			flash_url : "/swfupload/swfupload_f9.swf",
-			upload_url: "/photobook/processuploads/<%= @album.id %>?_studio_session_id=<%= session.session_id %>",	// Relative to the SWF file
+			upload_url: "/photobook/processuploads/<%= @album.id %>?swfupload_sid=<%= session.session_id %>",	// Relative to the SWF file
 			file_size_limit : "10 MB",
 			file_types : "*.jpg;*.png;*.gif",
 			file_types_description: "Please Select Photos to Add",
