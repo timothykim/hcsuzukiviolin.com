@@ -1,9 +1,12 @@
-<h2>Adding Photos to "<%= @album.name %>"</h2>
+<%= debug(session[:csrf_id]) %>
+<%= @ac %>
 
+
+<h2>Adding Photos to "<%= @album.name %>"</h2>
 
 <% form_tag :multipart => true do -%>
 
-	<input type="button" value="Upload Photos..." onclick="swfu.selectFiles()" />
+	<input type="button" value="Upload Photos..." onclick="swfu.selectFiles()" style="font-size: 8pt;" /> <input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" style="font-size: 8pt;" />
 
 <% end -%>
 

@@ -3,9 +3,7 @@ class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
-
   has_many :albums
-  has_many :photos
 
 
   before_validation         :use_email_as_login

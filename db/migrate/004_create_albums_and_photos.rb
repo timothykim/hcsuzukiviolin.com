@@ -18,9 +18,6 @@ class CreateAlbumsAndPhotos < ActiveRecord::Migration
       t.column :filename, :string     
       t.column :size, :integer
       
-      # used with thumbnails, always required
-      t.column :parent_id,  :integer 
-      t.column :thumbnail, :string
       
       # required for images only
       t.column :width, :integer  

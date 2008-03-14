@@ -1,6 +1,8 @@
 class PhotobookController < DisplayController
   
+  
   before_filter :login_required
+  session :swfupload => true
   
   def new
     @album = Album.new
@@ -17,12 +19,20 @@ class PhotobookController < DisplayController
     #check for params?
     @album = Album.find(params[:id])
     
+    @ac = self.action_name
+    
     if @album.user != current_user
       redirect_to :action => 'illegal' unless @album.is_public
     end
   end
   
-  def processuploads    
+  def processuploads
+    
+    
+    
+    @album = Album.find(params[:id])
+    @album.photos.create(params)
+    
     render :layout => false
   end
   
