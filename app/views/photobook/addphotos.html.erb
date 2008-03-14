@@ -1,0 +1,16 @@
+<h2>Adding Photos to "<%= @album.name %>"</h2>
+
+
+<% form_tag :multipart => true do -%>
+
+	<input type="button" value="Upload Photos..." onclick="swfu.selectFiles()" />
+
+<% end -%>
+
+
+<fieldset id="fsUploadProgress">
+	<legend>Uploaded Photos</legend>
+	
+</fieldset>
+<div id="divStatus">0 Files Uploaded</div>
+
