@@ -48,9 +48,9 @@
 							</div>
 						<% else -%>							<div id="login_form">
 								<% form_tag "/account/login" do -%>
-								<p id="login_email"><label for="login">Email: </label> <%= text_field_tag 'login', nil, :class => 'text', :size => 5, :onfocus => "this.size = 15;", :onblur => "if (this.value == '') this.size = 5;" %></p>
+								<p id="login_email"><label for="login">Email: </label> <%= text_field_tag 'login', nil, :class => 'text', :onfocus => "this.style.width = '100px';", :onblur => "if (this.value == '') this.style.width = '40px';" %></p>
 
-								<p id="login_password"> &nbsp; <label for="password">Password: </label> <%= password_field_tag 'password', nil, :class => 'text', :size => 5 %></p>
+								<p id="login_password"> &nbsp; <label for="password">Password: </label> <%= password_field_tag 'password', nil, :class => 'text' %></p>
 
 
 								<p><%= check_box_tag 'remember_me' %> <label for="remember_me">Remember me</label></p>

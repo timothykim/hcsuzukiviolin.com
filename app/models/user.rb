@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   attr_accessor :password
 
   has_many :albums
+  has_many :photos
 
 
   before_validation         :use_email_as_login

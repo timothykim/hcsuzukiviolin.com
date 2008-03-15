@@ -61,6 +61,7 @@ function fileQueueError(file, error_code, message) {
 
 function fileDialogComplete(num_files_selected, num_files_queued) {
 	try {
+		this.debug(num_files_queued);
 		if (num_files_queued > 0) {
 			document.getElementById(this.customSettings.cancelButtonId).disabled = false;
 		}
@@ -79,11 +80,14 @@ function uploadStart(file) {
 		It's important to update the UI here because in Linux no uploadProgress events are called. The best
 		we can do is say we are uploading.
 		 */
+		
 		var progress = new FileProgress(file, this.customSettings.progressTarget);
 		progress.SetStatus("Uploading...");
 		progress.ToggleCancel(true, this);
 	}
-	catch (ex) {}
+	catch (ex) {
+		this.debug(ex);
+	}
 	
 	return true;
 }
@@ -103,7 +107,7 @@ function uploadProgress(file, bytesLoaded, bytesTotal) {
 function uploadSuccess(file, server_data) {
 	try {
 		var progress = new FileProgress(file, this.customSettings.progressTarget);
-		progress.SetComplete();
+		progress.SetComplete(server_data);
 		progress.SetStatus("Complete.");
 		progress.ToggleCancel(false);
 
@@ -167,10 +171,12 @@ function uploadError(file, error_code, message) {
 function uploadComplete(file) {
 	if (this.getStats().files_queued === 0) {
 		document.getElementById(this.customSettings.cancelButtonId).disabled = true;
+	} else {
+		this.startUpload();
 	}
 }
 
 function queueComplete(num_files_uploaded) {
-	var status = document.getElementById("divStatus");
-	status.innerHTML = num_files_uploaded + " file" + (num_files_uploaded === 1 ? "" : "s") + " uploaded.";
+//	var status = document.getElementById("divStatus");
+//	status.innerHTML = num_files_uploaded + " file" + (num_files_uploaded === 1 ? "" : "s") + " uploaded.";
 }

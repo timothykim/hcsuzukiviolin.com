@@ -1,0 +1,10 @@
+<fieldset class="albumlist">
+	<legend>Photos in this Photobook</legend>
+	
+	<% @photos.each do |photo| -%>
+	
+		<%= image_tag photo.public_filename(:small) %>
+	
+	<% end -%>
+	
+</fieldset>

@@ -9,8 +9,8 @@ class CreateAlbumsAndPhotos < ActiveRecord::Migration
     end
 
     create_table :photos do |t|
-      t.column :name, :string, :limit => 80
-      t.column :caption, :text
+      t.column :name, :string
+      t.column :description, :text
       t.column :album_id, :integer
       t.column :user_id, :integer
       
@@ -18,6 +18,9 @@ class CreateAlbumsAndPhotos < ActiveRecord::Migration
       t.column :filename, :string     
       t.column :size, :integer
       
+      #for thumbnails
+      t.column :parent_id, :integer
+      t.column :thumbnail, :string
       
       # required for images only
       t.column :width, :integer  

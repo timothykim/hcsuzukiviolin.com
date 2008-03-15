@@ -27,13 +27,15 @@ ActiveRecord::Schema.define(:version => 5) do
   end
 
   create_table "photos", :force => true do |t|
-    t.string   "name",         :limit => 80
-    t.text     "caption"
+    t.string   "name"
+    t.text     "description"
     t.integer  "album_id"
     t.integer  "user_id"
     t.string   "content_type"
     t.string   "filename"
     t.integer  "size"
+    t.integer  "parent_id"
+    t.string   "thumbnail"
     t.integer  "width"
     t.integer  "height"
     t.datetime "created_at"

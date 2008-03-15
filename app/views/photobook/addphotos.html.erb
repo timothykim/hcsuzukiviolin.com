@@ -8,8 +8,12 @@
 
 
 <fieldset id="fsUploadProgress">
-	<legend>Uploaded Photos</legend>
+	<legend>Photos</legend>
+	
+	<p>Click on "Upload Photos..." button above to add photos to this album.</p>
+	
 	
 </fieldset>
-<div id="divStatus">0 Files Uploaded</div>
 
+
+<%= render :partial => "album_thumb_list", :locals => { :photos => @photos } %>
