@@ -9,12 +9,13 @@
 	window.onload = function() {
 		var settings = {
 			flash_url : "/swfupload/swfupload_f9.swf",
-			upload_url: "/photobook/processuploads/<%= @album.id %>?swfupload_sid=<%= session.session_id %>",	// Relative to the SWF file
+			upload_url: "/photobook/processuploads/<%= @album.id %>?swfupload_sid=<%= session.session_id %>",
+
+			
 			file_size_limit : "10 MB",
-			file_types : "*.jpg;*.png;*.gif",
+			file_types : "*.jpg;*.png;*.gif; *.jpeg",
 			file_types_description: "Please Select Photos to Add",
 			
-			post_params: {},
 			
 			file_types_description : "Picture Files",
 			file_upload_limit : 100,
@@ -23,7 +24,7 @@
 				progressTarget : "fsUploadProgress",
 				cancelButtonId : "btnCancel"
 			},
-			debug: true,
+			debug: false,
 
 			// The event handler functions are defined in handlers.js
 			file_queued_handler : fileQueued,

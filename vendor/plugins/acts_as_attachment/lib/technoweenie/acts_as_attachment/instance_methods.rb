@@ -55,8 +55,23 @@ module Technoweenie # :nodoc:
         return nil if file_data.nil? || file_data.size == 0 
         self.content_type    = file_data.content_type.strip
         self.filename        = file_data.original_filename.strip if respond_to?(:filename)
+        self.content_type    = determine_content_type(self.filename) if (self.content_type == "application/octet-stream")
         self.attachment_data = file_data.read
       end
+
+
+      def determine_content_type(filename)
+        extension=filename.split('.').last.downcase
+        mime_mappings = {
+          "jpg"   =>    "image/jpeg",
+          "jpeg"  =>    "image/jpeg",
+          "gif"   =>    "image/gif",
+          "png"   =>    "image/png",
+          "zip"   =>    "application/zip" 
+        }
+        return mime_mappings[extension]
+      end
+
 
       # Sets the actual binary data.  This is typically called by uploaded_data=, but you can call this
       # manually if you're creating from the console.  This is also where the resizing occurs.

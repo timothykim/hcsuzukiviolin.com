@@ -1,0 +1,13 @@
+<h2>Photobooks</h2>
+
+<% for album in @albums -%>
+
+	<div class="albumsummary">
+		<%= image_tag album.get_key_photo.public_filename(:list) %>
+		<%= link_to album.name, { :action => "album", :id => album.id } %>
+	</div>
+	
+<% end -%>
+
+
+<p><%= button_to "New Photobook", :action => "new" if current_user.is_admin %></p>

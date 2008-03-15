@@ -6,4 +6,13 @@ class Album < ActiveRecord::Base
   validates_presence_of     :name
   validates_presence_of     :user_id
   
+  
+  def get_key_photo
+    if self.key_photo_id
+      photo = Photo.find(self.key_photo_id)
+    else
+      photo = self.photos.find(:first)
+    end
+  end
+
 end

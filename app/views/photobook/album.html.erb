@@ -1,0 +1,11 @@
+<h2>Photobook - <%= @album.name %></h2>
+
+
+<% for photo in @photos -%>
+
+	<div class="photosummary">
+		<%= image_tag photo.public_filename(:list) %>
+		<%= link_to photo.name, { :action => "photo", :id => photo.id } %>
+	</div>
+	
+<% end -%>

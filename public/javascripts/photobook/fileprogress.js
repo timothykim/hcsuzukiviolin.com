@@ -23,6 +23,11 @@ function FileProgress(file, targetID) {
 		this.fileProgressElement = document.createElement("div");
 		this.fileProgressElement.className = "progressContainer";
 
+		var imageHolder = document.createElement("div");
+		imageHolder.className = "imageHolder";
+		imageHolder.id = this.fileProgressID + "_image";
+		imageHolder.appendChild(document.createTextNode(" "))
+
 		var progressCancel = document.createElement("a");
 		progressCancel.className = "progressCancel";
 		progressCancel.href = "#";
@@ -40,6 +45,7 @@ function FileProgress(file, targetID) {
 		progressStatus.className = "progressBarStatus";
 		progressStatus.innerHTML = "&nbsp;";
 
+		this.fileProgressElement.appendChild(imageHolder);
 		this.fileProgressElement.appendChild(progressCancel);
 		this.fileProgressElement.appendChild(progressText);
 		this.fileProgressElement.appendChild(progressStatus);
@@ -57,33 +63,41 @@ function FileProgress(file, targetID) {
 }
 FileProgress.prototype.SetProgress = function (percentage) {
 	this.fileProgressElement.className = "progressContainer green";
-	this.fileProgressElement.childNodes[3].className = "progressBarInProgress";
-	this.fileProgressElement.childNodes[3].style.width = percentage + "%";
+	this.fileProgressElement.childNodes[4].className = "progressBarInProgress";
+	this.fileProgressElement.childNodes[4].style.width = percentage + "%";
 };
-FileProgress.prototype.SetComplete = function () {
+FileProgress.prototype.SetComplete = function (image) {
 	this.fileProgressElement.className = "progressContainer blue";
-	this.fileProgressElement.childNodes[3].className = "progressBarComplete";
-	this.fileProgressElement.childNodes[3].style.width = "";
-
+	this.fileProgressElement.childNodes[4].className = "progressBarComplete";
+	this.fileProgressElement.childNodes[4].style.width = "";
+	this.fileProgressElement.childNodes[0].innerHTML = image;
+	
+/*
 	var oSelf = this;
 	setTimeout(function () {
 		oSelf.Disappear();
 	}, 10000);
+*/
+	//instead of getting rid of the box, who the picture.
+
 };
 FileProgress.prototype.SetError = function () {
 	this.fileProgressElement.className = "progressContainer red";
-	this.fileProgressElement.childNodes[3].className = "progressBarError";
-	this.fileProgressElement.childNodes[3].style.width = "";
+	this.fileProgressElement.childNodes[4].className = "progressBarError";
+	this.fileProgressElement.childNodes[4].style.width = "";
 
+/*
 	var oSelf = this;
 	setTimeout(function () {
 		oSelf.Disappear();
 	}, 5000);
+*/
 };
+
 FileProgress.prototype.SetCancelled = function () {
 	this.fileProgressElement.className = "progressContainer";
-	this.fileProgressElement.childNodes[3].className = "progressBarError";
-	this.fileProgressElement.childNodes[3].style.width = "";
+	this.fileProgressElement.childNodes[4].className = "progressBarError";
+	this.fileProgressElement.childNodes[4].style.width = "";
 
 	var oSelf = this;
 	setTimeout(function () {
@@ -91,15 +105,15 @@ FileProgress.prototype.SetCancelled = function () {
 	}, 2000);
 };
 FileProgress.prototype.SetStatus = function (status) {
-	this.fileProgressElement.childNodes[2].innerHTML = status;
+	this.fileProgressElement.childNodes[3].innerHTML = status;
 };
 
 // Show/Hide the cancel button
 FileProgress.prototype.ToggleCancel = function (show, swfUploadInstance) {
-	this.fileProgressElement.childNodes[0].style.visibility = show ? "visible" : "hidden";
+	this.fileProgressElement.childNodes[1].style.visibility = show ? "visible" : "hidden";
 	if (swfUploadInstance) {
 		var fileID = this.fileProgressID;
-		this.fileProgressElement.childNodes[0].onclick = function () {
+		this.fileProgressElement.childNodes[1].onclick = function () {
 			swfUploadInstance.cancelUpload(fileID);
 			return false;
 		};
