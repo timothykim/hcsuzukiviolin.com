@@ -5,14 +5,12 @@ set :domain, "hcsuzukiviolin.com"
 set :scm, :git
 set :deploy_via, :remote_cache
 
-
-
-set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
 set :user, "highwind"
-set :runner, "mongrel"
+set :runner, "highwind"
 set :use_sudo, false
 
 set :deploy_to, "/home/highwind/sites/hcsuzukiviolin.com/rails/#{application}"
+set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
 
 
 role :app, domain
