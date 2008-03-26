@@ -1,21 +1,30 @@
 set :application, "studio"
 set :repository,  "git://github.com/highwind/hc-suzuki-studio.git"
-set :domain, "kgfamily.com"
+set :domain, "hcsuzukiviolin.com"
 
 set :scm, :git
-set :scm_command, "/home/kgfamily/bin/git"
+set :deploy_via, :remote_cache
 
-ssh_options[:paranoid] = false
 
-set :user, "kgfamily"
+
+set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
+set :user, "highwind"
+set :runner, "mongrel"
 set :use_sudo, false
 
-set :deploy_to, "/home/kgfamily/rails/#{application}"
+set :deploy_to, "/home/highwind/sites/hcsuzukiviolin.com/rails/#{application}"
 
 
 role :app, domain
 role :web, domain
 role :db,  domain, :primary => true
+
+
+# moves over server config
+task :update_config, :rolse => [:app] do
+  run "cp -Rf #{shared_path}/config/* #{release_path}/config/"
+end
+after 'deploy:update_code', :update_config
 
 
 deploy.task :default do

@@ -18,8 +18,8 @@ test:
   timeout: 5000
 
 production:
-  adapter: mysql
-  database: kgfamily_suzuki
-  username: kgfamily_timothy
+  adapter: postgresql
+  database: suzuki_studio
+  username: highwind
   password: hanguazen
   timeout: 5000
