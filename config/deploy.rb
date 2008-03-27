@@ -7,7 +7,7 @@ set :deploy_via, :remote_cache
 
 set :user, "highwind"
 set :runner, "highwind"
-set :use_sudo, false
+set :use_sudo, true
 
 set :deploy_to, "/home/highwind/sites/hcsuzukiviolin.com/rails/#{application}"
 set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
