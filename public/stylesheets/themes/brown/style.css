@@ -64,7 +64,7 @@ div#toolbar #menu a {
 	text-decoration: none;
 }
 
-div#toolbar #login {
+div#toolbar #login_frame {
 	text-align: right;
 	font-size: 10px;
 }
@@ -95,19 +95,19 @@ div#logged_in {
 	color: white;
 }
 
-div#toolbar #login a {
+div#toolbar #login_frame a {
 	color: white;
 }
 
 
-div#toolbar #login p {
+div#toolbar #login_frame p {
 	display: inline;
 }
 
-div#toolbar #login label {
+div#toolbar #login_frame label {
 	color: white;
 }
-div#toolbar #login input.text {
+div#toolbar #login_frame input.text {
 	font-size: 10px;
 	height: 15px;
 	width: 40px;
@@ -116,7 +116,7 @@ div#toolbar #login input.text {
 	border: 1px solid #706961;
 }
 
-div#toolbar #login input.submit {
+div#toolbar #login_frame input.submit {
 	font-size: 12px;
 	font-weight: bold;
 	color: #633c1c;

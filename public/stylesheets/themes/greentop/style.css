@@ -1,3 +1,9 @@
+/* @group global */
+
+
+
+
+
 body {
 	margin: 0px;
 	padding: 0px;
@@ -9,7 +15,7 @@ body {
 }
 
 div#frame {
-	background: url(images/violin_silhouette.gif) no-repeat 100% 0px;
+/*	background: url(images/violin_silhouette.gif) no-repeat 100% 0px;*/
 	width: 850px;
 	margin: 0 auto;
 }
@@ -48,7 +54,7 @@ div#toolbar #menu li:hover {
 	background-color: #ecfdc1;
 }
 
-div#toolbar a {
+div#toolbar #menu a {
 	padding-top: 15px;
 	height: 25px;
 	display: block;
@@ -56,17 +62,112 @@ div#toolbar a {
 	text-decoration: none;
 }
 
-div#toolbar #login {
+div#toolbar #login_frame {
+	position: relative;
+	top: -240px;
+	clear: both;
+	margin-left: 400px;
+	font-size: 10px;
+	color: white;
+	text-align: right;
+	height: 23px;
+	width: 420px;
+}
+
+div#toolbar #login_frame a {
+	text-decoration: none;
+	color: white;
+}
+
+div#toolbar #login_form {
+	height: 25px;
+}
+
+p#login_email label, p#login_password label {
 	display: none;
 }
 
+p#login_email {
+	padding-left: 22px;
+	padding-bottom: 10px;
+	background: url(images/icon_email.png) no-repeat;
+}
+
+p#login_password {
+	margin-left: 10px;
+	padding-left: 15px;
+	padding-bottom: 10px;
+	background: url(images/icon_key.png) no-repeat;
+}
+
+div#toolbar #login_frame p {
+	display: inline;
+}
+
+div#toolbar #login_frame input.text {
+	font-size: 10px;
+	height: 15px;
+	width: 40px;
+	padding-left: 5px;
+	text-align: left;
+}
+
+
 div#body{
 	clear: both;
+	padding-bottom: 50px;
 }
+
+
+div#section_title {
+	background-color: #2c892e;
+	color: white;
+	padding-top: 30px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	margin-bottom: 20px;
+}
+
+div#section_title h2 {
+	padding: 0px;
+	margin: 0px;
+}
+
+div#submenu {
+	width: 200px;
+	float: left;
+}
+
+div#content {
+	margin-left: 220px;
+}
+
+
+/* @group forms */
+
+input.text {
+	border-top: none;
+	border-left: none;
+	border-right: 1px solid #c3c3c3;
+	border-bottom: 1px solid #dddddd;
+	background: url(images/form_bg.gif) no-repeat left top;
+}
+
+/* @end */
+
+
+/* @end */
+
+
+
+
+
+/* @group index */
 
 div#front_collage {
 	text-align: center;
-	margin-top: 100px;
+	margin-top: 30px;
+	margin-bottom: 60px;
 }
 
 div#front_collage img {
@@ -101,3 +202,4 @@ span.news_date {
 	color: #ff7610;
 }
 
+/* @end */
