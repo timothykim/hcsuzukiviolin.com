@@ -19,10 +19,22 @@ role :db,  domain, :primary => true
 
 
 # moves over server config
-task :update_config, :rolse => [:app] do
+task :update_config, :roles => [:app] do
   run "cp -Rf #{shared_path}/config/* #{release_path}/config/"
 end
+
+#keep a single shared directory for photos
+task :share_attachment_dir, :roles => [:app] do
+  %w{photos}.each do |share|
+    run "rm -rf #{release_path}/public/#{share}"
+    run "mkdir -p #{shared_path}/system/#{share}"
+    run "ln -nfs #{shared_path}/system/#{share} #{release_path}/public/#{share}"
+  end
+end
+
 after 'deploy:update_code', :update_config
+after 'deploy:update_config', :share_attachment_dir
+
 
 
 deploy.task :default do
