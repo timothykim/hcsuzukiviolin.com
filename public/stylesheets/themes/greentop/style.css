@@ -1,0 +1,103 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	background: #efedd8;
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+	font-size: 0.8em;
+	background: white url(images/body_bg.gif) repeat-x 50% 0px;
+	color: #505050;
+}
+
+div#frame {
+	background: url(images/violin_silhouette.gif) no-repeat 100% 0px;
+	width: 850px;
+	margin: 0 auto;
+}
+
+div#banner {
+	background: url(images/title.gif) no-repeat 0px 165px;
+	height: 210px;
+	display: block;
+}
+
+div#title {
+	display: none;
+}
+
+
+div#toolbar #menu {
+	margin-left: 570px;
+}
+div#toolbar #menu ul {
+	padding: 0;
+	margin: 0;
+}
+
+div#toolbar #menu li {
+	float: left;
+	font-size: 12px;
+	color: white;
+	width: 80px;
+	height: 37px;
+	list-style-type: none;
+	background-color: white;
+	text-align: center;
+}
+
+div#toolbar #menu li:hover {
+	background-color: #ecfdc1;
+}
+
+div#toolbar a {
+	padding-top: 15px;
+	height: 25px;
+	display: block;
+	color: #707070;
+	text-decoration: none;
+}
+
+div#toolbar #login {
+	display: none;
+}
+
+div#body{
+	clear: both;
+}
+
+div#front_collage {
+	text-align: center;
+	margin-top: 100px;
+}
+
+div#front_collage img {
+	margin: 4px;
+}
+
+div#latest_news {
+	margin-top: 30px;
+	padding: 10px;
+	font-size: 16px;
+	border-top: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+}
+
+div#latest_news h3 {
+	margin: 0px;
+	color: #6d84d0;
+}
+
+div#latest_news ul {
+	margin: 0px;
+	padding: 0px;
+}
+
+div#latest_news li {
+	margin-top: 3px;
+	list-style-type: none;
+}
+
+
+span.news_date {
+	color: #ff7610;
+}
+
