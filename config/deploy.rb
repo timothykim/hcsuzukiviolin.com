@@ -24,7 +24,7 @@ task :update_config, :roles => [:app] do
 end
 
 #keep a single shared directory for photos
-task :after_update_code, :roles => [:app] do
+task :set_symlinks, :roles => [:app] do
   %w{photos}.each do |share|
     run "rm -rf #{release_path}/public/#{share}"
     run "mkdir -p #{shared_path}/system/#{share}"
@@ -33,6 +33,7 @@ task :after_update_code, :roles => [:app] do
 end
 
 after 'deploy:update_code', :update_config
+after 'deploy:update_code', :set_symlinks
 
 
 
