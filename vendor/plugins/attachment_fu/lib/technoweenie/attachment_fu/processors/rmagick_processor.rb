@@ -41,7 +41,8 @@ module Technoweenie # :nodoc:
           size = size.first if size.is_a?(Array) && size.length == 1 && !size.first.is_a?(Fixnum)
           if size.is_a?(Fixnum) || (size.is_a?(Array) && size.first.is_a?(Fixnum))
             size = [size, size] if size.is_a?(Fixnum)
-            size[0] == size[1] ? img.crop_resized!(*size) : img.thumbnail!(*size)
+#            size[0] == size[1] ? img.crop_resized!(*size) : img.thumbnail!(*size)
+            img.crop_resized!(*size)
           else
             img.change_geometry(size.to_s) { |cols, rows, image| image.resize!(cols<1 ? 1 : cols, rows<1 ? 1 : rows) }
           end

@@ -1,13 +1,28 @@
-<h2>Photobooks</h2>
+<div id="photobook_app">
 
-<% for album in @albums -%>
+<div id="albums_thumb">
 
-	<div class="albumsummary">
-		<%= image_tag album.get_key_photo.public_filename(:list) %>
-		<%= link_to album.name, { :action => "album", :id => album.id } %>
-	</div>
-	
-<% end -%>
+<table cellpadding="0" cellspacing="0" border="0">
+	<tbody>
+	<% while !(row = @albums.slice!(0,4)).empty? %>
+		<tr>
+		<% for album in row %>
+			<td>
+				<%= link_to image_tag("/images/photoframe.png", :width => "200", :height => "133", :class => "albumimage", :style => "background: url(#{album.get_key_photo.public_filename(:list)}) no-repeat center center;"), { :action => "album", :id => album.id } %><br />
+				<div class="albumsummary">
+					<h3><%= link_to album.name, { :action => "album", :id => album.id }, :class => "ablumtitle" %> <span class="counter">(<%= album.photos.size %>)</span></h3>
+					<p>created by <%= album.user.get_name %><br /><%= album.updated_at.strftime('%B %e, %Y') %></p>
+				</div>
+			</td>
+		<% end %>
+		</tr>
+	<% end %>
+	</tbody>
+</table>
 
+</div>
 
 <p><%= button_to "New Photobook", :action => "new" if current_user.is_admin %></p>
+
+
+</div>

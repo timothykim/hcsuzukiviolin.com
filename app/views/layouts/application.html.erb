@@ -76,7 +76,7 @@
 
 <% if defined? @section_title %>
 				<div id="section_title">
-					<h2><%= @section_title %></h2>
+					<h2><span id="section_path"><%= @section_path %></span> <%= @section_title if defined? @section_title %></h2>
 				</div>
 <% end %>
 
@@ -85,7 +85,14 @@
 					<div id="submenu">
 						<ul>
 							<% @submenu.each do |menu| %>
-								<li><%= link_to menu[:name], menu[:link], :class => menu[:selected] %></li>
+								<li>
+									<% if menu.has_key?(:link) %>
+										<%= link_to menu[:name], menu[:link], :class => menu[:selected] %>
+									<% elsif menu.has_key?(:render) %>
+										<div class="side_title"><%= menu[:name] %></div>
+										<%= render :partial => menu[:render], :locals => menu[:locals] %>
+									<% end %>
+								</li>
 							<% end %>
 						</ul>
 					</div>
@@ -93,8 +100,14 @@
 				</div>
 
 				<div id="content">
+<% unless defined? @submenu %>
 				</div>
+				
+				<div id="content_no_side">
+<% end %>
+
 <%= yield %>
+				</div>
 
 			</div>
 			
