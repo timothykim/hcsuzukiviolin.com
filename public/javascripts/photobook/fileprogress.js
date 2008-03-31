@@ -39,10 +39,11 @@ function FileProgress(file, targetID) {
 		progressText.appendChild(document.createTextNode(file.name));
 
 		var progressBar = document.createElement("div");
-		progressBar.className = "progressBarInProgress";
+		progressBar.className = "progressBarPending";
+		progressBar.innerHTML = "<img src=\"/images/placer.gif\" />";
 
 		var progressStatus = document.createElement("div");
-		progressStatus.className = "progressBarStatus";
+		progressStatus.className = "progressBarStatus progressBar";
 		progressStatus.innerHTML = "&nbsp;";
 
 		this.fileProgressElement.appendChild(imageHolder);
@@ -64,12 +65,12 @@ function FileProgress(file, targetID) {
 FileProgress.prototype.SetProgress = function (percentage) {
 	this.fileProgressElement.className = "progressContainer green";
 	this.fileProgressElement.childNodes[4].className = "progressBarInProgress";
-	this.fileProgressElement.childNodes[4].style.width = percentage + "%";
+//	this.fileProgressElement.childNodes[4].style.width = percentage + "%";
 };
 FileProgress.prototype.SetComplete = function (image) {
 	this.fileProgressElement.className = "progressContainer blue";
 	this.fileProgressElement.childNodes[4].className = "progressBarComplete";
-	this.fileProgressElement.childNodes[4].style.width = "";
+//	this.fileProgressElement.childNodes[4].style.width = "";
 	this.fileProgressElement.childNodes[0].innerHTML = image;
 	
 /*
@@ -78,6 +79,7 @@ FileProgress.prototype.SetComplete = function (image) {
 		oSelf.Disappear();
 	}, 10000);
 */
+
 	//instead of getting rid of the box, who the picture.
 
 };

@@ -1,0 +1,25 @@
+<div id="album_navigation">
+
+<table border="0" cellpadding="0" cellspacing="5" align="center">
+<tbody>
+	<tr>
+		<td>
+<% if @prev_photo.nil? %>
+	<%= image_tag "placeholder_first_photo.gif" %><br />
+<% else %>
+	<%= link_to image_tag(@prev_photo.public_filename(:crop)), {:action => "photo", :id => @prev_photo}, :style => "display: inline; padding: 0; margin: 0;" %><br />
+<% end %>
+			&laquo;
+		</td>
+		<td>
+<% if @next_photo.nil? %>
+	<%= image_tag "placeholder_last_photo.gif" %><br />
+<% else %>
+	<%= link_to image_tag(@next_photo.public_filename(:crop)), {:action => "photo", :id => @next_photo}, :style => "display: inline; padding: 0; margin: 0;" %><br />
+<% end %>
+			&raquo;
+	</tr>
+</tbody>
+</table>
+
+</div>

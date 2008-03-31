@@ -7,6 +7,9 @@ class PhotobookController < DisplayController
   
   
   def index
+    @section_title = "Photobooks"
+    
+    
     @albums = []
     all_albums = Album.find(:all)
     for a in all_albums
@@ -15,19 +18,51 @@ class PhotobookController < DisplayController
   end
   
   def new
+    @section_path = "Photobooks &raquo; "
+    @section_title = "New Photobook"
+    @submenu = [
+          { :name => "Photobook Home", :link => "/photobook" },
+    ]
+    
     @album = Album.new
   end
   
   
   def album
+
+    @submenu = [
+          { :name => "Photobook Home", :link => "/photobook" },
+          { :name => "Download this photobook", :link => "#" },
+          { :name => "Latest Comments", :render => "album_latest_comments" }
+    ]
+    
     @album = Album.find(params[:id])
     @photos = @album.photos
+
+    @section_path = "Photobooks &raquo; "
+    @section_title = @album.name
+
   end
   
   
   def photo
     @photo = Photo.find(params[:id])
-    @photolist = @photo.album.photos
+    @album = @photo.album
+    @photos = @photo.album.photos
+    
+    @prev_photo = @photos.index(@photo) == 0 ? nil : @photos[@photos.index(@photo) - 1]
+    @next_photo = @photos.index(@photo) == @photos.length - 1 ? nil : @photos[@photos.index(@photo) + 1]
+    
+    
+    @submenu = [
+          { :name => "Photobook Home", :link => "/photobook" },
+          { :name => "Back to #{@album.name}", :link => {:action => "album", :id => @album} },
+          { :name => "Navigation", :render => "album_navigation", :local => {:prev_photo => @prev_photo, :next_photo => @next_photo } }
+    ]
+    
+    @section_path = "Photobooks &raquo; #{@album.name} &raquo; "
+    @section_title = @photo.name
+    
   end
   
   
@@ -42,6 +77,13 @@ class PhotobookController < DisplayController
     #check for params?
     @album = Album.find(params[:id])
     @photos = @album.photos
+    
+    @section_path = "Photobooks &raquo; #{@album.name} &raquo; "
+    @section_title = "Adding New Photos"
+    @submenu = [
+          { :name => "Photobook Home", :link => "/photobook" },
+          { :name => "View this Photobook", :link => {:action => 'album', :id => @album } },
+    ]
     
     if @album.user != current_user
       redirect_to :action => 'illegal' unless @album.is_public

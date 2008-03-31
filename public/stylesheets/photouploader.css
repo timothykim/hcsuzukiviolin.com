@@ -98,22 +98,29 @@ fieldset.flash
 }
 .progressBarInProgress,
 .progressBarComplete,
+.progressBarPending,
 .progressBarError {
 	font-size: 0px;
-	width: 0%;
-	height: 2px;z
-	background-color: blue;
+	width: 100%;
+	height: 30px;
+	background: url(/images/spinner.gif) no-repeat center center;
 	margin-top: 2px;
 }
 .progressBarComplete {
 	width: 100%;
-	background-color: green;
-	visibility: hidden;
+	background: none;
 }
+.progressBarPending {
+	background: none;
+}
+
+.progressBar {
+	margin-left: 80px;
+	margin-right: 10px;
+}
+
 .progressBarError {
-	width: 100%;
 	background-color: red;
-	visibility: hidden;
 }
 .progressBarStatus {
 	margin-top: 2px;

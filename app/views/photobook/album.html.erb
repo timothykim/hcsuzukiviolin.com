@@ -1,11 +1,23 @@
-<h2>Photobook - <%= @album.name %></h2>
+<div id="photos_thumb">
 
+<table cellpadding="0" cellspacing="0" border="0">
+	<tbody>
+	<% while !(row = @photos.slice!(0,3)).empty? %>
+		<tr>
+		<% for photo in row %>
+			<td>
+				<%= link_to image_tag("/images/photoframe.png", :width => "200", :height => "133", :class => "listimage", :style => "background: url(#{photo.public_filename(:list)}) no-repeat center center;"), { :action => "photo", :id => photo.id } %><br />
+				<div class="photosummary">
+					<h3><%= link_to photo.name, { :action => "photo", :id => photo.id }, :class => "phototitle" %></h3>
+					<p>uploaded by <%= photo.user.get_name %><br /><%= photo.updated_at.strftime('%B %e, %Y') %></p>
+				</div>
+			</td>
+		<% end %>
+		</tr>
+	<% end %>
+	</tbody>
+</table>
 
-<% for photo in @photos -%>
+</div>
 
-	<div class="photosummary">
-		<%= image_tag photo.public_filename(:list) %>
-		<%= link_to photo.name, { :action => "photo", :id => photo.id } %>
-	</div>
-	
-<% end -%>
+<p><%= button_to "Add Photos", {:action => "addphotos", :id => @album } if current_user.is_admin %></p>
