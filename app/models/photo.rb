@@ -5,7 +5,7 @@ class Photo < ActiveRecord::Base
   has_attachment  :content_type => :image,
                   :storage => :file_system,
                   :max_size => 10.megabytes,
-                  :thumbnails => {:view => '600', :list => "200", :crop => [75,75]}
+                  :thumbnails => {:view => '600', :list => "200", :thumb => [75,75]}
 
   validates_as_attachment
   
