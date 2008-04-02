@@ -9,6 +9,10 @@ body {
 	color: #505050;
 }
 
+img {
+	border: none;
+}
+
 div#frame {
 /*	background: url(images/violin_silhouette.gif) no-repeat 100% 0px;*/
 
@@ -22,19 +26,19 @@ div#banner_wrapper {
 div#banner {
 	width: 900px;
 	margin: 0 auto;
-	background: url(images/title_small.png) no-repeat 0px 60px;
+	background: url(images/title_small-trans.png) no-repeat 0px 60px;
 	height: 120px;
 	display: block;
 }
 
 div#banner.display_index {
-	background: url(images/title.png) no-repeat 0px 120px;
+	background: url(images/title-trans.png) no-repeat 0px 120px;
 	height: 190px;
 }
 
 div#title.display_index {
 	height: 100%;
-	background: url(images/violin_piano_icon.png) no-repeat 85% 50%;	
+	background: url(images/violin_piano_icon-trans.png) no-repeat 85% 50%;	
 }
 
 div#title h1 {
