@@ -19,16 +19,18 @@
 
 	<body>
 		<div id="frame">
-			<div id="banner">
-				<div id="title">
+			<div id="banner_wrapper" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
+			<div id="banner" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
+				<div id="title" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
 					<h1>Hannah Choi's Suzuki Violin Studio</h1>
 				</div>
+			</div>
 			</div>
 			
 			<div id="toolbar_wrapper">
 			<div id="toolbar">
 				<!-- TODO -->
-				<div id="menu">
+				<div id="menu" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
 					<ul>
 						<li><%= link_to "Home", { :controller => "/display", :action => "index" } %></li>
 						<li><%= link_to "Photobook", { :controller => "/photobook", :action => "index" } %></li>
@@ -37,7 +39,7 @@
 				</div>
 				
 				<!-- login form -->
-				<div id="login_frame">
+				<div id="login_frame" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
 					<% unless current_page?(:controller => '/account', :action => 'signup') -%>
 						<% if logged_in? -%>
 							<div id="logged_in">
@@ -49,7 +51,7 @@
 							</div>
 						<% else %>
 							<div id="show_login">
-								<p><%= link_to "Login", "#", :onclick => "$('show_login').hide(); $('login_form').show(); $('login').focus(); return false;" %> or <%= link_to "Sign up!", { :controller => "/account", :action => "signup" } %></p>
+								<p><%= link_to "Login", { :controller => "/account", :action => "login" }, :onclick => "$('show_login').hide(); $('login_form').show(); $('login').focus(); return false;" %> or <%= link_to "Sign up!", { :controller => "/account", :action => "signup" } %></p>
 							</div>
 							<div id="login_form" style="display: none;">
 								<% form_tag "/account/login" do -%>
@@ -72,10 +74,10 @@
 			</div>
 			</div>
 			
-			<div id="body">
+			<div id="body" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
 
 <% if defined? @section_title %>
-				<div id="section_title">
+				<div id="section_title" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
 					<h2><span id="section_path"><%= @section_path %></span> <%= @section_title if defined? @section_title %></h2>
 				</div>
 <% end %>
