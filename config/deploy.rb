@@ -1,6 +1,6 @@
 set :application, "studio"
 set :repository,  "git://github.com/highwind/hc-suzuki-studio.git"
-set :domain, "hcsuzukiviolin.com"
+set :domain, "gwsms.org"
 
 set :scm, :git
 set :deploy_via, :remote_cache
@@ -9,7 +9,7 @@ set :user, "highwind"
 set :runner, "highwind"
 set :use_sudo, true
 
-set :deploy_to, "/home/highwind/sites/hcsuzukiviolin.com/rails/#{application}"
+set :deploy_to, "/home/highwind/sites/gwsms.org/rails/#{application}"
 set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
 
 
