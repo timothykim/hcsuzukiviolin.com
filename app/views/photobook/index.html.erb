@@ -7,8 +7,8 @@
 	<% while !(row = @albums.slice!(0,4)).empty? %>
 		<tr>
 		<% for album in row %>
-			<td>
-				<%= link_to image_tag("/images/photoframe.png", :width => "200", :height => "133", :class => "albumimage", :style => "background: url(#{album.get_key_photo.public_filename(:list)}) no-repeat center center;"), { :action => "album", :id => album.id } %><br />
+			<td width="200">
+				<%= link_to image_tag("/images/photoframe.png", :width => "200", :height => "133", :class => "albumimage", :border => "0", :style => "background: url(#{album.get_key_photo.public_filename(:list)}) no-repeat center center;"), { :action => "album", :id => album.id } %><br />
 				<div class="albumsummary">
 					<h3><%= link_to album.name, { :action => "album", :id => album.id }, :class => "ablumtitle" %> <span class="counter">(<%= album.photos.size %>)</span></h3>
 					<p>created by <%= album.user.get_name %><br /><%= album.updated_at.strftime('%B %e, %Y') %></p>
