@@ -5,7 +5,7 @@
 	<% while !(row = @photos.slice!(0,3)).empty? %>
 		<tr>
 		<% for photo in row %>
-			<td width="200">
+			<td width="200" valign="top">
 				<%= link_to image_tag("/images/photoframe.png", :width => "200", :height => "133", :class => "listimage", :border => "0", :style => "background: url(#{photo.public_filename(:list)}) no-repeat center center;"), { :action => "photo", :id => photo.id } %><br />
 				<div class="photosummary">
 					<h3><%= link_to photo.name, { :action => "photo", :id => photo.id }, :class => "phototitle" %></h3>
