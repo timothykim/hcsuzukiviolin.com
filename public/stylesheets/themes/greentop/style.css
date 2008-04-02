@@ -26,19 +26,19 @@ div#banner_wrapper {
 div#banner {
 	width: 900px;
 	margin: 0 auto;
-	background: url(images/title_small-trans.png) no-repeat 0px 60px;
+	background: url(images/title_small-trans.png) no-repeat;
 	height: 120px;
 	display: block;
 }
 
 div#banner.display_index {
-	background: url(images/title-trans.png) no-repeat 0px 120px;
+	background: url(images/title-trans.png) no-repeat;
 	height: 190px;
 }
 
 div#title.display_index {
 	height: 100%;
-	background: url(images/violin_piano_icon-trans.png) no-repeat 85% 50%;	
+	background: url(images/violin_piano_icon-trans.png) no-repeat;	
 }
 
 div#title h1 {
@@ -54,7 +54,7 @@ div#toolbar #menu {
 	position: relative;
 	top: -15px;
 
-	margin-left: 570px;
+	margin-left: 600px;
 }
 div#toolbar #menu ul {
 	padding: 0;
@@ -117,14 +117,14 @@ p#login_email label, p#login_password label {
 p#login_email {
 	padding-left: 22px;
 	padding-bottom: 10px;
-	background: url(images/icon_email.png) no-repeat;
+	background: url(images/icon_email-trans.png) no-repeat;
 }
 
 p#login_password {
 	margin-left: 10px;
 	padding-left: 15px;
 	padding-bottom: 10px;
-	background: url(images/icon_key.png) no-repeat;
+	background: url(images/icon_key-trans.png) no-repeat;
 }
 
 div#toolbar #login_frame p {
@@ -326,9 +326,14 @@ div#albums_thumb table, div#photos_thumb table {
 	border-spacing: 10px;
 }
 
+div#albums_thumb td, div#photos_thumb td {
+	width: 200px;
+}
+
 div#albums_thumb .albumsummary h3, div#photos_thumb .photosummary h3 {
 	padding: 0px;
 	margin: 0px;
+	font-size: 12pt;
 }
 
 
