@@ -139,15 +139,11 @@ div#toolbar #login_frame input.text {
 	text-align: left;
 }
 
-
 div#body{
 	clear: both;
-	position: relative;
-	top: -10px;
-	padding-bottom: 50px;
+	padding-bottom: 20px;
 	width: 850px;
 	margin: 0 auto;
-
 }
 
 div#section_title {
@@ -156,7 +152,6 @@ div#section_title {
 	padding-top: 30px;
 	padding-bottom: 10px;
 	padding-left: 20px;
-	margin-bottom: 20px;
 }
 
 div#section_title h2 {
@@ -211,11 +206,30 @@ div#content {
 }
 
 div#content_no_side {
+	padding-top: 20px;
+	padding-right: 20px;
+	padding-left: 20px;
+}
 
+
+div#footer {
+	clear: both;
+	width: 850px;
+	height: 30px;
+	margin: 0 auto;
+	margin-bottom: 50px;
+	background-color: #eee;
 }
 
 
 	/* @group forms */
+	
+	div.notice {
+		background-color: #ff9aac;
+		border: 1px solid #ff4778;
+		color: white;
+		padding: 10px;
+	}
 	
 	input.text {
 		border-top: none;
@@ -230,6 +244,22 @@ div#content_no_side {
 		font-size: 15pt;
 		padding: 8px;
 	}
+	
+	div.form_box {
+	
+		padding: 20px;
+		background-color: #d5efff;
+		border: 1px solid #a5ccff;
+	}
+	
+	form p.nok {
+		background: url(/images/nok.png) no-repeat 96% 70%;
+	}
+
+	form p.ok {
+		background: url(/images/ok.png) no-repeat 96% 70%;
+	}
+
 	
 	/* @end */
 
@@ -254,6 +284,10 @@ div#content_no_side {
 
 
 /* @group index */
+
+div#content_no_side.display {
+	padding: 0px;
+}
 
 div#front_collage {
 	text-align: center;
@@ -309,6 +343,11 @@ div#section_title.photobook {
 div#body.photobook a {
 	color: #c085a9;
 	text-decoration: none;
+}
+
+
+div#content_no_side.photobook {
+	padding: 0px;
 }
 
 div#toolbar #menu.photobook li:hover {
@@ -373,6 +412,39 @@ div#toolbar #menu.account li:hover {
 	background-color: #c6d4f8;
 }
 
+div#body.account a {
+	color: #5fa4e4;
+	text-decoration: none;
+}
+
+div#login_notice {
+	width: 300px;
+	margin: 0 auto;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+div#login_form_page {
+	width: 300px;
+	margin: 0 auto;
+}
+
+div#login_text {
+	width: 300px;
+	margin: 0 auto;
+}
+
+div#login_form_page .submit, div#signup_box .submit {
+	width: 100px;
+	height: 30px;
+	font-size: 12pt;
+}
+
+
+div#signup_box{
+	width: 500px;
+	margin: 0 auto;
+}
 
 /* @end */
 

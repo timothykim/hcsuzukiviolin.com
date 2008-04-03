@@ -6,4 +6,5 @@ module ApplicationHelper
   rescue ActionView::ActionViewError
     #don't render!
   end
+  
 end
