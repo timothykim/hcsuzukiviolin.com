@@ -10,6 +10,9 @@ class AccountController < ApplicationController
   end
 
   def login
+    
+    @section_title = "Account Login"
+    
     if logged_in?
       redirect_to(:action => 'index')
     end
@@ -42,6 +45,10 @@ class AccountController < ApplicationController
 
   def signup
     redirect_to :action => 'activate' if logged_in?
+    
+    
+    @section_title = "Sign up for an Account"
+    @javascripts = [ "account/signup" ]
     
     @user = User.new(params[:user])
     return unless request.post?

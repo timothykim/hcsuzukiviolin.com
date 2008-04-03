@@ -1,8 +1,26 @@
-<h2>Login page</h2>
 
-<% if flash[:notice] %><div class="notice"><%= flash[:notice] %></div><% end %>
+<% if flash[:notice] %><div id="login_notice" class="notice"><%= flash[:notice] %></div><% end %>
 
-<p>To login, please use the login form above.</p>
-<p>Your login should be your email address.</p>
-<p>If you do not have an account, please sign up!</p>
-<p><a href="" class="small_link">I forgot my password</a></p>
+
+<div id="login_form_page" class="form_box">
+	<%=  %>
+	
+	
+	<% form_tag "/account/login" do -%>
+	<p><label for="login">Email: </label><br /><%= text_field_tag 'login', nil, :class => 'text' %></p>
+
+	<p><label for="password">Password: </label><br /><%= password_field_tag 'password', nil, :class => 'text' %></p>
+
+	<p><%= check_box_tag 'remember_me' %> <label for="remember_me">Remember me</label></p>
+
+	<p><%= submit_tag 'Log in', :class => 'submit' %></p>
+	
+	<% end -%>
+</div>
+
+<div id="login_text">
+	<p><a href="/account/signup">Don't have an account? Sign up!</a></p>
+	<p><a href="">Lost your password?</a></p>
+</div>
+
+
