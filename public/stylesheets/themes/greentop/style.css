@@ -152,6 +152,7 @@ div#section_title {
 	padding-top: 30px;
 	padding-bottom: 10px;
 	padding-left: 20px;
+	margin-bottom: 20px;
 }
 
 div#section_title h2 {
@@ -161,6 +162,7 @@ div#section_title h2 {
 
 div#submenu {
 	width: 200px;
+	margin-bottom: 20px;
 	float: left;
 }
 
@@ -218,6 +220,7 @@ div#footer {
 	height: 30px;
 	margin: 0 auto;
 	margin-bottom: 50px;
+	margin-top: 20px;
 	background-color: #eee;
 }
 
@@ -228,7 +231,9 @@ div#footer {
 		background-color: #ff9aac;
 		border: 1px solid #ff4778;
 		color: white;
-		padding: 10px;
+		padding: 20px;
+		margin-bottom: 20px;
+
 	}
 	
 	input.text {
@@ -251,13 +256,24 @@ div#footer {
 		background-color: #d5efff;
 		border: 1px solid #a5ccff;
 	}
-	
-	form p.nok {
-		background: url(/images/nok.png) no-repeat 96% 70%;
+
+	div.form_box .form_element {
+		margin-top: 10px;
+		margin-bottom: 10px;
 	}
 
-	form p.ok {
-		background: url(/images/ok.png) no-repeat 96% 70%;
+	div.form_box .submit {
+		width: 100px;
+		height: 30px;
+		font-size: 12pt;
+	}
+
+	div.form_box .nok {
+		background: url(/images/nok.png) no-repeat 100% 70%;
+	}
+
+	div.form_box .ok {
+		background: url(/images/ok.png) no-repeat 100% 70%;
 	}
 
 	
@@ -417,33 +433,20 @@ div#body.account a {
 	text-decoration: none;
 }
 
-div#login_notice {
-	width: 300px;
-	margin: 0 auto;
-	padding: 20px;
-	margin-bottom: 20px;
-}
 
 div#login_form_page {
-	width: 300px;
+	width: 320px;
 	margin: 0 auto;
 }
 
-div#login_text {
-	width: 300px;
+
+div#signup_box {
+	width: 480px;
 	margin: 0 auto;
 }
 
-div#login_form_page .submit, div#signup_box .submit {
-	width: 100px;
-	height: 30px;
-	font-size: 12pt;
-}
-
-
-div#signup_box{
-	width: 500px;
-	margin: 0 auto;
+div#signup_box input.text {
+	width: 390px;
 }
 
 /* @end */

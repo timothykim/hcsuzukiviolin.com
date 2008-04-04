@@ -1,5 +1,5 @@
-<h2>Thank you for singing up, <%= current_user.get_name %>!</h2>
-<p>Your account hasn't been activated yet.</p>
-<p>You will receive a email notification when your account has been activated.</p>
+<p>The page you are trying to access requires an verified account.</p>
+<p>Your account hasn't been verified yet.</p>
+<p>You will receive a email notification when your account has been verified and activated.</p>
 <p>Come back when you receive an email!</p>
-<p><%= link_to "Go Back Home", :controller => '/display', :action => 'index' %></p>
+<p><%= link_to "Back Home", :controller => '/display', :action => 'index' %></p>
