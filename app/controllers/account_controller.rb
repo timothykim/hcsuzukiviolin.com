@@ -7,6 +7,7 @@ class AccountController < ApplicationController
   # say something nice, you goof!  something sweet.
   def index
     redirect_to(:action => 'login') unless logged_in? # || User.count > 0
+    redirect_to(:controller => 'display', :action => 'index')
   end
 
   def login
@@ -38,9 +39,11 @@ class AccountController < ApplicationController
   end
   
   
-  def activate
-    redirect_to :action => 'login' unless logged_in?
+  def activate    
+    @section_title = "Thank you for signing up, #{current_user.get_name}!" if logged_in?
+    redirect_to :action => 'login' unless logged_in?  
     redirect_to :action => 'index' if logged_in? && self.current_user.activated
+
   end
 
   def signup
@@ -61,6 +64,8 @@ class AccountController < ApplicationController
   end
   
   def settings
+    @section_title = "Editing Your Personal Information"
+    
     @user = self.current_user
     
     return unless params[:user]
@@ -83,4 +88,6 @@ class AccountController < ApplicationController
     flash[:notice] = "You have been logged out."
     redirect_back_or_default(:controller => '/display', :action => 'index')
   end
+  
+  
 end

@@ -2,28 +2,42 @@
 <div id="signup_box">
 	<p>If you are a studio member, please sign up.</p>
 
+	<% if error_messages_for(:user) != '' %><div id="signup_notice" class="notice"><%= error_messages_for :user, :message => nil %></div><% end %>
+
+
 	<div class="form_box">
-		<%= error_messages_for :user %>
 	<% form_for :user do |f| -%>
-		<p class="check"><label for="user_firstname">First Name</label><br/>
-		<%= f.text_field :firstname, :class => "text" %></p>
+		<div class="form_element">
+			<div class="check"><label for="user_firstname">First Name</label></div>
+			<%= f.text_field :firstname, :class => "text" %>
+		</div>
 
-		<p class="check"><label for="user_lastname">Last Name</label><br/>
-		<%= f.text_field :lastname, :class => "text" %></p>
+		<div class="form_element">
+			<div class="check"><label for="user_lastname">Last Name</label></div>
+			<%= f.text_field :lastname, :class => "text" %>
+		</div>
 
-		<p class="check"><label for="user_email">Email</label><br/>
-		<%= f.text_field :email, :class => "text" %></p>
+		<div class="form_element">
+			<div class="check"><label for="user_email">Email</label></div>
+			<%= f.text_field :email, :class => "text" %>
+		</div>
 
-		<p class="check"><label for="user_email_confimation">Email Confimation</label><br/>
-		<%= f.text_field :email_confirmation, :class => "text" %></p>
+		<div class="form_element">
+			<div class="check"><label for="user_email_confimation">Email Confirmation</label></div>
+			<%= f.text_field :email_confirmation, :class => "text" %>
+		</div>
 
-		<p class="check"><label for="user_password">Password <small>(at least 5 characters long)</small></label><br/>
-		<%= f.password_field :password, :class => "text" %></p>
+		<div class="form_element">
+			<div class="check"><label for="user_password">Password <small>(at least 5 characters long)</small></label></div>
+			<%= f.password_field :password, :class => "text" %>
+		</div>
 
-		<p class="check"><label for="user_password_confirmation">Confirm Password</label><br/>
-		<%= f.password_field :password_confirmation, :class => "text" %></p>
+		<div class="form_element">
+			<div class="check"><label for="user_password_confirmation">Confirm Password</label></div>
+			<%= f.password_field :password_confirmation, :class => "text" %>
+		</div>
 
-		<p><%= submit_tag 'Sign up', :disabled => "disabled", :class => "submit", :id => "form_submit" %></p>
+		<div class="form_element"><%= submit_tag 'Sign up', :disabled => "disabled", :class => "submit", :id => "form_submit" %></div>
 	<% end -%>
 	</div>
 </div>
