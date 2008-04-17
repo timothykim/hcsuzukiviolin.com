@@ -9,17 +9,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 5) do
+ActiveRecord::Schema.define(:version => 6) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
-    t.text     "description"
     t.integer  "user_id"
     t.integer  "key_photo_id"
     t.boolean  "is_public",                  :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "photos_count",               :default => 0,     :null => false
+    t.text     "description"
   end
 
   create_table "options", :force => true do |t|
