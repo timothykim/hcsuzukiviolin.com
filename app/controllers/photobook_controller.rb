@@ -6,23 +6,27 @@ class PhotobookController < DisplayController
   session :cookie_only => false, :only => :processuploads
   
   
+  def global_submenu
+    [ { :name => "<img src=\"/images/icons/home.png\" class=\"icon\" /> Photobook Home", :link => "/photobook" } ]
+  end
+  
   def index
     @section_title = "Photobooks"
     
     
-    @albums = []
-    all_albums = Album.find(:all)
-    for a in all_albums
-      @albums << a unless a.photos.size == 0
-    end
+    # @albums = []
+    # all_albums = Album.find(:all)
+    # for a in all_albums
+    #   @albums << a unless a.photos.size == 0
+    # end
+    @albums = Album.find(:all)
+
   end
   
   def new
     @section_path = "Photobooks &raquo; "
     @section_title = "New Photobook"
-    @submenu = [
-          { :name => "Photobook Home", :link => "/photobook" },
-    ]
+    @submenu = self.global_submenu
     
     @album = Album.new
   end
@@ -30,14 +34,22 @@ class PhotobookController < DisplayController
   
   def album
 
-    @submenu = [
-          { :name => "Photobook Home", :link => "/photobook" },
-          { :name => "Download this photobook", :link => "#" },
+    @submenu = global_submenu + [
+          { :name => "<img src=\"/images/icons/package.png\" class=\"icon\" /> Download this photobook", :link => "/photobook/album/download/" + params[:id] },
           { :name => "Latest Comments", :render => "album_latest_comments" }
     ]
     
+    
+    
     @album = Album.find(params[:id])
     @photos = @album.photos
+
+
+    if current_user.has_permission? @album
+      @submenu += [ { :name => "Admin Controls", :render => "album_admin" } ]
+    end
+
+
 
     @section_path = "Photobooks &raquo; "
     @section_title = @album.name
@@ -54,8 +66,7 @@ class PhotobookController < DisplayController
     @next_photo = @photos.index(@photo) == @photos.length - 1 ? nil : @photos[@photos.index(@photo) + 1]
     
     
-    @submenu = [
-          { :name => "Photobook Home", :link => "/photobook" },
+    @submenu = global_submenu + [
           { :name => "Back to #{@album.name}", :link => {:action => "album", :id => @album} },
           { :name => "Navigation", :render => "album_navigation", :local => {:prev_photo => @prev_photo, :next_photo => @next_photo } }
     ]
@@ -64,6 +75,15 @@ class PhotobookController < DisplayController
     @section_title = @photo.name
     
   end
+  
+  
+  
+  def delete
+    
+    
+    
+  end
+  
   
   
   def create
@@ -78,10 +98,9 @@ class PhotobookController < DisplayController
     @album = Album.find(params[:id])
     @photos = @album.photos
     
-    @section_path = "Photobooks &raquo; #{@album.name} &raquo; "
-    @section_title = "Adding New Photos"
-    @submenu = [
-          { :name => "Photobook Home", :link => "/photobook" },
+    @section_path = "Photobooks &raquo; "
+    @section_title = "Adding New Photos to \"#{@album.name}\""
+    @submenu = global_submenu + [
           { :name => "View this Photobook", :link => {:action => 'album', :id => @album } },
     ]
     

@@ -85,8 +85,7 @@ FileProgress.prototype.SetComplete = function (image) {
 };
 FileProgress.prototype.SetError = function () {
 	this.fileProgressElement.className = "progressContainer red";
-	this.fileProgressElement.childNodes[4].className = "progressBarError";
-	this.fileProgressElement.childNodes[4].style.width = "";
+	this.fileProgressElement.childNodes[4].className = "progressBarComplete";
 
 /*
 	var oSelf = this;

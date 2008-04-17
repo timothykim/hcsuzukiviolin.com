@@ -83,9 +83,9 @@ function check_form() {
 
 	var sb = $('form_submit');
 	if ($$('.ok').length == 6) {
-		sb.enable();
+		sb.removeAttribute('disabled');
 	} else {
-		sb.disable();
+		sb.setAttribute('disabled', 'disabled');
 	}
 }
 

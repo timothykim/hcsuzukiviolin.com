@@ -13,6 +13,7 @@ ActiveRecord::Schema.define(:version => 5) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
+    t.text     "description"
     t.integer  "user_id"
     t.integer  "key_photo_id"
     t.boolean  "is_public",                  :default => false

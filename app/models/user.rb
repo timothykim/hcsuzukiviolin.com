@@ -60,10 +60,18 @@ class User < ActiveRecord::Base
     save(false)
   end
 
-
   def get_name
     self.firstname + " " + self.lastname
   end
+
+
+  def has_permission?(obj)
+    return true if self.is_admin or self == obj.user
+    return false
+  rescue
+    return false
+  end
+
 
   protected
     # before filter 

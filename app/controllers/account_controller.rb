@@ -51,7 +51,6 @@ class AccountController < ApplicationController
     
     
     @section_title = "Sign up for an Account"
-    @javascripts = [ "account/signup" ]
     
     @user = User.new(params[:user])
     return unless request.post?

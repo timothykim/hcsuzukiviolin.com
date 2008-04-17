@@ -1,4 +1,7 @@
 /* @group global */
+
+
+
 body {
 	margin: 0px;
 	padding: 0px;
@@ -161,7 +164,7 @@ div#section_title h2 {
 }
 
 div#submenu {
-	width: 200px;
+	width: 190px;
 	margin-bottom: 20px;
 	float: left;
 }
@@ -204,7 +207,7 @@ div#submenu li div.side_title {
 }
 
 div#content {
-	margin-left: 220px;
+	margin-left: 205px;
 }
 
 div#content_no_side {
@@ -236,17 +239,25 @@ div#footer {
 
 	}
 	
-	input.text {
+	input.text, textarea.text {
 		border-top: none;
 		border-left: none;
 		border-right: 1px solid #c3c3c3;
 		border-bottom: 1px solid #dddddd;
 		background: url(images/form_bg.gif) no-repeat left top;
 	}
-
+	
+	textarea {
+		font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+		font-size: 9pt;
+	}
 
 	div.form_box input.text {
 		font-size: 15pt;
+		padding: 8px;
+	}
+	
+	div.form_box textarea.text {
 		padding: 8px;
 	}
 	
@@ -410,6 +421,18 @@ div#album_navigation a {
 	display: inline;
 }
 
+/* @group forms */
+
+	input#album_name, textarea#album_description {
+		width: 400px;
+	}
+	
+	.photobook_new div.form_box {
+		width: 450px;
+	}
+
+/* @end */
+
 
 /* @end */
 
@@ -439,6 +462,10 @@ div#login_form_page {
 	margin: 0 auto;
 }
 
+
+div#login_form_page input.text {
+	width: 250px;
+}
 
 div#signup_box {
 	width: 480px;

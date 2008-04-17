@@ -2,6 +2,7 @@ class CreateAlbumsAndPhotos < ActiveRecord::Migration
   def self.up
     create_table :albums do |t|
       t.column :name, :string, :limit => 80
+      t.column :description, :text
       t.column :user_id, :integer
       t.column :key_photo_id, :integer
       t.column :is_public, :boolean, :default => false
