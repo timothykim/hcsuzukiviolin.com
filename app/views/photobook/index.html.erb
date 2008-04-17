@@ -2,9 +2,9 @@
 
 <div id="albums_thumb">
 
-<% if @albums.length == 0 %>
+<% if @albums.empty? %>
 <h3>OOPS! There aren't any photobooks yet!</h3>
-<p>Please start a new photobook by clicking the button below</p>
+<p>Please start a new photobook by clicking the button below:</p>
 
 <% else %>
 
@@ -15,14 +15,14 @@
 		<% for album in row %>
 			<td width="200" valign="top">
 				<% if album.photos.length == 0 && current_user.has_permission?(album) %>
-					<%= link_to image_tag("/images/photoframe-trans.png", :width => "200", :height => "133", :class => "albumimage", :border => "0", :style => "background: url(/images/image_place_holder.png) no-repeat center center;"), { :action => "addphotos", :id => album.id } %><br />
+					<%= link_to image_tag("/images/frame-photobook-trans.png", :width => "200", :height => "133", :class => "albumimage", :border => "0", :style => "background: url(/images/empty_photobook.gif) no-repeat center center;"), { :action => "album", :id => album.id } %><br />
 				<% else %>
-					<%= link_to image_tag("/images/photoframe-trans.png", :width => "200", :height => "133", :class => "albumimage", :border => "0", :style => "background: url(#{album.get_key_photo.public_filename(:list)}) no-repeat center center;"), { :action => "album", :id => album.id } %><br />
+					<%= link_to image_tag("/images/frame-photobook-trans.png", :width => "200", :height => "133", :class => "albumimage", :border => "0", :style => "background: url(#{album.get_key_photo.public_filename(:list)}) no-repeat center center;"), { :action => "album", :id => album.id } %><br />
 				<% end %>
 					
-				<div class="albumsummary">
+				<div class="albumcaption">
 					<h3><%= link_to album.name, { :action => "album", :id => album.id }, :class => "ablumtitle" %> <span class="counter">(<%= album.photos.size %>)</span></h3>
-					<p>created by <%= album.user.get_name %><br /><%= album.updated_at.strftime('%B %e, %Y') %></p>
+					<p>created by <%= album.user.fullname %><br /><%= album.updated_at.strftime('%B %e, %Y') %></p>
 				</div>
 			</td>
 		<% end %>

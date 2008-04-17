@@ -1,0 +1,39 @@
+
+<% form_for @album, :url => { :action => "create" } do |f| -%>
+
+
+	<div class="form_element">
+		<div class="check">	<%= label(:album, :name, "Photobook Name") %></div>
+		<%= f.text_field :name, :class => "text" %>
+	</div>
+
+
+	<div class="form_element">
+		<div class="check">	<%= label(:album, :description, "Photobook Description") %></div>
+		<%= f.text_area :description, :class => "text", :cols => 50, :rows => 2 %>
+	</div>
+
+
+	<% for photo in @photos %>
+
+	<div class="photoedit">
+
+		<%= check_box_tag "photo#{photo.id}"%>
+		<%= image_tag photo.public_filename(:thumb) %>
+
+		<div class="form_element">
+			<div class="check">	Photo Name</div>
+			<%= text_field_tag "photos[#{photo.id}]['name']", photo.name, :class => "text" %>
+		</div>
+		
+		<div class="form_element">
+			<div class="check">	Photo Description</div>
+			<%= text_field_tag "photos[#{photo.id}]['desc']", photo.description, :class => "text" %>
+		</div>
+	</div>
+
+
+
+	<% end %>
+<% end %>
+

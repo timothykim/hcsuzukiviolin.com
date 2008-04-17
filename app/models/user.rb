@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
     save(false)
   end
 
-  def get_name
+  def fullname
     self.firstname + " " + self.lastname
   end
 
