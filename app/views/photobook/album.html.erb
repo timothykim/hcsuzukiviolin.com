@@ -1,15 +1,27 @@
 <div id="photos_thumb">
 
+<% if @photos.empty? %>
+
+	<h3>OOPS! There aren't any photos in this photobook yet!</h3>
+	
+	<% if @album.is_public or current_user.has_permission? @album %>
+	
+		<p>Please upload some photos by clicking the button below:</p>
+		<p><button class="iconbutton" onclick="window.location = '/photobook/addphotos/<%= @album.id %>'"><img src="/images/icons/photo.png" class="icon" /> Upload Photos</button></p>
+
+	<% end %>
+
+<% else %>
 <table cellpadding="0" cellspacing="0" border="0">
 	<tbody>
 	<% while !(row = @photos.slice!(0,3)).empty? %>
 		<tr>
 		<% for photo in row %>
 			<td width="200" valign="top">
-				<%= link_to image_tag("/images/photoframe-trans.png", :width => "200", :height => "133", :class => "listimage", :border => "0", :style => "background: url(#{photo.public_filename(:list)}) no-repeat center center;"), { :action => "photo", :id => photo.id } %><br />
-				<div class="photosummary">
+				<%= link_to image_tag("/images/frame-photo-trans.png", :width => "200", :height => "133", :class => "listimage", :border => "0", :style => "background: url(#{photo.public_filename(:list)}) no-repeat center center;"), { :action => "photo", :id => photo.id } %><br />
+				<div class="photocaption">
 					<h3><%= link_to photo.name, { :action => "photo", :id => photo.id }, :class => "phototitle" %></h3>
-					<p>uploaded by <%= photo.user.get_name %><br /><%= photo.updated_at.strftime('%B %e, %Y') %></p>
+					<p>uploaded by <%= photo.user.fullname %><br /><%= photo.updated_at.strftime('%B %e, %Y') %></p>
 				</div>
 			</td>
 		<% end %>
@@ -18,6 +30,7 @@
 	</tbody>
 </table>
 
+<% end %>
+
 </div>
 
-<p><%= button_to "Add Photos", {:action => "addphotos", :id => @album } if current_user.is_admin %></p>

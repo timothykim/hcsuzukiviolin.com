@@ -11,7 +11,7 @@ class PhotobookController < DisplayController
   end
   
   def index
-    @section_title = "Photobooks"
+    @section_title = "Photobooks Home"
     
     
     # @albums = []
@@ -34,21 +34,19 @@ class PhotobookController < DisplayController
   
   def album
 
-    @submenu = global_submenu + [
-          { :name => "<img src=\"/images/icons/package.png\" class=\"icon\" /> Download this photobook", :link => "/photobook/album/download/" + params[:id] },
-          { :name => "Latest Comments", :render => "album_latest_comments" }
-    ]
-    
-    
     
     @album = Album.find(params[:id])
     @photos = @album.photos
+    @photocount = @photos.size
 
 
-    if current_user.has_permission? @album
-      @submenu += [ { :name => "Admin Controls", :render => "album_admin" } ]
+    @submenu = global_submenu + [{ :name => "<img src=\"/images/icons/photobook.png\" class=\"icon\" /> Photobook Summary", :render => "album_summary" }]
+
+    if @album.is_public or current_user.has_permission? @album
+      @submenu += [{ :name => "<img src=\"/images/icons/photobook_configure.png\" class=\"icon\" /> Photobook Controls", :render => "album_admin" }]
     end
-
+    
+    @submenu += [{ :name => "<img src=\"/images/icons/face-grin.png\" class=\"icon\" /> Latest Comments", :render => "album_latest_comments" }]
 
 
     @section_path = "Photobooks &raquo; "
@@ -66,24 +64,45 @@ class PhotobookController < DisplayController
     @next_photo = @photos.index(@photo) == @photos.length - 1 ? nil : @photos[@photos.index(@photo) + 1]
     
     
-    @submenu = global_submenu + [
-          { :name => "Back to #{@album.name}", :link => {:action => "album", :id => @album} },
+    @submenu = [
+      { :name => "<img src=\"/images/icons/photoindex.png\" class=\"icon\" /> Back to the Photobook", :link => {:action => 'album', :id => @album } }] + global_submenu + [
           { :name => "Navigation", :render => "album_navigation", :local => {:prev_photo => @prev_photo, :next_photo => @next_photo } }
     ]
     
-    @section_path = "Photobooks &raquo; #{@album.name} &raquo; "
-    @section_title = @photo.name
+    @section_path = "Photobooks &raquo; "
+    @section_title = "#{@album.name} &raquo; #{@photo.name}"
     
   end
   
   
   
-  def delete
-    
-    
-    
+  def deletealbum
+    if current_user.has_permission? @album
+      @album = Album.find(params[:id])
+      @album.destroy
+      redirect_to :action => 'index'
+    else
+      redirect_to :action => 'illegal'
+    end
   end
   
+  def edit
+    @album = Album.find(params[:id])
+    @photos = @album.photos
+    
+    @section_path = "Photobooks &raquo; "
+    @section_title = "Editing \"#{@album.name}\""
+
+    @submenu = global_submenu + [
+          { :name => "<img src=\"/images/icons/back.png\" class=\"icon\" /> Back to the Photobook", :link => {:action => 'album', :id => @album } },
+          { :name => "<img src=\"/images/icons/photobook.png\" class=\"icon\" /> Photobook Summary", :render => "album_summary" }
+    ]
+    
+    if current_user.has_permission? @album
+      @submenu += [ { :name => "<img src=\"/images/icons/photobook_configure.png\" class=\"icon\" /> Photobook Controls", :render => "album_admin" } ]
+    end
+
+  end
   
   
   def create
@@ -101,10 +120,16 @@ class PhotobookController < DisplayController
     @section_path = "Photobooks &raquo; "
     @section_title = "Adding New Photos to \"#{@album.name}\""
     @submenu = global_submenu + [
-          { :name => "View this Photobook", :link => {:action => 'album', :id => @album } },
+          { :name => "<img src=\"/images/icons/back.png\" class=\"icon\" /> Back to the Photobook", :link => {:action => 'album', :id => @album } },
+          { :name => "<img src=\"/images/icons/photobook.png\" class=\"icon\" /> Photobook Summary", :render => "album_summary" }
     ]
     
-    if @album.user != current_user
+    if current_user.has_permission? @album
+      @submenu += [ { :name => "<img src=\"/images/icons/photobook_configure.png\" class=\"icon\" /> Photobook Controls", :render => "album_admin" } ]
+    end
+    
+    
+    unless current_user.has_permission? @album
       redirect_to :action => 'illegal' unless @album.is_public
     end
   end

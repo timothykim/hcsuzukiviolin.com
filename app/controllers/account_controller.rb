@@ -40,7 +40,7 @@ class AccountController < ApplicationController
   
   
   def activate    
-    @section_title = "Thank you for signing up, #{current_user.get_name}!" if logged_in?
+    @section_title = "Thank you for signing up, #{current_user.fullname}!" if logged_in?
     redirect_to :action => 'login' unless logged_in?  
     redirect_to :action => 'index' if logged_in? && self.current_user.activated
 
