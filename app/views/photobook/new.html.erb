@@ -1,14 +1,28 @@
-<div class="form_box">
+<div align="center">
+<div class="form_box" align="left">
 	<%= error_messages_for :album %>
 
 <% form_for @album, :url => { :action => "create" } do |f| -%>
 
-	<p><%= label(:album, :name, "Photobook Name") %><br/>
-	<%= f.text_field :name, :class => "text" %></p>
+
+
+	<div class="form_element">
+		<div class="check">	<%= label(:album, :name, "Photobook Name") %></div>
+		<%= f.text_field :name, :class => "text" %>
+	</div>
+	
+	
+	<div class="form_element">
+		<div class="check">	<%= label(:album, :description, "Photobook Description") %></div>
+		<%= f.text_area :description, :class => "text", :cols => 50, :rows => 2 %>
+	</div>
+	
+	
 
 	<p><%= f.check_box :is_public %> <%= label(:album, :is_public, "Open book") %><br /><small>Open book means anyone can add photos to this photobook.</small></p>
 
-    <p><%= f.submit "Create" %></p>
+	<p><button class="iconbutton" id="form_submit" onclick="$('new_album').submit();"><img src="/images/icons/photo.png" class="icon" /> Create and Add Photos</button>
 <% end %>
 
+</div>
 </div>

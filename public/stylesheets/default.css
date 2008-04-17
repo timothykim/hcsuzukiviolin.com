@@ -1,0 +1,9 @@
+img.icon {
+	vertical-align: middle;
+	border: none;
+	margin-right: 2px;
+}
+
+button.iconbutton {
+	padding: 6px;
+}
