@@ -30,6 +30,9 @@
 		<thead>
 			<tr>
 				<th>
+					<%= image_tag "icons/sun_small.png" %>
+				</th>
+				<th>
 					<%= image_tag "icons/photo.png" %>
 				</th>
 				<th>
@@ -48,9 +51,10 @@
 
 		<tr class="<%= row_class %>">
 			<td>
-
-				<%= image_tag photo.public_filename(:thumb), :class => "thumb" %>
-
+				<%= f.radio_button :key_photo_id, photo.id %>
+			</td>
+			<td>
+				<label for="album_key_photo_id_<%= photo.id %>"><%= image_tag photo.public_filename(:thumb), :class => "thumb" %></label>
 			</td>
 
 			<td class="metadata">
@@ -87,7 +91,7 @@
 
 	
 	
-		<p><button class="iconbutton" id="form_submit" onclick="if (submit_ok()) $('edit_album_<%= @album.id -%>').submit(); else return false;"><img src="/images/icons/photo.png" class="icon" /> Save change!</button> &nbsp; &nbsp; <%= link_to "<img src=\"/images/icons/x_small.png\" class=\"icon\" /> <small>Cancel</small>", { :action => "album", :id => @album.id } %> </p>
+		<p><button class="iconbutton" id="form_submit" onclick="if (submit_ok()) { $('edit_album_<%= @album.id -%>').submit(); $(this).setAttribute('disabled', 'disabled'); } else { return false; }"><img src="/images/icons/photo.png" class="icon" /> Save change!</button> &nbsp; &nbsp; <%= link_to "<img src=\"/images/icons/x_small.png\" class=\"icon\" /> <small>Cancel</small>", { :action => "album", :id => @album.id } %> </p>
 	
 	
 	
