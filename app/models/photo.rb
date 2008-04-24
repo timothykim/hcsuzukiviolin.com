@@ -10,6 +10,8 @@ class Photo < ActiveRecord::Base
 
   validates_as_attachment
   
+  
+  
 #broken... horribly borken...  
   # 
   # def full_filename(thumbnail = nil)

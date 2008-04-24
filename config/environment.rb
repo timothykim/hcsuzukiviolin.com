@@ -62,6 +62,9 @@ Rails::Initializer.run do |config|
 end
 
 
+require 'will_paginate'
+
+
 
 
 # The following code is a work-around for the Flash 8 bug that prevents our multiple file uploader
