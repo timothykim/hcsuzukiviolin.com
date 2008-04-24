@@ -1,7 +1,7 @@
 function check(text, type) {
 	switch(type) {
 		case "name":
-			var re = /.{2,}/;
+			var re = /.+/;
 			return text.match(re);
 		break;
 		

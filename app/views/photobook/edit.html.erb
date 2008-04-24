@@ -1,39 +1,96 @@
+<div id="bookedit">
+<% if flash[:notice] %>
 
-<% form_for @album, :url => { :action => "create" } do |f| -%>
-
-
-	<div class="form_element">
-		<div class="check">	<%= label(:album, :name, "Photobook Name") %></div>
-		<%= f.text_field :name, :class => "text" %>
+	<div class="flash">
+		<%= flash[:notice] %>
 	</div>
-
-
-	<div class="form_element">
-		<div class="check">	<%= label(:album, :description, "Photobook Description") %></div>
-		<%= f.text_area :description, :class => "text", :cols => 50, :rows => 2 %>
-	</div>
-
-
-	<% for photo in @photos %>
-
-	<div class="photoedit">
-
-		<%= check_box_tag "photo#{photo.id}"%>
-		<%= image_tag photo.public_filename(:thumb) %>
+<% end %>
+	
+<% form_for @album, :url => { :action => "album_save" } do |f| -%>
+	<div class="form_box">
+		<div class="form_element">
+			<div class="check">	<%= label(:album, :name, "Photobook Name") %></div>
+			<%= f.text_field :name, :class => "text large" %>
+		</div>
 
 		<div class="form_element">
-			<div class="check">	Photo Name</div>
-			<%= text_field_tag "photos[#{photo.id}]['name']", photo.name, :class => "text" %>
+			<div class="check">	<%= label(:album, :description, "Photobook Description") %></div>
+			<%= f.text_area :description, :class => "text", :cols => 50, :rows => 2 %>
 		</div>
 		
-		<div class="form_element">
-			<div class="check">	Photo Description</div>
-			<%= text_field_tag "photos[#{photo.id}]['desc']", photo.description, :class => "text" %>
-		</div>
+		
+		<%= f.hidden_field :id %>
 	</div>
 
+	<% if @photos.size > 0 %>
 
+	<h3><%= image_tag "icons/photo.png", :class => "icon" %> Photos in this Photobook</h3>
 
-	<% end %>
-<% end %>
+	<table class="photolist">
+		<thead>
+			<tr>
+				<th>
+					<%= image_tag "icons/photo.png" %>
+				</th>
+				<th>
+					Metadata
+				</th>
+				<th width="50">
+					Delete
+				</th>
+			</tr>
+		</thead>
+		<tbody>
 
+		<% @photos.each_with_index do |photo, i| %>
+			<% row_class = i % 2 == 0 ? "even" : "odd" %> 
+			
+
+		<tr class="<%= row_class %>">
+			<td>
+
+				<%= image_tag photo.public_filename(:thumb), :class => "thumb" %>
+
+			</td>
+
+			<td class="metadata">
+			
+				<div class="form_element">
+					<div class="check"><small>Name</small></div>
+					<%= text_field_tag "photos[#{photo.id}][name]", photo.name, :class => "text" %>
+				</div>
+		
+				<div class="form_element">
+					<div class="check"><small>Description</small></div>
+					<%= text_field_tag "photos[#{photo.id}][description]", photo.description, :class => "text" %>
+				</div>
+
+			</td>
+
+			<td>
+				<%= check_box_tag "photos[#{photo.id}][delete]", 1, false, :class => 'checkbox', :onclick => "var tr = $(this).up('tr'); if (this.checked) { tr.addClassName('delete'); } else { tr.removeClassName('delete'); }" %><label for="photos[<%= photo.id %>][delete]"> <%= image_tag "icons/x_small.png", :class => "icon" %></label>
+			</td>
+		</tr>
+
+		<% end %>
+	
+	
+	
+		</tbody>
+
+	</table>
+
+	<div align="right"><small><a href="#" onclick=" $$('input.checkbox').each(function (cb) { cb.checked = false; var tr = cb.up('tr'); tr.removeClassName('delete'); }); return false;">Select None</a> | <a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = true; var tr = cb.up('tr'); tr.addClassName('delete'); }); return false;">Select All</a></small></div>
+	
+	
+	<% end #if photo exists %>
+
+	
+	
+		<p><button class="iconbutton" id="form_submit" onclick="if (submit_ok()) $('edit_album_<%= @album.id -%>').submit(); else return false;"><img src="/images/icons/photo.png" class="icon" /> Save change!</button> &nbsp; &nbsp; <%= link_to "<img src=\"/images/icons/x_small.png\" class=\"icon\" /> <small>Cancel</small>", { :action => "album", :id => @album.id } %> </p>
+	
+	
+	
+<% end #form %>
+
+</div>
