@@ -170,21 +170,31 @@ class PhotobookController < DisplayController
     album = Album.find(params[:album][:id])
     album.name = params[:album][:name]
     album.description = params[:album][:description]
-    album.save!
+    if params[:album][:key_photo_id]
+      album.key_photo_id = params[:album][:key_photo_id]
+    end
+    album.save
     
     photo_params = params[:photos]
-
-    photo_params.each do |id, param|
-      photo = Photo.find(id)
+    photos = album.photos
+    
+    photos.each do |photo|
+      param = photo_params["#{photo.id}"]
       if (param[:delete])
         photo.destroy
       else
-        photo.name = param[:name]
-        photo.description = param[:description]
-        photo.save!
+        unless photo.name == param[:name] and photo.description == param[:description]
+          photo.name = param[:name]
+          photo.description = param[:description]
+          photo.save
+
+          # photo.update_attribute(:name, param[:name])
+          # photo.update_attribute(:description, param[:description])
+
+
+        end
       end
     end
-    
     
     flash[:notice] = "Photobook was successfully saved!"
     redirect_to :action => 'edit', :id => params[:album][:id]
