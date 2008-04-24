@@ -19,7 +19,7 @@ class PhotobookController < DisplayController
     # for a in all_albums
     #   @albums << a unless a.photos.size == 0
     # end
-    @albums = Album.find(:all)
+    @albums = Album.find(:all, :order => "created_at DESC")
 
   end
   
@@ -33,8 +33,6 @@ class PhotobookController < DisplayController
   
   
   def album
-
-    
     @album = Album.find(params[:id])
     @photos = @album.photos
     @photocount = @photos.size
@@ -64,8 +62,8 @@ class PhotobookController < DisplayController
     @next_photo = @photos.index(@photo) == @photos.length - 1 ? nil : @photos[@photos.index(@photo) + 1]
     
     
-    @submenu = [
-      { :name => "<img src=\"/images/icons/photoindex.png\" class=\"icon\" /> Back to the Photobook", :link => {:action => 'album', :id => @album } }] + global_submenu + [
+    @submenu = global_submenu + [
+      { :name => "<img src=\"/images/icons/photoindex.png\" class=\"icon\" /> Back to the Photobook", :link => {:action => 'album', :id => @album } }] + [
           { :name => "Navigation", :render => "album_navigation", :local => {:prev_photo => @prev_photo, :next_photo => @next_photo } }
     ]
     
@@ -87,6 +85,10 @@ class PhotobookController < DisplayController
   end
   
   def edit
+    unless current_user.has_permission? @album
+      redirect_to :action => 'illegal'
+    end
+    
     @album = Album.find(params[:id])
     @photos = @album.photos
     
@@ -137,6 +139,11 @@ class PhotobookController < DisplayController
   def processuploads
     params[:pic] = {}
     album = Album.find(params[:id])
+
+    unless current_user.has_permission? album
+      redirect_to :action => 'illegal'
+    end
+
     params[:pic][:uploaded_data] = params[:Filedata]
     params[:pic][:user_id] = current_user.id
     params[:pic][:name] = params[:Filename]
@@ -150,4 +157,38 @@ class PhotobookController < DisplayController
   def illegal
   end
   
+  
+  def test
+    render :layout => false
+  end
+  
+  def album_save
+    unless current_user.has_permission? @album
+      redirect_to :action => 'illegal'
+    end
+    
+    album = Album.find(params[:album][:id])
+    album.name = params[:album][:name]
+    album.description = params[:album][:description]
+    album.save!
+    
+    photo_params = params[:photos]
+
+    photo_params.each do |id, param|
+      photo = Photo.find(id)
+      if (param[:delete])
+        photo.destroy
+      else
+        photo.name = param[:name]
+        photo.description = param[:description]
+        photo.save!
+      end
+    end
+    
+    
+    flash[:notice] = "Photobook was successfully saved!"
+    redirect_to :action => 'edit', :id => params[:album][:id]
+    
+  end
+
 end

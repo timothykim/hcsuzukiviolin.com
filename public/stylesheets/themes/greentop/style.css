@@ -217,6 +217,7 @@ div#content_no_side {
 }
 
 
+
 div#footer {
 	clear: both;
 	width: 850px;
@@ -225,6 +226,15 @@ div#footer {
 	margin-bottom: 50px;
 	margin-top: 20px;
 	background-color: #eee;
+}
+
+
+div.flash {
+	border: 1px solid #3e5086;
+	padding: 10px;
+	background-color: #dce7fe;
+	font-size: 150%;
+	margin-bottom: 10px;
 }
 
 
@@ -252,17 +262,21 @@ div#footer {
 		font-size: 9pt;
 	}
 
+	input.large {
+		font-size: 15pt;
+		padding: 8px;
+	}
+
 	div.form_box input.text {
 		font-size: 15pt;
 		padding: 8px;
 	}
 	
-	div.form_box textarea.text {
+	textarea.text {
 		padding: 8px;
 	}
 	
 	div.form_box {
-	
 		padding: 20px;
 		background-color: #d5efff;
 		border: 1px solid #a5ccff;
@@ -437,14 +451,71 @@ div.albumsummary p {
 	margin-bottom: 6px;
 }
 
+div#bookedit {
+	width: 450px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+
+table.photolist {
+	margin: 10px;
+	border-width: 1px 1px 1px 1px;
+	border-spacing: 2px;
+	border-style: solid solid solid solid;
+	border-color: gray gray gray gray;
+	border-collapse: collapse;
+	background-color: white;
+}
+table.photolist th {
+	border-width: 1px 1px 1px 1px;
+	padding: 5px 5px 5px 5px;
+	border-style: dotted dotted dotted dotted;
+	border-color: gray gray gray gray;
+	background-color: #ffe7f6;
+}
+table.photolist td {
+	border-width: 1px 1px 1px 1px;
+	padding: 5px 5px 5px 5px;
+	border-style: dotted dotted dotted dotted;
+	border-color: gray gray gray gray;
+}
+
+table.photolist tr.even td {
+	background-color: #f5f5f5;	
+}
+
+table.photolist tr.odd td {
+	background-color: #eaeaea;	
+}
+
+table.photolist tr.delete td {
+	background-color: #ec9aa0;	
+}
+
+
+table.photolist td img.thumb {
+	border: 1px solid #000;
+}
+
+table.photolist td input.text {
+	padding: 3px;
+	width: 200px;
+}
+
+table.photolist td div.form_element {
+	padding-bottom: 5px;
+}
+
+table.photolist td.metadata {
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
 /* @group forms */
 
 	input#album_name, textarea#album_description {
-		width: 400px;
-	}
-	
-	.photobook_new div.form_box {
-		width: 450px;
+		width: 350px;
 	}
 
 /* @end */
@@ -507,7 +578,6 @@ div#section_title.admin {
 div#toolbar #menu.admin li:hover {
 	background-color: #f8f8f8;
 }
-
 
 
 /* @end */
