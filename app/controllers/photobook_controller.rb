@@ -19,7 +19,9 @@ class PhotobookController < DisplayController
     # for a in all_albums
     #   @albums << a unless a.photos.size == 0
     # end
-    @albums = Album.find(:all, :order => "created_at DESC")
+#    @albums = Album.find(:all, :order => "created_at DESC")
+
+    @albums = Album.paginate :page => params[:page], :order => 'updated_at DESC', :per_page => 12
 
   end
   

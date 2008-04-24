@@ -8,6 +8,7 @@
 
 <% else %>
 
+
 <table cellpadding="0" cellspacing="10" border="0">
 	<tbody>
 	<% while !(row = @albums.slice!(0,4)).empty? %>
@@ -35,6 +36,12 @@
 
 
 </div>
+
+<div class="page_nav">
+	<%= will_paginate @albums %>
+</div>
+
+
 
 <p><button class="iconbutton" onclick="window.location = '/photobook/new'"><img src="/images/icons/photobook.png" class="icon" /> Start a New Photobook</button></p>
 
