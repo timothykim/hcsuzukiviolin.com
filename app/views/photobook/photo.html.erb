@@ -1,7 +1,9 @@
 
+
 <div class="photo">
-	<p class="shadow"><%= image_tag @photo.public_filename(:view) %></p>
+	<div class="shadow" style="background: url(http://sh.deviantart.com/shadow/alpha-000000/4.6667-0.45/<%= "#{@view.width}/#{@view.height}" -%>/null.png) no-repeat center center; padding: 10px;"><%= image_tag @view.public_filename %></div>
 </div>
+
 
 <p class="description">
 	<%= @photo.description %>

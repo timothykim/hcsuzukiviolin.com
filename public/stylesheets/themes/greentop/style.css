@@ -530,7 +530,8 @@ div.photobook div.photo {
 }
 
 div.photobook div.photo img {
-	border: 1px solid #ccc;
+	margin-bottom: 3px;
+	margin-right: 3px;
 }
 
 

@@ -12,7 +12,17 @@ class Photo < ActiveRecord::Base
 
   validates_as_attachment
   
-  
+  def get_thumbnail(t = nil)
+    ts = self.thumbnails
+    if t.nil?
+      return ts
+    else
+      ts.each do |te|
+        return te if te.thumbnail == t.to_s
+      end
+    end
+    return nil
+  end
   
 #broken... horribly borken...  
   # 
