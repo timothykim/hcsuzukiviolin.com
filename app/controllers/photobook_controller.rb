@@ -61,6 +61,8 @@ class PhotobookController < DisplayController
     @photo = Photo.find(params[:id])
     @album = @photo.album
     @photos = @photo.album.photos
+
+    @view = @photo.get_thumbnail(:view)
     
     @prev_photo = @photos.index(@photo) == 0 ? nil : @photos[@photos.index(@photo) - 1]
     @next_photo = @photos.index(@photo) == @photos.length - 1 ? nil : @photos[@photos.index(@photo) + 1]

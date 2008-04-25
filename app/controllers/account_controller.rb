@@ -81,6 +81,7 @@ class AccountController < ApplicationController
     
     if @user.update_attributes(params[:user])
       flash[:notice] = 'User was successfully updated.'
+      redirect_to :action => 'settings'
     else
       render :action => "settings"
     end
