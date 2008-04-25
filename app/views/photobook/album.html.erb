@@ -20,7 +20,7 @@
 			<td width="200" valign="top">
 				<%= link_to image_tag("/images/frame-photo-trans.png", :width => "200", :height => "133", :class => "listimage", :border => "0", :style => "background: url(#{photo.public_filename(:list)}) no-repeat center center;"), { :action => "photo", :id => photo.id } %><br />
 				<div class="photocaption">
-					<h3><%= link_to photo.name, { :action => "photo", :id => photo.id }, :class => "phototitle" %></h3>
+					<h3><%= link_to photo.name, { :action => "photo", :id => photo.id }, :class => "phototitle" %> <span class="counter">[<%= photo.comments.size %>]</span></h3>
 					<p>uploaded by <%= photo.user.fullname %><br /><%= photo.updated_at.strftime('%B %e, %Y') %></p>
 				</div>
 			</td>

@@ -27,6 +27,9 @@ class AccountController < ApplicationController
         cookies[:auth_token] = { :value => self.current_user.remember_token,
                                   :expires => self.current_user.remember_token_expires_at }
       end
+      
+      #set last logged in
+      
       redirect_back_or_default(:controller => '/display', :action => 'index')
       flash[:notice] = "Logged in successfully"
     else
@@ -72,6 +75,9 @@ class AccountController < ApplicationController
     if @user.email == params[:user][:email] and params[:user][:email_confirmation] == ""
       params[:user][:email_confirmation] = params[:user][:email]
     end
+    
+    @user.avatar.destroy if @user.avatar
+    Avatar.create!(params[:avatar])
     
     if @user.update_attributes(params[:user])
       flash[:notice] = 'User was successfully updated.'

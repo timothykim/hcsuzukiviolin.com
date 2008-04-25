@@ -1,3 +1,63 @@
 
-<%= image_tag @photo.public_filename(:view) %>
+<div class="photo">
+	<p class="shadow"><%= image_tag @photo.public_filename(:view) %></p>
+</div>
 
+<p class="description">
+	<%= @photo.description %>
+</p>
+
+
+<a name="comments"></a>
+<div class="comments">
+
+<% unless @comments.empty? %>
+
+	<h3>Comments</h3>
+
+<% for comment in @comments %>
+	<div class="comment" id="comment<%= comment.id %>">
+		<div class="avatar">
+			<%= image_tag(avatar_thumbnail_path(comment.user.avatar)) %>
+		</div>
+		
+		<div class="comment_text">
+			<div class="commenter">
+				<%= comment.user.fullname %> said,
+			</div>
+			<div class="meta">
+				<%= comment.updated_at.strftime('%B %e, %Y - %I:%M%p') %> &#183; <%= link_to "delete", :action => 'delete_comment', :id => comment.id, :photo_id => @photo.id if current_user.has_permission? comment %>
+			</div>
+			<div class="content">
+				<%= simple_format(comment.content) %>
+			</div>
+		</div>
+	</div>
+<% end %>
+
+
+<% end %>
+
+<a name="comment_form"></a>
+
+	<h3><%= current_user.fullname %>, leave a comment!</h3>
+
+	<div class="avatar">
+		<%= image_tag(avatar_thumbnail_path(current_user.avatar)) %>
+	</div>
+
+	<div class="comment_text">
+
+	<% form_for @new_comment, :url => { :action => "comment" } do |comment| -%>	
+		<%= comment.text_area :content, :class => "text comment", :cols => 50, :rows => 4 %>
+	
+		<%= hidden_field_tag "comment[photo_id]", @photo.id %>
+		<%= hidden_field_tag "comment[user_id]", current_user.id %>
+	
+		<p><button class="iconbutton" id="form_submit" onclick="$('new_comment').submit(); $(this).setAttribute('disabled','disabled');"><img src="/images/icons/write.png" class="icon" /> Say it!</button></p>
+	<% end %>
+
+	</div>
+
+	<p><a href="#top">^ top</a></p>
+</div>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 6) do
+ActiveRecord::Schema.define(:version => 9) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -20,6 +20,25 @@ ActiveRecord::Schema.define(:version => 6) do
     t.datetime "updated_at"
     t.integer  "photos_count",               :default => 0,     :null => false
     t.text     "description"
+  end
+
+  create_table "avatars", :force => true do |t|
+    t.integer "user_id"
+    t.integer "parent_id"
+    t.string  "content_type"
+    t.string  "filename"
+    t.string  "thumbnail"
+    t.integer "size"
+    t.integer "width"
+    t.integer "height"
+  end
+
+  create_table "comments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "photo_id"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "options", :force => true do |t|
@@ -41,6 +60,7 @@ ActiveRecord::Schema.define(:version => 6) do
     t.integer  "height"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "comments_count", :default => 0, :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -58,6 +78,8 @@ ActiveRecord::Schema.define(:version => 6) do
     t.boolean  "activated",                               :default => false
     t.integer  "albums_count",                            :default => 0,     :null => false
     t.integer  "photos_count",                            :default => 0,     :null => false
+    t.integer  "comments_count",                          :default => 0,     :null => false
+    t.integer  "avatar_id"
   end
 
 end

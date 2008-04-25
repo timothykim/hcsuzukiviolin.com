@@ -2,7 +2,7 @@
 <div class="form_box">
 	<%= error_messages_for :user %>
 
-<% form_for @user, :url => { :action => "settings" } do |f| %>
+<% form_for @user, :url => { :action => "settings" }, :html => { :multipart => true } do |f| %>
 	<%= f.hidden_field :id %>
 
 	<p><%= label(:user, :firstname, "First Name") %><br/>
@@ -10,6 +10,11 @@
 
 	<p><%= label(:user, :lastname, "Last Name") %><br/>
 	<%= f.text_field :lastname, :class => "text" %></p>
+
+	<p>Avatar</p>
+	<%= image_tag(@user.avatar.public_filename(:thumb)) if @user.avatar %>
+    <%= file_field_tag "avatar[uploaded_data]" %>
+	<%= hidden_field_tag "avatar[user_id]", @user.id %>
 
 	<p><%= label(:user, :email, "Email") %><br/>
 	<%= f.text_field :email, :class => "text" %></p>

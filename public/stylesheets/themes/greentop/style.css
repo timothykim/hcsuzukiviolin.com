@@ -16,6 +16,13 @@ img {
 	border: none;
 }
 
+hr {
+	border: 0;
+	color: #ccc;
+	background-color: #ccc;
+	height: 2px;
+}
+
 div#frame {
 /*	background: url(images/violin_silhouette.gif) no-repeat 100% 0px;*/
 	background-color: white;
@@ -146,7 +153,6 @@ div#body{
 	top: -22px;
 
 	clear: both;
-	padding-bottom: 20px;
 	width: 850px;
 	margin: 0 auto;
 }
@@ -222,12 +228,14 @@ div#content_no_side {
 
 
 div#footer {
+/*
 	clear: both;
 	width: 850px;
 	height: 30px;
 	margin: 0 auto;
-	margin-bottom: 100px;
 	margin-top: 20px;
+*/
+	margin-bottom: 100px;
 }
 
 
@@ -401,8 +409,8 @@ div#toolbar #menu.photobook li:hover {
 }
 
 
-#photobook_app .counter {
-	font-size: 9pt;
+div.photobook span.counter {
+	font-size: 7pt;
 	font-weight: normal;
 	font-style: normal;
 }
@@ -517,6 +525,68 @@ table.photolist td.metadata {
 	padding-right: 30px;
 }
 
+div.photobook div.photo {
+	text-align: center;
+}
+
+div.photobook div.photo img {
+	border: 1px solid #ccc;
+}
+
+
+div.photobook p.description {
+	text-align: center;
+}
+
+div.photobook div.comments {
+	width: 500px;
+	margin: 0 auto;
+}
+
+div.photobook div.comments h3 {
+	margin: 0;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+div.photobook div.comment {
+	margin-bottom: 30px;
+/*
+	background-color: #fdfee9;
+	border: 1px solid #ccc;
+*/
+}
+
+div.photobook div.comments div.avatar {
+	float: left;
+	margin-right: 5px;
+}
+
+div.photobook div.comments div.comment_text {
+	margin-left: 60px;
+}
+
+
+div.photobook div.comment div.commenter {
+	color: #d94b71;
+}
+
+div.photobook div.comment div.meta {
+	font-size: 7pt;
+	color: #aaa;
+}
+
+div.photobook div.comment div.content p {
+	margin-top: 7px;
+}
+
+div.photobook textarea.comment {
+	width: 350px;
+	height: 50px;
+	padding: 10px;
+}
+
+
 /* @group forms */
 
 	input#album_name, textarea#album_description {
@@ -524,7 +594,7 @@ table.photolist td.metadata {
 	}
 	
 	.photobook_new div.form_box {
-		width: 450px;
+		width: 400px;
 	}
 
 

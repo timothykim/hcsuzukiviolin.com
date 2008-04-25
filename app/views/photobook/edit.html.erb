@@ -22,7 +22,7 @@
 		<%= f.hidden_field :id %>
 	</div>
 
-	<% if @photos.size > 0 %>
+	<% unless @photos.empty? %>
 
 	<h3><%= image_tag "icons/photo.png", :class => "icon" %> Photos in this Photobook</h3>
 
@@ -87,7 +87,7 @@
 	<div align="right"><small><a href="#" onclick=" $$('input.checkbox').each(function (cb) { cb.checked = false; var tr = cb.up('tr'); tr.removeClassName('delete'); }); return false;">Select None</a> | <a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = true; var tr = cb.up('tr'); tr.addClassName('delete'); }); return false;">Select All</a></small></div>
 	
 	
-	<% end #if photo exists %>
+	<% end #unlexx photo is empty %>
 
 	
 	
