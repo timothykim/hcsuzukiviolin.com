@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
 
   has_many :albums
   has_many :photos
+  has_many :comments
+  has_one  :avatar
 
 
   before_validation         :use_email_as_login

@@ -7,7 +7,7 @@ class PhotobookController < DisplayController
   
   
   def global_submenu
-    [ { :name => "<img src=\"/images/icons/home.png\" class=\"icon\" /> Photobook Home", :link => "/photobook" } ]
+    [ { :name => "<img src=\"/images/icons/home.png\" class=\"icon\" /> Photobook Index", :link => "/photobook" } ]
   end
   
   def index
@@ -36,7 +36,9 @@ class PhotobookController < DisplayController
   
   def album
     @album = Album.find(params[:id])
-    @photos = @album.photos
+#    @photos = @album.photos
+    @photos = Photo.find(:all, :conditions => ["album_id = ?", @album.id], :order => 'created_at ASC')
+
     @photocount = @photos.size
 
 
@@ -63,6 +65,10 @@ class PhotobookController < DisplayController
     @prev_photo = @photos.index(@photo) == 0 ? nil : @photos[@photos.index(@photo) - 1]
     @next_photo = @photos.index(@photo) == @photos.length - 1 ? nil : @photos[@photos.index(@photo) + 1]
     
+    @comments = @photo.comments
+    
+    @new_comment = Comment.new
+    
     
     @submenu = global_submenu + [
       { :name => "<img src=\"/images/icons/photoindex.png\" class=\"icon\" /> Back to the Photobook", :link => {:action => 'album', :id => @album } }] + [
@@ -74,6 +80,20 @@ class PhotobookController < DisplayController
     
   end
   
+  def comment
+    c = Comment.create!(params[:comment])
+    
+    redirect_to :action => 'photo', :id => params[:comment][:photo_id], :anchor => "comment#{c.id}"
+  end
+  
+  def delete_comment
+    comment = Comment.find(params[:id])
+    if current_user.has_permission? @comment or current_user.is_admin
+      comment.destroy
+    end
+
+    redirect_to :action => 'photo', :id => params[:photo_id], :anchor => "comments"
+  end
   
   
   def deletealbum
@@ -92,7 +112,7 @@ class PhotobookController < DisplayController
     end
     
     @album = Album.find(params[:id])
-    @photos = @album.photos
+    @photos = Photo.find(:all, :conditions => ["album_id = ?", @album.id], :order => 'created_at ASC')
     
     @section_path = "Photobooks &raquo; "
     @section_title = "Editing \"#{@album.name}\""
