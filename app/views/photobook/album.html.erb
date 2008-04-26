@@ -1,3 +1,9 @@
+
+<div style="font-size: 8pt; text-align: right; margin-right: 20px">
+	<%= link_to "#{image_tag("icons/table_bw.gif", :class => "icon")} Table", :view => "table" if params[:view] == "list"%>
+	<%= link_to "#{image_tag("icons/list_bw.gif", :class => "icon")} List", :view => "list" unless params[:view] == "list" %> 
+</div>
+
 <div id="photos_thumb">
 
 <% if @photos.empty? %>
@@ -7,28 +13,50 @@
 	<% if @album.is_public or current_user.has_permission? @album %>
 	
 		<p>Please upload some photos by clicking the button below:</p>
-		<p><button class="iconbutton" onclick="window.location = '/photobook/addphotos/<%= @album.id %>'"><img src="/images/icons/photo.png" class="icon" /> Upload Photos</button></p>
+		<p><button class="iconbutton" onclick="window.location = '/photobook/addphotos/<%= @album.id %>'"><img src="/images/icons/photo.png" class="icon" /> Add Photos</button></p>
 
 	<% end %>
 
 <% else %>
-<table cellpadding="0" cellspacing="0" border="0">
-	<tbody>
-	<% while !(row = @photos.slice!(0,3)).empty? %>
-		<tr>
-		<% for photo in row %>
-			<td width="200" valign="top">
-				<%= link_to image_tag("/images/frame-photo-trans.png", :width => "200", :height => "133", :class => "listimage", :border => "0", :style => "background: url(#{photo.public_filename(:list)}) no-repeat center center;"), { :action => "photo", :id => photo.id } %><br />
-				<div class="photocaption">
-					<h3><%= link_to photo.name, { :action => "photo", :id => photo.id }, :class => "phototitle" %> <span class="counter">[<%= photo.comments.size %>]</span></h3>
-					<p>uploaded by <%= photo.user.fullname %><br /><%= photo.updated_at.strftime('%B %e, %Y') %></p>
-				</div>
-			</td>
+
+	<% if params[:view] == "list" %>
+		<% for photo in @photos %>
+		<div class="single_photo">
+			<div class="photo" id="photo<%= photo.id %>">
+				<div class="shadow" style="background: url(http://sh.deviantart.com/shadow/alpha-000000/5.6667-0.45/<%= "#{photo.get_thumbnail(:view).width}/#{photo.get_thumbnail(:view).height}" -%>/null.png) no-repeat center center; padding: 10px;"><%= link_to image_tag(photo.public_filename(:view)), { :action => "photo", :id => photo.id } %></div>
+			</div>
+
+			<p class="description" id="description<%= photo.id %>">
+				<%= simple_format photo.description %>
+			</p>
+
+			<p><%= link_to "Comments (#{photo.comments.size})", { :action => "photo", :id => photo.id, :anchor => "comments" }%></p>
+		</div>
+			<hr />
 		<% end %>
-		</tr>
+		<p><a href="#top">^ top</a></p>
+
+	<% else %>
+		<table cellpadding="0" cellspacing="0" border="0">
+			<tbody>
+			<% while !(row = @photos.slice!(0,3)).empty? %>
+				<tr>
+				<% for photo in row %>
+					<td width="200" valign="top">
+						<%= link_to image_tag("/images/frame-photo-trans.png", :width => "200", :height => "133", :class => "listimage", :border => "0", :style => "background: url(#{photo.public_filename(:list)}) no-repeat center center;"), { :action => "photo", :id => photo.id } %><br />
+						<div class="photocaption">
+							<h3><%= link_to photo.name, { :action => "photo", :id => photo.id }, :class => "phototitle" %> <span class="counter">[<%= photo.comments.size %>]</span></h3>
+							<p>uploaded by <%= photo.user.fullname %><br /><%= photo.updated_at.strftime('%B %e, %Y') %></p>
+						</div>
+					</td>
+				<% end %>
+				</tr>
+			<% end %>
+			</tbody>
+		</table>
+
 	<% end %>
-	</tbody>
-</table>
+
 
 <% end %>
 

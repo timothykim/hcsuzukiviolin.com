@@ -1,5 +1,10 @@
 class Admin::UsersController < AdminController
-  # GET /admin/users
+  active_scaffold :user do |config|
+    config.columns = [:created_at, :firstname, :lastname, :email, :activated]
+  end
+end
+  
+=begin  # GET /admin/users
   # GET /admin/users.xml
   def index
     @users = User.find(:all, :conditions => ["is_admin = true"]) | User.find(:all, :conditions => ["activated = true"]) | User.find(:all, :conditions => ["activated = false"])
@@ -84,4 +89,4 @@ class Admin::UsersController < AdminController
 
     redirect_to(users_url)
   end
-end
+=end

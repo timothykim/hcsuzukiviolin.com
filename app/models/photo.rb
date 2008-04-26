@@ -6,11 +6,15 @@ class Photo < ActiveRecord::Base
   
   has_attachment  :content_type => :image,
                   :storage => :file_system,
-                  :max_size => 10.megabytes,
-                  :thumbnails => {:view => '600x450', :list => "200", :thumb => [75,75]}
+                  :max_size => 5.megabytes,
+                  :thumbnails => {:big => '800x600>', :view => '500x375>', :list => "200>", :thumb => [75,75], :icon => [45,45]}
 #                  :path_prefix => 'public/datafiles/albums'
 
   validates_as_attachment
+  
+  def to_label
+    "<img src=\"#{self.public_filename(:icon)}\" />"
+  end
   
   def get_thumbnail(t = nil)
     ts = self.thumbnails

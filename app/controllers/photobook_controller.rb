@@ -21,7 +21,7 @@ class PhotobookController < DisplayController
     # end
 #    @albums = Album.find(:all, :order => "created_at DESC")
 
-    @albums = Album.paginate :page => params[:page], :order => 'updated_at DESC', :per_page => 12
+    @albums = Album.paginate :page => params[:page], :order => 'created_at DESC', :per_page => 12
 
   end
   
@@ -44,9 +44,7 @@ class PhotobookController < DisplayController
 
     @submenu = global_submenu + [{ :name => "<img src=\"/images/icons/photobook.png\" class=\"icon\" /> Photobook Summary", :render => "album_summary" }]
 
-    if @album.is_public or current_user.has_permission? @album
-      @submenu += [{ :name => "<img src=\"/images/icons/photobook_configure.png\" class=\"icon\" /> Photobook Controls", :render => "album_admin" }]
-    end
+    @submenu += [{ :name => "<img src=\"/images/icons/photobook_configure.png\" class=\"icon\" /> Photobook Controls", :render => "album_control" }]
     
     @submenu += [{ :name => "<img src=\"/images/icons/face-grin.png\" class=\"icon\" /> Latest Comments", :render => "album_latest_comments" }]
 
@@ -56,12 +54,26 @@ class PhotobookController < DisplayController
 
   end
   
+  def get_page
+    @photo = Photo.find(params[:photo_id])
+    @paginated_photos = Photo.paginate :page => params[:page], :conditions => ["album_id = ?", params[:album_id]], :order => 'created_at ASC', :per_page => params[:per_page]
+    @per_page = params[:per_page]
+    @album = @photo.album
+    
+    render :layout => false
+  end
   
   def photo
+    @per_page = 9
+    
     @photo = Photo.find(params[:id])
     @album = @photo.album
-    @photos = @photo.album.photos
-
+    @photos = Photo.find(:all, :conditions => ["album_id = ?", @album.id], :order => 'created_at ASC')
+    
+    page = (@photos.index(@photo) / @per_page) + 1
+    
+    @paginated_photos = Photo.paginate :page => page, :conditions => ["album_id = ?", @album.id], :order => 'created_at ASC', :per_page => @per_page
+    
     @view = @photo.get_thumbnail(:view)
     
     @prev_photo = @photos.index(@photo) == 0 ? nil : @photos[@photos.index(@photo) - 1]
@@ -72,10 +84,23 @@ class PhotobookController < DisplayController
     @new_comment = Comment.new
     
     
-    @submenu = global_submenu + [
-      { :name => "<img src=\"/images/icons/photoindex.png\" class=\"icon\" /> Back to the Photobook", :link => {:action => 'album', :id => @album } }] + [
-          { :name => "Navigation", :render => "album_navigation", :local => {:prev_photo => @prev_photo, :next_photo => @next_photo } }
-    ]
+    if params[:size] == "big"
+      @view = @photo.get_thumbnail(:big)
+      @sidebar_offset = 0
+      @panel_width = 850
+      @size = params[:size]
+    else
+      @size = ""
+      @sidebar_offset = 204
+      @panel_width = 645
+      @submenu = global_submenu + [
+                  { :name => "<img src=\"/images/icons/photoindex.png\" class=\"icon\" /> Back to the Photobook", :link => {:action => 'album', :id => @album } },
+                  { :name => "<img src=\"/images/icons/photobook.png\" class=\"icon\" /> Navigation", :render => "album_navigation", :local => {:prev_photo => @prev_photo, :next_photo => @next_photo } },
+                  { :name => "<img src=\"/images/icons/photo_configure.png\" class=\"icon\" /> Photo Controls", :render => "photo_control" },
+                  { :name => "<img src=\"/images/icons/photobook_configure.png\" class=\"icon\" /> Photobook Controls", :render => "album_control" }
+              ]
+    end
+    
     
     @section_path = "Photobooks &raquo; "
     @section_title = "#{@album.name} &raquo; #{@photo.name}"
@@ -86,6 +111,28 @@ class PhotobookController < DisplayController
     c = Comment.create!(params[:comment])
     
     redirect_to :action => 'photo', :id => params[:comment][:photo_id], :anchor => "comment#{c.id}"
+  end
+  
+  def deletephoto
+    @photo = Photo.find(params[:id])
+    @album = @photo.album
+    @photos = Photo.find(:all, :conditions => ["album_id = ?", @album.id], :order => 'created_at ASC')
+    @prev_photo = @photos.index(@photo) == 0 ? nil : @photos[@photos.index(@photo) - 1]
+    @next_photo = @photos.index(@photo) == @photos.length - 1 ? nil : @photos[@photos.index(@photo) + 1]
+    
+    if current_user.has_permission? photo
+      @photo.destroy
+    else
+      redirect_to :action => 'illegal'
+    end
+    
+    if @prev_photo.nil? and @next_photo.nil?
+      redirect_to :action => 'album', :id => @album 
+    elsif @next_photo.nil?
+      redirect_to :action => 'photo', :id => @prev_photo
+    else
+      redirect_to :action => 'photo', :id => @next_photo
+    end
   end
   
   def delete_comment
@@ -124,9 +171,7 @@ class PhotobookController < DisplayController
           { :name => "<img src=\"/images/icons/photobook.png\" class=\"icon\" /> Photobook Summary", :render => "album_summary" }
     ]
     
-    if current_user.has_permission? @album
-      @submenu += [ { :name => "<img src=\"/images/icons/photobook_configure.png\" class=\"icon\" /> Photobook Controls", :render => "album_admin" } ]
-    end
+    @submenu += [ { :name => "<img src=\"/images/icons/photobook_configure.png\" class=\"icon\" /> Photobook Controls", :render => "album_control" } ]
 
   end
   
@@ -150,9 +195,7 @@ class PhotobookController < DisplayController
           { :name => "<img src=\"/images/icons/photobook.png\" class=\"icon\" /> Photobook Summary", :render => "album_summary" }
     ]
     
-    if current_user.has_permission? @album
-      @submenu += [ { :name => "<img src=\"/images/icons/photobook_configure.png\" class=\"icon\" /> Photobook Controls", :render => "album_admin" } ]
-    end
+    @submenu += [ { :name => "<img src=\"/images/icons/photobook_configure.png\" class=\"icon\" /> Photobook Controls", :render => "album_control" } ]
     
     
     unless current_user.has_permission? @album

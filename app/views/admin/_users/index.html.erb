@@ -1,0 +1,68 @@
+<h1>User List</h1>
+
+<table>
+  <thead>
+  <tr>
+	<th>Name</th>
+	<th>Email</th>
+	<th>User Level</th>
+	<th>Actions</th>
+  </tr>
+  </thead>
+<% for user in @users %>
+  <tr>
+    <td><strong><%= user.firstname + " " + user.lastname %></strong></td>
+    <td><%= user.email %></td>
+
+    <td><div id="status<%= user.id.to_s %>"><% if user.is_admin -%>
+			Admin
+		<% elsif user.activated -%>
+			Normal User
+		<% else -%>
+			NA User
+		<% end -%></div>
+		</td>
+    <td><% if user.is_admin -%>
+			
+		<% elsif user.activated -%>
+			<div id="activated<%= user.id %>">
+				<%= link_to_remote 'Deactivate',
+					:url => {:controller => '/admin/users', :action => 'deactivate', :id => user.id},
+					:success => " $('status" + user.id.to_s + "').innerHTML = 'NA User'; $('deactivated" + user.id.to_s + "').show(); $('activated" + user.id.to_s + "').hide();",
+					:failure => "alert('There was an error.');"
+				%>
+			</div>
+			<div id="deactivated<%= user.id %>" style="display: none;">
+				<%= link_to_remote 'Activate',
+					:url => {:controller => '/admin/users', :action => 'activate', :id => user.id},
+					:success => "$('status" + user.id.to_s + "').innerHTML = 'Normal User'; $('deactivated" + user.id.to_s + "').hide(); $('activated" + user.id.to_s + "').show(); ",
+					:failure => "alert('There was an error.');"
+				%>
+			</div>
+		<% else -%>
+			<div id="activated<%= user.id %>" style="display: none;">
+				<%= link_to_remote 'Deactivate',
+					:url => {:controller => '/admin/users', :action => 'deactivate', :id => user.id},
+					:success => "$('status" + user.id.to_s + "').innerHTML = 'NA User'; $('deactivated" + user.id.to_s + "').show(); $('activated" + user.id.to_s + "').hide();",
+					:failure => "alert('There was an error.');"
+				%>
+			</div>
+			<div id="deactivated<%= user.id %>">
+				<%= link_to_remote 'Activate',
+					:url => {:controller => '/admin/users', :action => 'activate', :id => user.id},
+					:success => "$('status" + user.id.to_s + "').innerHTML = 'Normal User'; $('deactivated" + user.id.to_s + "').hide(); $('activated" + user.id.to_s + "').show(); ",
+					:failure => "alert('There was an error.');"
+				%>
+			</div>
+		<% end %>
+	</td>
+    <td><%= link_to 'Show', user %></td>
+    <td><%= link_to 'Edit', {:controller => '/admin/users', :action => 'edit', :id => user.id } %></td>
+    <td><%= link_to 'Delete', {:controller => '/admin/users', :action => 'destroy', :id => user.id } , :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New user', new_user_path %>

@@ -1,0 +1,41 @@
+
+<div id="photo_icons">
+<% @paginated_photos.each do |photo| %>
+
+	<% if photo.id == @photo.id %>
+		<%= image_tag photo.public_filename(:icon), :class => 'selected' %>
+	<% else %>
+		<%= link_to image_tag(photo.public_filename(:icon)), :action => 'photo', :id => photo.id %>
+	<% end %>
+
+<% end %>
+</div>
+
+<div id="prev" class="page_nav">
+	<% if @paginated_photos.previous_page %>
+	<%= link_to_remote "&laquo; prev",
+	    :url=>{
+			:action=>"get_page", 
+			:album_id=>@album.id,
+			:photo_id=>@photo.id,
+			:per_page=>@per_page,
+			:page=>@paginated_photos.previous_page},
+	    :update=>"album_navigation" 
+	%>
+	<% end %>
+</div>
+<div id="next" class="page_nav">
+	<% if @paginated_photos.next_page %>
+	<%= link_to_remote "next &raquo;",
+	    :url=>{
+			:action=>"get_page", 
+			:album_id=>@album.id,
+			:photo_id=>@photo.id,
+			:per_page=>@per_page,
+			:page=>@paginated_photos.next_page},
+	    :update=>"album_navigation"
+	%>
+	<% end %>
+</div>
+
+<div class="clear"></div>
