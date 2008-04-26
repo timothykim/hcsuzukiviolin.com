@@ -66,6 +66,9 @@ class User < ActiveRecord::Base
     self.firstname + " " + self.lastname
   end
 
+  def to_label
+    "#{self.fullname}"
+  end
 
   def has_permission?(obj)
     return true if self.is_admin or self == obj.user

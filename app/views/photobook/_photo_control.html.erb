@@ -1,0 +1,4 @@
+<div align="center">
+	<%= link_to '<img src="/images/buttons/zoomin.gif" />', "/photobook/photo/#{@photo.id}/big" %>
+	<%= link_to('<img src="/images/buttons/deletephoto.gif" />', {:action => "deletephoto", :id => @photo }, :onclick => "return confirm('Are you sure you want to delete this photo?\\nThis action cannot be undone.');") if current_user.has_permission? @photo %>
+</div>

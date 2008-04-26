@@ -20,7 +20,11 @@ hr {
 	border: 0;
 	color: #ccc;
 	background-color: #ccc;
-	height: 2px;
+	height: 1px;
+}
+
+div.clear {
+	clear: both;
 }
 
 div#frame {
@@ -37,7 +41,7 @@ div#banner {
 	width: 900px;
 	margin: 0 auto;
 	background: url(images/title_small-trans.png) no-repeat;
-	height: 120px;
+	height: 100px;
 	display: block;
 }
 
@@ -95,9 +99,9 @@ div#toolbar #menu a {
 
 div#toolbar #login_frame {
 	position: relative;
-	top: -150px;
+	top: -130px;
 	clear: both;
-	margin-left: 400px;
+	margin-left: 440px;
 	font-size: 10px;
 	color: white;
 	text-align: right;
@@ -160,7 +164,7 @@ div#body{
 div#section_title {
 	background-color: #2c892e;
 	color: white;
-	padding-top: 25px;
+	padding-top: 18px;
 	padding-bottom: 5px;
 	padding-left: 20px;
 	margin-bottom: 20px;
@@ -437,15 +441,37 @@ div#albums_thumb .albumcaption p, div#photos_thumb .photocaption p {
 }
 
 div#album_navigation {
-	padding-top: 5px;
-	margin-bottom: 5px;
-	text-align: center;
-	background-color: #cccccc;
-	border: 1px outset #dddddd;
+	margin-left: 15px;
+	margin-bottom: 10px;
+}
+
+div#album_navigation div#photo_icons {
+	margin-left: 4px;
+	height: 166px;
+}	
+
+div#album_navigation img {
+	border: 4px solid #ccc;
+}
+
+div#album_navigation img.selected {
+	border: 4px solid #eece49;
 }
 
 div#album_navigation a {
 	display: inline;
+}
+
+div#album_navigation div.page_nav {
+	font-size: 7pt;
+}
+
+div#album_navigation div#prev {
+	float: left;
+}
+
+div#album_navigation div#next {
+	float: right;
 }
 
 div.albumsummary {
@@ -457,6 +483,7 @@ div.albumsummary {
 }
 
 div.albumsummary p, div.albumsummary h4 {
+	font-size: 8pt;
 	margin: 0;
 }
 
@@ -534,9 +561,15 @@ div.photobook div.photo img {
 	margin-right: 3px;
 }
 
+div.single_photo p {
+	width: 500px;
+	margin: 0 auto;
+	margin-bottom: 30px;
+}
 
 div.photobook p.description {
 	text-align: center;
+	margin-bottom: 30px;
 }
 
 div.photobook div.comments {
@@ -586,6 +619,16 @@ div.photobook textarea.comment {
 	height: 50px;
 	padding: 10px;
 }
+
+
+div.photo a#next_arrow:hover{
+	background: url(/images/next_photo.png) no-repeat right center;
+}
+
+div.photo a#prev_arrow:hover{
+	background: url(/images/prev_photo.png) no-repeat left center;
+}
+
 
 
 /* @group forms */

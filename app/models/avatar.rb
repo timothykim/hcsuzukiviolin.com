@@ -8,4 +8,6 @@ class Avatar < ActiveRecord::Base
 
   validates_as_attachment
 
+
+
 end

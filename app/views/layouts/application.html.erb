@@ -4,7 +4,7 @@
 
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<title>Greater Washington Suzuki Music School - <%= @section_title if defined? @section_title %></title>
+		<title>Greater Washington Suzuki Music School <%= "- #{@section_title}" if defined? @section_title %></title>
 		
 		<%= javascript_include_tag :defaults %>
 		<%= javascript_include_tag "domready" %>
@@ -16,7 +16,8 @@
 		<!--[if lt IE 7]><script src="http://www.savethedevelopers.org/say.no.to.ie.6.js"></script><![endif]-->
 		
 		<%= conditional_render_partial "addphotos" if controller.action_name == "addphotos" %>
-		
+		<%= active_scaffold_includes %>
+	 
 		<%= stylesheet_link_tag("default") %>
 		<%= stylesheet_link_tag(get_current_theme_css()) %>
 		

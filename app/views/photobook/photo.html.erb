@@ -1,13 +1,24 @@
-
+<%= link_to image_tag("buttons/zoomout.png", :style => "position: absolute;"), "/photobook/photo/#{@photo.id}" if @size == "big" %>
 
 <div class="photo">
-	<div class="shadow" style="background: url(http://sh.deviantart.com/shadow/alpha-000000/4.6667-0.45/<%= "#{@view.width}/#{@view.height}" -%>/null.png) no-repeat center center; padding: 10px;"><%= image_tag @view.public_filename %></div>
+	<div class="shadow" style="background: url(http://sh.deviantart.com/shadow/alpha-000000/5.6667-0.45/<%= "#{@view.width}/#{@view.height}" -%>/null.png) no-repeat center center; padding: 10px;"><%= image_tag @view.public_filename %></div>
+
+<% unless @prev_photo.nil? %>
+	<a href="/photobook/photo/<%= "#{@prev_photo.id}/#{@size}" %>" style="display: block; width: <%= (@view.width * 0.3).to_i %>px; height: <%= @view.height %>px; position: absolute; top: 77px; left: <%= ((@panel_width - 3 - @view.width) / 2).to_i + @sidebar_offset %>px;" id="prev_arrow"> <%= image_tag "placer.gif" %> </a>
+<% end %>
+
+<% unless @next_photo.nil? %>
+	<a href="/photobook/photo/<%= "#{@next_photo.id}/#{@size}" %>" style="display: block; width: <%= (@view.width * 0.3).to_i %>px; height: <%= @view.height %>px; position: absolute; top: 77px; right: <%= ((@panel_width - @view.width) / 2).to_i + 1 %>px;" id="next_arrow"> <%= image_tag "placer.gif" %> </a>
+<% end %>
+
 </div>
 
 
 <p class="description">
 	<%= @photo.description %>
 </p>
+
+
 
 
 <a name="comments"></a>
