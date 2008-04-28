@@ -20,30 +20,30 @@ class Album < ActiveRecord::Base
     return "/datafiles/albums/" + 'album_' + self.id.to_s + ".zip"
   end
 
-  # 
-  # 
-  # def generate_zipfile
-  #   bundle_filename = "#{RAILS_ROOT}/public" + self.zipfile
-  # 
-  #   # check to see if the file exists already, and if it does, delete it.
-  #   if File.file?(bundle_filename)
-  #     File.delete(bundle_filename)
-  #   end 
-  # 
-  #   # open or create the zip file
-  #   Zip::ZipFile.open(bundle_filename, Zip::ZipFile::CREATE) {
-  #     |zipfile|
-  #     # collect the album's tracks
-  #     self.photos.each do |photo|
-  #       #print "adding #{RAILS_ROOT}/public#{photo.public_filename}"
-  #       # add each track to the archive, names using the track's attributes
-  #       zipfile.add( "#{photo.filename}", "#{RAILS_ROOT}/public#{photo.public_filename}")
-  #     end
-  #   }
-  # 
-  #   # set read permissions on the file
-  #   File.chmod(0644, bundle_filename)
-  # end
+
+
+  def generate_zipfile
+    bundle_filename = "#{RAILS_ROOT}/public" + self.zipfile
+
+    # check to see if the file exists already, and if it does, delete it.
+    if File.file?(bundle_filename)
+      File.delete(bundle_filename)
+    end 
+
+    # open or create the zip file
+    Zip::ZipFile.open(bundle_filename, Zip::ZipFile::CREATE) {
+      |zipfile|
+      # collect the album's tracks
+      self.photos.each do |photo|
+        #print "adding #{RAILS_ROOT}/public#{photo.public_filename}"
+        # add each track to the archive, names using the track's attributes
+        zipfile.add( "#{photo.filename}", "#{RAILS_ROOT}/public#{photo.public_filename}")
+      end
+    }
+
+    # set read permissions on the file
+    File.chmod(0644, bundle_filename)
+  end
 
 
   private
