@@ -11,7 +11,6 @@ class AccountController < ApplicationController
   end
 
   def login
-    
     @section_title = "Account Login"
     
     if logged_in?
@@ -60,6 +59,10 @@ class AccountController < ApplicationController
     return unless request.post?
     @user.save!
     self.current_user = @user
+    
+    email_setting = Option.find(:first, :conditions => [ "name = ?", "Sign-up Notification"])
+    Notifier.deliver_signup_notification(@user) if email_setting.true? # sends the email
+    
     redirect_to :controller => '/account', :action => 'thanks'
   rescue ActiveRecord::RecordInvalid
     render :action => 'signup'

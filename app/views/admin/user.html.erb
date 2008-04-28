@@ -1,0 +1,51 @@
+<h1><img src="/images/icons/users_big.png" class="icon" />User List</h1>
+
+
+<% if flash[:notice] %>
+	<div class="flash">
+		<%= flash[:notice] %>
+	</div>
+<% end %>
+
+<% form_tag "/admin/usersave", :method => :post, :id => "users_form" do -%>
+
+<table id="user_table" class="admin_table">
+  <thead>
+  <tr>
+	<th class="<%= @sort_by[:time] %>"><a href="?sort=time&amp;dir=<%= @newdir %>">Registered At <%= @dir_sym[:time] %></a></th>
+	<th>Avatar</th>
+	<th class="<%= @sort_by[:name] %>"><a href="?sort=name&amp;dir=<%= @newdir %>">Name <%= @dir_sym[:name] %></a></th>
+	<th>Email</th>
+	<th class="<%= @sort_by[:activated] %>"><a href="?sort=activated&amp;dir=<%= @newdir %>">Activated <%= @dir_sym[:activated] %></a></th>
+<!-- <th>Edit</th> -->
+  </tr>
+  </thead>
+<% @users.each_with_index do |user, i| %>
+<% row_class = i % 2 == 0 ? "even" : "odd" %> 
+  <tr class="<%= row_class %>">
+	<td align="center"><small><%= user.created_at.strftime('%m/%e/%y %I:%M%p') %></small></td>
+	<td align="center"><%= image_tag user.get_avatar %></td>
+    <td><div id="name_<%= user.id %>"><strong><%= user.lastname + ", " + user.firstname %></strong></div></td>
+    <td><div id="email_<%= user.id %>"><small><%= user.email %></small></div></td>
+    <td align="center"><% if user.is_admin -%>
+			<!-- user is admin, no need for activation -->
+		<% else -%>
+			<%= check_box_tag "users[#{user.id}][activate]", 1, user.activated, :class => 'checkbox' %>
+		<% end %>
+	</td>
+<!-- 
+	<td align="center">
+		<a href="#" onclic="edit_in_place(<%= user.id %>); return false;"><%= image_tag "icons/write_small.png" %></a>
+	</td>
+  </tr>
+-->
+<% end %>
+</table>
+
+<div align="right"><small><a href="#" onclick="$('users_form').reset();">Reset</a> | <a href="#" onclick=" $$('input.checkbox').each(function (cb) { cb.checked = false; var tr = cb.up('tr'); tr.removeClassName('activate'); }); return false;">Activate None</a> | <a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = true; var tr = cb.up('tr'); tr.addClassName('activate'); }); return false;">Activate All</a></small></div>
+
+
+<p><button class="iconbutton" id="form_submit" onclick="$('users_form').submit(); $(this).setAttribute('disabled', 'disabled');"><img src="/images/icons/users.png" class="icon" /> Save changes!</button></p>
+
+<% end %>
+

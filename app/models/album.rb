@@ -37,7 +37,9 @@ class Album < ActiveRecord::Base
       self.photos.each do |photo|
         #print "adding #{RAILS_ROOT}/public#{photo.public_filename}"
         # add each track to the archive, names using the track's attributes
-        zipfile.add( "#{photo.filename}", "#{RAILS_ROOT}/public#{photo.public_filename}")
+        if FileTest.exists?("#{RAILS_ROOT}/public#{photo.public_filename}")
+          zipfile.add( "#{photo.filename}", "#{RAILS_ROOT}/public#{photo.public_filename}")
+        end
       end
     }
 

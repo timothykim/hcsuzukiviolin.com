@@ -30,7 +30,7 @@ module AuthenticatedSystem
     #    current_user.login != "bob"
     #  end
     def activated?
-      self.current_user.activated
+      self.current_user.is_admin or self.current_user.activated
     end
 
     # Filter method to enforce a login requirement.

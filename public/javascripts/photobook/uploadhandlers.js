@@ -1,16 +1,3 @@
-/* Demo Note:  This demo uses a FileProgress class that handles the UI for displaying the file name and percent complete.
-The FileProgress class is not part of SWFUpload.
-*/
-
-
-/* **********************
-   Event Handlers
-   These are my custom event handlers to make my
-   web application behave the way I went when SWFUpload
-   completes different tasks.  These aren't part of the SWFUpload
-   package.  They are part of my application.  Without these none
-   of the actions SWFUpload makes will show up in my application.
-   ********************** */
 function fileQueued(file) {
 	try {
 		var progress = new FileProgress(file, this.customSettings.progressTarget);
@@ -171,6 +158,19 @@ function uploadError(file, error_code, message) {
 function uploadComplete(file) {
 	if (this.getStats().files_queued === 0) {
 		document.getElementById(this.customSettings.cancelButtonId).disabled = true;
+		
+		this.debug("Done with upload")
+		this.debug("Trying to generate zip file")
+		
+		//create zip file call
+		var url = "/photobook/makezip/" + album_id;
+		new Ajax.Request(url, {
+			method: 'get',
+			onSuccess: function(transport) {
+			this.debug("Done with upload")
+		  }
+		});
+		
 	} else {
 		this.startUpload();
 	}

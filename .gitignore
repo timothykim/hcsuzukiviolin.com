@@ -6,4 +6,5 @@ doc/app
 public/photos/**/*
 public/avatars/**/*
 public/datafiles/**/*
+.svn/*/**
 

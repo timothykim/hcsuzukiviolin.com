@@ -1,4 +1,6 @@
 <div align="center">
+	
+	<%= link_to '<img src="/images/buttons/photobookdownload.gif" />', @album.zipfile %>
 	<%= link_to '<img src="/images/buttons/addphotos.gif" />', {:action => "addphotos", :id => @album } if @album.is_public or current_user.has_permission? @album %>
 	<%= link_to '<img src="/images/buttons/editphotobook.gif" />', {:action => "edit", :id => @album } if current_user.has_permission? @album %>
 	<%= link_to('<img src="/images/buttons/deletephotobook.gif" />', {:action => "deletealbum", :id => @album }, :onclick => "return confirm('Are you sure you want to delete this photobook?\\nThis action cannot be undone.');") if current_user.has_permission? @album %>

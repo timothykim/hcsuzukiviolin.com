@@ -61,9 +61,21 @@ class User < ActiveRecord::Base
     self.remember_token            = nil
     save(false)
   end
+  
+  def email_address_with_name
+    "\"#{self.fullname}\" <#{self.email}>"
+  end
 
   def fullname
     self.firstname + " " + self.lastname
+  end
+  
+  def get_avatar
+    if self.avatar.nil?
+      return "/images/default_avatar.gif"
+    else
+      return self.avatar.public_filename(:thumb)
+    end
   end
 
   def to_label
