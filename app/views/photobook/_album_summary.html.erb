@@ -7,7 +7,7 @@
 
 	<h4>Created by</h4><p><%= @album.user.fullname %></p>
 
-	<h4>Created at</h4><p><%= @album.created_at.to_date.to_formatted_s(:long_ordinal) %></p>
+	<h4>Created on</h4><p><%= @album.created_at.to_date.to_formatted_s(:long_ordinal) %></p>
 
 	<h4>Number of Photos</h4><p><%= defined?(@photocount) ? @photocount : @album.photos.size %></p>
 

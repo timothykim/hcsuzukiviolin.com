@@ -1,6 +1,5 @@
 class PhotobookController < PageController
   
-  
   before_filter :login_required
   session :swfupload => true, :only => :processuploads
   session :cookie_only => false, :only => :processuploads
@@ -22,7 +21,6 @@ class PhotobookController < PageController
 #    @albums = Album.find(:all, :order => "created_at DESC")
 
     @albums = Album.paginate :page => params[:page], :order => 'created_at DESC', :per_page => 12
-
   end
   
   def new
@@ -36,8 +34,11 @@ class PhotobookController < PageController
   
   def album
     @album = Album.find(params[:id])
-#    @photos = @album.photos
-    @photos = Photo.find(:all, :conditions => ["album_id = ?", @album.id], :order => 'created_at ASC')
+    #@photos = Photo.find(:all, :conditions => ["album_id = ?", @album.id], :order => 'created_at ASC')
+
+    @photos = @album.photos.paginate :page => params[:page], :order => 'created_at ASC', :per_page => 9
+
+
 
     @photocount = @photos.size
 
@@ -51,6 +52,14 @@ class PhotobookController < PageController
 
     @section_path = "Photobooks &raquo; "
     @section_title = @album.name
+  end
+  
+  def makezip
+    render :nothing => true
+    album = Album.find(params[:id])
+    if current_user.has_permission? album
+      album.generate_zipfile
+    end
   end
   
   
@@ -244,14 +253,16 @@ class PhotobookController < PageController
     if params[:album][:key_photo_id]
       album.key_photo_id = params[:album][:key_photo_id]
     end
-    album.save
     
     photo_params = params[:photos]
     photos = album.photos
     
+    makezip = false
+    
     photos.each do |photo|
       param = photo_params["#{photo.id}"]
       if (param[:delete])
+        makezip = true
         photo.destroy
       else
         unless photo.name == param[:name] and photo.description == param[:description]
@@ -262,11 +273,14 @@ class PhotobookController < PageController
           # photo.update_attribute(:name, param[:name])
           # photo.update_attribute(:description, param[:description])
 
-
         end
       end
     end
-    
+
+    album.save
+
+    album.generate_zipfile if makezip
+
     flash[:notice] = "Photobook was successfully saved!"
     redirect_to :action => 'edit', :id => params[:album][:id]
     

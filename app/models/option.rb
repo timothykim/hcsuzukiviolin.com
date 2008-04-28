@@ -6,4 +6,9 @@ class Option < ActiveRecord::Base
   def to_label
     "#{self.name}"
   end
+
+  def true?
+    self.value == "true"
+  end
+  
 end
