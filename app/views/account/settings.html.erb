@@ -22,8 +22,8 @@
 	<p><%= label(:user, :email_confirmation, "Email Confirmation") %><br/>
 	<%= f.text_field :email_confirmation, :class => "text" %></p>
 
-	<p><%= label(:user, :password, "Password") %><br/>
-	<%= f.password_field :password, :class => "text" %> <small>fill only to change the password</small></p>
+	<p><%= label(:user, :password, "Password <small>(fill only to change the password)</small>") %><br/>
+	<%= f.password_field :password, :class => "text" %></p>
 
 	<p><%= label(:user, :password_confirmation, "Password Confirmation") %><br/>
 	<%= f.password_field :password_confirmation, :class => "text" %></p>
@@ -37,7 +37,6 @@
 <script type="text/javascript">
 <!--
 	alert("Save Complete!");
-
 -->
 </script>
 <% end %>

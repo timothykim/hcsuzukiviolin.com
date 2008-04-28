@@ -1,4 +1,4 @@
-class PhotobookController < DisplayController
+class PhotobookController < PageController
   
   
   before_filter :login_required
@@ -51,8 +51,8 @@ class PhotobookController < DisplayController
 
     @section_path = "Photobooks &raquo; "
     @section_title = @album.name
-
   end
+  
   
   def get_page
     @photo = Photo.find(params[:photo_id])
@@ -146,8 +146,9 @@ class PhotobookController < DisplayController
   
   
   def deletealbum
+    @album = Album.find(params[:id])
+
     if current_user.has_permission? @album
-      @album = Album.find(params[:id])
       @album.destroy
       redirect_to :action => 'index'
     else
@@ -156,11 +157,12 @@ class PhotobookController < DisplayController
   end
   
   def edit
+    @album = Album.find(params[:id])
+    
     unless current_user.has_permission? @album
       redirect_to :action => 'illegal'
     end
     
-    @album = Album.find(params[:id])
     @photos = Photo.find(:all, :conditions => ["album_id = ?", @album.id], :order => 'created_at ASC')
     
     @section_path = "Photobooks &raquo; "
@@ -222,6 +224,7 @@ class PhotobookController < DisplayController
   end
   
   def illegal
+    render :controller => "page", :action => "illegal"
   end
   
   
@@ -230,11 +233,12 @@ class PhotobookController < DisplayController
   end
   
   def album_save
+    album = Album.find(params[:album][:id])
+
     unless current_user.has_permission? @album
       redirect_to :action => 'illegal'
     end
     
-    album = Album.find(params[:album][:id])
     album.name = params[:album][:name]
     album.description = params[:album][:description]
     if params[:album][:key_photo_id]

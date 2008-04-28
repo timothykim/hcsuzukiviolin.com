@@ -11,16 +11,15 @@
 		<% if FileTest.exists?(File.join("public/javascripts", controller.controller_name, controller.action_name + ".js")) %>
 			<%= javascript_include_tag File.join(controller.controller_name, controller.action_name + ".js") %>
 		<% end %>
-		<% if defined?(@javascripts): @javascripts.each { |script| %><%= javascript_include_tag script %><% } end %>
+		<% if defined?(@javascripts): @javascripts.each { |script| javascript_include_tag script } end %>
 		<!--[if lt IE 8]><%= javascript_include_tag "IE8" %><![endif]-->
 		<!--[if lt IE 7]><script src="http://www.savethedevelopers.org/say.no.to.ie.6.js"></script><![endif]-->
 		
 		<%= conditional_render_partial "addphotos" if controller.action_name == "addphotos" %>
-		<%= active_scaffold_includes %>
 	 
 		<%= stylesheet_link_tag("default") %>
 		<%= stylesheet_link_tag(get_current_theme_css()) %>
-		
+		<%= stylesheet_link_tag(get_current_theme_css(controller.controller_name)) %>
 		
 		
 	</head>
@@ -42,7 +41,7 @@
 				<!-- TODO -->
 				<div id="menu" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
 					<ul>
-						<li><%= link_to "Home", { :controller => "/display", :action => "index" } %></li>
+						<li><%= link_to "Home", { :controller => "/page", :action => "index" } %></li>
 						<li><%= link_to "Photobook", { :controller => "/photobook", :action => "index" } %></li>
 						<li><%= link_to "Newsletter", "/newsletter/index.html" %></li>
 					</ul>

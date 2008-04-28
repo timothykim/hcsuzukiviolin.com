@@ -1,0 +1,41 @@
+
+/* @group account */
+
+div#banner_wrapper.account {
+	background-color: #6a89e8;
+}
+
+div#section_title.account {
+	background-color: #5068b0;
+}
+
+div#toolbar #menu.account li:hover {
+	background-color: #c6d4f8;
+}
+
+div#body.account a {
+	color: #5fa4e4;
+	text-decoration: none;
+}
+
+
+div#login_form_page {
+	width: 320px;
+	margin: 0 auto;
+}
+
+
+div#login_form_page input.text {
+	width: 250px;
+}
+
+div#signup_box {
+	width: 480px;
+	margin: 0 auto;
+}
+
+div#signup_box input.text {
+	width: 390px;
+}
+
+/* @end */

@@ -7,7 +7,7 @@ class AccountController < ApplicationController
   # say something nice, you goof!  something sweet.
   def index
     redirect_to(:action => 'login') unless logged_in? # || User.count > 0
-    redirect_to(:controller => 'display', :action => 'index')
+    redirect_to(:controller => '/page', :action => 'index')
   end
 
   def login
@@ -30,7 +30,7 @@ class AccountController < ApplicationController
       
       #set last logged in
       
-      redirect_back_or_default(:controller => '/display', :action => 'index')
+      redirect_back_or_default(:controller => '/page', :action => 'index')
       flash[:notice] = "Logged in successfully"
     else
       flash[:notice] = "Your email, password combination is not in the system. Please try again."
@@ -43,15 +43,16 @@ class AccountController < ApplicationController
   
   
   def activate    
-    @section_title = "Thank you for signing up, #{current_user.fullname}!" if logged_in?
-    redirect_to :action => 'login' unless logged_in?  
-    redirect_to :action => 'index' if logged_in? && self.current_user.activated
-
+    @section_title = "Your account hasn't been activated, yet!" if logged_in?
+    if logged_in?
+      redirect_back_or_default(:controller => '/page', :action => 'index') if self.current_user.activated
+    else
+      redirect_to :action => 'login' 
+    end
   end
 
   def signup
     redirect_to :action => 'activate' if logged_in?
-    
     
     @section_title = "Sign up for an Account"
     
@@ -59,11 +60,15 @@ class AccountController < ApplicationController
     return unless request.post?
     @user.save!
     self.current_user = @user
-    redirect_back_or_default(:controller => '/account', :action => 'activate')
-    flash[:notice] = "Thanks for signing up!"
+    redirect_to :controller => '/account', :action => 'thanks'
   rescue ActiveRecord::RecordInvalid
     render :action => 'signup'
   end
+  
+  def thanks
+    @section_title = "Thanks for signing up, #{current_user.fullname}!"
+  end
+  
   
   def settings
     @section_title = "Editing Your Personal Information"
@@ -76,8 +81,10 @@ class AccountController < ApplicationController
       params[:user][:email_confirmation] = params[:user][:email]
     end
     
-    @user.avatar.destroy if @user.avatar
-    Avatar.create!(params[:avatar])
+    if params[:avatar][:uploaded_data] != ""
+      @user.avatar.destroy if @user.avatar
+      Avatar.create!(params[:avatar])
+    end
     
     if @user.update_attributes(params[:user])
       flash[:notice] = 'User was successfully updated.'
@@ -92,7 +99,7 @@ class AccountController < ApplicationController
     cookies.delete :auth_token
     reset_session
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default(:controller => '/display', :action => 'index')
+    redirect_back_or_default(:controller => '/page', :action => 'index')
   end
   
   

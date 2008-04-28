@@ -99,11 +99,12 @@ FileProgress.prototype.SetCancelled = function () {
 	this.fileProgressElement.className = "progressContainer";
 	this.fileProgressElement.childNodes[4].className = "progressBarError";
 	this.fileProgressElement.childNodes[4].style.width = "";
-
+/*
 	var oSelf = this;
 	setTimeout(function () {
 		oSelf.Disappear();
 	}, 2000);
+*/
 };
 FileProgress.prototype.SetStatus = function (status) {
 	this.fileProgressElement.childNodes[3].innerHTML = status;

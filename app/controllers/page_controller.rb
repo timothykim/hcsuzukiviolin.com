@@ -1,4 +1,4 @@
-class DisplayController < ApplicationController
+class PageController < ApplicationController
   include AuthenticatedSystem
   include DisplayHelper
   
@@ -7,5 +7,8 @@ class DisplayController < ApplicationController
   def index
   end
   
+  def illegal
+    @section_title = "You can't do that!"
+  end
   
 end

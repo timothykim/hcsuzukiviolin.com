@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
 
-  map.root  :controller => "display"
+  map.root  :controller => "page"
   
   #admin stuff
 =begin

@@ -25,7 +25,7 @@ end
 
 #keep a single shared directory for photos
 task :set_symlinks, :roles => [:app] do
-  %w{photos avatars}.each do |share|
+  %w{datafiles}.each do |share|
     run "rm -rf #{release_path}/public/#{share}"
     run "mkdir -p #{shared_path}/system/#{share}"
     run "ln -nfs #{shared_path}/system/#{share} #{release_path}/public/#{share}"
