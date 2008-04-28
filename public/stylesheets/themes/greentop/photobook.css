@@ -1,0 +1,259 @@
+/* @group photobook */
+
+div#banner_wrapper.photobook {
+	background-color: #ffafbf;
+}
+
+div#section_title.photobook {
+	background-color: #ff769c;
+}
+
+div#body.photobook a {
+	color: #c085a9;
+	text-decoration: none;
+}
+
+
+div#content_no_side.photobook {
+	padding: 0px;
+}
+
+div#toolbar #menu.photobook li:hover {
+	background-color: #fbdfdd;
+}
+
+
+div.photobook span.counter {
+	font-size: 7pt;
+	font-weight: normal;
+	font-style: normal;
+}
+
+div#albums_thumb table, div#photos_thumb table {
+	border-spacing: 10px;
+}
+
+div#albums_thumb td, div#photos_thumb td {
+	width: 200px;
+}
+
+div#albums_thumb .albumcaption h3, div#photos_thumb .photocaption h3 {
+	padding: 0px;
+	margin: 0px;
+	font-size: 12pt;
+}
+
+
+div#albums_thumb .albumcaption p, div#photos_thumb .photocaption p {
+	color: #aaaaaa;
+	margin-top: 0px;
+	font-size: 7pt;
+}
+
+div#album_navigation {
+	margin-left: 15px;
+	margin-bottom: 10px;
+}
+
+div#album_navigation div#photo_icons {
+	margin-left: 4px;
+	height: 166px;
+}	
+
+div#album_navigation img {
+	border: 4px solid #ccc;
+}
+
+div#album_navigation img.selected {
+	border: 4px solid #eece49;
+}
+
+div#album_navigation a {
+	display: inline;
+}
+
+div#album_navigation div.page_nav {
+	font-size: 7pt;
+}
+
+div#album_navigation div#prev {
+	float: left;
+}
+
+div#album_navigation div#next {
+	float: right;
+}
+
+div.albumsummary {
+	font-size: 8pt;
+	margin-left: 15px;
+	margin-bottom: 10px;
+	padding-left: 10px;
+	border-left: 10px solid #e3e3e3;
+}
+
+div.albumsummary p, div.albumsummary h4 {
+	font-size: 8pt;
+	margin: 0;
+}
+
+div.albumsummary p {
+	margin-bottom: 6px;
+}
+
+div#bookedit {
+	width: 450px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+
+table.photolist {
+	margin: 10px;
+	border-width: 1px 1px 1px 1px;
+	border-spacing: 2px;
+	border-style: solid solid solid solid;
+	border-color: gray gray gray gray;
+	border-collapse: collapse;
+	background-color: white;
+}
+table.photolist th {
+	border-width: 1px 1px 1px 1px;
+	padding: 5px 5px 5px 5px;
+	border-style: dotted dotted dotted dotted;
+	border-color: gray gray gray gray;
+	background-color: #ffe7f6;
+}
+table.photolist td {
+	border-width: 1px 1px 1px 1px;
+	padding: 5px 5px 5px 5px;
+	border-style: dotted dotted dotted dotted;
+	border-color: gray gray gray gray;
+}
+
+table.photolist tr.even td {
+	background-color: #f5f5f5;	
+}
+
+table.photolist tr.odd td {
+	background-color: #eaeaea;	
+}
+
+table.photolist tr.delete td {
+	background-color: #ec9aa0;	
+}
+
+
+table.photolist td img.thumb {
+	border: 1px solid #000;
+}
+
+table.photolist td input.text {
+	padding: 3px;
+	width: 200px;
+}
+
+table.photolist td div.form_element {
+	padding-bottom: 5px;
+}
+
+table.photolist td.metadata {
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+div.photobook div.photo {
+	text-align: center;
+}
+
+div.photobook div.photo img {
+	margin-bottom: 3px;
+	margin-right: 3px;
+}
+
+div.single_photo p {
+	width: 500px;
+	margin: 0 auto;
+	margin-bottom: 30px;
+}
+
+div.photobook p.description {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+div.photobook div.comments {
+	width: 500px;
+	margin: 0 auto;
+}
+
+div.photobook div.comments h3 {
+	margin: 0;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+div.photobook div.comment {
+	margin-bottom: 30px;
+/*
+	background-color: #fdfee9;
+	border: 1px solid #ccc;
+*/
+}
+
+div.photobook div.comments div.avatar {
+	float: left;
+	margin-right: 5px;
+}
+
+div.photobook div.comments div.comment_text {
+	margin-left: 60px;
+}
+
+
+div.photobook div.comment div.commenter {
+	color: #d94b71;
+}
+
+div.photobook div.comment div.meta {
+	font-size: 7pt;
+	color: #aaa;
+}
+
+div.photobook div.comment div.content p {
+	margin-top: 7px;
+}
+
+div.photobook textarea.comment {
+	width: 350px;
+	height: 50px;
+	padding: 10px;
+}
+
+
+div.photo a#next_arrow:hover{
+	background: url(/images/next_photo.png) no-repeat right center;
+}
+
+div.photo a#prev_arrow:hover{
+	background: url(/images/prev_photo.png) no-repeat left center;
+}
+
+
+
+/* @group forms */
+
+	input#album_name, textarea#album_description {
+		width: 350px;
+	}
+	
+	.photobook_new div.form_box {
+		width: 400px;
+	}
+
+
+/* @end */
+
+
+/* @end */
+

@@ -1,5 +1,4 @@
-<p>The page you are trying to access requires an verified account.</p>
-<p>Your account hasn't been verified yet.</p>
-<p>You will receive a email notification when your account has been verified and activated.</p>
+<p><%= image_tag "icons/face-surprise.png", :width => "64", :height=>"64", :align=>"left", :style => "margin: 5px 20px 20px 20px;" %> This page requires an activated account. But your account hasn't been Activated yet.</p>
+<p>You will receive a email when your account has been verified and activated.</p>
 <p>Come back when you receive an email!</p>
-<p><%= link_to "Back Home", :controller => '/display', :action => 'index' %></p>
+<p><%= link_to "Home", :controller => '/page', :action => 'index' %></p>

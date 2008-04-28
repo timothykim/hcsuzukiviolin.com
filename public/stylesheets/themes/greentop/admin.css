@@ -1,0 +1,16 @@
+/* @group admin */
+
+div#banner_wrapper.admin {
+	background-color: #5c5c5c;
+}
+
+div#section_title.admin {
+	background-color: #ababab;
+}
+
+div#toolbar #menu.admin li:hover {
+	background-color: #f8f8f8;
+}
+
+
+/* @end */

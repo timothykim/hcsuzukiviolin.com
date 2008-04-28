@@ -7,8 +7,8 @@ class Photo < ActiveRecord::Base
   has_attachment  :content_type => :image,
                   :storage => :file_system,
                   :max_size => 5.megabytes,
-                  :thumbnails => {:big => '800x600>', :view => '500x375>', :list => "200>", :thumb => [75,75], :icon => [45,45]}
-#                  :path_prefix => 'public/datafiles/albums'
+                  :thumbnails => {:big => '800x600>', :view => '500x375>', :list => "200>", :thumb => [75,75], :icon => [45,45]},
+                  :path_prefix => 'public/datafiles/photos'
 
   validates_as_attachment
   

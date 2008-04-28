@@ -1,9 +1,4 @@
 
-<div style="font-size: 8pt; text-align: right; margin-right: 20px">
-	<%= link_to "#{image_tag("icons/table_bw.gif", :class => "icon")} Table", :view => "table" if params[:view] == "list"%>
-	<%= link_to "#{image_tag("icons/list_bw.gif", :class => "icon")} List", :view => "list" unless params[:view] == "list" %> 
-</div>
-
 <div id="photos_thumb">
 
 <% if @photos.empty? %>
@@ -18,6 +13,13 @@
 	<% end %>
 
 <% else %>
+
+
+	<div style="font-size: 8pt; text-align: right; margin-right: 20px">
+		<%= link_to "#{image_tag("icons/table_bw.gif", :class => "icon")} Table", :view => "table" if params[:view] == "list"%>
+		<%= link_to "#{image_tag("icons/list_bw.gif", :class => "icon")} List", :view => "list" unless params[:view] == "list" %> 
+	</div>
+
 
 	<% if params[:view] == "list" %>
 		<% for photo in @photos %>
