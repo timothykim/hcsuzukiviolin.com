@@ -63,7 +63,8 @@ end
 
 
 require 'will_paginate'
-
+require 'zip/zip'
+require 'zip/zipfilesystem'
 
 
 
