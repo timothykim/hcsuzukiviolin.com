@@ -38,9 +38,7 @@ class PhotobookController < PageController
 
     @photos = @album.photos.paginate :page => params[:page], :order => 'created_at ASC', :per_page => 9
 
-
-
-    @photocount = @photos.size
+    @photocount = @album.photos.size
 
 
     @submenu = global_submenu + [{ :name => "<img src=\"/images/icons/photobook.png\" class=\"icon\" /> Photobook Summary", :render => "album_summary" }]
