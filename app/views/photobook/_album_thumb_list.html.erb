@@ -3,7 +3,7 @@
 	
 	<% @photos.each do |photo| -%>
 	
-		<%= link_to image_tag(photo.public_filename(:thumb)), :action => 'photo', :id => photo.id %>
+		<%= link_to image_tag(photo.public_filename(:icon)), :action => 'photo', :id => photo.id %>
 	
 	<% end -%>
 	
