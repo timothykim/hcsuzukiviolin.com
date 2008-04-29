@@ -42,10 +42,20 @@ div#albums_thumb td, div#photos_thumb td {
 	width: 200px;
 }
 
-div#albums_thumb .albumcaption h3, div#photos_thumb .photocaption h3 {
+div#albums_thumb .albumcaption h3 {
+	width: 200px;
 	padding: 0px;
 	margin: 0px;
 	font-size: 12pt;
+	overflow: visible;
+}
+
+div#photos_thumb .photocaption h3 {
+	width: 200px;
+	padding: 0px;
+	margin: 0px;
+	font-size: 10pt;
+	overflow: visible;
 }
 
 
