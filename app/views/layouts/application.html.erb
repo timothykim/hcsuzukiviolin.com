@@ -18,8 +18,10 @@
 	 
 		<%= stylesheet_link_tag("default") %>
 		<%= stylesheet_link_tag(get_current_theme_css()) %>
-		<%= stylesheet_link_tag(get_current_theme_css(controller.controller_name)) %>
-		
+		<% if FileTest.exists?(File.join("public/stylesheets", get_current_theme_css(controller.controller_name) + ".css")) %>
+			<%= stylesheet_link_tag(get_current_theme_css(controller.controller_name)) %>
+		<% end %>
+	
 		
 	</head>
 
@@ -42,7 +44,7 @@
 					<ul>
 						<li><%= link_to "Home", { :controller => "/page", :action => "index" } %></li>
 						<li><%= link_to "Photobook", { :controller => "/photobook", :action => "index" } %></li>
-						<li><%= link_to "Newsletter", "/newsletter/index.html" %></li>
+						<li><%= link_to "Newsletter", { :controller => "/newsletter", :action => "index" } %></li>
 					</ul>
 				</div>
 				
