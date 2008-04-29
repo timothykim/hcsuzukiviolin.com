@@ -1,5 +1,10 @@
 /* @group photobook */
 
+img.listimage, div.listimage_wrapper {
+	behavior: url(iepngfix.htc);
+}
+
+
 div#banner_wrapper.photobook {
 	background-color: #ffafbf;
 }

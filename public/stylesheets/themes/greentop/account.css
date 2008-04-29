@@ -18,6 +18,10 @@ div#body.account a {
 	text-decoration: none;
 }
 
+div#body.account_settings div.form_box {
+	width: 500px;
+	margin: 0 auto;
+}
 
 div#login_form_page {
 	width: 320px;
