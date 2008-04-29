@@ -9,7 +9,7 @@ class PageController < ApplicationController
   
   
   def jesuslovesme
-    @section_title = "Jesus Love Me Download"
+    @section_title = "Music Downloads"
   end
   
   def illegal
