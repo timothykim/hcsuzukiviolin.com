@@ -7,6 +7,11 @@ class PageController < ApplicationController
   def index
   end
   
+  
+  def jesuslovesme
+    @section_title = "Jesus Love Me Download"
+  end
+  
   def illegal
     @section_title = "You can't do that!"
   end
