@@ -1,4 +1,14 @@
-<%= link_to image_tag("buttons/zoomout.png", :style => "position: absolute;"), "/photobook/photo/#{@photo.id}" if @size == "big" %>
+<%= link_to image_tag("buttons/zoomout.png", :style => "position: absolute; top: 80px;"), "/photobook/photo/#{@photo.id}" if @size == "big" %>
+
+
+<% unless @prev_photo.nil? %>
+	<div style="position: absolute; top: 57px;"><a href="/photobook/photo/<%= "#{@prev_photo.id}/#{@size}" %>"><small>&laquo; prev</small></a></div>
+<% end %>
+
+<% unless @next_photo.nil? %>
+	<div style="position: absolute; right: 0; top: 57px;"><a href="/photobook/photo/<%= "#{@next_photo.id}/#{@size}" %>"><small>next &raquo;</small></a></div>
+<% end %>
+
 
 <div class="photo">
 	<div class="shadow" style="background: url(http://sh.deviantart.com/shadow/alpha-000000/5.6667-0.45/<%= "#{@view.width}/#{@view.height}" -%>/null.png) no-repeat center center; padding: 10px;"><%= image_tag @view.public_filename %></div>
