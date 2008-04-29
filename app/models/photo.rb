@@ -4,6 +4,8 @@ class Photo < ActiveRecord::Base
 
   has_many :comments
   
+  
+  
   has_attachment  :content_type => :image,
                   :storage => :file_system,
                   :max_size => 5.megabytes,
@@ -12,6 +14,7 @@ class Photo < ActiveRecord::Base
 
   validates_as_attachment
   
+
   def to_label
     "<img src=\"#{self.public_filename(:icon)}\" />"
   end
@@ -27,6 +30,8 @@ class Photo < ActiveRecord::Base
     end
     return nil
   end
+  
+
   
 #broken... horribly borken...  
   # 

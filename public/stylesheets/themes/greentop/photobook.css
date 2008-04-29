@@ -4,6 +4,9 @@ img.listimage, div.listimage_wrapper {
 	behavior: url(iepngfix.htc);
 }
 
+div#menu a.photobook {
+	border-top: 5px solid red;
+}
 
 div#banner_wrapper.photobook {
 	background-color: #ffafbf;
@@ -47,7 +50,7 @@ div#albums_thumb .albumcaption h3 {
 	padding: 0px;
 	margin: 0px;
 	font-size: 12pt;
-	overflow: visible;
+	overflow: hidden;
 }
 
 div#photos_thumb .photocaption h3 {
@@ -55,7 +58,7 @@ div#photos_thumb .photocaption h3 {
 	padding: 0px;
 	margin: 0px;
 	font-size: 10pt;
-	overflow: visible;
+	overflow: hidden;
 }
 
 

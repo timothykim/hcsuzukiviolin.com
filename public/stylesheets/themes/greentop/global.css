@@ -3,10 +3,9 @@
 body {
 	margin: 0px;
 	padding: 0px;
-	background: #efedd8;
 	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
 	font-size: 0.8em;
-	background-color: #eee;
+	background-color: white;
 	color: #505050;
 }
 
@@ -38,7 +37,7 @@ div#banner_wrapper {
 
 
 div#banner {
-	width: 900px;
+	width: 850px;
 	margin: 0 auto;
 	background: url(images/title_small-trans.png) no-repeat;
 	height: 100px;
@@ -60,15 +59,18 @@ div#title h1 {
 }
 
 div#toolbar_wrapper {
-	width: 900px;
+	width: 800px;
 	margin: 0 auto;
 }
 
 div#toolbar #menu {
+	height: 0px;
+	float: right;
 	position: relative;
-	top: -15px;
-	margin-left: 600px;
+	top: -20px;
+	height: 40px;
 }
+
 div#toolbar #menu ul {
 	padding: 0;
 	margin: 0;
@@ -98,21 +100,21 @@ div#toolbar #menu a {
 }
 
 div#toolbar #login_frame {
-	position: relative;
-	top: -130px;
+	position: absolute;
+	top: 5px;
 	clear: both;
-	margin-left: 440px;
+	margin-left: 400px;
 	font-size: 10px;
 	color: white;
 	text-align: right;
 	height: 23px;
 	width: 420px;
 }
-
+/*
 div#toolbar #login_frame.page_index {
 	top: -220px;
 }
-
+*/
 
 div#toolbar #login_frame a {
 	text-decoration: none;
@@ -153,9 +155,6 @@ div#toolbar #login_frame input.text {
 }
 
 div#body{
-	position: relative;
-	top: -22px;
-
 	clear: both;
 	width: 850px;
 	margin: 0 auto;
