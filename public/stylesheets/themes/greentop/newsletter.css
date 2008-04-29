@@ -2,3 +2,25 @@ div#current_issue {
 	margin-left: 50px;
 	margin-bottom: 30px;
 }
+
+div#menu a.newsletter {
+	border-top: 5px solid #ff7c00;
+}
+
+
+div#banner_wrapper.newsletter {
+	background-color: #f3b16a;
+}
+
+div#section_title.newsletter {
+	background-color: #bb7646;
+}
+
+div#body.newsletter a {
+	color: #bb7646;
+	text-decoration: none;
+}
+
+div#toolbar #menu.newsletter li:hover {
+	background-color: #ffdd9e;
+}

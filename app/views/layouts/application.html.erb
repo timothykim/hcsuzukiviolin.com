@@ -42,9 +42,10 @@
 				<!-- TODO -->
 				<div id="menu" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
 					<ul>
-						<li><%= link_to "Home", { :controller => "/page", :action => "index" } %></li>
-						<li><%= link_to "Photobook", { :controller => "/photobook", :action => "index" } %></li>
-						<li><%= link_to "Newsletter", { :controller => "/newsletter", :action => "index" } %></li>
+						<% home_class = (controller.controller_name == "page" and controller.action_name == "index") ? "home" : "" %>
+						<li><%= link_to "Home", { :controller => "/page", :action => "index" }, :class => home_class %></li>
+						<li><%= link_to "Photobook", { :controller => "/photobook", :action => "index" }, :class => "photobook" %></li>
+						<li><%= link_to "Newsletter", { :controller => "/newsletter", :action => "index" }, :class => "newsletter" %></li>
 					</ul>
 				</div>
 				

@@ -25,6 +25,14 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email, :case_sensitive => false
   before_save :encrypt_password
 
+
+  before_save :strip_html
+  
+  def strip_html
+    self.firstname = self.firstname.gsub(/<\/?[^>]*>/, "")
+    self.lastname = self.lastname.gsub(/<\/?[^>]*>/, "")
+  end
+
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
     u = find_by_login(login) # need to get the salt

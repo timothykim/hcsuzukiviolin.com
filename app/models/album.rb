@@ -8,6 +8,14 @@ class Album < ActiveRecord::Base
   
   before_destroy  :purge_photos
   
+  before_save   :strip_html
+  
+  def strip_html
+    self.name = self.name.gsub(/<\/?[^>]*>/, "")
+    self.description = self.description.gsub(/<\/?[^>]*>/, "")
+  end
+  
+  
   def get_key_photo
     if self.key_photo_id
       photo = Photo.find(self.key_photo_id)

@@ -222,8 +222,8 @@ class PhotobookController < PageController
 
     params[:pic][:uploaded_data] = params[:Filedata]
     params[:pic][:user_id] = current_user.id
-    params[:pic][:name] = params[:Filename]
-    params[:pic][:description] = album.name
+    params[:pic][:name] = params[:Filename].gsub(/<\/?[^>]*>/, "")
+    params[:pic][:description] = album.name.gsub(/<\/?[^>]*>/, "")
     
     @photo = album.photos.create! params[:pic]
     
@@ -251,6 +251,7 @@ class PhotobookController < PageController
     if params[:album][:key_photo_id]
       album.key_photo_id = params[:album][:key_photo_id]
     end
+    album.save
     
     photo_params = params[:photos]
     photos = album.photos
@@ -264,8 +265,8 @@ class PhotobookController < PageController
         photo.destroy
       else
         unless photo.name == param[:name] and photo.description == param[:description]
-          photo.name = param[:name]
-          photo.description = param[:description]
+          photo.name = param[:name].gsub(/<\/?[^>]*>/, "")
+          photo.description = param[:description].gsub(/<\/?[^>]*>/, "")
           photo.save
 
           # photo.update_attribute(:name, param[:name])
@@ -275,7 +276,6 @@ class PhotobookController < PageController
       end
     end
 
-    album.save
 
     album.generate_zipfile if makezip
 
