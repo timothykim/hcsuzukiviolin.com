@@ -12,7 +12,10 @@
 			<%= javascript_include_tag File.join(controller.controller_name, controller.action_name + ".js") %>
 		<% end %>
 		<% if defined?(@javascripts): @javascripts.each { |script| javascript_include_tag script } end %>
-		<!--[if lt IE 8]><%= javascript_include_tag "IE8" %><![endif]-->
+		<!--[if lte IE 6]>
+			<%= javascript_include_tag "supersleight-min" %>
+		<![endif]-->
+
 		
 		<%= conditional_render_partial "addphotos" if controller.action_name == "addphotos" %>
 	 

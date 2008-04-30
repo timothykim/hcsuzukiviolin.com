@@ -1,86 +1,78 @@
-<%= link_to image_tag("buttons/zoomout.png", :style => "position: absolute; top: 80px;"), "/photobook/photo/#{@photo.id}" if @size == "big" %>
 
-
-<% unless @prev_photo.nil? %>
-	<div style="position: absolute; top: 57px;"><a href="/photobook/photo/<%= "#{@prev_photo.id}/#{@size}" %>"><small>&laquo; prev</small></a></div>
-<% end %>
-
-<% unless @next_photo.nil? %>
-	<div style="position: absolute; right: 0; top: 57px;"><a href="/photobook/photo/<%= "#{@next_photo.id}/#{@size}" %>"><small>next &raquo;</small></a></div>
-<% end %>
 
 
 <div class="photo">
-	<div class="shadow" style="background: url(http://sh.deviantart.com/shadow/alpha-000000/5.6667-0.45/<%= "#{@view.width}/#{@view.height}" -%>/null.png) no-repeat center center; padding: 10px;"><%= image_tag @view.public_filename %></div>
-
+	
 <% unless @prev_photo.nil? %>
-	<a href="/photobook/photo/<%= "#{@prev_photo.id}/#{@size}" %>" style="display: block; width: <%= (@view.width * 0.3).to_i %>px; height: <%= @view.height %>px; position: absolute; top: 77px; left: <%= ((@panel_width - 3 - @view.width) / 2).to_i + @sidebar_offset %>px;" id="prev_arrow"> <%= image_tag "placer.gif" %> </a>
+	<a href="/photobook/photo/<%= "#{@prev_photo.id}/#{@size}" %>" id="prev_arrow" style="display: block; width: <%= (@view.width * 0.3).to_i %>px; height: <%= @view.height %>px; position: absolute; z-index: 5; margin-left: <%= @prev_margin_left %>px; margin-top: 10px;"><%= image_tag "placer.gif", :width => (@view.width * 0.3).to_i, :height => @view.height %></a>
 <% end %>
 
 <% unless @next_photo.nil? %>
-	<a href="/photobook/photo/<%= "#{@next_photo.id}/#{@size}" %>" style="display: block; width: <%= (@view.width * 0.3).to_i %>px; height: <%= @view.height %>px; position: absolute; top: 77px; right: <%= ((@panel_width - @view.width) / 2).to_i + 1 %>px;" id="next_arrow"> <%= image_tag "placer.gif" %> </a>
+	<a href="/photobook/photo/<%= "#{@next_photo.id}/#{@size}" %>" id="next_arrow" style="display: block; width: <%= (@view.width * 0.3).to_i %>px; height: <%= @view.height %>px; position: absolute; z-index: 5; margin-left: <%= @next_margin_left %>px; margin-top: 10px;"><%= image_tag "placer.gif", :width => (@view.width * 0.3).to_i, :height => @view.height %></a>
 <% end %>
 
+<%= link_to image_tag("buttons/zoomout.png"), "/photobook/photo/#{@photo.id}", :style => "position: absolute;" if @size == "big" %>
+
+
+<div class="shadow" style="background: url(http://sh.deviantart.com/shadow/alpha-000000/5.6667-0.45/<%= "#{@view.width}/#{@view.height}" -%>/null.png) no-repeat center center; padding: 10px;"><%= image_tag @view.public_filename %></div>
 </div>
 
 
-<p class="description">
-	<%= @photo.description %>
-</p>
 
+	<p class="description" style="">
+		<%= @photo.description %>
+	</p>
 
+	<a name="comments"></a>
+	<div class="comments">
 
+	<% unless @comments.empty? %>
 
-<a name="comments"></a>
-<div class="comments">
+		<h3>Comments</h3>
 
-<% unless @comments.empty? %>
-
-	<h3>Comments</h3>
-
-<% for comment in @comments %>
-	<div class="comment" id="comment<%= comment.id %>">
-		<div class="avatar">
-			<%= image_tag(avatar_thumbnail_path(comment.user.avatar)) %>
-		</div>
+	<% for comment in @comments %>
+		<div class="comment" id="comment<%= comment.id %>">
+			<div class="avatar">
+				<%= image_tag(avatar_thumbnail_path(comment.user.avatar)) %>
+			</div>
 		
-		<div class="comment_text">
-			<div class="commenter">
-				<%= comment.user.fullname %> said,
-			</div>
-			<div class="meta">
-				<%= comment.updated_at.strftime('%B %e, %Y - %I:%M%p') %> &#183; <%= link_to "delete", :action => 'delete_comment', :id => comment.id, :photo_id => @photo.id if current_user.has_permission? comment %>
-			</div>
-			<div class="content">
-				<%= simple_format(comment.content) %>
+			<div class="comment_text">
+				<div class="commenter">
+					<%= comment.user.fullname %> said,
+				</div>
+				<div class="meta">
+					<%= comment.updated_at.strftime('%B %e, %Y - %I:%M%p') %> &#183; <%= link_to "delete", :action => 'delete_comment', :id => comment.id, :photo_id => @photo.id if current_user.has_permission? comment %>
+				</div>
+				<div class="content">
+					<%= simple_format(comment.content) %>
+				</div>
 			</div>
 		</div>
-	</div>
-<% end %>
-
-
-<% end %>
-
-<a name="comment_form"></a>
-
-	<h3><%= current_user.fullname %>, leave a comment!</h3>
-
-	<div class="avatar">
-		<%= image_tag(avatar_thumbnail_path(current_user.avatar)) %>
-	</div>
-
-	<div class="comment_text">
-
-	<% form_for @new_comment, :url => { :action => "comment" } do |comment| -%>	
-		<%= comment.text_area :content, :class => "text comment", :cols => 50, :rows => 4 %>
-	
-		<%= hidden_field_tag "comment[photo_id]", @photo.id %>
-		<%= hidden_field_tag "comment[user_id]", current_user.id %>
-	
-		<p><button class="iconbutton" id="form_submit" onclick="$('new_comment').submit(); $(this).setAttribute('disabled','disabled');"><img src="/images/icons/write.png" class="icon" /> Say it!</button></p>
 	<% end %>
 
-	</div>
 
-	<p><a href="#top">^ top</a></p>
-</div>
+	<% end %>
+
+	<a name="comment_form"></a>
+
+		<h3><%= current_user.fullname %>, leave a comment!</h3>
+
+		<div class="avatar">
+			<%= image_tag(avatar_thumbnail_path(current_user.avatar)) %>
+		</div>
+
+		<div class="comment_text">
+
+		<% form_for @new_comment, :url => { :action => "comment" } do |comment| -%>	
+			<%= comment.text_area :content, :class => "text comment", :cols => 50, :rows => 4 %>
+	
+			<%= hidden_field_tag "comment[photo_id]", @photo.id %>
+			<%= hidden_field_tag "comment[user_id]", current_user.id %>
+	
+			<p><button class="iconbutton" id="form_submit" onclick="$('new_comment').submit(); $(this).setAttribute('disabled','disabled');"><img src="/images/icons/write.png" class="icon" /> Say it!</button></p>
+		<% end %>
+
+		</div>
+
+		<p><a href="#top">^ top</a></p>
+	</div>
