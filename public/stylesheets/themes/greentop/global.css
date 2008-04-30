@@ -257,12 +257,11 @@ div.page_nav {
 	/* @group forms */
 	
 	div.notice {
-		background-color: #ff9aac;
+		background-color: #bc0000;
 		border: 1px solid #ff4778;
 		color: white;
 		padding: 20px;
 		margin-bottom: 20px;
-
 	}
 	
 	input.text, textarea.text {

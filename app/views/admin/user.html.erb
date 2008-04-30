@@ -27,25 +27,20 @@
 	<td align="center"><%= image_tag user.get_avatar %></td>
     <td><div id="name_<%= user.id %>"><strong><%= user.lastname + ", " + user.firstname %></strong></div></td>
     <td><div id="email_<%= user.id %>"><small><%= user.email %></small></div></td>
-    <td align="center"><% if user.is_admin -%>
-			<!-- user is admin, no need for activation -->
+    <td align="center">
+		<% if user.is_admin -%>
+		<!-- user is admin, no need for activation -->
 		<% else -%>
-			<%= check_box_tag "users[#{user.id}][activate]", 1, user.activated, :class => 'checkbox' %>
+		<%= check_box_tag "users[#{user.id}][activate]", 1, user.activated, :class => 'checkbox', :id => "users_#{user.id}_activate" -%>
 		<% end %>
 	</td>
-<!-- 
-	<td align="center">
-		<a href="#" onclic="edit_in_place(<%= user.id %>); return false;"><%= image_tag "icons/write_small.png" %></a>
-	</td>
-  </tr>
--->
 <% end %>
 </table>
 
 <div align="right"><small><a href="#" onclick="$('users_form').reset();">Reset</a> | <a href="#" onclick=" $$('input.checkbox').each(function (cb) { cb.checked = false; var tr = cb.up('tr'); tr.removeClassName('activate'); }); return false;">Activate None</a> | <a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = true; var tr = cb.up('tr'); tr.addClassName('activate'); }); return false;">Activate All</a></small></div>
 
 
-<p><button class="iconbutton" id="form_submit" onclick="$('users_form').submit(); $(this).setAttribute('disabled', 'disabled');"><img src="/images/icons/users.png" class="icon" /> Save changes!</button></p>
+<p><button class="iconbutton" id="form_submit" onclick="$('users_form').submit();"><img src="/images/icons/users.png" class="icon" /> Save changes!</button></p>
 
 <% end %>
 

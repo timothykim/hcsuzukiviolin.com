@@ -1,6 +1,5 @@
 <div id="bookedit">
 <% if flash[:notice] %>
-
 	<div class="flash">
 		<%= flash[:notice] %>
 	</div>
@@ -61,18 +60,18 @@
 			
 				<div class="form_element">
 					<div class="check"><small>Name</small></div>
-					<%= text_field_tag "photos[#{photo.id}][name]", photo.name, :class => "text" %>
+					<%= text_field_tag "photos[#{photo.id}][name]", photo.name, :class => "text", :id => "photos_#{photo.id}_name" %>
 				</div>
 		
 				<div class="form_element">
 					<div class="check"><small>Description</small></div>
-					<%= text_field_tag "photos[#{photo.id}][description]", photo.description, :class => "text" %>
+					<%= text_field_tag "photos[#{photo.id}][description]", photo.description, :class => "text", :id => "photos_#{photo.id}_description" %>
 				</div>
 
 			</td>
 
 			<td>
-				<%= check_box_tag "photos[#{photo.id}][delete]", 1, false, :class => 'checkbox', :onclick => "var tr = $(this).up('tr'); if (this.checked) { tr.addClassName('delete'); } else { tr.removeClassName('delete'); }" %><label for="photos[<%= photo.id %>][delete]"> <%= image_tag "icons/x_small.png", :class => "icon" %></label>
+				<%= check_box_tag "photos[#{photo.id}][delete]", 1, false, :class => 'checkbox', :onclick => "var tr = $(this).up('tr'); if (this.checked) { tr.addClassName('delete'); } else { tr.removeClassName('delete'); }", :id => "photos_#{photo.id}_delete" %><label for="<%= "photos_#{photo.id}_delete" %>"> <%= image_tag "icons/x_small.png", :class => "icon" %></label>
 			</td>
 		</tr>
 
@@ -88,10 +87,8 @@
 	
 	
 	<% end #unlexx photo is empty %>
-
 	
-	
-		<p><button class="iconbutton" id="form_submit" onclick="if (submit_ok()) { $('edit_album_<%= @album.id -%>').submit(); $(this).setAttribute('disabled', 'disabled'); } else { return false; }"><img src="/images/icons/photo.png" class="icon" /> Save change!</button> &nbsp; &nbsp; <%= link_to "<img src=\"/images/icons/x_small.png\" class=\"icon\" /> <small>Cancel</small>", { :action => "album", :id => @album.id } %> </p>
+		<p><button class="iconbutton" id="form_submit" onclick="if (submit_ok()) { $('edit_album_<%= @album.id -%>').submit(); } else { return false; }"><img src="/images/icons/photo.png" class="icon" /> Save change!</button> &nbsp; &nbsp; <%= link_to "<img src=\"/images/icons/x_small.png\" class=\"icon\" /> <small>Cancel</small>", { :action => "album", :id => @album.id } %> </p>
 	
 	
 	
