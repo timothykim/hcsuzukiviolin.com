@@ -31,7 +31,7 @@
 
 		<h3>Comments</h3>
 
-	<% for comment in @comments %>
+		<% for comment in @comments %>
 		<div class="comment" id="comment<%= comment.id %>">
 			<div class="avatar">
 				<%= image_tag(avatar_thumbnail_path(comment.user.avatar)) %>
@@ -42,15 +42,26 @@
 					<%= comment.user.fullname %> said,
 				</div>
 				<div class="meta">
-					<%= comment.updated_at.strftime('%B %e, %Y - %I:%M%p') %> &#183; <%= link_to "delete", :action => 'delete_comment', :id => comment.id, :photo_id => @photo.id if current_user.has_permission? comment %>
+					<%= comment.updated_at.strftime('%B %e, %Y - %I:%M%p') %> &#183;
+					<% if current_user.has_permission? comment %>
+					<%= link_to_remote "delete",
+							:url => {
+								:controller => "photobook",
+								:action => "delete_comment",
+								:id => comment.id
+							},
+							:loading => "$('comment#{comment.id}').addClassName('delete');",
+							:complete => "Effect.Fade($('comment#{comment.id}'), {duration: 1});",
+							:confirm => "Are you sure?"
+					%>
+					<% end %>
 				</div>
 				<div class="content">
 					<%= simple_format(comment.content) %>
 				</div>
 			</div>
 		</div>
-	<% end %>
-
+		<% end %>
 
 	<% end %>
 

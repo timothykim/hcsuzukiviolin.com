@@ -257,7 +257,10 @@ div.photo a#prev_arrow:hover{
 	background: url(/images/prev_photo.png) no-repeat left center;
 }
 
-
+div.delete {
+	background-color: #bc0000;
+	border: 1px solid #ff4778;
+}
 
 /* @group forms */
 
