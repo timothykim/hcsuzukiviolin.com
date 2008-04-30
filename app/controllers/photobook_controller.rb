@@ -120,8 +120,12 @@ class PhotobookController < PageController
   
   def comment
     c = Comment.create!(params[:comment])
-    
     redirect_to :action => 'photo', :id => params[:comment][:photo_id], :anchor => "comment#{c.id}"
+  rescue
+    if params[:comment][:content] == ""
+      flash[:notice] = "Comments can't be blank!"
+    end
+    redirect_to :action => 'photo', :id => params[:comment][:photo_id], :anchor => "comment_form"
   end
   
   def deletephoto

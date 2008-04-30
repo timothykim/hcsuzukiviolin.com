@@ -11,8 +11,9 @@
 	<a href="/photobook/photo/<%= "#{@next_photo.id}/#{@size}" %>" id="next_arrow" style="display: block; width: <%= (@view.width * 0.3).to_i %>px; height: <%= @view.height %>px; position: absolute; z-index: 5; margin-left: <%= @next_margin_left %>px; margin-top: 10px;"><%= image_tag "placer.gif", :width => (@view.width * 0.3).to_i, :height => @view.height %></a>
 <% end %>
 
-<%= link_to image_tag("buttons/zoomout.png"), "/photobook/photo/#{@photo.id}", :style => "position: absolute;" if @size == "big" %>
-
+<% if @size == "big" %>
+<div style="position: absolute;" ><%= link_to image_tag("buttons/zoomout.png"), "/photobook/photo/#{@photo.id}" %></div>
+<% end %>
 
 <div class="shadow" style="background: url(http://sh.deviantart.com/shadow/alpha-000000/5.6667-0.45/<%= "#{@view.width}/#{@view.height}" -%>/null.png) no-repeat center center; padding: 10px;"><%= image_tag @view.public_filename %></div>
 </div>
@@ -62,14 +63,15 @@
 		</div>
 
 		<div class="comment_text">
-
 		<% form_for @new_comment, :url => { :action => "comment" } do |comment| -%>	
 			<%= comment.text_area :content, :class => "text comment", :cols => 50, :rows => 4 %>
 	
-			<%= hidden_field_tag "comment[photo_id]", @photo.id %>
-			<%= hidden_field_tag "comment[user_id]", current_user.id %>
+			<%= hidden_field_tag "comment[photo_id]", @photo.id, :id => "hidden_photo_id" %>
+			<%= hidden_field_tag "comment[user_id]", current_user.id, :id => "hidden_user_id" %>
 	
-			<p><button class="iconbutton" id="form_submit" onclick="$('new_comment').submit(); $(this).setAttribute('disabled','disabled');"><img src="/images/icons/write.png" class="icon" /> Say it!</button></p>
+			<p><button class="iconbutton" id="form_submit" onclick="$('new_comment').submit();"><img src="/images/icons/write.png" class="icon" /> Say it!</button></p>
+			
+			<% if flash[:notice] %><div class="notice" style="width: 330px;"><%= flash[:notice] %></div><% end %>
 		<% end %>
 
 		</div>

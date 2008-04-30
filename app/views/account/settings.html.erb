@@ -13,8 +13,8 @@
 
 	<p>Avatar</p>
 	<%= image_tag(@user.avatar.public_filename(:thumb), :align => "right", :style => "margin-right: 170px; border: 1px solid black;") if @user.avatar %><br/>
-    <%= file_field_tag "avatar[uploaded_data]" %>
-	<%= hidden_field_tag "avatar[user_id]", @user.id %>
+    <%= file_field_tag "avatar[uploaded_data]", :id => "avatar_uploaded_datat" %>
+	<%= hidden_field_tag "avatar[user_id]", @user.id, :id => "avatar_user_id" %>
 
 	<p><%= label(:user, :email, "Email") %><br/>
 	<%= f.text_field :email, :class => "text" %></p>
