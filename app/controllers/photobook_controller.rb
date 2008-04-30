@@ -152,11 +152,11 @@ class PhotobookController < PageController
   
   def delete_comment
     comment = Comment.find(params[:id])
-    if current_user.has_permission? @comment or current_user.is_admin
+    if current_user.has_permission? comment or current_user.is_admin
       comment.destroy
     end
-
-    redirect_to :action => 'photo', :id => params[:photo_id], :anchor => "comments"
+    #redirect_to :action => 'photo', :id => params[:photo_id], :anchor => "comment_form"
+    render :nothing => true
   end
   
   
