@@ -81,7 +81,6 @@ class PhotobookController < PageController
     
     @paginated_photos = Photo.paginate :page => page, :conditions => ["album_id = ?", @album.id], :order => 'created_at ASC', :per_page => @per_page
     
-    @view = @photo.get_thumbnail(:view)
     
     @prev_photo = @photos.index(@photo) == 0 ? nil : @photos[@photos.index(@photo) - 1]
     @next_photo = @photos.index(@photo) == @photos.length - 1 ? nil : @photos[@photos.index(@photo) + 1]
@@ -95,11 +94,16 @@ class PhotobookController < PageController
       @view = @photo.get_thumbnail(:big)
       @sidebar_offset = 0
       @panel_width = 850
+      @prev_margin_left = ((@panel_width - @view.width) / 2).to_i - 2
+      @next_margin_left = ((@panel_width - @view.width) / 2).to_i + (@view.width * 0.7).to_i
       @size = params[:size]
     else
+      @view = @photo.get_thumbnail(:view)
       @size = ""
       @sidebar_offset = 204
-      @panel_width = 645
+      @panel_width = 625
+      @prev_margin_left = ((@panel_width - @view.width) / 2).to_i + 10
+      @next_margin_left = ((@panel_width - @view.width) / 2).to_i + 10 + (@view.width * 0.7).to_i
       @submenu = global_submenu + [
                   { :name => "<img src=\"/images/icons/photoindex.png\" class=\"icon\" /> Back to the Photobook", :link => {:action => 'album', :id => @album } },
                   { :name => "<img src=\"/images/icons/photobook.png\" class=\"icon\" /> Navigation", :render => "album_navigation", :local => {:prev_photo => @prev_photo, :next_photo => @next_photo } },
