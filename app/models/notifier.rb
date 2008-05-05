@@ -1,8 +1,7 @@
 class Notifier < ActionMailer::Base
 
   def signup_notification(new_account)
-    admin = User.find(:first, :conditions => [ "is_admin = ?", true])
-    #admin = User.find(2)
+    admin = User.find(1)
     recipients admin.email_address_with_name
     from       "\"GWSMS.org Administrator\" <admin@gwsms.org>"
     subject    "[GWSMS] New account signup!"
