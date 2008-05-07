@@ -269,7 +269,7 @@ div.page_nav {
 		border-left: none;
 		border-right: 1px solid #c3c3c3;
 		border-bottom: 1px solid #dddddd;
-		background: url(images/form_bg.gif) no-repeat left top;
+		background: white url(images/form_bg.gif) no-repeat left top;
 	}
 	
 	textarea {
