@@ -129,21 +129,30 @@ p#login_email label, p#login_password label {
 	display: none;
 }
 
-p#login_email {
+#login_email {
 	padding-left: 22px;
 	padding-bottom: 10px;
-	background: url(images/icon_email-trans.png) no-repeat;
+	background-image: url(images/icon_email-trans.gif);
+	background-repeat: no-repeat;
 }
 
-p#login_password {
+#login_password {
 	margin-left: 10px;
 	padding-left: 15px;
 	padding-bottom: 10px;
-	background: url(images/icon_key-trans.png) no-repeat;
+	background-image: url(images/icon_key-trans.gif);
+	background-repeat: no-repeat;
 }
 
 div#toolbar #login_frame p {
 	display: inline;
+	margin-left: 5px;
+}
+
+div#toolbar #login_frame p input.submit {
+	font-size: 7pt;
+	font-weight: bold;
+	height: 20px;
 }
 
 div#toolbar #login_frame input.text {
@@ -309,11 +318,11 @@ div.page_nav {
 	}
 
 	div.form_box .nok {
-		background: url(/images/nok.png) no-repeat 100% 70%;
+		background: url(/images/nok.gif) no-repeat 100% 70%;
 	}
 
 	div.form_box .ok {
-		background: url(/images/ok.png) no-repeat 100% 70%;
+		background: url(/images/ok.gif) no-repeat 100% 70%;
 	}
 
 	

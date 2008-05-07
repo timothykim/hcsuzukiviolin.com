@@ -19,9 +19,11 @@ var supersleight	= function() {
 		}
 		for (var i = root.all.length - 1, obj = null; (obj = root.all[i]); i--) {
 			// background pngs
+			
 			if (obj.currentStyle.backgroundImage.match(/\.png/i) !== null) {
 				bg_fnFixPng(obj);
 			}
+
 			// image elements
 			if (obj.tagName=='IMG' && obj.src.match(/\.png$/i) !== null){
 				el_fnFixPng(obj);
@@ -35,6 +37,18 @@ var supersleight	= function() {
 
 	var bg_fnFixPng = function(obj) {
 		if (obj.className == "shadow") return;
+		if (obj.id == "prev_arrow") return;
+		if (obj.id == "next_arrow") return;
+
+
+		if (obj.className == "use_gif_bg_for_ie") {
+			bg = obj.style.backgroundImage;
+			bg.replace(/png/,"gif");
+			alert(obj.style.backgroundImage);
+			obj.style.backgroundImage = bg;
+			return;
+		}
+		
 		
 		var mode = 'scale';
 		var bg	= obj.currentStyle.backgroundImage;
@@ -44,6 +58,7 @@ var supersleight	= function() {
 		}
 		obj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + src + "', sizingMethod='" + mode + "')";
 		obj.style.backgroundImage = 'url('+shim+')';
+
 	};
 
 	var el_fnFixPng = function(img) {

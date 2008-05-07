@@ -12,10 +12,10 @@
 <% end %>
 
 <% if @size == "big" %>
-<div style="position: absolute;" ><%= link_to image_tag("buttons/zoomout.png"), "/photobook/photo/#{@photo.id}" %></div>
+<div style="position: absolute;" ><%= link_to image_tag("buttons/zoomout.gif"), "/photobook/photo/#{@photo.id}" %></div>
 <% end %>
 
-<div class="shadow" style="background: url(http://sh.deviantart.com/shadow/alpha-000000/5.6667-0.45/<%= "#{@view.width}/#{@view.height}" -%>/null.png) no-repeat center center; padding: 10px;"><%= image_tag @view.public_filename %></div>
+<div class="shadow" style="background: url(http://sh.deviantart.com/shadow/FFFFFF-000000/5.6667-0.45/<%= "#{@view.width}/#{@view.height}" -%>/null.png) no-repeat center center; padding: 10px;"><%= image_tag @view.public_filename %></div>
 </div>
 
 
