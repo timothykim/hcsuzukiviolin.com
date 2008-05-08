@@ -23,6 +23,7 @@ task :update_config, :roles => [:app] do
   run "cp -Rf #{shared_path}/config/* #{release_path}/config/"
 end
 
+
 #keep a single shared directory for photos
 task :set_symlinks, :roles => [:app] do
   %w{datafiles}.each do |share|
