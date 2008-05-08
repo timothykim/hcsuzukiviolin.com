@@ -35,6 +35,7 @@ class PhotobookController < PageController
   def album
     @album = Album.find(params[:id])
     #@photos = Photo.find(:all, :conditions => ["album_id = ?", @album.id], :order => 'created_at ASC')
+    @comments = @album.comments
 
     @photos = @album.photos.paginate :page => params[:page], :order => 'created_at ASC', :per_page => 9
 
@@ -81,9 +82,11 @@ class PhotobookController < PageController
     
     @paginated_photos = Photo.paginate :page => page, :conditions => ["album_id = ?", @album.id], :order => 'created_at ASC', :per_page => @per_page
     
+    @photoindex = @photos.index(@photo)
+    @prev_photo = @photoindex == 0 ? nil : @photos[@photoindex - 1]
+    @next_photo = @photoindex == (@photos.size - 1) ? nil : @photos[@photoindex + 1]
+    @photoindex += 1
     
-    @prev_photo = @photos.index(@photo) == 0 ? nil : @photos[@photos.index(@photo) - 1]
-    @next_photo = @photos.index(@photo) == @photos.length - 1 ? nil : @photos[@photos.index(@photo) + 1]
     
     @comments = @photo.comments
     

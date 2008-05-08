@@ -66,11 +66,14 @@
 								<%= "|" if current_user.is_admin %>
 								<%= link_to "Admin", { :controller => "/admin", :action => "index" } if current_user.is_admin %>
 								| <%= link_to "Settings", { :controller => "/account", :action => "settings" } %>
+								| <%= link_to "Help", { :controller => "/accont", :action => "help"} %>
 								| <%= link_to "Logout", { :controller => "/account", :action => "logout" } %>
 							</div>
 						<% else %>
 							<div id="show_login">
-								<p><%= link_to "Login", { :controller => "/account", :action => "login" }, :onclick => "$('show_login').hide(); $('login_form').show(); $('login').focus(); return false;" %> or <%= link_to "Sign up!", { :controller => "/account", :action => "signup" } %></p>
+								<p>
+									<%= link_to "Login", { :controller => "/account", :action => "login" }, :onclick => "$('show_login').hide(); $('login_form').show(); $('login').focus(); return false;" %> or <%= link_to "Sign up!", { :controller => "/account", :action => "signup" } %>
+								</p>
 							</div>
 							<div id="login_form" style="display: none;">
 								<% form_tag "/account/login" do -%>

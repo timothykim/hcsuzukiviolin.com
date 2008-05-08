@@ -1,9 +1,5 @@
 /* @group photobook */
 
-img.listimage, div.listimage_wrapper {
-	behavior: url(iepngfix.htc);
-}
-
 div#menu a.photobook {
 	border-top: 5px solid red;
 }
@@ -259,6 +255,20 @@ div.photo a#prev_arrow:hover{
 div.delete {
 	background-color: #bc0000;
 	border: 1px solid #ff4778;
+}
+
+div.photoindexindicator {
+	font-size: 10px;
+	text-align: center;
+}
+
+
+div#latest_comments {
+	margin-left: 20px;
+}
+
+div#latest_comments p {
+	font-size: 9px;
 }
 
 /* @group forms */
