@@ -12,7 +12,6 @@ set :use_sudo, true
 set :deploy_to, "/home/highwind/sites/gwsms.org/rails/#{application}"
 set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
 
-
 role :app, domain
 role :web, domain
 role :db,  domain, :primary => true
