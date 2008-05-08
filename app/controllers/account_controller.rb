@@ -105,5 +105,7 @@ class AccountController < ApplicationController
     redirect_back_or_default(:controller => '/page', :action => 'index')
   end
   
+  def help
+  end
   
 end

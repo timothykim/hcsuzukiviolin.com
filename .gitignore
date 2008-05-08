@@ -5,4 +5,4 @@ doc/api
 doc/app
 public/datafiles/**/*
 .svn/*/**
-
+config/database.yml
