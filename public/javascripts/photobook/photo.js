@@ -3,3 +3,4 @@ window.onload = function() {
 		Effect.Fade(notice, {duration: 5})
 	});
 }
+
