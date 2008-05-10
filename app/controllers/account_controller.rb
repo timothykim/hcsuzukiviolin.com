@@ -14,7 +14,7 @@ class AccountController < ApplicationController
     @section_title = "Account Login"
     
     if logged_in?
-      redirect_to(:action => 'index')
+      redirect_back_or_default(:action => 'index')
     end
     
     return unless request.post?
@@ -41,7 +41,7 @@ class AccountController < ApplicationController
   end
   
   
-  def activate    
+  def activate
     @section_title = "Your account hasn't been activated, yet!" if logged_in?
     if logged_in?
       redirect_back_or_default(:controller => '/page', :action => 'index') if self.current_user.activated
@@ -100,12 +100,18 @@ class AccountController < ApplicationController
   def logout
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
+    
+    redirect = session[:return_to]
     reset_session
+    session[:return_to] = redirect;
+
     flash[:notice] = "You have been logged out."
     redirect_back_or_default(:controller => '/page', :action => 'index')
   end
   
   def help
+    store_location
+    @section_title = "Help"
   end
   
 end

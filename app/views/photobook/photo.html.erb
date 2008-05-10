@@ -2,8 +2,7 @@
 	<%= "#{@photoindex} / #{@photos.size}" %>
 </div>
 
-<div class="photo">
-	
+<div class="photo_nav">
 <% unless @prev_photo.nil? %>
 	<a href="/photobook/photo/<%= "#{@prev_photo.id}/#{@size}" %>" id="prev_arrow" style="display: block; width: <%= (@view.width * 0.3).to_i %>px; height: <%= @view.height %>px; position: absolute; z-index: 5; margin-left: <%= @prev_margin_left %>px; margin-top: 10px;"><%= image_tag "placer.gif", :width => (@view.width * 0.3).to_i, :height => @view.height %></a>
 <% end %>
@@ -11,6 +10,11 @@
 <% unless @next_photo.nil? %>
 	<a href="/photobook/photo/<%= "#{@next_photo.id}/#{@size}" %>" id="next_arrow" style="display: block; width: <%= (@view.width * 0.3).to_i %>px; height: <%= @view.height %>px; position: absolute; z-index: 5; margin-left: <%= @next_margin_left %>px; margin-top: 10px;"><%= image_tag "placer.gif", :width => (@view.width * 0.3).to_i, :height => @view.height %></a>
 <% end %>
+
+</div>
+
+
+<div class="photo">
 
 <% if @size == "big" %>
 <div style="position: absolute;" ><%= link_to image_tag("buttons/zoomout.gif"), "/photobook/photo/#{@photo.id}" %></div>

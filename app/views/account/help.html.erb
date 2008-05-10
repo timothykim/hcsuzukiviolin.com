@@ -1,0 +1,41 @@
+<h3>Help is on the way!</h3>
+
+<p>We are still working on a way to help you when you have trouble using this site. It's not ready yet, so come back later!</p>
+<!--
+<p>If you have any questions about using this site, please send us an email by using the form below.</p>
+
+<div class="form_box">
+<% form_tag '/account/emailhelp' do %>
+
+	<div class="form_element">
+<% if logged_in? %>
+		<div class="check"><label for="email">From:</label></div>
+		<%= "<strong>#{current_user.fullname}</strong>" %>
+<% else %>
+		<div class="check"><label for="email">Your Email:</label></div>
+		<%= text_field_tag "email", nil , :class => "text", :size => 30 %>
+<% end %>
+	</div>
+	
+	<div class="form_element">
+		<div class="check"><label for="email">To:</label></div>
+		<%= "<strong>gwsms.org Administrator</strong>" %>
+	</div>
+
+	<div class="form_element">
+		<div class="check"><label for="content">Your question:</label></div>
+		<%= text_area_tag 'content', nil, :class => 'text', :rows => 13, :cols => 50 %>
+	</div>
+
+<% unless logged_in? %>
+	<div class="form_element">
+		<%= check_box_tag 'not_spam' %> <label for="not_spam">I'm not a spam-bot.</label>
+	</div>
+<% else %>
+		<%= hidden_field_tag 'not_spam', '1' %>
+<% end %>
+
+	<div><%= submit_tag 'Send', :class => 'submit' %></div>
+<% end %>
+</div>
+ -->

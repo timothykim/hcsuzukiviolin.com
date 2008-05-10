@@ -244,11 +244,11 @@ div.photobook textarea.comment {
 }
 
 
-div.photo a#next_arrow:hover{
+div.photo_nav a#next_arrow:hover{
 	background: url(/images/next_photo.png) no-repeat right center;
 }
 
-div.photo a#prev_arrow:hover{
+div.photo_nav a#prev_arrow:hover{
 	background: url(/images/prev_photo.png) no-repeat left center;
 }
 

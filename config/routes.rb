@@ -17,7 +17,5 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/photobook/album/:id/:view', :controller => 'photobook', :action => 'album'
 
 
-
-
   map.connect ':controller/:action/:id'
 end
