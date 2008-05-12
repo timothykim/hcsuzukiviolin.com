@@ -21,6 +21,8 @@ class PhotobookController < PageController
 #    @albums = Album.find(:all, :order => "created_at DESC")
 
     @albums = Album.paginate :page => params[:page], :order => 'created_at DESC', :per_page => 12
+    
+    @comments = Comment.find(:all, :limit => 5, :order => 'created_at DESC')
   end
   
   def new
@@ -46,7 +48,7 @@ class PhotobookController < PageController
 
     @submenu += [{ :name => "<img src=\"/images/icons/photobook_configure.png\" class=\"icon\" /> Photobook Controls", :render => "album_control" }]
     
-    @submenu += [{ :name => "<img src=\"/images/icons/face-grin.png\" class=\"icon\" /> Latest Comments", :render => "album_latest_comments" }]
+#    @submenu += [{ :name => "<img src=\"/images/icons/face-grin.png\" class=\"icon\" /> Latest Comments", :render => "album_latest_comments" }]
 
 
     @section_path = "Photobooks &raquo; "

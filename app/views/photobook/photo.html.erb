@@ -30,67 +30,10 @@
 	</p>
 
 	<a name="comments"></a>
-	<div class="comments">
 
-	<% unless @comments.empty? %>
-
-		<h3>Comments</h3>
-
-		<% for comment in @comments %>
-		<div class="comment" id="comment<%= comment.id %>">
-			<div class="avatar">
-				<%= image_tag(avatar_thumbnail_path(comment.user.avatar)) %>
-			</div>
-		
-			<div class="comment_text">
-				<div class="commenter">
-					<%= comment.user.fullname %> said,
-				</div>
-				<div class="meta">
-					<%= comment.updated_at.strftime('%B %e, %Y - %I:%M%p') %> &#183;
-					<% if current_user.has_permission? comment %>
-					<%= link_to_remote "delete",
-							:url => {
-								:controller => "photobook",
-								:action => "delete_comment",
-								:id => comment.id
-							},
-							:loading => "$('comment#{comment.id}').addClassName('delete');",
-							:complete => "Effect.Fade($('comment#{comment.id}'), {duration: 1});",
-							:confirm => "Are you sure?"
-					%>
-					<% end %>
-				</div>
-				<div class="content">
-					<%= simple_format(comment.content) %>
-				</div>
-			</div>
-		</div>
-		<% end %>
-
-	<% end %>
-
-	<a name="comment_form"></a>
-
-		<h3><%= current_user.fullname %>, leave a comment!</h3>
-
-		<div class="avatar">
-			<%= image_tag(avatar_thumbnail_path(current_user.avatar)) %>
-		</div>
-
-		<div class="comment_text">
-		<% form_for @new_comment, :url => { :action => "comment" } do |comment| -%>	
-			<%= comment.text_area :content, :class => "text comment", :cols => 50, :rows => 4 %>
+<div class="comment_list">
 	
-			<%= hidden_field_tag "comment[photo_id]", @photo.id, :id => "hidden_photo_id" %>
-			<%= hidden_field_tag "comment[user_id]", current_user.id, :id => "hidden_user_id" %>
+	<%= render :partial => "photo_comments", :locals => { :comments => @comments } %>
 	
-			<p><button class="iconbutton" id="form_submit" onclick="$('new_comment').submit();"><img src="/images/icons/write.png" class="icon" /> Say it!</button></p>
-			
-			<% if flash[:notice] %><div class="notice" style="width: 330px;"><%= flash[:notice] %></div><% end %>
-		<% end %>
+</div>
 
-		</div>
-
-		<p><a href="#top">^ top</a></p>
-	</div>
