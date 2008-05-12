@@ -96,6 +96,10 @@ class AccountController < ApplicationController
       render :action => "settings"
     end
   end
+  
+  def illegal
+      render :controller => "page", :action => "illegal"
+  end
 
   def logout
     self.current_user.forget_me if logged_in?
@@ -114,4 +118,23 @@ class AccountController < ApplicationController
     @section_title = "Help"
   end
   
+  def emailhelp
+    unless params[:email]
+      redirect_to :action => "illegal"
+    end
+    
+    # if params[:email][:content] == ""
+    #   flash[:notice] = "You can't send an empty email!"
+    # elsif
+    #   
+    # end
+  end
+  
 end
+
+
+
+
+
+
+
