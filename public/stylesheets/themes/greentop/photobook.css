@@ -24,7 +24,7 @@ div.photobook div.index_control {
 }
 
 div.photobook div.latest_comments {
-	width: 600px;
+	width: 500px;
 	margin: 0 auto;
 }
 
@@ -243,6 +243,11 @@ div.photobook div.comments div.avatar {
 
 div.photobook div.comments div.comment_text {
 	margin-left: 60px;
+	margin-right: 90px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	min-height: 75px;
+	padding: 0;
 }
 div.photobook div.comment div.commenter {
 	color: #d94b71;
