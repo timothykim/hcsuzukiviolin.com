@@ -7,8 +7,9 @@
 		<% end %>
 
 		<% for comment in @comments %>
+
 		<a name="comment_<%= comment.id %>"></a>
-		<div class="comment" id="comment<%= comment.id %>">
+		<div class="comment " id="comment<%= comment.id %>">
 			<div class="avatar">
 				<%= image_tag(avatar_thumbnail_path(comment.user.avatar)) %>
 			</div>
@@ -43,8 +44,8 @@
 					<%= simple_format(comment.content) %>
 				</div>
 			</div>
-			<div class="clear"></div>
 		</div>
+
 		<% end %>
 
 	<% end %>
