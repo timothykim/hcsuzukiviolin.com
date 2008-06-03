@@ -84,10 +84,27 @@ class AdminController < ApplicationController
     @students = SummerStudent.find(:all)
   end
   
+  def summer_delete
+    if params[:id]
+      s = SummerStudent.find(params[:id])
+      s.destroy
+      redirect_to :action => "summer"
+    end
+  end
   
   def summer_add
     if params[:schedule]
-      @student = SummerStudent.create :name => params[:name], :school_id => params[:school], :lesson_duration => params[:duration]
+      if params[:id]
+        @student = SummerStudent.update(params[:id], params[:summer_student])
+      else
+        @student = SummerStudent.create(params[:summer_student])
+      end
+      
+      sc = @student.summer_student_schedule
+      for s in sc
+        s.destroy
+      end
+      
       params[:schedule].each_pair do |yday, times|
         unless times.strip == ""
           year = params[:year].to_i
@@ -112,7 +129,7 @@ class AdminController < ApplicationController
         end #unless
       end #params
       redirect_to :action => "summer"
-    end
+    end    
     
     @schools = SummerSchool.find(:all)
 
@@ -127,54 +144,65 @@ class AdminController < ApplicationController
     @numberofweeks = (@totaldays / 7.0).ceil
     
     
-    @schedule = [
-        Date.new(2008, 6, 17),
-        Date.new(2008, 6, 18),
-        Date.new(2008, 6, 19),
-        Date.new(2008, 6, 20),
-        Date.new(2008, 6, 23),
-        Date.new(2008, 6, 24),
-        Date.new(2008, 6, 25),
-        Date.new(2008, 6, 26),
-        Date.new(2008, 6, 27),
-        Date.new(2008, 7, 7),
-        Date.new(2008, 7, 8),
-        Date.new(2008, 7, 9),
-        Date.new(2008, 7, 10),
-        Date.new(2008, 7, 11),
-        Date.new(2008, 7, 14),
-        Date.new(2008, 7, 15),
-        Date.new(2008, 7, 16),
-        Date.new(2008, 7, 17),
-        Date.new(2008, 7, 18),
-        Date.new(2008, 7, 19),
-        Date.new(2008, 7, 21),
-        Date.new(2008, 7, 22),
-        Date.new(2008, 7, 23),
-        Date.new(2008, 7, 24),
-        Date.new(2008, 7, 25),
-        Date.new(2008, 7, 28),
-        Date.new(2008, 7, 29),
-        Date.new(2008, 7, 30),
-        Date.new(2008, 7, 31),
-        Date.new(2008, 8, 6),
-        Date.new(2008, 8, 7),
-        Date.new(2008, 8, 8),
-        Date.new(2008, 8, 14),
-        Date.new(2008, 8, 15),
-        Date.new(2008, 8, 18),
-        Date.new(2008, 8, 19),
-        Date.new(2008, 8, 20),
-        Date.new(2008, 8, 21),
-        Date.new(2008, 8, 22),
-        Date.new(2008, 8, 25),
-        Date.new(2008, 8, 26),
-        Date.new(2008, 8, 27),
-        Date.new(2008, 8, 28),
-        Date.new(2008, 8, 29),
-        Date.new(2008, 8, 30),
-        Date.new(2008, 9, 2)
-    ]
+    @schedule = {
+        Date.new(2008, 6, 17).yday => "",
+        Date.new(2008, 6, 18).yday => "",
+        Date.new(2008, 6, 19).yday => "",
+        Date.new(2008, 6, 20).yday => "",
+        Date.new(2008, 6, 23).yday => "",
+        Date.new(2008, 6, 24).yday => "",
+        Date.new(2008, 6, 25).yday => "",
+        Date.new(2008, 6, 26).yday => "",
+        Date.new(2008, 6, 27).yday => "",
+        Date.new(2008, 7, 7).yday => "",
+        Date.new(2008, 7, 8).yday => "",
+        Date.new(2008, 7, 9).yday => "",
+        Date.new(2008, 7, 10).yday => "",
+        Date.new(2008, 7, 11).yday => "",
+        Date.new(2008, 7, 14).yday => "",
+        Date.new(2008, 7, 15).yday => "",
+        Date.new(2008, 7, 16).yday => "",
+        Date.new(2008, 7, 17).yday => "",
+        Date.new(2008, 7, 18).yday => "",
+        Date.new(2008, 7, 19).yday => "",
+        Date.new(2008, 7, 21).yday => "",
+        Date.new(2008, 7, 22).yday => "",
+        Date.new(2008, 7, 23).yday => "",
+        Date.new(2008, 7, 24).yday => "",
+        Date.new(2008, 7, 25).yday => "",
+        Date.new(2008, 7, 28).yday => "",
+        Date.new(2008, 7, 29).yday => "",
+        Date.new(2008, 7, 30).yday => "",
+        Date.new(2008, 7, 31).yday => "",
+        Date.new(2008, 8, 6).yday => "",
+        Date.new(2008, 8, 7).yday => "",
+        Date.new(2008, 8, 8).yday => "",
+        Date.new(2008, 8, 14).yday => "",
+        Date.new(2008, 8, 15).yday => "",
+        Date.new(2008, 8, 18).yday => "",
+        Date.new(2008, 8, 19).yday => "",
+        Date.new(2008, 8, 20).yday => "",
+        Date.new(2008, 8, 21).yday => "",
+        Date.new(2008, 8, 22).yday => "",
+        Date.new(2008, 8, 25).yday => "",
+        Date.new(2008, 8, 26).yday => "",
+        Date.new(2008, 8, 27).yday => "",
+        Date.new(2008, 8, 28).yday => "",
+        Date.new(2008, 8, 29).yday => "",
+        Date.new(2008, 8, 30).yday => "",
+        Date.new(2008, 9, 2).yday => "",
+    }
+    
+    
+    if params[:id]
+      @student = SummerStudent.find(params[:id])
+      schedule = @student.summer_student_schedule
+      for time in schedule
+        @schedule[time.begin.yday] += time.to_s + "\n"
+      end
+    else
+      @student = SummerStudent.new
+    end
   end
   
   

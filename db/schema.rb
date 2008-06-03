@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 16) do
+ActiveRecord::Schema.define(:version => 17) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(:version => 16) do
 
   create_table "summer_students", :force => true do |t|
     t.string   "name"
-    t.integer  "school_id"
+    t.integer  "summer_school_id"
     t.integer  "lesson_duration"
     t.datetime "created_at"
     t.datetime "updated_at"

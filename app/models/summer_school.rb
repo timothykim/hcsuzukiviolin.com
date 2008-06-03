@@ -1,3 +1,3 @@
 class SummerSchool < ActiveRecord::Base
-  belongs_to :summer_student
+  has_many :summer_student
 end
