@@ -2,7 +2,7 @@
 	<h3>Student List</h3>
 	<ul>
 	<% for student in @students %>
-		<li><input type="checkbox" id="st_check_<%= student.id %>" onclick="return update_calendar(<%= student.id %>, this);" /> <label for="st_check_<%= student.id %>"><span class="studentname"><%= student.name %></span></label></li>
+		<li><input type="checkbox" id="st_check_<%= student.id %>" onclick="return update_calendar(<%= student.id %>, this);" /> <label for="st_check_<%= student.id %>"><span class="studentname" style="background-color: #<%= @colors[student.id % 21] %>;"><%= student.name %></span></label></li>
 	<% end %>
 	</ul>
 </div>
