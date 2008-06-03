@@ -1,0 +1,12 @@
+<h3>Student Schedules</h3>
+
+<ul>
+<% for student in @students %>
+	<li><%= student.name %></li>
+<% end %>
+</ul>
+
+<div>
+	<p><button class="iconbutton" onclick="window.location = '/admin/summer_add'"><img src="/images/icons/calendar.png" class="icon" /> Add a New Student Schedule</button></p>
+</div>
+

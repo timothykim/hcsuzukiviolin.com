@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 10) do
+ActiveRecord::Schema.define(:version => 16) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -20,6 +20,12 @@ ActiveRecord::Schema.define(:version => 10) do
     t.datetime "updated_at"
     t.integer  "photos_count",               :default => 0,     :null => false
     t.text     "description"
+  end
+
+  create_table "announcements", :force => true do |t|
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "avatars", :force => true do |t|
@@ -37,6 +43,16 @@ ActiveRecord::Schema.define(:version => 10) do
     t.integer  "user_id"
     t.integer  "photo_id"
     t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "login_logs", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "newsletters", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -63,6 +79,25 @@ ActiveRecord::Schema.define(:version => 10) do
     t.integer  "comments_count", :default => 0, :null => false
   end
 
+  create_table "summer_schools", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "summer_student_schedules", :force => true do |t|
+    t.integer  "summer_student_id"
+    t.datetime "begin"
+    t.datetime "end"
+    t.datetime "selected"
+  end
+
+  create_table "summer_students", :force => true do |t|
+    t.string   "name"
+    t.integer  "school_id"
+    t.integer  "lesson_duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "firstname"
     t.string   "lastname"
@@ -79,7 +114,6 @@ ActiveRecord::Schema.define(:version => 10) do
     t.integer  "albums_count",                            :default => 0,     :null => false
     t.integer  "photos_count",                            :default => 0,     :null => false
     t.integer  "comments_count",                          :default => 0,     :null => false
-    t.integer  "avatar_id"
   end
 
 end

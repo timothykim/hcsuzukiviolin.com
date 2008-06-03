@@ -5,7 +5,7 @@ class CreateOptions < ActiveRecord::Migration
       t.column :value,  :string
     end
     
-    Option.create :name => "Site name", :value => "Hannah Choi's Suzuki Violin Studio"
+    Option.create :name => "Site name", :value => "Greater Washington Suzuki Music School"
     Option.create :name => "Theme", :value => "greentop"
 
   end
