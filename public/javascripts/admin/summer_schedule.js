@@ -53,6 +53,10 @@ function render_schedule(student_id) {
 		onSuccess: function(transport) {
 			student = transport.responseText.evalJSON();
 			
+			if (student.events.length == 0) {
+				alert("The Student you selected has no time that fits into your schedule.");
+			}
+			
 			student.events.each(function(e) {
 				var start = e[0];
 				var end = e[1];
