@@ -176,5 +176,11 @@ img.calendar_bar {
 	margin-left: 5px;
 }
 
+span.studentname {
+	color: white;
+	padding: 2px;
+	padding-left: 5px;
+	padding-right: 15px;
+}
 
 /* @end */
