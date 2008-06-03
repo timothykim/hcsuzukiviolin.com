@@ -45,8 +45,9 @@ function update_calendar(id, checkbox) {
 
 function hidename(name, color) {
 	var d = $('mouseover_name');
-	Effect.Fade(d, { duration: 0.2 });
+	//Effect.Fade(d, { duration: 0.1 });
 
+	d.style.display = "none";
 }
 
 function showname(name, color, str) {
@@ -58,7 +59,7 @@ function showname(name, color, str) {
 	d.style.borderColor = "#" + color;
 	d.update(name + "<br /><small>" + str + "</small>");
 
-	Effect.Appear(d, { duration: 0.2 });
+	d.style.display = "inline";//, { duration: 0.1 });
 }
 
 function render_schedule(student_id) {
@@ -72,7 +73,7 @@ function render_schedule(student_id) {
 			student = transport.responseText.evalJSON();
 			
 			if (student.events.length == 0) {
-				alert("The Student you selected has no time that fits into your schedule.");
+				alert("Uh oh!\n" + student.name + "'s schedule doesn't fits into your schedule at all!");
 			}
 			
 			student.events.each(function(e) {
@@ -85,7 +86,7 @@ function render_schedule(student_id) {
 				var es = start + "-" + end;
 				var img = "http://kgfamily.com/scripts/calendarbar.php?w=" + width + "&amp;uh=" + unit_height + "&amp;ut=" + unit_time + "&amp;c=" + colors[student_id % 21] + "&amp;ds=" + block_start + "&amp;es=" + es;
 
-				$(div).insert('<img onmouseout="hidename();" onmouseover="showname(\'' + student.name + '\', colors[' + student_id + ' % 21], \'' + student.display_str + '\');" class="calendar_bar bar_' + student_id + '" src="' + img + '" />');
+				$(div).insert('<img onmouseout="hidename();" onmouseover="showname(\'' + student.name + '\', colors[' + student_id + ' % 21], \'' + e[2] + '\');" class="calendar_bar bar_' + student_id + '" src="' + img + '" />');
 			});
 	  	}
 	});

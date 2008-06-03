@@ -82,7 +82,7 @@ class AdminController < ApplicationController
     
     @submenu = global_submenu
     
-    @students = SummerStudent.find(:all)
+    @students = SummerStudent.find(:all, :order => "name ASC")
   end
   
   def summer_student_json
@@ -93,6 +93,9 @@ class AdminController < ApplicationController
     
     events = []
     for event in schedules
+      
+      str = "#{event.begin.strftime('%I:%M%p')} - #{event.end.strftime('%I:%M%p')}";
+      
       start, finish = event.begin.to_time.to_i, event.end.to_time.to_i
       
       today_begin = Time.local(event.begin.year, event.begin.month, event.begin.day, params[:day_start].to_i)
@@ -102,10 +105,10 @@ class AdminController < ApplicationController
         start = today_begin.to_i
       end
       
-      events << [start, finish] unless (finish < today_begin.to_i)
+      events << [start, finish, str] unless (finish < today_begin.to_i)
     end
     
-    data = { :events => events, :name => student.name, :display_str => "#{event.begin.strftime('%I:%M%p')} - #{event.end.strftime('%I:%M%p')}" }
+    data = { :events => events, :name => student.name }
 
     render :text => data.to_json
   end
@@ -120,7 +123,7 @@ class AdminController < ApplicationController
     @totaldays = (@enddate - @startdate).to_i
     @numberofweeks = (@totaldays / 7.0).ceil
     
-    @students = SummerStudent.find(:all)
+    @students = SummerStudent.find(:all, :order => "name ASC")
     
     @day_start = 13;
     @day_end   = 20;
