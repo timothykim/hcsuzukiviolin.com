@@ -2,9 +2,11 @@
 	<h3>Student List</h3>
 	<ul>
 	<% for student in @students %>
-		<li><input type="checkbox" id="st_check_<%= student.id %>" onclick="return update_calendar(<%= student.id %>, this);" /> <label for="st_check_<%= student.id %>"><span class="studentname" style="background-color: #<%= @colors[student.id % 21] %>;"><%= student.name %></span></label></li>
+		<li><input type="checkbox" class="checkbox" id="st_check_<%= student.id %>" title="<%= student.id %>" onclick="return update_calendar(<%= student.id %>, this);" /> <label for="st_check_<%= student.id %>"><span class="studentname" style="background-color: #<%= @colors[student.id % 21] %>;"><%= student.name %></span></label></li>
 	<% end %>
 	</ul>
+	
+	<p><small><a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = true; update_calendar(cb.title, cb); }); return false;">select all</a> | <a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = false; update_calendar(cb.title, cb); }); return false;">select none</a></small></p>
 </div>
 
 <div id="calendar_table">
