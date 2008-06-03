@@ -1,0 +1,79 @@
+<div id="side_list">
+	<h3>Student List</h3>
+	<ul>
+	<% for student in @students %>
+		<li><input type="checkbox" id="st_check_<%= student.id %>" onclick="return update_calendar(<%= student.id %>, this);" /> <label for="st_check_<%= student.id %>"><span class="studentname"><%= student.name %></span></label></li>
+	<% end %>
+	</ul>
+</div>
+
+<div id="calendar_table">
+<table class="calendar main">
+	<thead>
+	<tr>
+		<th width="30">Week</th>
+		<th width="10">hrs</th>
+		<th class="flex">Monday</th>
+		<th class="flex">Tuesday</th>
+		<th class="flex">Wednesday</th>
+		<th class="flex">Thursday</th>
+		<th class="flex">Friday</th>
+	</tr>	
+	</thead>
+	<tbody>
+<%
+  @numberofweeks.times do |week|
+%>
+		<tr>
+			<th><%= week + 1 %></th>
+			<td style="padding-top: 17px" valign="top">
+				<% for i in (@day_start..@day_end)
+						t = (i > 11) ? "#{i-12}pm" : "#{i}am"
+				%>
+					<div style="border-top: 1px solid silver; height: 31px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);"><%= t %></div>
+				<% end %>
+			</td>
+<%
+	for day in (1..5)
+		today = @startdate + ((week * 7) + day)
+		if @schedule[today.yday].nil?
+			td_class = "not_active"
+			active = false
+		else
+			td_class = "active"
+			active = true
+		end	
+%>
+		<td class="<%= td_class %>" valign="top">
+			<div class="date"><%= today.strftime('%m/%d') %></div>
+			<% for i in (@day_start..@day_end)
+					bgcolor = ""
+
+					if active and i >= @teaching_hours[day][0] and i < @teaching_hours[day][1]
+						bgcolor = "background-color: #e2fde6;"
+					end
+					
+					timestamp = Time.local(today.year, today.month, today.day, i).to_i
+			%>
+				<div id="t<%= timestamp %>" style="<%= bgcolor %> padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size:9px;"> </div>
+			<%
+					i += 0.5
+					bgcolor = ""
+					if active and i >= @teaching_hours[day][0] and i < @teaching_hours[day][1]
+						bgcolor = "background-color: #e2fde6;"						
+					end
+
+					timestamp = Time.local(today.year, today.month, today.day, i, 30).to_i
+			%>
+				<div id="t<%= timestamp %>" style="<%= bgcolor %> padding:0px; margin:0px;  border-top: 1px dotted silver; height: 15px; font-size:9px;"></div>
+			<% end %>
+		
+		</td>
+<% 
+    end
+%>
+		</tr>
+<% end %>
+	</tbody>
+</table>
+</div>
