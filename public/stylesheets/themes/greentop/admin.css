@@ -62,8 +62,8 @@ table.admin_table tr.hightlight td {
 
 
 
-#body.admin_summer_add {
-	width: 90%;
+#body.admin_summer_add, #body.admin_summer_schedule {
+	width: 95%;
 	margin: 0px auto;
 }
 
@@ -86,10 +86,13 @@ table.calendar th {
 	background-color: #b1cefe;
 }
 
+table.calendar th.flex {
+	width: 16%;
+}
+
 table.calendar td {
 	border: 1px dotted silver;
 	padding: 5px;
-	width: 14%;
 }
 
 table.calendar td .date {
@@ -110,5 +113,68 @@ table.calendar td.active {
 table.calendar td.active textarea {
 	width: 100%;
 }
+
+div#calendar_table {
+	margin-left: 170px;
+}
+
+table.main {
+	width: 100%;
+	margin: 0;
+}
+
+table.main th.flex {
+	width: 20%;
+}
+
+
+table.main td div.date {
+	background-color: #ffe5eb;
+	font-size: 12px;
+	text-align: center;
+	height: 17px;
+	margin: 0;
+	padding: 0;
+}
+
+table.main td {
+	border: 1px solid silver;
+	padding: 0px;
+}
+
+table.main td.not_active {
+	background-color: #f0f0f0;
+}
+
+table.calendar td.active {
+	background-color: #fff;
+}
+
+div#side_list {
+	float: left;
+	border: 1px inset silver;
+	width: 150px;
+	min-height: 500px;
+	padding-left: 5px;
+	background-color: #f3f3f3;
+}
+
+div#side_list ul {
+	margin: 0;
+	padding: 0;
+}
+
+div#side_list ul {
+	margin: 0;
+	margin-left: 10px;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	list-style-type: none;
+}
+
+img.calendar_bar {
+	margin-left: 5px;
+}
+
 
 /* @end */

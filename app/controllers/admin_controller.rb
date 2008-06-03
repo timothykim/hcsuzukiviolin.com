@@ -7,6 +7,7 @@ class AdminController < ApplicationController
   before_filter :login_required
   before_filter :admin_required
 
+
   def global_submenu
     [
       { :name => '<img src="/images/icons/users.png" class="icon" /> Users', :link => "/admin/user", :selected => "selected" },
@@ -82,6 +83,102 @@ class AdminController < ApplicationController
     @submenu = global_submenu
     
     @students = SummerStudent.find(:all)
+  end
+  
+  def summer_student_json
+    headers["Content-Type"] = "text/x-json; charset=utf-8"
+    
+    student = SummerStudent.find(params[:id])
+    schedules = student.summer_student_schedule
+    
+    events = []
+    for event in schedules
+      start, finish = event.begin.to_time.to_i, event.end.to_time.to_i
+      
+      today_begin = Time.local(event.begin.year, event.begin.month, event.begin.day, params[:day_start].to_i)
+      today_end = Time.local(event.end.year, event.end.month, event.end.day, params[:day_end].to_i)
+      
+      if event.begin.hour < params[:day_start].to_i
+        start = today_begin.to_i
+      end
+      
+      events << [start, finish] unless (finish < today_begin.to_i)
+    end
+    
+    data = { :events => events }
+
+    render :text => data.to_json
+  end
+  
+  def summer_schedule
+    @section_path = "Adminitration &raquo; "
+    @section_title = 'Summer Schedule Edit'
+    
+    @startdate = Date.new(2008, 6, 15)
+    @enddate = Date.new(2008, 9, 2)
+    
+    @totaldays = (@enddate - @startdate).to_i
+    @numberofweeks = (@totaldays / 7.0).ceil
+    
+    @students = SummerStudent.find(:all)
+    
+    @day_start = 13;
+    @day_end   = 20;
+
+    @teaching_hours = {
+      1 => [14, 20],
+      2 => [19.5, 20],
+      3 => [14, 19],
+      4 => [14, 20],
+      5 => [0, 0]
+    }
+    
+    @schedule = {
+        Date.new(2008, 6, 17).yday => "",
+        Date.new(2008, 6, 18).yday => "",
+        Date.new(2008, 6, 19).yday => "",
+        Date.new(2008, 6, 20).yday => "",
+        Date.new(2008, 6, 23).yday => "",
+        Date.new(2008, 6, 24).yday => "",
+        Date.new(2008, 6, 25).yday => "",
+        Date.new(2008, 6, 26).yday => "",
+        Date.new(2008, 6, 27).yday => "",
+        Date.new(2008, 7, 7).yday => "",
+        Date.new(2008, 7, 8).yday => "",
+        Date.new(2008, 7, 9).yday => "",
+        Date.new(2008, 7, 10).yday => "",
+        Date.new(2008, 7, 11).yday => "",
+        Date.new(2008, 7, 14).yday => "",
+        Date.new(2008, 7, 15).yday => "",
+        Date.new(2008, 7, 16).yday => "",
+        Date.new(2008, 7, 17).yday => "",
+        Date.new(2008, 7, 18).yday => "",
+        Date.new(2008, 7, 21).yday => "",
+        Date.new(2008, 7, 22).yday => "",
+        Date.new(2008, 7, 23).yday => "",
+        Date.new(2008, 7, 24).yday => "",
+        Date.new(2008, 7, 25).yday => "",
+        Date.new(2008, 7, 28).yday => "",
+        Date.new(2008, 7, 29).yday => "",
+        Date.new(2008, 7, 30).yday => "",
+        Date.new(2008, 7, 31).yday => "",
+        Date.new(2008, 8, 6).yday => "",
+        Date.new(2008, 8, 7).yday => "",
+        Date.new(2008, 8, 8).yday => "",
+        Date.new(2008, 8, 14).yday => "",
+        Date.new(2008, 8, 15).yday => "",
+        Date.new(2008, 8, 18).yday => "",
+        Date.new(2008, 8, 19).yday => "",
+        Date.new(2008, 8, 20).yday => "",
+        Date.new(2008, 8, 21).yday => "",
+        Date.new(2008, 8, 22).yday => "",
+        Date.new(2008, 8, 25).yday => "",
+        Date.new(2008, 8, 26).yday => "",
+        Date.new(2008, 8, 27).yday => "",
+        Date.new(2008, 8, 28).yday => "",
+        Date.new(2008, 8, 29).yday => "",
+        Date.new(2008, 9, 2).yday => "",
+    }
   end
   
   def summer_delete
@@ -164,7 +261,6 @@ class AdminController < ApplicationController
         Date.new(2008, 7, 16).yday => "",
         Date.new(2008, 7, 17).yday => "",
         Date.new(2008, 7, 18).yday => "",
-        Date.new(2008, 7, 19).yday => "",
         Date.new(2008, 7, 21).yday => "",
         Date.new(2008, 7, 22).yday => "",
         Date.new(2008, 7, 23).yday => "",
@@ -189,7 +285,6 @@ class AdminController < ApplicationController
         Date.new(2008, 8, 27).yday => "",
         Date.new(2008, 8, 28).yday => "",
         Date.new(2008, 8, 29).yday => "",
-        Date.new(2008, 8, 30).yday => "",
         Date.new(2008, 9, 2).yday => "",
     }
     
