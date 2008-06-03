@@ -43,6 +43,24 @@ function update_calendar(id, checkbox) {
 	}
 }
 
+function hidename(name, color) {
+	var d = $('mouseover_name');
+	Effect.Fade(d, { duration: 0.2 });
+
+}
+
+function showname(name, color, str) {
+	var d = $('mouseover_name');
+
+	d.style.left = (tempX + 10) + "px";
+	d.style.top = (tempY + 10) + "px";
+	
+	d.style.borderColor = "#" + color;
+	d.update(name + "<br /><small>" + str + "</small>");
+
+	Effect.Appear(d, { duration: 0.2 });
+}
+
 function render_schedule(student_id) {
 	var url = "/admin/summer_student_json/" + student_id + "?day_start=" + day_start + "&day_end=" + day_end;
 
@@ -67,9 +85,32 @@ function render_schedule(student_id) {
 				var es = start + "-" + end;
 				var img = "http://kgfamily.com/scripts/calendarbar.php?w=" + width + "&amp;uh=" + unit_height + "&amp;ut=" + unit_time + "&amp;c=" + colors[student_id % 21] + "&amp;ds=" + block_start + "&amp;es=" + es;
 
-				$(div).insert('<img class="calendar_bar bar_' + student_id + '" src="' + img + '" />');
+				$(div).insert('<img onmouseout="hidename();" onmouseover="showname(\'' + student.name + '\', colors[' + student_id + ' % 21], \'' + student.display_str + '\');" class="calendar_bar bar_' + student_id + '" src="' + img + '" />');
 			});
 	  	}
 	});
 
+}
+
+
+document.captureEvents(Event.MOUSEMOVE)
+
+// Set-up to use getMouseXY function onMouseMove
+document.onmousemove = getMouseXY;
+
+// Temporary variables to hold mouse x-y pos.s
+var tempX = 0
+var tempY = 0
+
+// Main function to retrieve mouse x-y pos.s
+
+function getMouseXY(e) {
+  tempX = e.pageX
+  tempY = e.pageY
+
+  // catch possible negative values in NS4
+  if (tempX < 0){tempX = 0}
+  if (tempY < 0){tempY = 0}  
+
+  return true
 }

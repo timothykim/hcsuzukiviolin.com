@@ -105,7 +105,7 @@ class AdminController < ApplicationController
       events << [start, finish] unless (finish < today_begin.to_i)
     end
     
-    data = { :events => events }
+    data = { :events => events, :name => student.name, :display_str => "#{event.begin.strftime('%I:%M%p')} - #{event.end.strftime('%I:%M%p')}" }
 
     render :text => data.to_json
   end
