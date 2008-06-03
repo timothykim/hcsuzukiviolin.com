@@ -1,0 +1,74 @@
+<% form_tag('summer_add') do %>
+<p>Student Name: <input type="text" id="name" name="name" size="20" value="" /></p>
+
+<p>
+	School:
+<% for school in @schools %>
+		<input type="radio" name="school" value="<%= school.id %>" id="<%= school.name %>" /><label for="<%= school.name %>"> <%= school.name %></label>
+<% end %>
+</p>
+
+<p>Lesson Duration: <input type="text" id="duration" name="duration" size="10" value="" /> minutes</p>
+
+
+
+<p>
+	Available Time Format: 1pm-2pm, 9am-3:15pm<br />
+	Leave blank if the student is not available on that day
+</p>
+
+<table class="calendar">
+	<thead>
+	<tr>
+		<th width="30">Week</th>
+		<th>Sunday</th>
+		<th>Monday</th>
+		<th>Tuesday</th>
+		<th>Wednesday</th>
+		<th>Thursday</th>
+		<th>Friday</th>
+		<th>Saturday</th>
+	</tr>	
+	</thead>
+	<tbody>
+<%
+  @numberofweeks.times do |week|
+%>
+		<tr>
+			<th><%= week + 1 %></th>
+<%
+	7.times do |day|
+		today = @startdate + ((week * 7) + day)
+		if @schedule.first == today
+			td_class = "active"
+			active = true
+			@schedule.shift
+		else
+			td_class = "not_active"
+			active = false
+		end	
+%>
+			<td class="<%= td_class %>" valign="top" height="80">
+				<div class="date"><%= today.strftime('%m/%d') %></div>
+				<% if active %>
+				
+				Time:<br />
+				<textarea name="schedule[<%= today.yday %>]" rows="2" class="time"></textarea>
+				
+				<% end %>
+			</td>
+<% 
+    end
+%>
+		</tr>
+<% end %>
+	</tbody>
+</table>
+
+<p>
+	<input type="submit" value="Save Schedule" />
+</p>
+
+<input type="hidden" name="year" value="2008" />
+
+<% end %>

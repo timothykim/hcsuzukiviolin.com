@@ -11,6 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :path_prefix => '/admin'
 =end
 
+
   #album stuff
   map.resources :albums
   map.connect '/photobook/photo/:id/:size', :controller => 'photobook', :action => 'photo'
