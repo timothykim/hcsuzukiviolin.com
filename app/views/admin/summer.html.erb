@@ -2,7 +2,7 @@
 
 <ul>
 <% for student in @students %>
-	<li><%= student.name %> : view | <%= link_to "edit", :action => "summer_add", :id => student.id %> | <%= link_to "delete", :action => "summer_delete", :id => student.id %></li>
+	<li><%= student.name %> : view | <%= link_to "edit", :action => "summer_add", :id => student.id %> | <%= link_to "delete", { :action => "summer_delete", :id => student.id }, :confirm => "Are you sure you want to delete this schedule?" %></li>
 <% end %>
 </ul>
 
