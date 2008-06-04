@@ -2,11 +2,24 @@
 	<h3>Student List</h3>
 	<ul>
 	<% for student in @students %>
-		<li><input type="checkbox" class="checkbox" id="st_check_<%= student.id %>" title="<%= student.id %>" onclick="return update_calendar(<%= student.id %>, this);" /> <label for="st_check_<%= student.id %>"><span class="studentname" style="background-color: #<%= @colors[student.id % 21] %>;"><%= student.name %></span></label></li>
+		<li><input type="checkbox" class="checkbox" id="st_check_<%= student.id %>" title="<%= student.id %>" onclick="return update_calendar(<%= student.id %>, this);" /> <label for="st_check_<%= student.id %>"><span class="studentname" style="background-color: #<%= @colors[student.id % 21] %>;"><%= student.name %></span></label> <small><%= link_to "edit", :action => "summer_add", :id => student.id %></small></li>
 	<% end %>
 	</ul>
 	
 	<p><small><a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = true; update_calendar(cb.title, cb); }); return false;">select all</a> | <a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = false; update_calendar(cb.title, cb); }); return false;">select none</a></small></p>
+	
+	<h3>Jump to Week</h3>
+	<p>
+	<% @numberofweeks.times do |week| %>
+		<small><a href="#week<%= week %>"><%= week+1 %></a></small>
+	<% end %>
+	</p>
+	
+	<h3>Legend</h3>
+	<div class="legend" style="background-color: #e2fde6;">Your CIFA schedule</div>
+	<div class="legend" style="background-color: #e6edf2;">Your CHMS schedule</div>
+	<div class="legend" style="background-color: #ffcccc;">Lesson occupied</div>
+
 </div>
 
 <div id="calendar_table">
@@ -26,11 +39,14 @@
 <%
   @numberofweeks.times do |week|
 %>
+		<tr><td><a name="week<%= week %>"></a></td></tr>
 		<tr>
-			<th><%= week + 1 %></th>
-			<td style="padding-top: 17px" valign="top">
+			<th>
+			<%= week + 1 %></th>
+			<td  style="padding-top: 17px" valign="top">
 				<% for i in (@day_start..@day_end)
 						t = (i > 11) ? "#{i-12}pm" : "#{i}am"
+						t = "12pm" if i == 12
 				%>
 					<div style="border-top: 1px solid silver; height: 31px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);"><%= t %></div>
 				<% end %>
@@ -51,18 +67,23 @@
 			<% for i in (@day_start..@day_end)
 					bgcolor = ""
 
-					if active and i >= @teaching_hours[day][0] and i < @teaching_hours[day][1]
-						bgcolor = "background-color: #e2fde6;"
+					for hours in @teaching_hours
+						if active and i >= hours[day][0] and i < hours[day][1]
+							bgcolor = "background-color: #{hours[:color]};"
+						end
 					end
-					
+										
 					timestamp = Time.local(today.year, today.month, today.day, i).to_i
 			%>
 				<div id="t<%= timestamp %>" style="<%= bgcolor %> padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size:9px;"> </div>
 			<%
 					i += 0.5
 					bgcolor = ""
-					if active and i >= @teaching_hours[day][0] and i < @teaching_hours[day][1]
-						bgcolor = "background-color: #e2fde6;"						
+					
+					for hours in @teaching_hours
+						if active and i >= hours[day][0] and i < hours[day][1]
+							bgcolor = "background-color: #{hours[:color]};"
+						end
 					end
 
 					timestamp = Time.local(today.year, today.month, today.day, i, 30).to_i

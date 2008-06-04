@@ -1,4 +1,4 @@
-var day_start = 13;
+var day_start = 7;
 var day_end = 21;
 
 var width = 10;
@@ -30,15 +30,29 @@ var colors = [
 			];
 
 Event.onDOMReady(function() {
+	Event.observe(window, 'scroll', function() {
+		if (window.scrollY > 190) {
+			$('side_list').style.top = (window.scrollY - 190) + "px";
+		} else {
+			$('side_list').style.top = 0;
+		}
+	});   
 });
 
 function update_calendar(id, checkbox) {
 	if (checkbox.checked) {
-		render_schedule(id);
+		images = $$('img.bar_' + id);
+		if (images.length == 0) {
+			render_schedule(id);
+		} else {
+			images.each(function(i) {
+				i.show();
+			});
+		}
 	} else {
-			images = $$('img.bar_' + id);
+		images = $$('img.bar_' + id);
 		images.each(function(i) {
-			i.remove();
+			i.hide();
 		});
 	}
 }
@@ -115,3 +129,5 @@ function getMouseXY(e) {
 
   return true
 }
+
+

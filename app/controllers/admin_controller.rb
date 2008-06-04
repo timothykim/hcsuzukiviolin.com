@@ -125,16 +125,24 @@ class AdminController < ApplicationController
     
     @students = SummerStudent.find(:all, :order => "name ASC")
     
-    @day_start = 13;
+    @day_start = 7;
     @day_end   = 20;
 
-    @teaching_hours = {
+    @teaching_hours = [{
       1 => [14, 20],
       2 => [19.5, 20],
       3 => [14, 19],
       4 => [14, 20],
-      5 => [0, 0]
-    }
+      5 => [0, 0],
+      :color => "#e2fde6"
+    },{
+      1 => [0, 0],
+      2 => [0, 0],
+      3 => [7.5, 11],
+      4 => [7.5, 11],
+      5 => [7.5, 11],
+      :color => "#e6edf2"
+    }]
     
     
     @colors = [
