@@ -122,7 +122,7 @@ class AdminController < ApplicationController
       :block => 't' + block.to_s,
       :offset => (((lesson_start - block) / unit_time) * unit_height).round,
       :duration => (((student.lesson_duration * 60) / unit_time) * unit_height).round,
-      :string => "<a name=\"lesson_" + lesson_start.to_s + "\"></a><strong>#{student.name}</strong>: #{event.selected.strftime('%I:%M%p')} - #{Time.at(lesson_end).strftime('%I:%M%p')} | <a href=\"#\" onclick=\"if (confirm('Are you sure you want to delete this lesson?')) { new Ajax.Request('/admin/summer_lesson_delete/" + event.id.to_s + "', {asynchronous:true, evalScripts:true, onComplete:function(request){Effect.Fade($('t" + block.to_s + "').down('div'), {duration: 0.5});}, parameters:'authenticity_token=' + encodeURIComponent('" + form_authenticity_token + "')}); }; return false;\" style=\"color: #700;\">delete</a>",
+      :string => "<a name=\"lesson_" + lesson_start.to_s + "\"></a><strong>#{student.name}</strong>: #{event.selected.strftime('%I:%M%p')} - #{Time.at(lesson_end).strftime('%I:%M%p')} | <a href=\"#\" onclick=\"if (confirm('Are you sure you want to delete this lesson?')) { new Ajax.Request('/admin/summer_lesson_delete/" + event.id.to_s + "', {asynchronous:true, evalScripts:true, onComplete:function(request){Effect.Fade($('t" + block.to_s + "').down('div'), {duration: 0.5}); var count = $('lesson_count_" + student.id.to_s + "').down('a'); count.update(parseInt(count.innerHTML) - 1);}, parameters:'authenticity_token=' + encodeURIComponent('" + form_authenticity_token + "')}); }; return false;\" style=\"color: #700;\">delete</a>",
       :schedule_id => event.id,
       :student_id => student.id,
       :update => update,
@@ -231,7 +231,7 @@ class AdminController < ApplicationController
       @all_lessons[block] = {
         :offset => (((lesson_start - block) / unit_time) * unit_height).round,
         :duration => (((student.lesson_duration * 60) / unit_time) * unit_height).round,
-        :string => "<a name=\"lesson_" + lesson_start.to_s + "\"></a><strong>#{student.name}</strong>: #{data.selected.strftime('%I:%M%p')} - #{Time.at(lesson_end).strftime('%I:%M%p')} | <a href=\"#\" onclick=\"if (confirm('Are you sure you want to delete this lesson?')) { new Ajax.Request('/admin/summer_lesson_delete/" + data.id.to_s + "', {asynchronous:true, evalScripts:true, onComplete:function(request){Effect.Fade($('t" + block.to_s + "').down('div'), {duration: 0.5});}, parameters:'authenticity_token=' + encodeURIComponent('" + form_authenticity_token + "')}); }; return false;\" style=\"color: #700;\">delete</a>",
+        :string => "<a name=\"lesson_" + lesson_start.to_s + "\"></a><strong>#{student.name}</strong>: #{data.selected.strftime('%I:%M%p')} - #{Time.at(lesson_end).strftime('%I:%M%p')} | <a href=\"#\" onclick=\"if (confirm('Are you sure you want to delete this lesson?')) { new Ajax.Request('/admin/summer_lesson_delete/" + data.id.to_s + "', {asynchronous:true, evalScripts:true, onComplete:function(request){Effect.Fade($('t" + block.to_s + "').down('div'), {duration: 0.5}); var count = $('lesson_count_" + student.id.to_s + "').down('a'); count.update(parseInt(count.innerHTML) - 1);}, parameters:'authenticity_token=' + encodeURIComponent('" + form_authenticity_token + "')}); }; return false;\" style=\"color: #700;\">delete</a>",
         :schedule_id => data.id,
         :student_id => student.id
       }
