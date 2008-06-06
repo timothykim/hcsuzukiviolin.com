@@ -32,6 +32,9 @@ var colors = [
 				"B08B59" 
 			];
 
+
+var resizeTimer = null;
+
 Event.onDOMReady(function() {
 	Event.observe(window, 'scroll', function() {
 		if (window.scrollY > 190) {
@@ -40,7 +43,21 @@ Event.onDOMReady(function() {
 			$('side_list').style.top = 0;
 		}
 	});
+	
+	Event.observe(window, 'resize', function() {
+	    if (resizeTimer) clearTimeout(resizeTimer);
+	    resizeTimer = setTimeout(adjust_lesson_width, 100);
+	});
+	
+	if (resizeTimer) clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(adjust_lesson_width, 100);
 });
+
+function adjust_lesson_width() {
+	$$('div.lesson_bar').each(function(bar) {
+		bar.style.width = (bar.up('div').getWidth() - 2) + "px";
+	});	
+}
 
 function close_lesson_list(id) {
 	Effect.Fade($('lesson_list_' + id), { duration: 0.5 });
@@ -211,12 +228,15 @@ function render_single_event(e, student_id, student_name, duration) {
 	var style = "";
 	
 	var insert_div = $(div);
-	
+/*	
 	if (insert_div.childElements().length == 1) {
 		var top_div = insert_div.childElements()[0]
 		var height = top_div.getHeight();
 		style = "top: -" + (height + parseInt(top_div.style.marginTop))+ "px;";
 	}
+*/
+	
+	
 
 	var html = '<img style="cursor: pointer; ' + style + '" onclick="show_lesson_dialog(\'' + student_name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\', \'' + e.schedule_id + '\', \'' + duration + '\');" onmouseout="hidename();" onmouseover="showname(\'' + student_name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\');" class="calendar_bar bar_' + student_id + '" src="' + img + '" />';
 

@@ -199,8 +199,9 @@ div.lesson_bar {
 	border: 1px solid white;
 	font-size: 9px;
 	color: white;
-	position: relative;
+	position: absolute;
 	z-index: 2;
+	overflow: hidden;
 }
 div.studentname {
 	color: white;
