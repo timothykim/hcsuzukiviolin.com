@@ -86,11 +86,10 @@ function get_calendar_bar_image_url(color, block_start, start, end) {
 
 function add_lesson() {	
 	$('add_lesson').request({
-		onComplete: function(transport){ 
+		onComplete: function(transport){
 			var data = transport.responseText.evalJSON();
 			hide_dialog();
 			var div = '<div class="lesson_bar" style="margin-top: ' + data.offset + 'px; height: ' + (data.duration - 3 - 1) + 'px; background-color: #' + get_color(data.student_id) + '"><span class="lesson_text" style="position: absolute;">' + data.string + '</span></div>';
-
 
 			if (data.update) {
 				$(data.prev_block).down('div').remove();
@@ -98,7 +97,12 @@ function add_lesson() {
 				var count = $('lesson_count_' + data.student_id).down('a');				
 				count.update(parseInt(count.innerHTML) + 1);
 			}
+			
 			$(data.block).insert(div);
+			
+			data.image_blocks.each(function(b) {
+				Effect.Fade($(b).down('img'), { duration: 0.5, afterFinish: function() { $(b).down('img').remove() } });
+			});
 		}
 	});
 	return false;
@@ -193,9 +197,36 @@ function showname(name, color, str) {
 	d.style.display = "inline";//, { duration: 0.1 });
 }
 
+function render_single_event(e, student_id, student_name, duration) {
+	var start = e.start;
+	var end = e.finish;
+
+	var block_start = (start - (start % 1800));
+
+	var div = "t" + block_start;
+	var es = start + "-" + end;
+	var img = "http://kgfamily.com/scripts/calendarbar.php?w=" + width + "&amp;uh=" + unit_height + "&amp;ut=" + unit_time + "&amp;c=" + colors[student_id % 21] + "&amp;ds=" + block_start + "&amp;es=" + es;
+
+
+	var style = "";
+	
+	var insert_div = $(div);
+	
+	if (insert_div.childElements().length == 1) {
+		var top_div = insert_div.childElements()[0]
+		var height = top_div.getHeight();
+		style = "top: -" + (height + parseInt(top_div.style.marginTop))+ "px;";
+	}
+
+	var html = '<img style="cursor: pointer; ' + style + '" onclick="show_lesson_dialog(\'' + student_name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\', \'' + e.schedule_id + '\', \'' + duration + '\');" onmouseout="hidename();" onmouseover="showname(\'' + student_name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\');" class="calendar_bar bar_' + student_id + '" src="' + img + '" />';
+
+	insert_div.insert(html);
+}
+
+
 function render_schedule(student_id) {
 	var url = "/admin/summer_student_json/" + student_id + "?day_start=" + day_start + "&day_end=" + day_end;
-
+	
 	var student;
 
 	new Ajax.Request(url, {
@@ -208,29 +239,33 @@ function render_schedule(student_id) {
 			}
 			
 			student.events.each(function(e) {
-				var start = e.start;
-				var end = e.finish;
+				render_single_event(e, student_id, student.name, student.duration);
+			});
+	  	}
+	});
 
-				var block_start = (start - (start % 1800));
+}
 
-				var div = "t" + block_start;
-				var es = start + "-" + end;
-				var img = "http://kgfamily.com/scripts/calendarbar.php?w=" + width + "&amp;uh=" + unit_height + "&amp;ut=" + unit_time + "&amp;c=" + colors[student_id % 21] + "&amp;ds=" + block_start + "&amp;es=" + es;
+function render_schedule_day(student_id, day) {
+	if (!$('st_check_' + student_id).checked) {
+		return;
+	}
+	
+	var url = "/admin/summer_student_json/" + student_id + "?day_start=" + day_start + "&day_end=" + day_end + "&day=" + day;
+	
+	var student;
 
-
-				var style = "";
-				
-				var insert_div = $(div);
-				
-				if (insert_div.childElements().length == 1) {
-					var top_div = insert_div.childElements()[0]
-					var height = top_div.getHeight();
-					style = "top: -" + (height + parseInt(top_div.style.marginTop))+ "px;";
-				}
-
-				var html = '<img style="cursor: pointer; ' + style + '" onclick="show_lesson_dialog(\'' + student.name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\', \'' + e.schedule_id + '\', \'' + student.duration + '\');" onmouseout="hidename();" onmouseover="showname(\'' + student.name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\');" class="calendar_bar bar_' + student_id + '" src="' + img + '" />';
-
-				insert_div.insert(html);
+	new Ajax.Request(url, {
+		method: 'get',
+		onSuccess: function(transport) {
+			student = transport.responseText.evalJSON();
+			
+			if (student.events.length == 0) {
+				alert("Uh oh!\n" + student.name + "'s schedule doesn't fits into your schedule at all!");
+			}
+			
+			student.events.each(function(e) {
+				render_single_event(e, student_id, student.name, student.duration);
 			});
 	  	}
 	});

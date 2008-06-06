@@ -114,19 +114,23 @@ class AdminController < ApplicationController
     lesson_end = lesson_start + (event.summer_student.lesson_duration * 60)
     
     block = (lesson_start - (lesson_start % 1800))
-    
     student = event.summer_student
 
+    image_blocks = []
+    for e in SummerStudentSchedule.find(:all, :conditions => ["summer_student_id = ? and begin >= ? and begin < ?", event.summer_student.id, DateTime.new(event.begin.year, event.begin.month, event.begin.day), DateTime.new(event.begin.year, event.begin.month, event.begin.day, 24) ], :order => "selected ASC")
+      image_blocks << 't' + (e.begin.to_time.to_i - (e.begin.to_time.to_i % 1800)).to_s
+    end
 
     data = {
       :block => 't' + block.to_s,
       :offset => (((lesson_start - block) / unit_time) * unit_height).round,
       :duration => (((student.lesson_duration * 60) / unit_time) * unit_height).round,
-      :string => "<a name=\"lesson_" + lesson_start.to_s + "\"></a><strong>#{student.name}</strong>: #{event.selected.strftime('%I:%M%p')} - #{Time.at(lesson_end).strftime('%I:%M%p')} | <a href=\"#\" onclick=\"if (confirm('Are you sure you want to delete this lesson?')) { new Ajax.Request('/admin/summer_lesson_delete/" + event.id.to_s + "', {asynchronous:true, evalScripts:true, onComplete:function(request){Effect.Fade($('t" + block.to_s + "').down('div'), {duration: 0.5}); var count = $('lesson_count_" + student.id.to_s + "').down('a'); count.update(parseInt(count.innerHTML) - 1);}, parameters:'authenticity_token=' + encodeURIComponent('" + form_authenticity_token + "')}); }; return false;\" style=\"color: #700;\">x</a>",
+      :string => "<a name=\"lesson_" + lesson_start.to_s + "\"></a><strong>#{student.name}</strong>: #{event.selected.strftime('%I:%M%p')} - #{Time.at(lesson_end).strftime('%I:%M%p')} | <a href=\"#\" onclick=\"if (confirm('Are you sure you want to delete this lesson?')) { new Ajax.Request('/admin/summer_lesson_delete/" + event.id.to_s + "', {asynchronous:true, evalScripts:true, onComplete:function(request){Effect.Fade($('t" + block.to_s + "').down('div'), {duration: 0.5, afterFinish: function() { $('t" + block.to_s + "').down('div').remove() }}); var count = $('lesson_count_" + student.id.to_s + "').down('a'); count.update(parseInt(count.innerHTML) - 1); render_schedule_day(" + student.id.to_s + ", '" + today.strftime("%Y/%m/%d") + "');}, parameters:'authenticity_token=' + encodeURIComponent('" + form_authenticity_token + "')}); }; return false;\" style=\"color: #700;\">x</a>",
       :schedule_id => event.id,
       :student_id => student.id,
       :update => update,
-      :prev_block => 't' + prev_block.to_s
+      :prev_block => 't' + prev_block.to_s,
+      :image_blocks => image_blocks
     }
     
 
@@ -172,23 +176,33 @@ class AdminController < ApplicationController
     headers["Content-Type"] = "text/x-json; charset=utf-8"
     
     student = SummerStudent.find(params[:id])
-    schedules = student.summer_student_schedule
     
+    if params[:day]
+      day = DateTime.strptime("#{params[:day]}", "%Y/%m/%d")
+      schedules = SummerStudentSchedule.find(:all, :conditions => ["summer_student_id = ? and selected IS NULL and begin >= ? and begin < ?", params[:id], DateTime.new(day.year, day.month, day.day), DateTime.new(day.year, day.month, day.day, 24)],  :order => "selected ASC")
+    else
+      schedules = SummerStudentSchedule.find(:all, :conditions => ["summer_student_id = ? and selected IS NULL", params[:id]], :order => "selected ASC")
+    end
+
+        
     events = []
     for event in schedules
       
-      str = "#{event.begin.strftime('%I:%M%p')} - #{event.end.strftime('%I:%M%p')}";
+      if SummerStudentSchedule.find(:all, :conditions => ["summer_student_id = ? and selected IS NOT NULL and begin >= ? and begin < ?", params[:id], DateTime.new(event.begin.year, event.begin.month, event.begin.day), DateTime.new(event.begin.year, event.begin.month, event.begin.day, 24) ], :order => "selected ASC").size == 0
       
-      start, finish = event.begin.to_time.to_i, event.end.to_time.to_i
+        str = "#{event.begin.strftime('%I:%M%p')} - #{event.end.strftime('%I:%M%p')}";
       
-      today_begin = Time.local(event.begin.year, event.begin.month, event.begin.day, params[:day_start].to_i)
-      today_end = Time.local(event.end.year, event.end.month, event.end.day, params[:day_end].to_i)
+        start, finish = event.begin.to_time.to_i, event.end.to_time.to_i
       
-      if event.begin.hour < params[:day_start].to_i
-        start = today_begin.to_i
+        today_begin = Time.local(event.begin.year, event.begin.month, event.begin.day, params[:day_start].to_i)
+        today_end = Time.local(event.end.year, event.end.month, event.end.day, params[:day_end].to_i)
+      
+        if event.begin.hour < params[:day_start].to_i
+          start = today_begin.to_i
+        end
+      
+        events << {:start => start, :finish => finish, :string => str, :schedule_id => event.id, :selected => event.selected } unless (finish < today_begin.to_i)
       end
-      
-      events << {:start => start, :finish => finish, :string => str, :schedule_id => event.id, :selected => event.selected } unless (finish < today_begin.to_i)
     end
     
     data = { :events => events, :name => student.name, :duration => student.lesson_duration }
@@ -231,7 +245,7 @@ class AdminController < ApplicationController
       @all_lessons[block] = {
         :offset => (((lesson_start - block) / unit_time) * unit_height).round,
         :duration => (((student.lesson_duration * 60) / unit_time) * unit_height).round,
-        :string => "<a name=\"lesson_" + lesson_start.to_s + "\"></a><strong>#{student.name}</strong>: #{data.selected.strftime('%I:%M%p')} - #{Time.at(lesson_end).strftime('%I:%M%p')} | <a href=\"#\" onclick=\"if (confirm('Are you sure you want to delete this lesson?')) { new Ajax.Request('/admin/summer_lesson_delete/" + data.id.to_s + "', {asynchronous:true, evalScripts:true, onComplete:function(request){Effect.Fade($('t" + block.to_s + "').down('div'), {duration: 0.5}); var count = $('lesson_count_" + student.id.to_s + "').down('a'); count.update(parseInt(count.innerHTML) - 1);}, parameters:'authenticity_token=' + encodeURIComponent('" + form_authenticity_token + "')}); }; return false;\" style=\"color: #700;\">x</a>",
+        :string => "<a name=\"lesson_" + lesson_start.to_s + "\"></a><strong>#{student.name}</strong>: #{data.selected.strftime('%I:%M%p')} - #{Time.at(lesson_end).strftime('%I:%M%p')} | <a href=\"#\" onclick=\"if (confirm('Are you sure you want to delete this lesson?')) { new Ajax.Request('/admin/summer_lesson_delete/" + data.id.to_s + "', {asynchronous:true, evalScripts:true, onComplete:function(request){Effect.Fade($('t" + block.to_s + "').down('div'), { duration: 0.5, afterFinish: function() { $('t" + block.to_s + "').down('div').remove() } }); var count = $('lesson_count_" + student.id.to_s + "').down('a'); count.update(parseInt(count.innerHTML) - 1);  render_schedule_day(" + student.id.to_s + ", '" + data.begin.strftime("%Y/%m/%d") + "');}, parameters:'authenticity_token=' + encodeURIComponent('" + form_authenticity_token + "')}); }; return false;\" style=\"color: #700;\">x</a>",
         :schedule_id => data.id,
         :student_id => student.id
       }
