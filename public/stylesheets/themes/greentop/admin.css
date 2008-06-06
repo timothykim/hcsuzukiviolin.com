@@ -62,9 +62,16 @@ table.admin_table tr.hightlight td {
 
 
 
+
+
 #body.admin_summer_add, #body.admin_summer_schedule {
-	width: 95%;
+	width: 100%;
 	margin: 0px auto;
+}
+
+#content_no_side.admin_summer_schedule {
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 
