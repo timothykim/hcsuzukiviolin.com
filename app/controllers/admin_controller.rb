@@ -76,6 +76,12 @@ class AdminController < ApplicationController
   end
   
   
+  def calendar
+    if params[:calendar]
+      
+    end
+  end
+  
   def summer
     @section_path = "Adminitration &raquo; "
     @section_title = 'Summer Schedule'
@@ -85,7 +91,32 @@ class AdminController < ApplicationController
     @students = SummerStudent.find(:all, :order => "name ASC")
   end
   
+  def summer_lesson_add
+    session[:return_to] = ""
+        
+    event = SummerStudentSchedule.find(params[:schedule_id])
+    today = event.begin
+    lesson = DateTime.strptime("#{today.month}/#{today.day}/#{today.year} #{params[:time]}", "%m/%d/%Y %I:%M%p")
+    event.selected = lesson
+    event.save
+    
+    lesson_begin = lesson.to_time.to_i
+    lesson_end = lesson_begin +     (event.summer_student.lesson_duration * 60)
+    
+    block_start = (lesson_begin - (lesson_begin % 1800))
+    
+    block_array = [block_start]
+    
+#    while block_array.last <
+    block_array << block_start + 1800
+    
+
+    render :text => "{ 'start': #{lesson.to_time.to_i}, 'end': #{lesson_end}, 'block_array': #{block_start}}"
+  end
+  
   def summer_student_json
+    session[:return_to] = ""
+    
     headers["Content-Type"] = "text/x-json; charset=utf-8"
     
     student = SummerStudent.find(params[:id])
@@ -105,10 +136,10 @@ class AdminController < ApplicationController
         start = today_begin.to_i
       end
       
-      events << [start, finish, str] unless (finish < today_begin.to_i)
+      events << {:start => start, :finish => finish, :string => str, :schedule_id => event.id, :selected => event.selected } unless (finish < today_begin.to_i)
     end
     
-    data = { :events => events, :name => student.name }
+    data = { :events => events, :name => student.name, :duration => student.lesson_duration }
 
     render :text => data.to_json
   end
@@ -124,6 +155,13 @@ class AdminController < ApplicationController
     @numberofweeks = (@totaldays / 7.0).ceil
     
     @students = SummerStudent.find(:all, :order => "name ASC")
+
+    @student_lessons = {}
+    
+    for student in @students
+      @student_lessons[student] = SummerStudentSchedule.find(:all, :conditions => ["summer_student_id = ? and selected IS NOT NULL", student.id]).size
+    end
+    
     
     @day_start = 7;
     @day_end   = 20;

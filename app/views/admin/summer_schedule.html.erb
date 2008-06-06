@@ -2,12 +2,23 @@
 	<h3>Student List</h3>
 	<ul>
 	<% for student in @students %>
-		<li><input type="checkbox" class="checkbox" id="st_check_<%= student.id %>" title="<%= student.id %>" onclick="return update_calendar(<%= student.id %>, this);" /> <label for="st_check_<%= student.id %>"><span class="studentname" style="background-color: #<%= @colors[student.id % 21] %>;"><%= student.name %></span></label> <small><%= link_to "edit", :action => "summer_add", :id => student.id %></small></li>
+		<li>
+			<table cellspacing="0" cellpadding="0" border="0"><tr><td>
+				<input type="checkbox" class="checkbox" id="st_check_<%= student.id %>" title="<%= student.id %>" onclick="return update_calendar(<%= student.id %>, this);" />
+			</td><td>
+				<label for="st_check_<%= student.id %>"><div class="studentname" style="background-color: #<%= @colors[student.id % 21] %>;"><%= student.name %></div></label>
+			</td><td>
+				<span id="lesson_count_<%= student.id %>"><%= 10 - @student_lessons[student] %></span>
+			</td><td>
+				&nbsp;<small><%= link_to "edit", :action => "summer_add", :id => student.id %></small>
+			</td></tr></table>
+		</li>
 	<% end %>
 	</ul>
-	
 	<p><small><a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = true; update_calendar(cb.title, cb); }); return false;">select all</a> | <a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = false; update_calendar(cb.title, cb); }); return false;">select none</a></small></p>
 	
+	<p><small><a href="/admin/summer_add"><img src="/images/icons/add_small.png" class="icon" /> Add a New Student</a></small></p>
+
 	<h3>Jump to Week</h3>
 	<p>
 	<% @numberofweeks.times do |week| %>
@@ -102,3 +113,16 @@
 </div>
 
 <span id="mouseover_name" style="display: none;"></span>
+
+<div id="event_dialog" style="display: none;" onmouseover="show_time = false;" onmouseout="show_time = true;">
+	<%= form_tag '/admin/summer_lesson_add', :method => 'get', :id => 'add_lesson', :onsubmit => 'add_lesson(); return false;' %>
+	<strong>Adding Lesson</strong><br />
+	<span id="dialog_name"></span> @ <input type="text" id="dialog_time" name="time" size="7" />
+	for <span id="dialog_duration_str"></span> minutes.<bt />
+	<input type="submit" value="Add!"/> <button onclick="hide_dialog(); return false;">Cancel</button>
+	<input type="hidden" name="schedule_id" id="dialog_schedule_id" value="" />
+	<input type="hidden" name="duration" id="dialog_duration" value="" />
+	</form>
+</div>
+
+<div id="xy" style="display: none;"></div>
