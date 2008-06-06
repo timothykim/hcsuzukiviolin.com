@@ -135,7 +135,10 @@ class AdminController < ApplicationController
   
   def summer_lesson_delete
     if params[:id]
-      SummerStudentSchedule.find(params[:id]).destroy
+      schedule = SummerStudentSchedule.find(params[:id])
+      
+      schedule.selected = nil
+      schedule.save
     end
     
     render :nothing => true
@@ -355,7 +358,7 @@ class AdminController < ApplicationController
           date = Date.ordinal(year, yday.to_i)
         
           #split it by commas or endline
-          times.split(/,|\n/).each do |time|
+          times.strip.split(/,|\n/).each do |time|
             t = time.strip.split(%r{-\s*})
             if t[0].include? ":"
               start = DateTime.strptime("#{date.month}/#{date.day}/#{date.year} #{t[0]}", "%m/%d/%Y %I:%M%p")
