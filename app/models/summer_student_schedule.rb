@@ -4,4 +4,6 @@ class SummerStudentSchedule < ActiveRecord::Base
   def to_s
     self.begin.strftime("%I:%M%p") + "-" + self.end.strftime("%I:%M%p")
   end
+
+
 end

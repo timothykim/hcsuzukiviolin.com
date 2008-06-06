@@ -42,19 +42,66 @@ Event.onDOMReady(function() {
 	});
 });
 
+function close_lesson_list(id) {
+	Effect.Fade($('lesson_list_' + id), { duration: 0.5 });
+}
 
-var ser;
-
-function add_lesson() {
-	ser = $('add_lesson').serialize(true);
+function show_lesson_list(id) {
+	var url = "/admin/get_lesson_list_json/" + id;
 	
-	/*
-	$('add_lesson').request({
-		onComplete: function(transport){ 
-			//
+	$$('div.lesson_list').each(function(e) {
+		if(e.visible()) {
+			Effect.Fade(e, { duration: 0.5 });			
 		}
 	});
-	*/
+	
+	new Ajax.Request(url, {
+		method: 'get',
+		onSuccess: function(transport) {
+			var data = transport.responseText.evalJSON();
+			
+			var lesson_div = $('lesson_list_' + id);
+			lesson_div.style.display = "block";
+
+			lesson_div.down('ul').remove();
+			lesson_div.insert('<ul></ul>');
+
+			var list = lesson_div.down('ul');
+			
+			data.lessons.each(function(lesson) {
+				list.insert("<li>" + lesson + "</li>");
+			});
+		}
+	});
+}
+
+function get_color(id) {
+	return colors[id % 21];
+}
+
+function get_calendar_bar_image_url(color, block_start, start, end) {
+	return img = "http://kgfamily.com/scripts/calendarbar.php?w=" + width + "&amp;uh=" + unit_height + "&amp;ut=" + unit_time + "&amp;c=" + colors[student_id % 21] + "&amp;ds=" + block_start + "&amp;es=" + start + "-" + end;
+}
+
+
+function add_lesson() {	
+	$('add_lesson').request({
+		onComplete: function(transport){ 
+			var data = transport.responseText.evalJSON();
+			hide_dialog();
+			var div = '<div class="lesson_bar" style="margin-top: ' + data.offset + 'px; height: ' + (data.duration - 3 - 1) + 'px; background-color: #' + get_color(data.student_id) + '"><span class="lesson_text" style="position: absolute;">' + data.string + '</span></div>';
+
+
+			if (data.update) {
+				$(data.prev_block).down('div').remove();
+			} else {
+				var count = $('lesson_count_' + data.student_id);
+				count.update(parseInt(count.innerHTML) + 1);
+			}
+			$(data.block).insert(div);
+		}
+	});
+	return false;
 }
 
 function hide_dialog() {
@@ -171,9 +218,19 @@ function render_schedule(student_id) {
 				var img = "http://kgfamily.com/scripts/calendarbar.php?w=" + width + "&amp;uh=" + unit_height + "&amp;ut=" + unit_time + "&amp;c=" + colors[student_id % 21] + "&amp;ds=" + block_start + "&amp;es=" + es;
 
 
-				var html = '<img style="cursor: pointer;" onclick="show_lesson_dialog(\'' + student.name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\', \'' + e.schedule_id + '\', \'' + student.duration + '\');" onmouseout="hidename();" onmouseover="showname(\'' + student.name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\');" class="calendar_bar bar_' + student_id + '" src="' + img + '" />';
+				var style = "";
+				
+				var insert_div = $(div);
+				
+				if (insert_div.childElements().length == 1) {
+					var top_div = insert_div.childElements()[0]
+					var height = top_div.getHeight();
+					style = "top: -" + (height + parseInt(top_div.style.marginTop))+ "px;";
+				}
 
-				$(div).insert(html);
+				var html = '<img style="cursor: pointer; ' + style + '" onclick="show_lesson_dialog(\'' + student.name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\', \'' + e.schedule_id + '\', \'' + student.duration + '\');" onmouseout="hidename();" onmouseover="showname(\'' + student.name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\');" class="calendar_bar bar_' + student_id + '" src="' + img + '" />';
+
+				insert_div.insert(html);
 			});
 	  	}
 	});
@@ -234,9 +291,6 @@ function getMouseXY(e) {
 		$('xy').style.display = "none";
 		
 	}
-	
-  
-
 
   return true;
 }
