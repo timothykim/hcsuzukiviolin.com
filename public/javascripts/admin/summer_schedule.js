@@ -106,7 +106,7 @@ function add_lesson() {
 		onComplete: function(transport){
 			var data = transport.responseText.evalJSON();
 			hide_dialog();
-			var div = '<div class="lesson_bar" style="margin-top: ' + data.offset + 'px; height: ' + (data.duration - 3 - 1) + 'px; background-color: #' + get_color(data.student_id) + '"><span class="lesson_text" style="position: absolute;">' + data.string + '</span></div>';
+			var div = '<div class="lesson_bar" style="width: ' + ($(data.block).getWidth() - 2) + 'px; margin-top: ' + data.offset + 'px; height: ' + (data.duration - 3 - 1) + 'px; background-color: #' + get_color(data.student_id) + '"><span class="lesson_text" style="position: absolute;">' + data.string + '</span></div>';
 
 			if (data.update) {
 				$(data.prev_block).down('div').remove();
@@ -118,7 +118,10 @@ function add_lesson() {
 			$(data.block).insert(div);
 			
 			data.image_blocks.each(function(b) {
-				Effect.Fade($(b).down('img'), { duration: 0.5, afterFinish: function() { $(b).down('img').remove() } });
+				var img = $(b).down('img.bar_' + data.student_id);
+				
+				
+				Effect.Fade(img, { duration: 0.5, afterFinish: function() { img } });
 			});
 		}
 	});
