@@ -7,10 +7,17 @@
 				<input type="checkbox" class="checkbox" id="st_check_<%= student.id %>" title="<%= student.id %>" onclick="return update_calendar(<%= student.id %>, this);" />
 			</td><td>
 				<label for="st_check_<%= student.id %>"><div class="studentname" style="background-color: #<%= @colors[student.id % 21] %>;"><%= student.name %></div></label>
+			</td><td width="20">
+				<span id="lesson_count_<%= student.id %>"><a href="#" onclick="show_lesson_list(<%= student.id %>); return false;"><%= @student_lessons[student].size %></a></span>
+				<div class="lesson_list" id="lesson_list_<%= student.id %>" style="display:none;">
+					<div style="float:right;"><a href="#" onclick="close_lesson_list(<%= student.id %>); return false;">close</a></div>
+
+					<strong><%= student.name %>'s Lessons</strong>
+					<ul></ul>
+					
+				</div>
 			</td><td>
-				<span id="lesson_count_<%= student.id %>"><%= 10 - @student_lessons[student] %></span>
-			</td><td>
-				&nbsp;<small><%= link_to "edit", :action => "summer_add", :id => student.id %></small>
+				<%= link_to "edit", :action => "summer_add", :id => student.id %></small>
 			</td></tr></table>
 		</li>
 	<% end %>
@@ -29,8 +36,9 @@
 	<h3>Legend</h3>
 	<div class="legend" style="background-color: #e2fde6;">Your CIFA schedule</div>
 	<div class="legend" style="background-color: #e6edf2;">Your CHMS schedule</div>
-	<div class="legend" style="background-color: #ffcccc;">Lesson occupied</div>
 
+	<h3>Controls</h3>
+	<input type="checkbox" id="time_show" checked="checked" onclick="if (this.checked) { show_time = true; } else { show_time = false;}" /><small><label for="time_show"> Show Cursor Time Box</label></small>
 </div>
 
 <div id="calendar_table">
@@ -86,7 +94,15 @@
 										
 					timestamp = Time.local(today.year, today.month, today.day, i).to_i
 			%>
-				<div id="t<%= timestamp %>" style="<%= bgcolor %> padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size:9px;"> </div>
+				<div id="t<%= timestamp %>" style="<%= bgcolor %> padding:0px; margin:0px; border-top: 1px solid silver; height: 15px;">
+					<%
+						if @all_lessons[timestamp]
+					%>
+					<div class="lesson_bar" style="margin-top: <%= @all_lessons[timestamp][:offset] %>px; height: <%= @all_lessons[timestamp][:duration] - 3 - 1 %>px; background-color: #<%= @colors[@all_lessons[timestamp][:student_id] % 21] %>"><span class="lesson_text"><%= @all_lessons[timestamp][:string] %></span></div>
+
+					<% end %>
+				
+				</div>
 			<%
 					i += 0.5
 					bgcolor = ""
@@ -99,7 +115,17 @@
 
 					timestamp = Time.local(today.year, today.month, today.day, i, 30).to_i
 			%>
-				<div id="t<%= timestamp %>" style="<%= bgcolor %> padding:0px; margin:0px;  border-top: 1px dotted silver; height: 15px; font-size:9px;"></div>
+				<div id="t<%= timestamp %>" style="<%= bgcolor %> padding:0px; margin:0px;  border-top: 1px dotted silver; height: 15px; font-size:9px;">
+				
+					<%
+						if @all_lessons[timestamp]
+					%>
+					<div class="lesson_bar" style="margin-top: <%= @all_lessons[timestamp][:offset] %>px; height: <%= @all_lessons[timestamp][:duration] - 3 - 1 %>px; background-color: #<%= @colors[@all_lessons[timestamp][:student_id] % 21] %>"><span class="lesson_text"><%= @all_lessons[timestamp][:string] %></span></div>
+
+					<% end %>
+				
+					
+				</div>
 			<% end %>
 		
 		</td>
@@ -115,7 +141,7 @@
 <span id="mouseover_name" style="display: none;"></span>
 
 <div id="event_dialog" style="display: none;" onmouseover="show_time = false;" onmouseout="show_time = true;">
-	<%= form_tag '/admin/summer_lesson_add', :method => 'get', :id => 'add_lesson', :onsubmit => 'add_lesson(); return false;' %>
+	<%= form_tag '/admin/summer_lesson_add', :id => 'add_lesson', :onsubmit => 'add_lesson(); return false;' %>
 	<strong>Adding Lesson</strong><br />
 	<span id="dialog_name"></span> @ <input type="text" id="dialog_time" name="time" size="7" />
 	for <span id="dialog_duration_str"></span> minutes.<bt />

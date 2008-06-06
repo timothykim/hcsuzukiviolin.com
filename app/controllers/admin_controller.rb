@@ -93,25 +93,74 @@ class AdminController < ApplicationController
   
   def summer_lesson_add
     session[:return_to] = ""
-        
+    
+    unit_height = 16.0
+    unit_time = 30 * 60.0
+
+
     event = SummerStudentSchedule.find(params[:schedule_id])
+    update = false
+    unless event.selected.nil?
+      update = true
+      prev = Time.local(event.selected.year, event.selected.month, event.selected.day, event.selected.hour, event.selected.min).to_i
+      prev_block = (prev - (prev % 1800))
+    end
     today = event.begin
-    lesson = DateTime.strptime("#{today.month}/#{today.day}/#{today.year} #{params[:time]}", "%m/%d/%Y %I:%M%p")
+    lesson = DateTime.strptime("#{today.month}/#{today.day}/#{today.year} #{params[:time]} #{today.strftime('%z')}", "%m/%d/%Y %I:%M%p %z")
     event.selected = lesson
     event.save
     
-    lesson_begin = lesson.to_time.to_i
-    lesson_end = lesson_begin +     (event.summer_student.lesson_duration * 60)
+    lesson_start = Time.local(lesson.year, lesson.month, lesson.day, lesson.hour, lesson.min).to_i
+    lesson_end = lesson_start + (event.summer_student.lesson_duration * 60)
     
-    block_start = (lesson_begin - (lesson_begin % 1800))
+    block = (lesson_start - (lesson_start % 1800))
     
-    block_array = [block_start]
-    
-#    while block_array.last <
-    block_array << block_start + 1800
+    student = event.summer_student
+
+
+    data = {
+      :block => 't' + block.to_s,
+      :offset => (((lesson_start - block) / unit_time) * unit_height).round,
+      :duration => (((student.lesson_duration * 60) / unit_time) * unit_height).round,
+      :string => "<a name=\"lesson_" + lesson_start.to_s + "\"></a><strong>#{student.name}</strong>: #{event.selected.strftime('%I:%M%p')} - #{Time.at(lesson_end).strftime('%I:%M%p')} | <a href=\"#\" onclick=\"if (confirm('Are you sure you want to delete this lesson?')) { new Ajax.Request('/admin/summer_lesson_delete/" + event.id.to_s + "', {asynchronous:true, evalScripts:true, onComplete:function(request){Effect.Fade($('t" + block.to_s + "').down('div'), {duration: 0.5});}, parameters:'authenticity_token=' + encodeURIComponent('" + form_authenticity_token + "')}); }; return false;\" style=\"color: #700;\">delete</a>",
+      :schedule_id => event.id,
+      :student_id => student.id,
+      :update => update,
+      :prev_block => 't' + prev_block.to_s
+    }
     
 
-    render :text => "{ 'start': #{lesson.to_time.to_i}, 'end': #{lesson_end}, 'block_array': #{block_start}}"
+    render :text => data.to_json
+  end
+  
+  def summer_lesson_delete
+    if params[:id]
+      SummerStudentSchedule.find(params[:id]).destroy
+    end
+    
+    render :nothing => true
+  end
+  
+  def get_lesson_list_json
+    session[:return_to] = ""
+    headers["Content-Type"] = "text/x-json; charset=utf-8"
+    
+    schedules = SummerStudentSchedule.find(:all, :conditions => ["summer_student_id = ? and selected IS NOT NULL", params[:id]], :order => "selected ASC")
+    
+    lesson_list = []
+    
+    i = 1
+    for schedule in schedules 
+      lesson_start = Time.local(schedule.selected.year, schedule.selected.month, schedule.selected.day, schedule.selected.hour, schedule.selected.min).to_i
+      lesson_end = lesson_start + (schedule.summer_student.lesson_duration * 60)
+      lesson_list << i.to_s + '. <a href="#lesson_' + lesson_start.to_s + '">' + Time.at(lesson_start).strftime("%a %b %d : %I:%M%p") + ' - ' + Time.at(lesson_end).strftime("%I:%M%p") + '</a>'
+      i += 1
+    end
+    
+    data = { :lessons => lesson_list }
+    
+    render :text => data.to_json
+    
   end
   
   def summer_student_json
@@ -145,6 +194,9 @@ class AdminController < ApplicationController
   end
   
   def summer_schedule
+    unit_height = 16.0
+    unit_time = 30 * 60.0
+    
     @section_path = "Adminitration &raquo; "
     @section_title = 'Summer Schedule Edit'
     
@@ -159,7 +211,27 @@ class AdminController < ApplicationController
     @student_lessons = {}
     
     for student in @students
-      @student_lessons[student] = SummerStudentSchedule.find(:all, :conditions => ["summer_student_id = ? and selected IS NOT NULL", student.id]).size
+      @student_lessons[student] = SummerStudentSchedule.find(:all, :conditions => ["summer_student_id = ? and selected IS NOT NULL", student.id])
+    end
+    
+    
+    lesson_data = SummerStudentSchedule.find(:all, :conditions => ["selected IS NOT NULL"])
+
+
+    @all_lessons = {}
+    
+    for data in lesson_data
+      student = data.summer_student
+      lesson_start = data.selected.to_time.to_i
+      lesson_end = lesson_start + (student.lesson_duration * 60)
+      block = (lesson_start - (lesson_start % 1800))
+      @all_lessons[block] = {
+        :offset => (((lesson_start - block) / unit_time) * unit_height).round,
+        :duration => (((student.lesson_duration * 60) / unit_time) * unit_height).round,
+        :string => "<a name=\"lesson_" + lesson_start.to_s + "\"></a><strong>#{student.name}</strong>: #{data.selected.strftime('%I:%M%p')} - #{Time.at(lesson_end).strftime('%I:%M%p')} | <a href=\"#\" onclick=\"if (confirm('Are you sure you want to delete this lesson?')) { new Ajax.Request('/admin/summer_lesson_delete/" + data.id.to_s + "', {asynchronous:true, evalScripts:true, onComplete:function(request){Effect.Fade($('t" + block.to_s + "').down('div'), {duration: 0.5});}, parameters:'authenticity_token=' + encodeURIComponent('" + form_authenticity_token + "')}); }; return false;\" style=\"color: #700;\">delete</a>",
+        :schedule_id => data.id,
+        :student_id => student.id
+      }
     end
     
     
