@@ -95,7 +95,7 @@ function add_lesson() {
 			if (data.update) {
 				$(data.prev_block).down('div').remove();
 			} else {
-				var count = $('lesson_count_' + data.student_id).down('a');
+				var count = $('lesson_count_' + data.student_id).down('a');				
 				count.update(parseInt(count.innerHTML) + 1);
 			}
 			$(data.block).insert(div);
