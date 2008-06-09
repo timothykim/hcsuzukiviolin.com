@@ -1,5 +1,5 @@
 set :application, "studio"
-set :repository,  "git://github.com/highwind/gwsms-org.git"
+set :repository,  "git@github.com:highwind/gwsms.org.git"
 set :domain, "gwsms.org"
 
 set :scm, :git

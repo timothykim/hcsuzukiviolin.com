@@ -210,6 +210,38 @@ class AdminController < ApplicationController
     render :text => data.to_json
   end
   
+  def summer_schedule_ical
+    headers["Content-Type"] = "text/calendar; charset=utf-8"
+    
+    ical = <<END_OF_STRING
+BEGIN:VCALENDAR
+METHOD:PUBLISH
+X-WR-TIMEZONE:US/Eastern
+PRODID:-//GWSMS.//Summer Calendar//EN
+X-WR-CALNAME:Summer 2008
+VERSION:2.0
+END_OF_STRING
+
+    schedules = SummerStudentSchedule.find(:all, :conditions => ["selected IS NOT NULL"], :order => "selected ASC")
+    
+    for lesson in schedules
+      startstr = lesson.selected.strftime("%Y%m%dT%H%M00")
+      finishstr = Time.at(lesson.selected.to_time.to_i + (lesson.summer_student.lesson_duration * 60)).strftime("%Y%m%dT%H%M00")
+      event_str = <<END_OF_EVENT
+BEGIN:VEVENT
+DTSTART;TZID=US/Eastern:#{startstr}
+SUMMARY:#{lesson.summer_student.name}
+DTEND;TZID=US/Eastern:#{finishstr}
+END:VEVENT
+END_OF_EVENT
+      ical += event_str
+    end
+
+    ical += "END:VCALENDAR"
+
+    render :text => ical
+  end
+  
   def summer_schedule
     unit_height = 16.0
     unit_time = 30 * 60.0
