@@ -52,6 +52,7 @@
 		<th class="flex">Wednesday</th>
 		<th class="flex">Thursday</th>
 		<th class="flex">Friday</th>
+		<th class="flex">Saturday</th>
 	</tr>	
 	</thead>
 	<tbody>
@@ -71,7 +72,7 @@
 				<% end %>
 			</td>
 <%
-	for day in (1..5)
+	for day in (1..6)
 		today = @startdate + ((week * 7) + day)
 		if @schedule[today.yday].nil?
 			td_class = "not_active"
@@ -155,8 +156,23 @@ for student in @students
 		
 		lesson_start = Time.local(schedule.selected.year, schedule.selected.month, schedule.selected.day, schedule.selected.hour, schedule.selected.min).to_i
         lesson_end = lesson_start + (schedule.summer_student.lesson_duration * 60)
+
+      	if (student.name == "*Group" && schedule.selected.strftime('%m/%d') == "06/28")
 %>
+
+		<%= Time.at(lesson_start).strftime("<strike><strong>%a, %b. %d</strong></strike> <strong style=\"color:red;\">CANCELED</strong><br />%I:%M%p") + ' - ' + Time.at(lesson_end).strftime("%I:%M%p") %>
+
+		<%
+		else
+		%>
+
         <%= Time.at(lesson_start).strftime("<strong>%a, %b. %d</strong><br />%I:%M%p") + ' - ' + Time.at(lesson_end).strftime("%I:%M%p") %>
+
+		<%
+		end
+		%>
+
+
 		</li>
 <%
 	end

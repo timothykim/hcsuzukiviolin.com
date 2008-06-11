@@ -34,7 +34,13 @@ class PageController < ApplicationController
       for schedule in @schedules[student]
         lesson_start = Time.local(schedule.selected.year, schedule.selected.month, schedule.selected.day, schedule.selected.hour, schedule.selected.min).to_i
         lesson_end = lesson_start + (schedule.summer_student.lesson_duration * 60)
-        lesson_list << "<li>" + i.to_s + '. <a href="#lesson_' + lesson_start.to_s + '">' + Time.at(lesson_start).strftime("%a, %b. %d : %I:%M%p") + ' - ' + Time.at(lesson_end).strftime("%I:%M%p") + '</a></li>'
+        
+        if (student.name == "*Group" && i == 1)
+          lesson_list << "<li>" + i.to_s + '. <strike><a href="#lesson_' + lesson_start.to_s + '">' + Time.at(lesson_start).strftime("%a, %b. %d : %I:%M%p") + ' - ' + Time.at(lesson_end).strftime("%I:%M%p") + '</a></strike> <strong style="color:red;">CANCELED</strong></li>'
+        else
+          lesson_list << "<li>" + i.to_s + '. <a href="#lesson_' + lesson_start.to_s + '">' + Time.at(lesson_start).strftime("%a, %b. %d : %I:%M%p") + ' - ' + Time.at(lesson_end).strftime("%I:%M%p") + '</a></li>'
+        end
+        
         i += 1
       end
       
@@ -76,7 +82,7 @@ class PageController < ApplicationController
       student = data.summer_student
       lesson_start = data.selected.to_time.to_i
       lesson_end = lesson_start + (student.lesson_duration * 60)
-      block = (lesson_start - (lesson_start % 1800))
+      block = (lesson_start - (lesson_start % 1800))      
       @all_lessons[block] = {
         :offset => (((lesson_start - block) / unit_time) * unit_height).round,
         :duration => (((student.lesson_duration * 60) / unit_time) * unit_height).round,
@@ -87,6 +93,12 @@ class PageController < ApplicationController
         :schedule_id => data.id,
         :student_id => student.id
       }
+      
+      if (student.name == "*Group" && data.selected.strftime('%m/%d') == "06/28")
+        @all_lessons[block][:name_string] = "<strike>" + @all_lessons[block][:name_string] + "</strike> CANCELED"
+        @all_lessons[block][:student_name] = "<strike>" + @all_lessons[block][:student_name] + '</strike> CANCELED'
+        @all_lessons[block][:time_string] = "<strike>" + @all_lessons[block][:time_string] + "</strike>"
+      end
     end
     
     
@@ -116,7 +128,6 @@ class PageController < ApplicationController
       Date.new(2008, 6, 11).yday => "",
       Date.new(2008, 6, 12).yday => "",
       Date.new(2008, 6, 13).yday => "",
-      Date.new(2008, 6, 14).yday => "",
       Date.new(2008, 6, 15).yday => "",
       Date.new(2008, 6, 16).yday => "",
         Date.new(2008, 6, 17).yday => "",
@@ -128,10 +139,13 @@ class PageController < ApplicationController
         Date.new(2008, 6, 25).yday => "",
         Date.new(2008, 6, 26).yday => "",
         Date.new(2008, 6, 27).yday => "",
+        Date.new(2008, 6, 28).yday => "",
+        
         Date.new(2008, 7, 7).yday => "",
         Date.new(2008, 7, 8).yday => "",
         Date.new(2008, 7, 9).yday => "",
         Date.new(2008, 7, 10).yday => "",
+        Date.new(2008, 7, 12).yday => "",
         Date.new(2008, 7, 11).yday => "",
         Date.new(2008, 7, 14).yday => "",
         Date.new(2008, 7, 15).yday => "",
@@ -143,6 +157,8 @@ class PageController < ApplicationController
         Date.new(2008, 7, 23).yday => "",
         Date.new(2008, 7, 24).yday => "",
         Date.new(2008, 7, 25).yday => "",
+        Date.new(2008, 7, 26).yday => "",
+
         Date.new(2008, 7, 28).yday => "",
         Date.new(2008, 7, 29).yday => "",
         Date.new(2008, 7, 30).yday => "",
@@ -150,13 +166,19 @@ class PageController < ApplicationController
         Date.new(2008, 8, 6).yday => "",
         Date.new(2008, 8, 7).yday => "",
         Date.new(2008, 8, 8).yday => "",
+        Date.new(2008, 8, 9).yday => "",
+        
         Date.new(2008, 8, 14).yday => "",
         Date.new(2008, 8, 15).yday => "",
+        Date.new(2008, 8, 16).yday => "",
+        
         Date.new(2008, 8, 18).yday => "",
         Date.new(2008, 8, 19).yday => "",
         Date.new(2008, 8, 20).yday => "",
         Date.new(2008, 8, 21).yday => "",
         Date.new(2008, 8, 22).yday => "",
+        Date.new(2008, 8, 23).yday => "",
+        
         Date.new(2008, 8, 25).yday => "",
         Date.new(2008, 8, 26).yday => "",
         Date.new(2008, 8, 27).yday => "",

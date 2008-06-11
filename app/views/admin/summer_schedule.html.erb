@@ -54,6 +54,7 @@
 		<th class="flex">Wednesday</th>
 		<th class="flex">Thursday</th>
 		<th class="flex">Friday</th>
+		<th class="flex">Saturday</th>
 	</tr>	
 	</thead>
 	<tbody>
@@ -73,7 +74,7 @@
 				<% end %>
 			</td>
 <%
-	for day in (1..5)
+	for day in (1..6)
 		today = @startdate + ((week * 7) + day)
 		if @schedule[today.yday].nil?
 			td_class = "not_active"

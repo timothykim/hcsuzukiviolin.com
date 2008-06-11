@@ -293,6 +293,7 @@ END_OF_EVENT
       3 => [14, 19],
       4 => [14, 20],
       5 => [0, 0],
+      6 => [0, 0],
       :color => "#e2fde6"
     },{
       1 => [0, 0],
@@ -300,6 +301,7 @@ END_OF_EVENT
       3 => [7.5, 11],
       4 => [7.5, 11],
       5 => [7.5, 11],
+      6 => [0, 0],
       :color => "#e6edf2"
     }]
     
@@ -328,14 +330,14 @@ END_OF_EVENT
     				"B08B59" 
     ]
     
+    
     @schedule = {
-        Date.new(2008, 6, 10).yday => "",
-        Date.new(2008, 6, 11).yday => "",
-        Date.new(2008, 6, 12).yday => "",
-        Date.new(2008, 6, 13).yday => "",
-        Date.new(2008, 6, 14).yday => "",
-        Date.new(2008, 6, 15).yday => "",
-        Date.new(2008, 6, 16).yday => "",
+      Date.new(2008, 6, 10).yday => "",
+      Date.new(2008, 6, 11).yday => "",
+      Date.new(2008, 6, 12).yday => "",
+      Date.new(2008, 6, 13).yday => "",
+      Date.new(2008, 6, 15).yday => "",
+      Date.new(2008, 6, 16).yday => "",
         Date.new(2008, 6, 17).yday => "",
         Date.new(2008, 6, 18).yday => "",
         Date.new(2008, 6, 19).yday => "",
@@ -345,10 +347,13 @@ END_OF_EVENT
         Date.new(2008, 6, 25).yday => "",
         Date.new(2008, 6, 26).yday => "",
         Date.new(2008, 6, 27).yday => "",
+        Date.new(2008, 6, 28).yday => "",
+        
         Date.new(2008, 7, 7).yday => "",
         Date.new(2008, 7, 8).yday => "",
         Date.new(2008, 7, 9).yday => "",
         Date.new(2008, 7, 10).yday => "",
+        Date.new(2008, 7, 12).yday => "",
         Date.new(2008, 7, 11).yday => "",
         Date.new(2008, 7, 14).yday => "",
         Date.new(2008, 7, 15).yday => "",
@@ -360,6 +365,8 @@ END_OF_EVENT
         Date.new(2008, 7, 23).yday => "",
         Date.new(2008, 7, 24).yday => "",
         Date.new(2008, 7, 25).yday => "",
+        Date.new(2008, 7, 26).yday => "",
+
         Date.new(2008, 7, 28).yday => "",
         Date.new(2008, 7, 29).yday => "",
         Date.new(2008, 7, 30).yday => "",
@@ -367,13 +374,19 @@ END_OF_EVENT
         Date.new(2008, 8, 6).yday => "",
         Date.new(2008, 8, 7).yday => "",
         Date.new(2008, 8, 8).yday => "",
+        Date.new(2008, 8, 9).yday => "",
+        
         Date.new(2008, 8, 14).yday => "",
         Date.new(2008, 8, 15).yday => "",
+        Date.new(2008, 8, 16).yday => "",
+        
         Date.new(2008, 8, 18).yday => "",
         Date.new(2008, 8, 19).yday => "",
         Date.new(2008, 8, 20).yday => "",
         Date.new(2008, 8, 21).yday => "",
         Date.new(2008, 8, 22).yday => "",
+        Date.new(2008, 8, 23).yday => "",
+        
         Date.new(2008, 8, 25).yday => "",
         Date.new(2008, 8, 26).yday => "",
         Date.new(2008, 8, 27).yday => "",
@@ -381,6 +394,8 @@ END_OF_EVENT
         Date.new(2008, 8, 29).yday => "",
         Date.new(2008, 9, 2).yday => "",
     }
+    
+    
   end
   
   def summer_delete
@@ -443,6 +458,7 @@ END_OF_EVENT
     @numberofweeks = (@totaldays / 7.0).ceil
     
     
+    
     @schedule = {
         Date.new(2008, 6, 17).yday => "",
         Date.new(2008, 6, 18).yday => "",
@@ -453,10 +469,13 @@ END_OF_EVENT
         Date.new(2008, 6, 25).yday => "",
         Date.new(2008, 6, 26).yday => "",
         Date.new(2008, 6, 27).yday => "",
+        Date.new(2008, 6, 28).yday => "",
+        
         Date.new(2008, 7, 7).yday => "",
         Date.new(2008, 7, 8).yday => "",
         Date.new(2008, 7, 9).yday => "",
         Date.new(2008, 7, 10).yday => "",
+        Date.new(2008, 7, 12).yday => "",
         Date.new(2008, 7, 11).yday => "",
         Date.new(2008, 7, 14).yday => "",
         Date.new(2008, 7, 15).yday => "",
@@ -468,6 +487,8 @@ END_OF_EVENT
         Date.new(2008, 7, 23).yday => "",
         Date.new(2008, 7, 24).yday => "",
         Date.new(2008, 7, 25).yday => "",
+        Date.new(2008, 7, 26).yday => "",
+
         Date.new(2008, 7, 28).yday => "",
         Date.new(2008, 7, 29).yday => "",
         Date.new(2008, 7, 30).yday => "",
@@ -475,13 +496,19 @@ END_OF_EVENT
         Date.new(2008, 8, 6).yday => "",
         Date.new(2008, 8, 7).yday => "",
         Date.new(2008, 8, 8).yday => "",
+        Date.new(2008, 8, 9).yday => "",
+        
         Date.new(2008, 8, 14).yday => "",
         Date.new(2008, 8, 15).yday => "",
+        Date.new(2008, 8, 16).yday => "",
+        
         Date.new(2008, 8, 18).yday => "",
         Date.new(2008, 8, 19).yday => "",
         Date.new(2008, 8, 20).yday => "",
         Date.new(2008, 8, 21).yday => "",
         Date.new(2008, 8, 22).yday => "",
+        Date.new(2008, 8, 23).yday => "",
+        
         Date.new(2008, 8, 25).yday => "",
         Date.new(2008, 8, 26).yday => "",
         Date.new(2008, 8, 27).yday => "",
@@ -489,6 +516,8 @@ END_OF_EVENT
         Date.new(2008, 8, 29).yday => "",
         Date.new(2008, 9, 2).yday => "",
     }
+    
+    
     
     
     if params[:id]
