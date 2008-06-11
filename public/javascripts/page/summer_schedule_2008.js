@@ -12,12 +12,22 @@ Event.onDOMReady(function() {
 	}
 	
 	Event.observe(window, 'scroll', function() {
-		if (window.scrollY > 190) {
-			$('side_list').style.top = (window.scrollY - 190) + "px";
+		if(window.scrollY) {
+			if (window.scrollY > 190) {
+				$('side_list').style.top = (window.scrollY - 190) + "px";
+			} else {
+				$('side_list').style.top = 0;
+			}
 		} else {
-			$('side_list').style.top = 0;
+			if (document.documentElement.scrollTop > 220) {
+				$('side_list').style.top = (document.documentElement.scrollTop - 220) + "px";
+			} else {
+				$('side_list').style.top = 0;
+			}
 		}
 	});
+	
+	Event.observe(document, 'mousemove', getMouseXY);
 });
 
 function toggleView(str) {
@@ -44,17 +54,10 @@ function hideTimeBubble() {
 }
 
 
-document.captureEvents(Event.MOUSEMOVE)
-
-// Set-up to use getMouseXY function onMouseMove
-document.onmousemove = getMouseXY;
-
 // Temporary variables to hold mouse x-y pos.s
 var tempX = 0;
 var tempY = 0;
 
-var show_time = true;
-// Main function to retrieve mouse x-y pos.s
 
 function getMouseXY(e) {
   tempX = e.pageX;
