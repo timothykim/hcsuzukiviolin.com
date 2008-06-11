@@ -121,7 +121,7 @@ function add_lesson() {
 				var img = $(b).down('img.bar_' + data.student_id);
 				
 				
-				Effect.Fade(img, { duration: 0.5, afterFinish: function() { img } });
+				Effect.Fade(img, { duration: 0.5, afterFinish: function() { img.remove(); } });
 			});
 		}
 	});

@@ -1,3 +1,10 @@
+<div id="options">
+	<div style="font-size: 8pt; text-align: right; margin-right: 20px; margin-bottom: 5px;">
+		<a href="#" onclick="toggleView('cal');">View as Calendar</a> | 
+		<a href="#" onclick="toggleView('list');">View as List</a>
+	</div>
+</div>
+
 <div id="side_list">
 	<h3>Student List</h3>
 	<p><small>Click on the name to see the lesson list</small></p>
@@ -34,7 +41,6 @@
 </div>
 
 
-
 <div id="calendar_table">
 <table class="calendar main">
 	<thead>
@@ -61,7 +67,7 @@
 						t = (i > 11) ? "#{i-12}pm" : "#{i}am"
 						t = "12pm" if i == 12
 				%>
-					<div style="border-top: 1px solid silver; height: 31px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);"><%= t %></div>
+					<div class="week_indicator"><%= t %></div>
 				<% end %>
 			</td>
 <%
@@ -80,11 +86,11 @@
 			<% for i in (@day_start..@day_end)
 					bgcolor = ""
 
-					for hours in @teaching_hours
-						if active and i >= hours[day][0] and i < hours[day][1]
-							bgcolor = "background-color: #{hours[:color]};"
-						end
-					end
+#					for hours in @teaching_hours
+#						if active and i >= hours[day][0] and i < hours[day][1]
+#							bgcolor = "background-color: #{hours[:color]};"
+#						end
+#					end
 										
 					timestamp = Time.local(today.year, today.month, today.day, i).to_i
 			%>
@@ -92,7 +98,7 @@
 					<%
 						if @all_lessons[timestamp]
 					%>
-					<div class="lesson_bar" style="margin-top: <%= @all_lessons[timestamp][:offset] %>px; height: <%= @all_lessons[timestamp][:duration] - 3 - 1 %>px; background-color: #<%= @colors[@all_lessons[timestamp][:student_id] % 21] %>"><span class="lesson_text"><%= @all_lessons[timestamp][:string] %></span></div>
+					<div onmouseover="showTimeBubble('<%= @all_lessons[timestamp][:student_name] %>','<%= @all_lessons[timestamp][:color] %>','<%= @all_lessons[timestamp][:time_string] %>');" onmouseout="hideTimeBubble();" class="lesson_bar" style="margin-top: <%= @all_lessons[timestamp][:offset] %>px; height: <%= @all_lessons[timestamp][:duration] - 3 - 1 %>px; background-color: #<%= @colors[@all_lessons[timestamp][:student_id] % 21] %>"><span class="lesson_text"><%= @all_lessons[timestamp][:name_string] %></span></div>
 
 					<% end %>
 				
@@ -101,11 +107,11 @@
 					i += 0.5
 					bgcolor = ""
 					
-					for hours in @teaching_hours
-						if active and i >= hours[day][0] and i < hours[day][1]
-							bgcolor = "background-color: #{hours[:color]};"
-						end
-					end
+#					for hours in @teaching_hours
+#						if active and i >= hours[day][0] and i < hours[day][1]
+#							bgcolor = "background-color: #{hours[:color]};"
+#						end
+#					end
 
 					timestamp = Time.local(today.year, today.month, today.day, i, 30).to_i
 			%>
@@ -114,7 +120,7 @@
 					<%
 						if @all_lessons[timestamp]
 					%>
-					<div class="lesson_bar" style="margin-top: <%= @all_lessons[timestamp][:offset] %>px; height: <%= @all_lessons[timestamp][:duration] - 3 - 1 %>px; background-color: #<%= @colors[@all_lessons[timestamp][:student_id] % 21] %>"><span class="lesson_text"><%= @all_lessons[timestamp][:string] %></span></div>
+					<div onmouseover="showTimeBubble('<%= @all_lessons[timestamp][:student_name] %>','<%= @all_lessons[timestamp][:color] %>','<%= @all_lessons[timestamp][:time_string] %>');" onmouseout="hideTimeBubble();" class="lesson_bar" style="margin-top: <%= @all_lessons[timestamp][:offset] %>px; height: <%= @all_lessons[timestamp][:duration] - 3 - 1 %>px; background-color: #<%= @colors[@all_lessons[timestamp][:student_id] % 21] %>"><span class="lesson_text"><%= @all_lessons[timestamp][:name_string] %></span></div>
 
 					<% end %>
 				
@@ -130,4 +136,34 @@
 <% end %>
 	</tbody>
 </table>
+</div>
+
+<span id="timebubble" style="display: none;"></span>
+
+
+<div id="calendar_list" style="display: none;">
+<%
+for student in @students
+%>
+	<div class="student_lesson_list">
+		<h3 style="color: #<%= @colors[student.id % 21] %>"><%= "#{student.name}" %></h3>
+		<ol>
+<%
+    for schedule in @schedules[student]
+%>
+		<li><%
+		
+		lesson_start = Time.local(schedule.selected.year, schedule.selected.month, schedule.selected.day, schedule.selected.hour, schedule.selected.min).to_i
+        lesson_end = lesson_start + (schedule.summer_student.lesson_duration * 60)
+%>
+        <%= Time.at(lesson_start).strftime("<strong>%a, %b. %d</strong><br />%I:%M%p") + ' - ' + Time.at(lesson_end).strftime("%I:%M%p") %>
+		</li>
+<%
+	end
+%>
+		</ol>
+	</div>
+<%
+end
+%>
 </div>

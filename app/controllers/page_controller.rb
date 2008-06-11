@@ -12,7 +12,7 @@ class PageController < ApplicationController
     unit_time = 30 * 60.0
     
     @section_path = "Adminitration &raquo; "
-    @section_title = 'Summer Schedule Edit'
+    @section_title = 'Summer Schedule 2008'
     
     @startdate = Date.new(2008, 6, 8)
     @enddate = Date.new(2008, 9, 2)
@@ -34,7 +34,7 @@ class PageController < ApplicationController
       for schedule in @schedules[student]
         lesson_start = Time.local(schedule.selected.year, schedule.selected.month, schedule.selected.day, schedule.selected.hour, schedule.selected.min).to_i
         lesson_end = lesson_start + (schedule.summer_student.lesson_duration * 60)
-        lesson_list << "<li>" + i.to_s + '. <a href="#lesson_' + lesson_start.to_s + '">' + Time.at(lesson_start).strftime("%a %b %d : %I:%M%p") + ' - ' + Time.at(lesson_end).strftime("%I:%M%p") + '</a></li>'
+        lesson_list << "<li>" + i.to_s + '. <a href="#lesson_' + lesson_start.to_s + '">' + Time.at(lesson_start).strftime("%a, %b. %d : %I:%M%p") + ' - ' + Time.at(lesson_end).strftime("%I:%M%p") + '</a></li>'
         i += 1
       end
       
@@ -44,6 +44,31 @@ class PageController < ApplicationController
     
     lesson_data = SummerStudentSchedule.find(:all, :conditions => ["selected IS NOT NULL"])
 
+
+    
+    @colors = [
+    				"CC3333",
+    				"DD4477",
+    				"994499",
+    				"6633CC",
+    				"336699",
+    				"3366CC",
+    				"22AA99",
+    				"329262",
+    				"0F9618",
+    				"66AA00",
+    				"AAAA11",
+    				"D6AE00",
+    				"EE8800",
+    				"DD5511",
+    				"A87070",
+    				"8C6D8C",
+    				"627487",
+    				"7083A8",
+    				"5C8D87",
+    				"898951",
+    				"B08B59" 
+    ]
 
     @all_lessons = {}
     
@@ -55,7 +80,10 @@ class PageController < ApplicationController
       @all_lessons[block] = {
         :offset => (((lesson_start - block) / unit_time) * unit_height).round,
         :duration => (((student.lesson_duration * 60) / unit_time) * unit_height).round,
-        :string => "<a name=\"lesson_" + lesson_start.to_s + "\"></a><strong>#{student.name}</strong>: #{data.selected.strftime('%I:%M%p')} - #{Time.at(lesson_end).strftime('%I:%M%p')}",
+        :student_name => "#{student.name}",
+        :color => @colors[student.id % 21],
+        :name_string => "<a name=\"lesson_" + lesson_start.to_s + "\"></a><strong>#{student.name}</strong>",
+        :time_string => "#{data.selected.strftime('%b. %d,')} #{data.selected.strftime('%I:%M%p')} - #{Time.at(lesson_end).strftime('%I:%M%p')}",
         :schedule_id => data.id,
         :student_id => student.id
       }
@@ -81,30 +109,7 @@ class PageController < ApplicationController
       :color => "#e6edf2"
     }]
     
-    
-    @colors = [
-    				"CC3333",
-    				"DD4477",
-    				"994499",
-    				"6633CC",
-    				"336699",
-    				"3366CC",
-    				"22AA99",
-    				"329262",
-    				"0F9618",
-    				"66AA00",
-    				"AAAA11",
-    				"D6AE00",
-    				"EE8800",
-    				"DD5511",
-    				"A87070",
-    				"8C6D8C",
-    				"627487",
-    				"7083A8",
-    				"5C8D87",
-    				"898951",
-    				"B08B59" 
-    ]
+
     
     @schedule = {
       Date.new(2008, 6, 10).yday => "",

@@ -60,11 +60,11 @@ table.calendar td.active textarea {
 }
 
 div#calendar_table {
-	margin-left: 130px;
+	margin-left: 135px;
 }
 
 table.main {
-	width: 100%;
+	width: 99%;
 	margin: 0;
 }
 
@@ -133,10 +133,9 @@ img.calendar_bar {
 }
 
 div.lesson_bar {
-	text-align: center;
-	padding-top: 1px;
 	border: 1px solid white;
 	font-size: 9px;
+	padding-top: 1px;
 	color: white;
 	position: relative;
 	z-index: 2;
@@ -146,13 +145,12 @@ div.studentname {
 	color: white;
 	padding: 2px;
 	padding-left: 5px;
-	padding-right: 15px;
 	cursor: pointer;
-	width: 50px;
+	width: 60px;
 	margin-right: 5px;
 }
 
-span#mouseover_name {
+span#timebubble {
 	border: 5px solid red;
 	background-color: white;
 	font-size: 14px;
@@ -214,7 +212,7 @@ span.lesson_text {
 }
 
 div.lesson_list {
-	width: 200px;
+	width: 240px;
 	border: 5px solid silver;
 	background-color: white;
 	-webkit-box-shadow: 2px 2px 10px #888;
@@ -235,4 +233,37 @@ div.lesson_list ul li {
 	padding-top: 4px;
 }
 
+div.week_indicator {
+	border-top: 1px solid silver;
+	height: 31px;
+	text-align:right;
+	font-size:10px;
+	background-color:rgb(232, 238, 247);
+}
+
+div#calendar_list {
+	margin-left: 150px;
+}
+
+div.student_lesson_list {
+	width: 150px;
+	height: 350px;
+	float: left;
+	margin-right: 15px;
+}
+
+div.student_lesson_list h3 {
+	padding-left: 5px;
+	border-bottom: 1px solid silver;
+}
+
+div.student_lesson_list ol {
+	padding-left: 30px;
+	margin: 0px;
+}
+
+div.student_lesson_list li {
+	font-size: 10px;
+	margin-bottom: 4px;
+}
 /* @end */
