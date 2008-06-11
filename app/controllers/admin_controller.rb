@@ -249,7 +249,7 @@ END_OF_EVENT
     @section_path = "Adminitration &raquo; "
     @section_title = 'Summer Schedule Edit'
     
-    @startdate = Date.new(2008, 6, 15)
+    @startdate = Date.new(2008, 6, 8)
     @enddate = Date.new(2008, 9, 2)
     
     @totaldays = (@enddate - @startdate).to_i
@@ -329,6 +329,13 @@ END_OF_EVENT
     ]
     
     @schedule = {
+        Date.new(2008, 6, 10).yday => "",
+        Date.new(2008, 6, 11).yday => "",
+        Date.new(2008, 6, 12).yday => "",
+        Date.new(2008, 6, 13).yday => "",
+        Date.new(2008, 6, 14).yday => "",
+        Date.new(2008, 6, 15).yday => "",
+        Date.new(2008, 6, 16).yday => "",
         Date.new(2008, 6, 17).yday => "",
         Date.new(2008, 6, 18).yday => "",
         Date.new(2008, 6, 19).yday => "",
