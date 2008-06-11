@@ -20,7 +20,7 @@ class PageController < ApplicationController
     @totaldays = (@enddate - @startdate).to_i
     @numberofweeks = (@totaldays / 7.0).ceil
     
-    @students = SummerStudent.find(:all, :order => "name ASC")
+    @students = SummerStudent.find(:all, :order => "name ASC").sort
 
     @student_lessons = {}
     @schedules = {}
