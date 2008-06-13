@@ -32,6 +32,7 @@ task :set_symlinks, :roles => [:app] do
   end
 end
 
+
 after 'deploy:update_code', :update_config
 after 'deploy:update_code', :set_symlinks
 
