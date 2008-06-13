@@ -9,11 +9,12 @@ function show_lesson_list(id) {
 Event.onDOMReady(function() {
 	if(!window.XMLHttpRequest) {
 		$('calendar_table').update('<img src="/images/icons/face-surprise.png" width="64" height="64" align="left" style="margin: 5px 20px 20px 20px;"><h4>Unfortunately your broswer <small>(Internet Explorer 6)</small> does not support the calendar view.</h4>Please  upgrade to <a href="http://www.microsoft.com/windows/downloads/ie/getitnow.mspx">Internet Explorer 7</a> or use <a href="http://www.getfirefox.com">Mozilla Firefox</a> to view the calendar.<br />You can still view your child\'s lesson schedule by clicking on "View as List" above.');
-		toggleView('list');
+		if (window.location.hash != "#list" && window.location.hash != "#cal" )
+			window.location.hash = "#list";
+	} else {
+		if (window.location.hash != "#list" && window.location.hash != "#cal" )
+			window.location.hash = "#cal";		
 	}
-	
-	if (window.location.hash != "#list" || window.location.hash != "#cal" )
-		window.location.hash = "#cal";
 
 	toggleView(window.location.hash.substr(1));
 	
