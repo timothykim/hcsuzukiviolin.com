@@ -184,7 +184,7 @@ class AdminController < ApplicationController
       schedules = SummerStudentSchedule.find(:all, :conditions => ["summer_student_id = ? and selected IS NULL", params[:id]], :order => "selected ASC")
     end
 
-        
+
     events = []
     for event in schedules
       

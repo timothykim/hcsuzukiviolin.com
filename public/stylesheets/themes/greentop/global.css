@@ -39,14 +39,14 @@ div#banner_wrapper {
 div#banner {
 	width: 850px;
 	margin: 0 auto;
-	background: url(images/title_small-trans.png) no-repeat;
+/*	background: url(images/title_small-trans.png) no-repeat; */
 	height: 100px;
 	display: block;
 }
 
 div#banner.page_index {
-	background: url(images/title-trans.png) no-repeat;
-	height: 190px;
+/*	background: url(images/title-trans.png) no-repeat; */
+	height: 190px; 
 }
 
 div#title.page_index {
@@ -54,9 +54,23 @@ div#title.page_index {
 	background: url(images/violin_piano_icon-trans.png) no-repeat;	
 }
 
-div#title h1 {
-	display: none;
+
+div#banner.page_index h1 {
+	position: absolute;
+	top: 100px;
+	color: white;	
+	font-size: 20pt;
 }
+
+div#title h1 {
+/*	display: none;*/
+	position: absolute;
+	top: 28px;
+	color: white;
+	font-size: 16pt;
+}
+
+
 
 div#toolbar_wrapper {
 	width: 800px;
