@@ -196,6 +196,10 @@ class PageController < ApplicationController
     @section_title = "Music Downloads"
   end
   
+  def policy_and_tuition
+    @section_title = "Policy and Tuition"
+  end
+  
   def illegal
     @section_title = "You can't do that!"
   end
