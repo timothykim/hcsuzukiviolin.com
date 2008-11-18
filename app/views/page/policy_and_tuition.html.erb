@@ -19,7 +19,7 @@
 		padding: 1px;
 		border-style: inset;
 		border-color: gray;
-		background-color: #eeeeff;
+		background-color: #eeffee;
 		padding: 3px;
 	}
 	.page_policy_and_tuition table td {
@@ -38,10 +38,74 @@
 	td.right {
 		text-align: right;
 	}
+
+	div#fpmenu ul {
+		height: 15px;
+		margin-left: 200px;
+	}
+	
+	div#fpmenu li {
+		display: inline;
+		float: left;
+		border: 6px solid #aaffaa;
+		background-color: #eeffee;
+	}
+	
+	div#fpmenu a {
+		display: block;
+		height: 20px;
+		width: 150px;
+		padding: 10px;
+		text-align: center;
+		font-weight: bold;
+	}
 </style>
 
+<div id="fpmenu">
+<ul>
+	<li id="pli" style="background-color: #aaffaa;"><a href="#policy" onclick="
+		
+		$('pli').style.backgroundColor = '#aaffaa';
+		$('fli').style.backgroundColor = '#eeffee';
+		
+		$('faq').hide(); $('pnt').show();">Policy and Tuition</a></li>
+	<li id="fli"><a href="#FAQs" onclick="$('fli').style.backgroundColor = '#aaffaa'; $('pli').style.backgroundColor = '#eeffee'; $('pnt').hide(); $('faq').show();">FAQs</a></li>
+</ul>
+</div>
 
-<div style="margin-left: 100px; margin-right:100px;">
+
+
+<div style="margin-left: 100px; margin-right:100px; padding: 50px; border: 6px solid #aaffaa;">
+
+<div id="faq" style="display: none; position: relative; top: -50px;">
+	<h3>Frequently Asked Questions</h3>
+
+<ol>
+	<li><h4>How may I enroll my child?</h4>
+	<p>Fill out the registration form and sign the agreement form. Indicate your preferred lesson times on all of the available days of the week so I can schedule the lesson a lesson time for you. </p></li>
+	
+	<li><h4>How should we prepare to begin?</h4>
+	<p>First of all, you need to come to 3 group classes with your child to observe.</p>
+	<p>At this point if you and your child are eager to begin, you are invited to observe the individual lessons for the next six weeks. During this time you will receive the handbook which includes the agreement form and the registration from. Fill out the observation schedule and hand it in to the teacher. Then come to the studio to observe at least 6 private lessons. During this observation period, you will need to attend the parent education classes.</p>
+	<p>Obtain all materials speciﬁed on “Materials List” (page 6).  I expect your child to have listened to the Suzuki recording from book one several times daily especially emphasizing the early half of the book for couple of weeks prior to the ﬁrst lesson. </p>
+	<p>You and your child will have discussed the fact that he/she will not begin playing the violin right away. </p>
+
+	<li><h4>Should I have my child practice with the instrument before the ﬁrst lesson? </h4>
+	<p>Please DO NOT allow your child to attempt playing the violin. Children who handle their instruments prior to receiving instruction face the discouraging process of reversing unhealthy playing habits. Also, children who come to their ﬁrst lesson thinking they already know how to play are not easily receptive to instruction. Please come with them having this expectation. Your child must simply know that he/she is getting ready to play the violin.</p> </li>
+
+
+	<li><h4>What can I expect to learn from the parent education class? What do I need to bring to the parent education classes? </h4>
+	<p>You will learn about the 10 Suzuki philosophies, discuss about the observations you have done, learn about how to prepare your child before starting the lessons, learn the responsibilities as a parent at home and lessons, and watch the "Nurtured by Love" video. You will have reading assignments. You will learn to play the few first songs that your child is yet to play so you will need an instrument for yourself to play at the parent classes as well as at the first several lessons. You may use your child’s violin but if you can use a larger one you will be more comfortable. Don't forget to bring the handbook, something to take notes with, and lots of questions!</p> </li>
+
+	<li><h4>When should we stop listening to the recording?</h4>
+	<p>Continue to hear in your home and in your child’s presence, ﬁne music from your own  listening library and attend concerts with your child.  THIS IS THE ENVIRONMENTAL SOURCE OF TALENT.  It is your opportunity to give your child the gift of talent.</p> </li>
+
+	<li><h4>Can I still observe even after I started the lessons? </h4>
+	<p>You are encouraged to continue to observe the group classes of children who are in the program and are farther along. It is important for you to demonstrate your interest.  Also, you and your child will have ongoing exposure to what is next as well as to develop relationship with other families.</p></li>
+	
+</div>
+
+<div id="pnt" style="position: relative; top: -50px;">
 <h3>Tuition</h3>
 
 <p>The tuition includes individual lessons and group classes. 
@@ -52,13 +116,13 @@ and the spring semester will begin on 1/26/09 and end of
 
 <table>
 	<thead>
-		<tr><th>Duration</th><th>Semester Tuition Rate</th><th>Notes</th></tr>
+		<tr><th width="170" height="40">Duration</th><th width="100">Rate</th><th>Notes</th></tr>
 	</thead>
 	<tbody>
 		<tr><td class="section_head" colspan="3"><strong>Semester Tuition Rate</strong></td></tr>
-		<tr><td class="right">30 minute lesson</td><td class="right">$1012.50</td><td>Beginner and Book 1</td></tr>
-		<tr><td class="right">45 minute lesson</td><td class="right">$1331.25</td><td>Book 2 and 3</td></tr>
-		<tr><td class="right">60 minute lesson</td><td class="right">$1650.00</td><td>Book 4 and up</td></tr>
+		<tr><td class="right">30 minute lesson</td><td class="right">$1,012.50</td><td>Beginner and Book 1</td></tr>
+		<tr><td class="right">45 minute lesson</td><td class="right">$1,331.25</td><td>Book 2 and 3</td></tr>
+		<tr><td class="right">60 minute lesson</td><td class="right">$1,650.00</td><td>Book 4 and up</td></tr>
 
 		<tr><td class="section_head" colspan="3"><strong>Registration Fee</strong></td></tr>
 		<tr><td class="right">Per year</td><td class="right">$40.00</td><td></td></tr>
@@ -132,7 +196,7 @@ the state. </p>
 			
 			<li><em>Home studio</em>
 				<p>501 Roosevelt Boulevard, Apt. #B124<br />
-				Falls Church, Virginia  22044</p></li>
+				Falls Church, Virginia  22044</p></li>
 			<li><em>Institute</em>
 				<p>103 West Columbia St. - room 327<br />
 				Falls Church, VA 22046</p></li>
@@ -143,4 +207,7 @@ the state. </p>
 
 <p><strong>Your participation in this program signiﬁes acceptance 
 of these policies.</strong></p>
+</div>
+
+
 </div>
