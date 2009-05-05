@@ -1,6 +1,6 @@
 set :application, "studio"
 set :repository,  "git@github.com:highwind/gwsms.org.git"
-set :domain, "hcsuzukiviolin.com"
+set :domain, "celes"
 
 set :scm, :git
 #set :local_scm_command, "/opt/local/bin/git"
