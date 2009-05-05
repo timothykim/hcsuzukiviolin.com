@@ -9,7 +9,7 @@ set :deploy_via, :remote_cache
 
 set :user, "highwind"
 set :runner, "highwind"
-set :use_sudo, true
+#set :use_sudo, true
 
 set :branch, "master"
 

@@ -98,7 +98,7 @@ end
 OPTIONS = {
   :action     => "restart",
   :pid_path   => File.expand_path(RAILS_ROOT + '/tmp/pids'),
-  :pattern    => "dispatch.[0-9]*.pid",
+  :pattern    => "{dispatch,mongrel}.[0-9]*.pid",
   :dispatcher => File.expand_path("#{RAILS_ROOT}/public/dispatch.fcgi")
 }
 
