@@ -3,6 +3,8 @@ set :repository,  "git@github.com:highwind/gwsms.org.git"
 set :domain, "hcsuzukiviolin.com"
 
 set :scm, :git
+#set :local_scm_command, "/opt/local/bin/git"
+#set :scm_command, "/usr/bin/git"
 set :deploy_via, :remote_cache
 
 set :user, "highwind"

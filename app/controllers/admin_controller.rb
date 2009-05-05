@@ -11,7 +11,7 @@ class AdminController < ApplicationController
   def global_submenu
     [
       { :name => '<img src="/images/icons/users.png" class="icon" /> Users', :link => "/admin/user", :selected => "selected" },
-      { :name => '<img src="/images/icons/calendar.png" class="icon" /> Summer Schedule', :link => "/admin/summer" },
+      { :name => '<img src="/images/icons/calendar.png" class="icon" /> Summer Registration', :link => "/admin/summer" },
       # { :name => '<img src="/images/icons/globe.png" class="icon" /> Site', :link => "#" },
       # { :name => '<img src="/images/icons/announce.png" class="icon" /> Announcements', :link => "#" },
       # { :name => '<img src="/images/icons/news.png" class="icon" /> Newsletter', :link => "#" }
