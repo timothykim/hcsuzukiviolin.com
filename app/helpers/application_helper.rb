@@ -3,7 +3,7 @@ module ApplicationHelper
   
   def conditional_render_partial(partial)
     render_partial partial
-  rescue ActionView::ActionViewError
+  rescue
     #don't render!
   end
   
