@@ -1,3 +1,8 @@
+<%		
+		#assume that sub controllers go only one level deep
+		levels = [controller.controller_path.split('/')[0], controller.controller_path]	
+		levels.pop if levels[0] == levels[1]
+-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,8 +19,8 @@
 		
 		<%= javascript_include_tag :defaults %>
 		<%= javascript_include_tag "domready" %>
-		<% if FileTest.exists?(File.join("public/javascripts", controller.controller_name, controller.action_name + ".js")) %>
-			<%= javascript_include_tag File.join(controller.controller_name, controller.action_name + ".js") %>
+		<% if FileTest.exists?(File.join("public/javascripts", controller.controller_path, controller.action_name + ".js")) %>
+			<%= javascript_include_tag File.join(controller.controller_path, controller.action_name + ".js") %>
 		<% end %>
 		<% if defined?(@javascripts): @javascripts.each { |script| javascript_include_tag script } end %>
 		<!--[if lte IE 6]>
@@ -26,10 +31,17 @@
 	 
 		<%= stylesheet_link_tag("default") %>
 		<%= stylesheet_link_tag(get_current_theme_css()) %>
-	<% if FileTest.exists?(File.join("public/stylesheets", get_current_theme_css(controller.controller_name) + ".css")) %>
-		<%= stylesheet_link_tag(get_current_theme_css(controller.controller_name)) %>
-	<% end %>
-	
+		
+		
+<%		
+		levels.each do |file|
+			if FileTest.exists?(File.join("public/stylesheets", get_current_theme_css(file) + ".css"))
+%>
+		<%= stylesheet_link_tag(get_current_theme_css(file)) %>
+<%
+			end
+		end
+%>
 		
 	</head>
 
@@ -37,9 +49,9 @@
 		<a name="top"></a>
 		
 		<div id="frame">
-			<div id="banner_wrapper" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
-			<div id="banner" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
-				<div id="title" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
+			<div id="banner_wrapper" class="<%= get_css_class(controller) %>">
+			<div id="banner" class="<%= get_css_class(controller) %>">
+				<div id="title" class="<%= get_css_class(controller) %>">
 					<h1>Suzuki Violin Studio of<br />Hannah Choi</h1>
 				</div>
 			</div>
@@ -48,7 +60,7 @@
 			<div id="toolbar_wrapper">
 			<div id="toolbar">
 				<!-- TODO -->
-				<div id="menu" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
+				<div id="menu" class="<%= get_css_class(controller) %>">
 					<ul>
 						<% home_class = (controller.controller_name == "page" and controller.action_name == "index") ? "home" : "" %>
 						<li><%= link_to "Home", { :controller => "/page", :action => "index" }, :class => home_class %></li>
@@ -59,7 +71,7 @@
 				</div>
 				
 				<!-- login form -->
-				<div id="login_frame" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
+				<div id="login_frame" class="<%= get_css_class(controller) %>">
 					<% unless current_page?(:controller => '/account', :action => 'login') %>
 						<% if logged_in? -%>
 							<div id="logged_in">
@@ -92,10 +104,10 @@
 			</div>
 			</div>
 			
-			<div id="body" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
+			<div id="body" class="<%= get_css_class(controller) %>">
 
 <% if defined? @section_title %>
-				<div id="section_title" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
+				<div id="section_title" class="<%= get_css_class(controller) %>">
 					<h2><span id="section_path"><%= @section_path %></span> <%= @section_title if defined? @section_title %></h2>
 				</div>
 <% end %>
@@ -119,7 +131,7 @@
 <% end %>
 				</div>
 
-				<div id="<%= defined?(@submenu) ? "content" : "content_no_side" %>" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
+				<div id="<%= defined?(@submenu) ? "content" : "content_no_side" %>" class="<%= get_css_class(controller) %>">
 <%= yield %>
 				</div>
 
@@ -132,7 +144,11 @@
 			
 			
 		</div>
-		
+
+
+
+
+	
 <!--		<script type="text/javascript">
 //		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 //		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));

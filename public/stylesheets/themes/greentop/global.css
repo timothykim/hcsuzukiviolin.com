@@ -316,8 +316,8 @@ div.page_nav {
 	
 	div.form_box {
 		padding: 20px;
-		background-color: #d5efff;
-		border: 1px solid #a5ccff;
+		background-color: #eff3fc;
+		border: 1px solid #c9d9ef;
 	}
 
 	div.form_box .form_element {
@@ -410,3 +410,6 @@ div#latest_news span.news_date {
 /* @end */
 
 
+.red {
+	color: red;
+}

@@ -1,0 +1,51 @@
+div.school {
+	margin-bottom: 20px;
+}
+
+div.school_name {
+	font-weight: bold;
+	font-size: 1.2em;
+	color: #56a;
+}
+
+div.school table {
+	border-collapse: collapse;
+	border: none;
+}
+
+div#calendar table {
+	border-collapse: collapse;
+	border: 1px solid silver;
+	background-color: white;	
+}
+
+div#calendar table th {
+	background-color: #afc;
+	border: 1px solid silver;	
+	border-bottom: 2px solid silver;	
+}
+
+div#calendar table td {
+	border: 1px solid silver;
+	vertical-align: top;
+	font-size: 0.8em;
+	height: 58px;
+}
+
+div#calendar table td.off_day {
+	background-color: #eee;
+}
+
+div#calendar table td div.date {
+	text-align: center;
+	font-weight: bold;
+	width: 82px;
+	margin-bottom: 5px;
+}
+
+div#calendar table td.week_no {
+	background-color: #ddd;
+	vertical-align: middle;
+	text-align: center;
+	font-weight: bold;	
+}

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 17) do
+ActiveRecord::Schema.define(:version => 20090507050235) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -79,6 +79,29 @@ ActiveRecord::Schema.define(:version => 17) do
     t.integer  "comments_count", :default => 0, :null => false
   end
 
+  create_table "schools", :force => true do |t|
+    t.string "name"
+    t.string "address"
+    t.string "zip"
+  end
+
+  create_table "session_group_lessons", :force => true do |t|
+    t.integer "session_id"
+    t.date    "day"
+  end
+
+  create_table "session_off_days", :force => true do |t|
+    t.integer "session_id"
+    t.date    "day"
+    t.text    "note"
+  end
+
+  create_table "sessions", :force => true do |t|
+    t.string "name"
+    t.date   "begin"
+    t.date   "end"
+  end
+
   create_table "summer_schools", :force => true do |t|
     t.string "name"
   end
@@ -114,6 +137,14 @@ ActiveRecord::Schema.define(:version => 17) do
     t.integer  "albums_count",                            :default => 0,     :null => false
     t.integer  "photos_count",                            :default => 0,     :null => false
     t.integer  "comments_count",                          :default => 0,     :null => false
+  end
+
+  create_table "weekly_availablities", :force => true do |t|
+    t.integer "session_id"
+    t.integer "school_id"
+    t.integer "day"
+    t.time    "start"
+    t.time    "end"
   end
 
 end

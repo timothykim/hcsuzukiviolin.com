@@ -1,9 +1,8 @@
 class AdminController < ApplicationController
-  include AuthenticatedSystem
-  include OptionDictionary
+#  include AuthenticatedSystem
 
   before_filter :store_location
-  before_filter :login_from_cookie
+#  before_filter :login_from_cookie
   before_filter :login_required
   before_filter :admin_required
 
@@ -11,7 +10,9 @@ class AdminController < ApplicationController
   def global_submenu
     [
       { :name => '<img src="/images/icons/users.png" class="icon" /> Users', :link => "/admin/user", :selected => "selected" },
-      { :name => '<img src="/images/icons/calendar.png" class="icon" /> Summer Registration', :link => "/admin/summer" },
+      { :name => '<img src="/images/icons/home.png" class="icon" /> Schools', :link => "/admin/schools" },
+      { :name => '<img src="/images/icons/calendar.png" class="icon" /> Sessions', :link => "/admin/session" },
+      { :name => '<img src="/images/icons/write.png" class="icon" /> Registrations', :link => "/admin/summer" },
       # { :name => '<img src="/images/icons/globe.png" class="icon" /> Site', :link => "#" },
       # { :name => '<img src="/images/icons/announce.png" class="icon" /> Announcements', :link => "#" },
       # { :name => '<img src="/images/icons/news.png" class="icon" /> Newsletter', :link => "#" }
@@ -22,57 +23,6 @@ class AdminController < ApplicationController
   def index
     @section_title = "Administration"
     @submenu = global_submenu
-  end
-  
-  def user
-    @section_path = "Adminitration &raquo; "
-    @section_title = 'User'
-    @submenu = global_submenu
-    
-    @sort_by = {:time => "selected", :name => "", :activated => ""}
-    dir = (params[:dir]) ? params[:dir] : "DESC"
-    d_sym = (dir == "DESC") ? "&uarr;" : "&darr;"
-    @dir_sym = {:time => d_sym, :name => "", :activated => ""}
-    
-
-    sort = "created_at"
-    if params[:sort] == "name"
-      sort = "lastname"
-      @sort_by = {:time => "", :name => "selected", :activated => ""}
-      @dir_sym = {:time => "", :name => d_sym, :activated => ""}
-    end
-    
-    if params[:sort] == "activated"
-      sort = "activated"
-      @sort_by = {:time => "", :name => "", :activated => "selected"}
-      @dir_sym = {:time => "", :name => "", :activated => d_sym}
-    end
-    
-    @newdir = (dir == "DESC") ? "ASC" : "DESC"
-    
-    @users = User.find(:all, :order => "#{sort} #{dir}")
-  end
-  
-  def usersave
-    users = User.find(:all)
-    
-    users.each do |user|
-      p = (params[:users]) ? params[:users]["#{user.id}"] : nil
-      unless user.is_admin
-        if p.nil?
-          user.update_attributes!({:activated => false, :email_confirmation => user.email})
-        else
-          unless user.activated
-            user.update_attributes!({:activated => true, :email_confirmation => user.email})
-            Notifier.deliver_activation_notification(user)
-          end
-        end
-      end
-    end
-    
-    flash[:notice] = "Save Successful!"
- 
-    redirect_to :action => "user"
   end
   
   
@@ -96,7 +46,6 @@ class AdminController < ApplicationController
     
     unit_height = 16.0
     unit_time = 30 * 60.0
-
 
     event = SummerStudentSchedule.find(params[:schedule_id])
     update = false
@@ -132,7 +81,6 @@ class AdminController < ApplicationController
       :prev_block => 't' + prev_block.to_s,
       :image_blocks => image_blocks
     }
-    
 
     render :text => data.to_json
   end

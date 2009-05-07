@@ -343,8 +343,8 @@ function getMouseXY(e) {
 	if (army_time >= day_start && army_time < day_end && tempX > 256 && show_time) {
 		$('xy').style.display = "block";
 		$('xy').update(time_str);
-		$('xy').style.top = tempY - 60 + "px";
-		$('xy').style.left = tempX - 100 + "px";
+		$('xy').style.top = tempY + 15 + "px";
+		$('xy').style.left = tempX + 15 + "px";
 	} else {
 		$('xy').style.display = "none";
 		

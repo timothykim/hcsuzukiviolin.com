@@ -22,5 +22,8 @@ module ApplicationHelper
   end
   
   
-  
+  def get_css_class(controller)
+    return controller.controller_path.split('/')[0] + " " + controller.controller_name + " " + controller.controller_name + "_" + controller.action_name
+  end
+
 end

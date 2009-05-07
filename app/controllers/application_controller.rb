@@ -4,10 +4,17 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
 
+  include AuthenticatedSystem
+#  include OptionDictionary
+
+
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery #:secret => 'dfa76e0fe299f37159620fafd8b110dd'
 #  session :session_key => '_studio_session_id'
+  
+  
+  before_filter :login_from_cookie
   
   
 end

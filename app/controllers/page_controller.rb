@@ -1,8 +1,8 @@
 class PageController < ApplicationController
-  include AuthenticatedSystem
-  include DisplayHelper
+#  include AuthenticatedSystem
+#  include DisplayHelper
   
-  before_filter :store_location, :login_from_cookie
+  before_filter :store_location #, :login_from_cookie
   
   def index
   end
