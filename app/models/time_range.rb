@@ -17,8 +17,8 @@ class TimeRange
   
   def clean(s, d)
     #gasp! we are assuming s and d are pretty much in time format... -_-;;
-    s = s.strip.downcase
-    d = d.strip.downcase
+    s = s.gsub(/\s/,"").downcase
+    d = d.gsub(/\s/,"").downcase
     
     if s.match(/^[\d:]+[ap]m$/) and d.match(/^[\d:]+[ap]m$/)
       # in good format, do nothing and return

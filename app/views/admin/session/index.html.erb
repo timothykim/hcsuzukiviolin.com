@@ -1,3 +1,32 @@
 <h2>Sessions</h2>
 
-<p><button class="iconbutton" onclick="window.location = '/admin/session/new'"><img src="/images/icons/add.png" class="icon" /> Create a New Session</button>
+
+<table id="session_table" class="admin_table">
+  <thead>
+  <tr>
+	<th></th>
+	<th>Session Name</th>
+	<th>First Day</th>
+	<th>Last Day</th>
+	<th>Edit</th>
+	<th>Del</th>
+  </tr>
+  </thead>
+  <tbody>
+<% @sessions.each_with_index do |sess, i| %>
+<% row_class = i % 2 == 0 ? "even" : "odd" %> 
+  <tr class="<%= row_class %>">
+	<% img = sess.is_active ? "icons/forward.png" : "icons/green_dash.png" %>
+	<td align="center"><%= image_tag(img) %></td>
+	<td><%= sess.name %></td>
+	<td align="center"><%= sess.first %></td>
+	<td align="center"><%= sess.last %></td>
+	<td align="center"><%= link_to(image_tag("icons/write.png"), :action => "edit", :id => sess) %></td>
+	<td align="center"><%= link_to(image_tag("icons/x.png"), {:action => "delete", :id => sess}, :confirm => "Are you sure?\nThis action can NOT be undone.") %></td>
+  </tr>
+<% end %>
+  </tbody>
+</table>
+
+
+<p><button class="iconbutton" onclick="window.location = '/admin/session/edit'"><img src="/images/icons/add.png" class="icon" /> Create a New Session</button></p>

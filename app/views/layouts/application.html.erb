@@ -19,30 +19,28 @@
 		
 		<%= javascript_include_tag :defaults %>
 		<%= javascript_include_tag "domready" %>
-		<% if FileTest.exists?(File.join("public/javascripts", controller.controller_path, controller.action_name + ".js")) %>
-			<%= javascript_include_tag File.join(controller.controller_path, controller.action_name + ".js") %>
-		<% end %>
-		<% if defined?(@javascripts): @javascripts.each { |script| javascript_include_tag script } end %>
+<% if FileTest.exists?(File.join("public/javascripts", controller.controller_path, controller.action_name + ".js")) %>
+		<%= javascript_include_tag File.join(controller.controller_path, controller.action_name + ".js") %>
+<% end %>
+<% if defined?(@javascripts): @javascripts.each do |script| %>
+ 		<%= javascript_include_tag script %>
+<% end end %>
 		<!--[if lte IE 6]>
 			<%= javascript_include_tag "supersleight-min" %>
 		<![endif]-->
 		
-		<%= conditional_render_partial "addphotos" if controller.action_name == "addphotos" %>
-	 
+		<%= conditional_render_partial "addphotos" if controller.action_name == "addphotos" -%>
+
 		<%= stylesheet_link_tag("default") %>
 		<%= stylesheet_link_tag(get_current_theme_css()) %>
-		
-		
-<%		
-		levels.each do |file|
-			if FileTest.exists?(File.join("public/stylesheets", get_current_theme_css(file) + ".css"))
-%>
+<% levels.each do |file|
+	if FileTest.exists?(File.join("public/stylesheets", get_current_theme_css(file) + ".css")) %>
 		<%= stylesheet_link_tag(get_current_theme_css(file)) %>
-<%
-			end
-		end
-%>
-		
+<% end end %>
+<% if defined?(@stylesheets): @stylesheets.each do |sheets| %>
+		<%= stylesheet_link_tag sheets %>
+<% end end %>
+
 	</head>
 
 	<body>

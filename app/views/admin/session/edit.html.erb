@@ -1,0 +1,96 @@
+<h2>Session Editor</h2>
+
+<% form_tag "/admin/session/save", :method => "post" , :id => "session_form" do -%>
+
+<% if params[:id] %>
+	<input type="hidden" id="session_id" name="id" value="<%= @session.id %>" />
+<% end %>
+<div class="form_box">
+	<%= error_messages_for :session %>
+	<div class="form_element">
+		<div class="check"><label>Session:</label></div>
+		<%= select_tag("session_name", @season_opt) %>
+		<%= date_select("session_year", "year", :start_year => Time.now.year, :order => [:year], :default => {:year => @year}) %>
+	</div>
+	
+	<div id="dates">
+		<div class="form_element">
+			<div class="check"><label>First day of the session:</label></div>
+			<%= date_select("session", "first", :start_year => Time.now.year) %>
+		</div>
+
+		<div class="form_element">
+			<div class="check"><label>Last day of the session:</label></div>
+			<%= date_select("session", "last", :start_year => Time.now.year) %>
+		</div>
+	</div>
+</div>
+
+<h3>Weekly Lesson Availability</h3>
+<div class="form_box">
+	<div style="text-align: right;">e.g. 4~5pm, 10:30am-2pm</div>
+<% @schools.each_with_index do |school, i| -%>
+
+	<div class="school">
+		<div class="school_name"><%= school.name %></div>
+	
+		<table>
+			<thead>
+				<tr>
+<% @days_of_the_week.each do |day| -%>
+					<th><%= day %></th>
+<% end -%>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+<% @days_of_the_week.each_with_index do |day, j| -%>
+<% text = (@availabilities) ? @availabilities[school.id][j+1] : "" -%>
+
+					<th><%= text_area_tag "schools[#{school.id}][#{j+1}]", text, :rows => 2, :cols => 9 %></th>
+<% end -%>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+<% end -%>
+</div>
+
+<h3>Off days and Group Lessons</h3>
+
+<div class="form_box">
+	<span id="error" class="red">Please adjust the session start and end dates.</span>
+	<div id="calendar">
+	</div>
+</div>
+
+
+<h3>Registration Info</h3>
+<div class="form_box">
+
+	<div class="form_item">
+		<%= check_box_tag "active_reg", "yes", @active %><label for="active_reg"> Activate Registration</label>
+	</div>
+
+	<div class="form_item">
+		<div>Registration Info <small>(This information will be shown to the parents)</small>:</div>
+		<%= text_area_tag "notice", @registration_notice, :rows => 5, :cols => 70, :id => "notice" %>
+	</div>
+
+	<div class="form_item">
+		<div>Other Options</div>
+		<ol id="option_list">
+		<% @options.each_with_index do |opt, i| %>
+			<li id="li_<%= i %>"><input type="text" class="opt" name="opt_name[<%= i %>]" value="<%= opt.text %>" /> <select name="opt_type[<%= i %>]"><option value="checkbox" <%= 'selected="selected"' if opt.input_type == "checkbox" %>>Yes/No</option><option value="text" <%= 'selected="selected"' if opt.input_type == "text" %>>Text</option></select> <a href="#" onclick="Effect.BlindUp('li_<%= i %>', {duration:0.3}); $(this).previous('input').value=''; return false;"><img src="/images/icons/x_small.png" class="icon" /></a></li>
+		<% end %>
+		</ol>
+		<a href="#" onclick="addOption(); return false;"><img src="/images/icons/add_small.png" class="icon"> Add option</a>
+	</div>
+</div>
+
+
+<div style="text-align: right; margin-top: 20px;">
+<button class="iconbutton" id="form_submit" onclick="$('session_form').submit(); return false;"><img src="/images/icons/calendar.png" class="icon"> Save this Session!</button>
+</div>
+
+<% end #form -%>
