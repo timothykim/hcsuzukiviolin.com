@@ -104,25 +104,27 @@ class Admin::SessionController < AdminController
     end #params
     
     #save each day info
-    params[:notes].each do |date_str, note|
-      p = {}
-      p[:session_id] = s.id
-      p[:date] = Date.parse(date_str)
-      if params[:offdays]
-        p[:offday] = params[:offdays][date_str].nil? ? false : true
-      end
-      if params[:groups]
-        p[:group] = params[:groups][date_str].nil? ? false : true
-      end
-      p[:note] = note
+    if params[:notes]
+      params[:notes].each do |date_str, note|
+        p = {}
+        p[:session_id] = s.id
+        p[:date] = Date.parse(date_str)
+        if params[:offdays]
+          p[:offday] = params[:offdays][date_str].nil? ? false : true
+        end
+        if params[:groups]
+          p[:group] = params[:groups][date_str].nil? ? false : true
+        end
+        p[:note] = note
     
-      sd = SessionDay.find(:first, :conditions => { :session_id => s.id, :date => p[:date]})
-      if sd.nil?
-        sd = SessionDay.new(p)
-      else
-        sd.attributes = p
+        sd = SessionDay.find(:first, :conditions => { :session_id => s.id, :date => p[:date]})
+        if sd.nil?
+          sd = SessionDay.new(p)
+        else
+          sd.attributes = p
+        end
+        sd.save
       end
-      sd.save
     end
     
     #save the registration option

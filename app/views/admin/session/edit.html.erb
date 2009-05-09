@@ -45,8 +45,7 @@
 			<tbody>
 				<tr>
 <% @days_of_the_week.each_with_index do |day, j| -%>
-<% text = (@availabilities) ? @availabilities[school.id][j+1] : "" -%>
-
+<% text = @availabilities.length == 0 ? "" : @availabilities[school.id][j+1] -%>
 					<th><%= text_area_tag "schools[#{school.id}][#{j+1}]", text, :rows => 2, :cols => 9 %></th>
 <% end -%>
 				</tr>
