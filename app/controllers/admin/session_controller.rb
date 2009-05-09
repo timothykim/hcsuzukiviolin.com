@@ -23,20 +23,19 @@ class Admin::SessionController < AdminController
     
     @javascripts = ["widgEditor.js"]
     @stylesheets = ["widgEditor.css"]
-    
-    
+        
     if params[:id]
       @session = Session.find(params[:id])
       season = ['selected="selected"', '', ''] if @session.name.match(/Spring/)
       season = ['', 'selected="selected"', ''] if @session.name.match(/Summer/)
       season = ['', '', 'selected="selected"'] if @session.name.match(/Fall/)
       @year = @session.name.match(/[0-9]+/).to_s
-      
+    
       @availabilities = []
+      @schools.each { |school| @availabilities[school.id] = [[],[],[],[],[],[],[]] }
       was = @session.weekly_availablity
       was.each do |wa|
-        @availabilities[wa.school_id] = [] unless @availabilities[wa.school_id]
-        @availabilities[wa.school_id][wa.day] = wa.to_s
+        @availabilities[wa.school_id][wa.day].push(wa.user_input)
       end
       
       @registration_notice = @session.registration_notes
@@ -79,26 +78,24 @@ class Admin::SessionController < AdminController
     #save lesson availability
     params[:schools].each do |school_id, availability|
       availability.each do |day, times|
-        times.split(/[,\n]+/).each do |time_str|
-          if time_str.strip != ""
-            tr = TimeRange.new(time_str)
-            
-            p = {}
-            p[:session_id] = s.id
-            p[:school_id] = school_id
-            p[:start] = tr.start
-            p[:end] = tr.done
-            p[:day] = day
-            
-            wa = WeeklyAvailablity.find(:first, :conditions => { :session_id => s.id, :school_id => school_id, :day => day})
-            if wa.nil?
-              wa = WeeklyAvailablity.new(p)
-            else
-              wa.attributes = p
-            end #if wa.nil?
-            
-            wa.save
-          end #if
+        #delete them all!
+        was = WeeklyAvailablity.find(:all, :conditions => { :session_id => s.id, :school_id => school_id, :day => day})
+        was.each { |wa| wa.destroy }
+        
+        #and remake... -_-;;
+        times.split(/[,\s]+/).each do |time_str|
+          tr = TimeRange.new(time_str)
+          
+          p = {}
+          p[:session_id] = s.id
+          p[:school_id] = school_id
+          p[:start] = tr.start
+          p[:end] = tr.done
+          p[:day] = day
+          p[:user_input] = tr.range
+          
+          wa = WeeklyAvailablity.new(p)          
+          wa.save
         end #time.split
       end #availability
     end #params

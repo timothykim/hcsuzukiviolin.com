@@ -16,7 +16,7 @@
 <% @sessions.each_with_index do |sess, i| %>
 <% row_class = i % 2 == 0 ? "even" : "odd" %> 
   <tr class="<%= row_class %>">
-	<% img = sess.is_active ? "icons/forward.png" : "icons/green_dash.png" %>
+	<% img = sess.is_active ? "icons/on.png" : "icons/off.png" %>
 	<td align="center"><%= image_tag(img) %></td>
 	<td><%= sess.name %></td>
 	<td align="center"><%= sess.first %></td>

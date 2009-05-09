@@ -74,7 +74,7 @@ function addOption() {
 }
 
 function resetCalednar() {
-	
+	updateCalendar();
 }
 
 function updateCalendar() {

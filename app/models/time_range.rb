@@ -4,10 +4,15 @@ class TimeRange
     @range = range
     
     a = range.split(/[-~]/)
+    
+    
     s, d = clean(a[0], a[1])
     
     @start = Time.parse(s)
     @done = Time.parse(d)
+  rescue
+    @start = nil
+    @done = nil
   end
   
   #err why doesn't ruby support copy constructor???
