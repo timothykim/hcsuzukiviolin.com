@@ -155,9 +155,12 @@ function updateCalendar() {
 										"Group Lessons: <span id=\"g_count\">0</span><br /><br />" +
 										"<button class=\"iconbutton\" onclick=\"if(confirm('Are you sure?')) resetCalednar(); return false;\">Reset Calendar</button>" +
 									"</div>");
+				
+				updateCounters();
 			}
 		}
 	});
+	
 }
 
 
