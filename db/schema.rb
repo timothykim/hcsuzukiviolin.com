@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090509172453) do
+ActiveRecord::Schema.define(:version => 20090511171143) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -79,10 +79,41 @@ ActiveRecord::Schema.define(:version => 20090509172453) do
     t.integer  "comments_count", :default => 0, :null => false
   end
 
+  create_table "registered_dates", :force => true do |t|
+    t.integer  "registration_id"
+    t.datetime "start"
+    t.datetime "end"
+    t.datetime "approved_time"
+  end
+
+  create_table "registered_days", :force => true do |t|
+    t.integer "registration_id"
+    t.integer "day"
+    t.time    "start"
+    t.time    "end"
+    t.time    "approved_time"
+  end
+
+  create_table "registered_options", :force => true do |t|
+    t.integer "registration_id"
+    t.integer "option_id"
+    t.text    "value",           :default => ""
+  end
+
   create_table "registration_options", :force => true do |t|
     t.integer "session_id"
     t.text    "text"
     t.string  "input_type"
+  end
+
+  create_table "registrations", :force => true do |t|
+    t.integer  "student_id"
+    t.integer  "school_id"
+    t.integer  "user_id"
+    t.integer  "session_id"
+    t.integer  "lesson_duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "schools", :force => true do |t|
@@ -105,6 +136,22 @@ ActiveRecord::Schema.define(:version => 20090509172453) do
     t.date    "last"
     t.boolean "is_active"
     t.text    "registration_notes"
+    t.integer "registration_type"
+  end
+
+  create_table "students", :force => true do |t|
+    t.string "first_name"
+    t.string "middle_initial", :limit => 1
+    t.string "last_name"
+    t.date   "dob"
+    t.text   "note"
+    t.string "school"
+    t.string "grade_level"
+  end
+
+  create_table "students_users", :force => true do |t|
+    t.integer "user_id"
+    t.integer "student_id"
   end
 
   create_table "summer_schools", :force => true do |t|

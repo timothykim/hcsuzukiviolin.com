@@ -32,7 +32,7 @@ class Admin::UserController < AdminController
     @users = User.find(:all, :order => "#{sort} #{dir}")
   end
   
-  def usersave
+  def save
     users = User.find(:all)
     
     users.each do |user|
@@ -51,7 +51,7 @@ class Admin::UserController < AdminController
     
     flash[:notice] = "Save Successful!"
  
-    redirect_to :action => "user"
+    redirect_to :action => "index"
   end
   
   

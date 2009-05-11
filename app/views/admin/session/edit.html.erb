@@ -67,16 +67,21 @@
 <h3>Registration Info</h3>
 <div class="form_box">
 
-	<div class="form_item">
+	<div class="form_element">
 		<%= check_box_tag "active_reg", "yes", @active %><label for="active_reg"> Activate Registration</label>
 	</div>
 
-	<div class="form_item">
+	<div class="form_element">
+		<div class="check"><label>Registration Type:</label></div>
+		<%= select_tag("registration_type", @registration_type_opt) %>
+	</div>
+
+	<div class="form_element">
 		<div>Registration Info <small>(This information will be shown to the parents)</small>:</div>
 		<%= text_area_tag "notice", @registration_notice, :rows => 5, :cols => 70, :id => "notice" %>
 	</div>
 
-	<div class="form_item">
+	<div class="form_element">
 		<div>Other Options</div>
 		<ol id="option_list">
 		<% @options.each_with_index do |opt, i| %>

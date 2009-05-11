@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   has_many :photos
   has_many :comments
   has_one  :avatar
+  has_and_belongs_to_many :students
+  has_many :registrations
 
 
   before_validation         :use_email_as_login

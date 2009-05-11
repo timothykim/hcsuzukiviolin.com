@@ -174,4 +174,10 @@ Event.onDOMReady(function() {
 	
 	updateCalendar();
 	//editor = new widgEditor("notice");
+
+	tinyMCE.init({
+		mode : "exact",
+		elements : "notice",
+		theme : "simple"
+	});
 });

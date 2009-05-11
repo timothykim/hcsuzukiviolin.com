@@ -21,9 +21,8 @@ class Admin::SessionController < AdminController
     
     @days_of_the_week = Date::DAYNAMES[1..6]
     
-    @javascripts = ["widgEditor.js"]
-    @stylesheets = ["widgEditor.css"]
-        
+    @use_tiny_mce = true
+            
     if params[:id]
       @session = Session.find(params[:id])
       season = ['selected="selected"', '', ''] if @session.name.match(/Spring/)
@@ -33,24 +32,28 @@ class Admin::SessionController < AdminController
     
       @availabilities = []
       @schools.each { |school| @availabilities[school.id] = [[],[],[],[],[],[],[]] }
-      was = @session.weekly_availablity
+      was = @session.weekly_availablities
       was.each do |wa|
         @availabilities[wa.school_id][wa.day].push(wa.user_input)
       end
       
       @registration_notice = @session.registration_notes
       @active = @session.is_active
-      @options = @session.registration_option
+      @options = @session.registration_options
+      reg_type = ['selected="selected"', ''] if @session.registration_type == Session::DAY_TYPE
+      reg_type = ['', 'selected="selected"'] if @session.registration_type == Session::DATE_TYPE
+      
     else
       season = ['selected="selected"', '', '']
-      @year = Time.now.year + 1
+      reg_type = ['selected="selected"', '']
+      @year = Time.now.year
       @registration_notice = ""
       @active = false
       @options = []
     end
     
     @season_opt = "<option value=\"Spring\" #{season[0]}>Spring</option><option value=\"Summer\" #{season[1]}>Summer</option><option value=\"Fall\" #{season[2]}>Fall</option>"
-    
+    @registration_type_opt = "<option value=\"#{Session::DAY_TYPE}\" #{reg_type[0]}>Per Day of the Week</option><option value=\"#{Session::DATE_TYPE}\" #{reg_type[1]}>Per Each Date</option>"
   end
   
   def delete
@@ -73,6 +76,7 @@ class Admin::SessionController < AdminController
     s.first = Date.parse(params[:session]["first(1i)"] + "/" + params[:session]["first(2i)"] + "/" + params[:session]["first(3i)"])
     s.last = Date.parse(params[:session]["last(1i)"] + "/" + params[:session]["last(2i)"] + "/" + params[:session]["last(3i)"])
     s.registration_notes = params[:notice]
+    s.registration_type = params[:registration_type]
     s.save
     
     #save lesson availability
@@ -154,7 +158,7 @@ class Admin::SessionController < AdminController
   def get_date_interval
     meta = {}
     if params[:id]
-      session_days = Session.find(params[:id]).session_day
+      session_days = Session.find(params[:id]).session_days
       session_days.each do |day|
         meta[day.date] = {:off_day => day.offday, :group => day.group, :note => day.note}
       end
