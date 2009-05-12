@@ -38,6 +38,7 @@ class Admin::SessionController < AdminController
       @registration_notice = @session.registration_notes
       @active = @session.is_active
       @options = @session.registration_options
+      reg_type = ['', '']
       reg_type = ['selected="selected"', ''] if @session.registration_type == Session::DAY_TYPE
       reg_type = ['', 'selected="selected"'] if @session.registration_type == Session::DATE_TYPE
       
@@ -51,7 +52,7 @@ class Admin::SessionController < AdminController
     end
     
     @season_opt = "<option value=\"Spring\" #{season[0]}>Spring</option><option value=\"Summer\" #{season[1]}>Summer</option><option value=\"Fall\" #{season[2]}>Fall</option>"
-    @registration_type_opt = "<option value=\"#{Session::DAY_TYPE}\" #{reg_type[0]}>Per Day of the Week</option><option value=\"#{Session::DATE_TYPE}\" #{reg_type[1]}>Per Each Date</option>"
+    @registration_type_opt = "<option value=\"0\" #{reg_type[0]}>Per Day of the Week</option><option value=\"1\" #{reg_type[1]}>Per Each Date</option>"
   end
   
   def delete
