@@ -1,11 +1,12 @@
 class CreateStudents < ActiveRecord::Migration
   def self.up
     create_table :students do |t|
+      t.column :user_id,          :integer
       t.column :first_name,       :string
       t.column :middle_initial,   :string, :limit => 1
       t.column :last_name,        :string
       t.column :dob,              :date
-      t.column :note,             :text
+      t.column :comment,          :text
       t.column :school,           :string
       t.column :grade_level,      :string
     end

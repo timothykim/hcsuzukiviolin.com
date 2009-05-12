@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
   has_many :photos
   has_many :comments
   has_one  :avatar
-  has_and_belongs_to_many :students
-  has_many :registrations
+  has_many :students
+  has_many :registrations, :through => :students
 
 
   before_validation         :use_email_as_login
@@ -98,7 +98,11 @@ class User < ActiveRecord::Base
   rescue
     return false
   end
-
+  
+  def registered?(sess)
+    return true if Registration.find(:first, :conditions => {:user_id => self.id, :session_id => sess.id})
+    return false
+  end
 
   protected
     # before filter 

@@ -1,0 +1,174 @@
+<% form_tag "/register/save", :method => "post" , :id => "register_form" do -%>
+<%= hidden_field_tag "session_id", @current_session.id %>
+
+<h2>Registering for <%= @current_session %></h2>
+<hr />
+
+<h3>Student Information</h3>
+
+<div class="form_box" id="student_info">
+
+	<div class="form_element">
+	<label class="form_label">Register for:</label>
+	<select name="student_id">
+		<option value="0">New Student</option>
+	<% @students.each do |student| -%>
+		<option value="<%= student.id %>"><%= student %></option>
+	<% end -%>
+	</select>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">First Name:</label> <%= text_field_tag "first_name", "" , :class => "text", :size => 20 %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Middle Initial:</label> <%= text_field_tag "mi", "" , :class => "text", :size => 2, :maxlength => 1 %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Last Name:</label> <%= text_field_tag "last_name", "" , :class => "text", :size => 20 %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Date of Birth:</label> <%= date_select("student", "dob", :start_year => Time.now.year - 30, :end_year => Time.now.year - 2, :default => {:year => Time.now.year - 10, :month => 1, :day => 1}, :order => [:month, :day, :year]) %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Attending School:</label> <%= text_field_tag "student_school", "" , :class => "text", :size => 20 %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Grade Level: </label> <%= text_field_tag "grade", "" , :class => "text number", :size => 10 %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Comments:<br /><small>(Any information that teacher should know about the student)</small></label> <%= text_area_tag "comment", "" , :class => "text", :size => "45x3" %>
+	</div>
+</div>
+
+<hr />
+
+
+<h3>Registration Information</h3>
+
+<div id="notice">
+	<%= textilize(@current_session.registration_notes) %>
+</div>
+
+<div class="form_box" id="reg">
+	
+	<div class="form_element">
+		<label class="form_label">This registration is for:</label>
+		<select name="school">
+			<% @schools.each do |school| %>
+			  <option value="<%= school.id %>"><%= school.name %></option>
+			<% end %>
+		</select>
+	</div>
+
+	<div class="form_element">
+		<label class="form_label">Single Lesson Duration:</label>
+		<%= text_field_tag "duration", "", :class=>"text", :style=>"text-align:right;", :size=>3, :maxlength=>2 %> minutes
+	</div>
+	
+	
+	<% @registration_options.each do |option| -%>
+	<div class="form_element">
+<%=
+
+case option.input_type
+	
+	when "text"
+		'<label class="form_label">' + option.text + '</label>' + text_field_tag("reg_option[#{option.id}]", "", :class => "text", :size => 20)
+
+	when "big_text"
+		'<label class="form_label">' + option.text + '</label>' + text_area_tag("reg_option[#{option.id}]", "" , :class => "text", :size => "30x3")
+
+	when "checkbox"
+		'<label class="form_label">' + option.text + '</label>' + radio_button_tag("reg_option[#{option.id}]", "yes") + " Yes<br />" + radio_button_tag("reg_option[#{option.id}]", "no") + " No"
+
+
+
+end -%>
+	</div>
+	
+	<% end -%>
+</div>
+
+<hr />
+
+<h3>Scheduling</h3>
+
+<% if @current_session.registration_type == Session::DATE_TYPE %>
+	<div id="calendar">
+		<h4>Individual Lessons</h4>
+		<ul>
+			<li>Please indicate ALL possible time RANGE for EACH DAY. e.g: 6-8pm, 10am~1:30pm</li>
+			<li>Multiple range can be entered by separating them with commas.</li>
+			<li>You may mark a time range with an * (asterisk) to indicate preferred time.</li>
+		</ul>
+		<h4>Group Lessons</h4>
+		<ul>
+			<li>Please check ALL the group lessons that you are able to join.</li>
+		</ul>
+		
+		<div class="help">
+		<p>Example:</p>
+		<table width="110" height="100"><thead><tr><th>Tuesday</th></tr></thead><tr><td class="cell"><div class="date">MM/DD</date><div class="notes"><br /></div><textarea class="text time_range" readonly="readonly">7-10am,
+11pm~3:30pm,
+6-7pm*</textarea></td></tr></table>
+
+		<p>Legend:</p>
+		<table width="110" height="100"><thead><tr><th>Off Day</th></tr></thead><tr><td valign="top" class="cell off_day"><div class="date">MM/DD</date><div class="notes"><br /></div></td></tr></table>
+
+		</div>
+
+
+		<table>
+			<thead>
+				<tr>
+					<th>W</th>
+					<th>Monday</th>
+					<th>Tuesday</th>
+					<th>Wednesday</th>
+					<th>Thursday</th>
+					<th>Friday</th>
+					<th>Saturday</th>
+				</tr>
+			</thead>
+			<tbody>
+<%		@dates.each_with_index do |today, i| -%>
+<%			if i % 6 == 0 #index % 6 does NOT corespond to day of the week -%>
+				<tr>
+					<td class="week_no"><%= i / 6 + 1 %></td>
+<%			end #if -%>
+<%			clss = "" -%>
+<%			clas = (today.date.mon % 2 == 1) ? "odd_month" : "even_month" -%>
+<%			clas = " off_day" if today.offday -%>
+<%			form = text_area_tag("times[#{today.date.strftime("%Y/%m/%d")}]", "", :class=>"text time_range") unless today.offday -%>
+<%			grpd = "<div class=\"group_day\"><input class=\"group_box\" type=\"checkbox\" id=\"#{today.date.to_s}\" name=\"groups[#{today.date.strftime("%Y/%m/%d")}]\"><label for=\"#{today.date.to_s}\"> Group Class</label></div>"  if today.group -%>
+
+
+					<td valign="top" class="cell <%= clas %>"><div class="date"><%= today.date.strftime("%m/%d") %></div><div class="notes"><%= today.note %><br /></div><div class="time_range_form"><%= form %></div><%= grpd %></td>
+<%			if i % 6 == 5 -%>
+				</tr>
+<%			end #if -%>
+<%		end #each -%>
+			</tbody>
+		</table>
+	</div>
+<% else #if @current_session.registration_type == Session::DATE_TYPE %>
+		This type of session requires different type of calendar... T_T;;
+<% end %>
+
+<hr />
+
+
+<div style="text-align: right; margin-top: 20px;">
+<button class="iconbutton" id="form_submit" type="submit"><img src="/images/icons/write.png" class="icon"> Submit this Registration</button>
+</div>
+
+
+
+<% end #form %>

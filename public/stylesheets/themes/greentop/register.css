@@ -1,0 +1,121 @@
+div.form_box {
+	padding: 10px 20px;
+	margin-bottom: 20px;
+}
+
+div.form_box input.text {
+	padding: 4px;
+	font-size: 14px;
+}
+
+div.form_box select {
+	font-size: 14px;
+}
+
+div.form_box .form_element {
+	margin-bottom: 20px;
+}
+
+div.form_box label {
+	margin-top: 4px;
+	margin-right: 5px;
+	width: 150px;
+	font-size: 14px;
+	float: left;
+	text-align: right;
+}
+
+div.form_box label small {
+	font-size: 10px;
+}
+
+div#reg label {
+	width: 280px;
+}
+
+
+div#calendar table {
+	border-collapse: collapse;
+	border: 1px solid silver;
+	background-color: white;	
+}
+
+div#calendar table th {
+	background-color: #afc;
+	border: 1px solid silver;	
+	border-bottom: 2px solid silver;	
+}
+
+div#calendar table td {
+	border: 1px solid silver;
+}
+
+div#calendar table td.cells {
+	vertical-align: top;
+	font-size: 0.8em;
+}
+
+div#calendar table td.off_day {
+	background-color: #ddd !important;
+}
+
+div#calendar table td.group_day {
+	background-color: #fcc !important;
+}
+
+div#calendar table td div.date {
+	text-align: center;
+	font-weight: bold;
+	width: 102px;
+	padding-top: 10px;
+}
+
+div#calendar table td.week_no {
+	background-color: #eee;
+	vertical-align: middle;
+	text-align: center;
+	font-weight: bold;	
+	height: 100px;
+}
+
+div#calendar table td.odd_month {
+	background-color: #fff;
+}
+
+div#calendar table td.even_month {
+	background-color: #efe;
+}
+
+div#calendar table div.group_day {
+	font-size: 9px;
+	color: #f00;
+	text-align: center;
+}
+
+div#calendar table div.group_day label {
+	cursor: pointer;
+}
+
+div#calendar table div.time_range_form {
+	height: 50px;
+}
+
+div#calendar .notes {
+	text-align:center;
+	font-size: 10px;
+	margin-bottom: 5px;
+}
+
+div#calendar table .time_range {
+	width: 90px;
+	height: 40px;
+	display: block;
+	margin: 0 auto;
+	font-size: 10px;
+	padding: 2px;
+}
+
+div.help {
+	position: absolute;
+	margin-left: -200px;
+}

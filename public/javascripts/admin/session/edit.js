@@ -13,10 +13,10 @@ function processClick(inp, type, day) {
 	if (type == "offday") {
 		if (inp.checked) {
 			//check off the group box
-			if (day >= 5) $(inp).next('input').checked = false;
+//			if (day >= 5) $(inp).next('input').checked = false;
 			//change the highlight
 //			$(inp).up().removeClassName("in_session");
-			$(inp).up().removeClassName("group_day");
+//			$(inp).up().removeClassName("group_day");
 			$(inp).up().addClassName("off_day");
 		} else {
 			$(inp).up().removeClassName("off_day");
@@ -26,8 +26,8 @@ function processClick(inp, type, day) {
 	
 	if (type == "groups") {
 		if (inp.checked) {
-			$(inp).previous('input').checked = false;
-			$(inp).up().removeClassName("off_day");
+//			$(inp).previous('input').checked = false;
+//			$(inp).up().removeClassName("off_day");
 			$(inp).up().addClassName("group_day");
 		} else {
 			$(inp).up().removeClassName("group_day");
@@ -65,7 +65,7 @@ function addOption() {
 	var i = $$('input.opt').length;
 	
 	var id = "li_" + i;
-	var str = '<li id="' + id + '" style="display: none;"><input type="text" class="opt" name="opt_name[' + i + ']" /> <select name="opt_type[' + i + ']"><option value="checkbox">Yes/No</option><option value="text">Text</option></select>';
+	var str = '<li id="' + id + '" style="display: none;"><input type="text" class="opt" name="opt_name[' + i + ']" /> <select name="opt_type[' + i + ']"><option value="checkbox">Yes/No</option><option value="text">Text</option><option value="big_text">Big Text</option></select>';
 	str += ' <a href="#" onclick="Effect.BlindUp(\'' + id + '\', {duration:0.3}); $(this).previous(\'input\').value=\'\'; return false;"><img src="/images/icons/x_small.png" class="icon" /></a></li>';
 	
 
@@ -153,8 +153,9 @@ function updateCalendar() {
 									"</tbody></table>" +
 									"<div style=\"text-align: right; margin-top: 5px;\">" +
 										"Group Lessons: <span id=\"g_count\">0</span><br /><br />" +
-										"<button class=\"iconbutton\" onclick=\"if(confirm('Are you sure?')) resetCalednar(); return false;\">Reset Calendar</button>" +
-									"</div>");
+									"</div>" +
+									"<button class=\"iconbutton\" onclick=\"if(confirm('Are you sure?')) resetCalednar(); return false;\" type=\"button\">Reset Calendar</button>" +
+									"");
 				
 				updateCounters();
 			}
@@ -174,10 +175,4 @@ Event.onDOMReady(function() {
 	
 	updateCalendar();
 	//editor = new widgEditor("notice");
-
-	tinyMCE.init({
-		mode : "exact",
-		elements : "notice",
-		theme : "simple"
-	});
 });

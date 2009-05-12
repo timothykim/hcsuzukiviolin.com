@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090511171143) do
+ActiveRecord::Schema.define(:version => 20090512001754) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20090511171143) do
     t.datetime "start"
     t.datetime "end"
     t.datetime "approved_time"
+    t.text     "user_input",      :default => ""
   end
 
   create_table "registered_days", :force => true do |t|
@@ -92,6 +93,12 @@ ActiveRecord::Schema.define(:version => 20090511171143) do
     t.time    "start"
     t.time    "end"
     t.time    "approved_time"
+    t.text    "user_input",      :default => ""
+  end
+
+  create_table "registered_group_classes", :force => true do |t|
+    t.integer "registration_id"
+    t.date    "class_date"
   end
 
   create_table "registered_options", :force => true do |t|
@@ -140,18 +147,14 @@ ActiveRecord::Schema.define(:version => 20090511171143) do
   end
 
   create_table "students", :force => true do |t|
-    t.string "first_name"
-    t.string "middle_initial", :limit => 1
-    t.string "last_name"
-    t.date   "dob"
-    t.text   "note"
-    t.string "school"
-    t.string "grade_level"
-  end
-
-  create_table "students_users", :force => true do |t|
     t.integer "user_id"
-    t.integer "student_id"
+    t.string  "first_name"
+    t.string  "middle_initial", :limit => 1
+    t.string  "last_name"
+    t.date    "dob"
+    t.text    "comment"
+    t.string  "school"
+    t.string  "grade_level"
   end
 
   create_table "summer_schools", :force => true do |t|

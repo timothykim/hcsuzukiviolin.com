@@ -20,9 +20,7 @@ class Admin::SessionController < AdminController
     @schools = School.find(:all)
     
     @days_of_the_week = Date::DAYNAMES[1..6]
-    
-    @use_tiny_mce = true
-            
+
     if params[:id]
       @session = Session.find(params[:id])
       season = ['selected="selected"', '', ''] if @session.name.match(/Spring/)
@@ -98,13 +96,13 @@ class Admin::SessionController < AdminController
           p[:day] = day
           p[:user_input] = tr.range
           
-          wa = WeeklyAvailablity.new(p)          
+          wa = WeeklyAvailablity.new(p)
           wa.save
         end #time.split
       end #availability
     end #params
     
-    #save each day info
+    #save each day infot
     if params[:notes]
       params[:notes].each do |date_str, note|
         p = {}

@@ -413,3 +413,48 @@ div#latest_news span.news_date {
 .red {
 	color: red;
 }
+
+
+
+/* table */
+
+table.default_table {
+	width: 100%;
+	border-width: 1px 1px 1px 1px;
+	border-spacing: 2px;
+	border-style: solid solid solid solid;
+	border-color: gray gray gray gray;
+	border-collapse: collapse;
+	background-color: white;
+}
+
+table.default_table th {
+	border-width: 1px 1px 1px 1px;
+	padding: 5px 5px 5px 5px;
+	border-style: dotted;
+	border-color: gray gray gray gray;
+	background-color: #b1cefe;
+}
+
+table.default_table th.selected {
+	background-color: #d1fdd3;
+}
+
+
+
+table.default_table td {
+	border: 1px dotted silver;
+	padding: 5px;
+}
+
+table.default_table tr.even td {
+	background-color: #fcfcfc;	
+}
+
+table.default_table tr.odd td {
+	background-color: #eaeaea;	
+}
+
+table.default_table tr.hightlight td {
+	background-color: #ead887;	
+}

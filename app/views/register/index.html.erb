@@ -1,1 +1,35 @@
-testing
+<h2>Session Listing</h2>
+
+<% if @sessions.length == 0 %>
+	<p>There are no open sessions to register for.</p>
+<% else %>
+	<table id="session_table" class="default_table">
+	  <thead>
+	  <tr>
+		<th>Session Name</th>
+		<th>First Day</th>
+		<th>Last Day</th>
+		<th>Register</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	<% @sessions.each_with_index do |sess, i| %>
+	<% row_class = i % 2 == 0 ? "even" : "odd" %>
+	  <tr class="<%= row_class %>">
+		<td align="center"><h3><%= sess.name %></h3></td>
+		<td align="center"><%= sess.first %></td>
+		<td align="center"><%= sess.last %></td>
+		<td align="center">
+			<% if @current_user.registered?(sess) %>
+				<img src="/images/ok.png" class="icon" /> You have already registered.
+			<% else %>
+				<a href="/register/for/<%= sess.name.gsub(/ /, '-') %>"><img src="/images/icons/write.png" class="icon" /> Register a Student</a>
+			<% end %>
+		</td>
+	  </tr>
+	<% end %>
+	  </tbody>
+	</table>
+
+
+<% end %>

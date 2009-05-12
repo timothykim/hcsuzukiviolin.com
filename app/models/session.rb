@@ -6,4 +6,8 @@ class Session < ActiveRecord::Base
   
   DAY_TYPE = 0
   DATE_TYPE = 1
+  
+  def to_s
+    self.name
+  end
 end

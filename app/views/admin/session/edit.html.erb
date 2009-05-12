@@ -85,7 +85,15 @@
 		<div>Other Options</div>
 		<ol id="option_list">
 		<% @options.each_with_index do |opt, i| %>
-			<li id="li_<%= i %>"><input type="text" class="opt" name="opt_name[<%= i %>]" value="<%= opt.text %>" /> <select name="opt_type[<%= i %>]"><option value="checkbox" <%= 'selected="selected"' if opt.input_type == "checkbox" %>>Yes/No</option><option value="text" <%= 'selected="selected"' if opt.input_type == "text" %>>Text</option></select> <a href="#" onclick="Effect.BlindUp('li_<%= i %>', {duration:0.3}); $(this).previous('input').value=''; return false;"><img src="/images/icons/x_small.png" class="icon" /></a></li>
+			<li id="li_<%= i %>">
+				<input type="text" class="opt" name="opt_name[<%= i %>]" value="<%= opt.text %>" />
+				<select name="opt_type[<%= i %>]">
+					<option value="checkbox" <%= 'selected="selected"' if opt.input_type == "checkbox" %>>Yes/No</option>
+					<option value="text" <%= 'selected="selected"' if opt.input_type == "text" %>>Text</option>
+					<option value="big_text" <%= 'selected="selected"' if opt.input_type == "big_text" %>>Big Text</option>
+				</select>
+				<a href="#" onclick="Effect.BlindUp('li_<%= i %>', {duration:0.3}); $(this).previous('input').value=''; return false;"><img src="/images/icons/x_small.png" class="icon" /></a>
+			</li>
 		<% end %>
 		</ol>
 		<a href="#" onclick="addOption(); return false;"><img src="/images/icons/add_small.png" class="icon"> Add option</a>
@@ -94,7 +102,7 @@
 
 
 <div style="text-align: right; margin-top: 20px;">
-<button class="iconbutton" id="form_submit" onclick="$('session_form').submit(); return false;"><img src="/images/icons/calendar.png" class="icon"> Save this Session!</button>
+<button class="iconbutton" id="form_submit" type="submit"><img src="/images/icons/calendar.png" class="icon"> Save this Session!</button>
 </div>
 
 <% end #form -%>
