@@ -49,14 +49,28 @@ class RegisterController < ApplicationController
       else
         #yeah.. do something for day type registration
       end
+      
+      @javascript_code = "var registration_id = " + (@registration.id || 0).to_s
 
     else 
       @error = "Sorry, #{name} sessoin is either not active or no longer accepting registration."
     end
-    
-    
-    
   end
+  
+  
+  def get_registered_date
+    hash = {}
+    
+    dates = Registration.find(params[:id]).registered_dates
+    
+    dates.each do |date|
+      hash[date.start.strftime("%F")] = [] unless hash[date.start.strftime("%F")]
+      hash[date.start.strftime("%F")].push(date.user_input)
+    end
+    
+    render :text => hash.to_json
+  end
+  
   
   def save
     
@@ -117,7 +131,6 @@ class RegisterController < ApplicationController
         
         tr = TimeRange.new(time_str)
         
-        reg_date.user_input = time_str
         reg_date.start = (tr.start) ? DateTime.strptime(date.to_s.gsub("/","-")+"T"+tr.start.strftime("%H:%M:%S%z"),"%FT%T%z") : nil
         reg_date.end = (tr.done) ? DateTime.strptime(date.to_s.gsub("/","-")+"T"+tr.done.strftime("%H:%M:%S%z"),"%FT%T%z") : nil
         
@@ -138,7 +151,7 @@ class RegisterController < ApplicationController
       end
     end
     
-    redirect_to :action => 'notice', :id => student.id
+    redirect_to :action => 'notice', :id => current_session.id
   end #def save
   
   def notice

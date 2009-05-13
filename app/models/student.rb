@@ -8,14 +8,18 @@ class Student < ActiveRecord::Base
   
   #embedding html here might be bad -_-;; oh well...
   def registered?(sess)
-    return true if self.registrations.find(:first, :conditions => {:session_id => sess.id})
+    return true if self.get_registration(sess)
     return false
   end
   
   def confirmed?(sess)
-    return self.registrations.find(:first, :conditions => {:session_id => sess.id}).confirmed
+    return self.get_registration(sess).confirmed
   rescue
     return false
+  end
+  
+  def get_registration(sess)
+    return self.registrations.find(:first, :conditions => {:session_id => sess.id})
   end
   
   def current_or_new_registration(sess)

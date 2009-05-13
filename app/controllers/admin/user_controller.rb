@@ -32,6 +32,12 @@ class Admin::UserController < AdminController
     @users = User.find(:all, :order => "#{sort} #{dir}")
   end
   
+  def delete
+    user = User.find(params[:id])
+    user.destroy
+    redirect_to :action => "index"
+  end
+  
   def save
     users = User.find(:all)
     
