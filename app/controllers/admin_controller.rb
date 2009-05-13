@@ -10,7 +10,7 @@ class AdminController < ApplicationController
   def global_submenu
     [
       { :name => '<img src="/images/icons/users.png" class="icon" /> Users', :link => "/admin/user", :selected => "selected" },
-      { :name => '<img src="/images/icons/home.png" class="icon" /> Schools', :link => "/admin/schools" },
+      { :name => '<img src="/images/icons/home.png" class="icon" /> Schools', :link => "/admin/school" },
       { :name => '<img src="/images/icons/calendar.png" class="icon" /> Sessions', :link => "/admin/session" },
       { :name => '<img src="/images/icons/write.png" class="icon" /> Registrations', :link => "/admin/summer" },
       # { :name => '<img src="/images/icons/globe.png" class="icon" /> Site', :link => "#" },
@@ -20,6 +20,10 @@ class AdminController < ApplicationController
   end
 
 
+
+
+
+#below is all legacy stuff
   def index
     @section_title = "Administration"
     @submenu = global_submenu

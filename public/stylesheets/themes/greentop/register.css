@@ -130,7 +130,7 @@ div#calendar table div.group_day label {
 }
 
 div#calendar table div.time_range_form {
-	height: 50px;
+	height: 55px;
 }
 
 div#calendar .notes {
@@ -140,15 +140,20 @@ div#calendar .notes {
 }
 
 div#calendar table .time_range {
-	width: 90px;
-	height: 40px;
+	width: 85px;
+	height: 45px;
 	display: block;
 	margin: 0 auto;
 	font-size: 10px;
-	padding: 2px;
+	padding-top: 2px;
+	padding-left: 4px;
+	font-family: 'Tahoma';
 }
 
 div.help {
 	position: absolute;
 	margin-left: -200px;
+}
+
+div#calendar textarea {
 }
