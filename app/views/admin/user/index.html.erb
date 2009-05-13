@@ -25,7 +25,7 @@
 <% @users.each_with_index do |user, i| %>
 <% row_class = i % 2 == 0 ? "even" : "odd" %> 
   <tr class="<%= row_class %>">
-	<td align="center"><small><%= user.created_at.strftime('%m/%e/%y %I:%M%p') %></small></td>
+	<td align="center"><small><%= user.created_at.strftime('%m/%d/%y<br />%I:%M%p') %></small></td>
 	<td align="center"><%= image_tag user.get_avatar %></td>
     <td><div id="name_<%= user.id %>"><strong><%= user.lastname + ", " + user.firstname %></strong></div></td>
     <td><div id="email_<%= user.id %>"><small><%= user.email %></small></div></td>
