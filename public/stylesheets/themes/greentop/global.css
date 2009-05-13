@@ -278,6 +278,9 @@ div.page_nav {
 }
 
 	/* @group forms */
+	textarea {
+		overflow: auto;
+	}
 	
 	div.notice {
 		background-color: #bc0000;
