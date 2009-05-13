@@ -1,3 +1,8 @@
+<% if @error %>
+	<%= @error %>
+<% else %>
+
+
 <% form_tag "/register/save", :method => "post" , :id => "register_form" do -%>
 <%= hidden_field_tag "session_id", @current_session.id %>
 
@@ -9,25 +14,26 @@
 <div class="form_box" id="student_info">
 
 	<div class="form_element">
-	<label class="form_label">Register for:</label>
-	<select name="student_id">
-		<option value="0">New Student</option>
-	<% @students.each do |student| -%>
-		<option value="<%= student.id %>"><%= student %></option>
-	<% end -%>
-	</select>
+	<label class="form_label">Student:</label>
+	<div class="student_name">
+		<% if @student.id.nil? %>
+			New Student <input type="hidden" name="new" value="true" />
+		<% else %>
+			<%= @student %> <%= hidden_field "student", "id" %>
+		<% end %>
+	</div>
 	</div>
 
 	<div class="form_element">
-	<label class="form_label">First Name:</label> <%= text_field_tag "first_name", "" , :class => "text", :size => 20 %>
+	<label class="form_label">First Name:</label> <%= text_field "student", "first_name", :class => "text", :size => 20 %>
 	</div>
 
 	<div class="form_element">
-	<label class="form_label">Middle Initial:</label> <%= text_field_tag "mi", "" , :class => "text", :size => 2, :maxlength => 1 %>
+	<label class="form_label">Middle Initial:</label> <%= text_field "student", "middle_initial", :class => "text", :size => 2, :maxlength => 1 %>
 	</div>
 
 	<div class="form_element">
-	<label class="form_label">Last Name:</label> <%= text_field_tag "last_name", "" , :class => "text", :size => 20 %>
+	<label class="form_label">Last Name:</label> <%= text_field "student", "last_name", :class => "text", :size => 20 %>
 	</div>
 
 	<div class="form_element">
@@ -35,15 +41,15 @@
 	</div>
 
 	<div class="form_element">
-	<label class="form_label">Attending School:</label> <%= text_field_tag "student_school", "" , :class => "text", :size => 20 %>
+	<label class="form_label">Attending School:</label> <%= text_field "student", "school", :class => "text", :size => 20 %>
 	</div>
 
 	<div class="form_element">
-	<label class="form_label">Grade Level: </label> <%= text_field_tag "grade", "" , :class => "text number", :size => 10 %>
+	<label class="form_label">Grade Level: </label> <%= text_field "student", "grade_level", :class => "text number", :size => 10 %>
 	</div>
 
 	<div class="form_element">
-	<label class="form_label">Comments:<br /><small>(Any information that teacher should know about the student)</small></label> <%= text_area_tag "comment", "" , :class => "text", :size => "45x3" %>
+	<label class="form_label">Comments:<br /><small>(Any information that teacher should know about the student)</small></label> <%= text_area "student", "comment", :class => "text", :size => "45x3" %>
 	</div>
 </div>
 
@@ -60,35 +66,32 @@
 	
 	<div class="form_element">
 		<label class="form_label">This registration is for:</label>
-		<select name="school">
-			<% @schools.each do |school| %>
-			  <option value="<%= school.id %>"><%= school.name %></option>
-			<% end %>
-		</select>
+		<%= select "registration", "school_id", School.find(:all).collect {|s| [s.name, s.id] } %>
 	</div>
 
 	<div class="form_element">
 		<label class="form_label">Single Lesson Duration:</label>
-		<%= text_field_tag "duration", "", :class=>"text", :style=>"text-align:right;", :size=>3, :maxlength=>2 %> minutes
+		<%= text_field "registration", "lesson_duration", :class=>"text", :style=>"text-align:right;", :size=>3, :maxlength=>2 %> minutes
 	</div>
 	
 	
 	<% @registration_options.each do |option| -%>
 	<div class="form_element">
+<%
+o = @registration.registered_options.find(:first, :conditions => {:option_id => option.id})
+value = ""
+value = o.value if o
+%>
 <%=
-
 case option.input_type
-	
 	when "text"
-		'<label class="form_label">' + option.text + '</label>' + text_field_tag("reg_option[#{option.id}]", "", :class => "text", :size => 20)
+		'<label class="form_label">' + option.text + '</label>' + text_field_tag("reg_option[#{option.id}]", value.to_s, :class => "text", :size => 20)
 
 	when "big_text"
-		'<label class="form_label">' + option.text + '</label>' + text_area_tag("reg_option[#{option.id}]", "" , :class => "text", :size => "30x3")
+		'<label class="form_label">' + option.text + '</label>' + text_area_tag("reg_option[#{option.id}]", value.to_s, :class => "text", :size => "30x3")
 
 	when "checkbox"
-		'<label class="form_label">' + option.text + '</label>' + radio_button_tag("reg_option[#{option.id}]", "yes") + " Yes<br />" + radio_button_tag("reg_option[#{option.id}]", "no") + " No"
-
-
+		'<label class="form_label">' + option.text + '</label>' + radio_button_tag("reg_option[#{option.id}]", "yes", value == "yes") + " Yes<br />" + radio_button_tag("reg_option[#{option.id}]", "no" , value == "no") + " No"
 
 end -%>
 	</div>
@@ -172,3 +175,6 @@ end -%>
 
 
 <% end #form %>
+
+
+<% end #for error %>

@@ -1,35 +1,77 @@
-<h2>Session Listing</h2>
+<% if flash[:notice] %>
+  <div class="flash"><%= flash[:notice] %></div>
+<% end %>
 
-<% if @sessions.length == 0 %>
-	<p>There are no open sessions to register for.</p>
+
+<% @sessions.each_with_index do |sess, i| %>
+
+<div class="session">
+	<h2><%= sess.name %> Registrations</h2>
+<% days_left = sess.due_date - Date.today %>
+<% if days_left < 0 %>
+	<div class="due_date">No longer accepting registration</div>
+<% elsif days_left == 0 %>
+	<div class="due_date">Due TODAY!</div>
+<% elsif days_left == 1 %>
+	<div class="due_date">Due TOMORROW!</div>
 <% else %>
-	<table id="session_table" class="default_table">
-	  <thead>
-	  <tr>
-		<th>Session Name</th>
-		<th>First Day</th>
-		<th>Last Day</th>
-		<th>Register</th>
-	  </tr>
-	  </thead>
-	  <tbody>
-	<% @sessions.each_with_index do |sess, i| %>
-	<% row_class = i % 2 == 0 ? "even" : "odd" %>
-	  <tr class="<%= row_class %>">
-		<td align="center"><h3><%= sess.name %></h3></td>
-		<td align="center"><%= sess.first %></td>
-		<td align="center"><%= sess.last %></td>
-		<td align="center">
-			<% if @current_user.registered?(sess) %>
-				<img src="/images/ok.png" class="icon" /> You have already registered.
-			<% else %>
-				<a href="/register/for/<%= sess.name.gsub(/ /, '-') %>"><img src="/images/icons/write.png" class="icon" /> Register a Student</a>
-			<% end %>
-		</td>
-	  </tr>
-	<% end %>
-	  </tbody>
-	</table>
+		<div class="due_date">Due in <%= sess.due_date - Date.today %> days on <%= sess.due_date.strftime("%m/%d/%Y") %></div>
+<% end %>
+	<div class="date"><strong>Lessons</strong>: <%= sess.first.strftime("%B %d, %Y") %> ~ <%= sess.last.strftime("%B %d, %Y") %></div>
 
+
+	<table id="session_table" class="default_table">
+		<thead>
+		<tr>
+			<th width="150">Students</th>
+			<th width="200">Status</th>
+			<th>Action</th>
+		</tr>
+		</thead>
+		<tbody>
+<%	@current_user.students.each_with_index do |student, j| -%>
+<%		row_class = j % 2 == 0 ? "even" : "odd" %>
+		<tr class="<%= row_class %>">
+			<td><%= student %></td>
+			<td>
+<%=
+			if student.registered? sess
+				if student.confirmed? sess
+					"<img src=\"/images/ok.png\" class=\"icon\"> Registered!" 
+				else
+					"<img src=\"/images/icons/processing.png\" class=\"icon\"> Being Processed"
+				end
+			else
+				"<img src=\"/images/icons/exclamation.png\" class=\"icon\"> Not Registered"
+			end
+%>
+			</td>
+			<td>
+				<% if days_left < 0 %>
+					No longer accepting registrations
+				<% else %>
+					<% if student.registered? sess %>
+						<% if student.confirmed? sess %>
+							View your lesson schedule
+						<% else %>
+							<a href="/register/for/<%= sess.name.gsub(/ /, '-') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Re-submit Registration</a>
+						<% end %>
+					<% else %>
+						<a href="/register/for/<%= sess.name.gsub(/ /, '-') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Register!</a>
+					<% end %>
+				<% end %>
+			</td>
+		</tr>
+<% 	end %>
+		</tbody>
+	</table>
+	<div style="text-align: right; margin-top: 20px;">
+		<button class="iconbutton" onclick="window.location='/register/for/<%= sess.name.gsub(/ /, '-') %>'" type="button"><img src="/images/icons/write.png" class="icon"> Register a new student!</button>
+	</div>
+	
+</div>
+
+<div class="divider"><img src="/images/swirly.gif" /></div>
 
 <% end %>
+

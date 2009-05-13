@@ -1,3 +1,36 @@
+div.divider {
+	text-align: center;
+	margin: 50px 0;
+}
+
+
+div.session h2 {
+	margin: 0px;
+	margin-top: 20px;
+}
+
+div.session .date {
+	font-size: 0.8em;
+	margin-top: 5px;
+}
+
+div.session .due_date {
+	font-size: 1.5em;
+	float: right;
+}
+
+div.session table {
+	margin: 20px 0;
+}
+
+div.session td {
+	padding-left: 20px;
+}
+
+div.student_name {
+	font-size: 20px;
+}
+
 div.form_box {
 	padding: 10px 20px;
 	margin-bottom: 20px;

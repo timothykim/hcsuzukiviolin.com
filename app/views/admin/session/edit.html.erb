@@ -76,6 +76,13 @@
 		<%= select_tag("registration_type", @registration_type_opt) %>
 	</div>
 
+
+	<div class="form_element">
+		<div class="check"><label>Registration Due Date:</label></div>
+		<%= date_select("session", "due_date", :start_year => Time.now.year) %>
+	</div>
+
+
 	<div class="form_element">
 		<div>Registration Info <small>(This information will be shown to the parents)</small>:</div>
 		<%= text_area_tag "notice", @registration_notice, :rows => 5, :cols => 70, :id => "notice" %>

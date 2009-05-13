@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090512001754) do
+ActiveRecord::Schema.define(:version => 20090513150311) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -83,8 +83,8 @@ ActiveRecord::Schema.define(:version => 20090512001754) do
     t.integer  "registration_id"
     t.datetime "start"
     t.datetime "end"
-    t.datetime "approved_time"
     t.text     "user_input",      :default => ""
+    t.boolean  "preferred",       :default => false
   end
 
   create_table "registered_days", :force => true do |t|
@@ -92,8 +92,8 @@ ActiveRecord::Schema.define(:version => 20090512001754) do
     t.integer "day"
     t.time    "start"
     t.time    "end"
-    t.time    "approved_time"
     t.text    "user_input",      :default => ""
+    t.boolean "preferred",       :default => false
   end
 
   create_table "registered_group_classes", :force => true do |t|
@@ -116,11 +116,11 @@ ActiveRecord::Schema.define(:version => 20090512001754) do
   create_table "registrations", :force => true do |t|
     t.integer  "student_id"
     t.integer  "school_id"
-    t.integer  "user_id"
     t.integer  "session_id"
     t.integer  "lesson_duration"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "confirmed",       :default => false
   end
 
   create_table "schools", :force => true do |t|
@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(:version => 20090512001754) do
     t.boolean "is_active"
     t.text    "registration_notes"
     t.integer "registration_type"
+    t.date    "due_date"
   end
 
   create_table "students", :force => true do |t|

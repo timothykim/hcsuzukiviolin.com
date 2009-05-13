@@ -99,10 +99,7 @@ class User < ActiveRecord::Base
     return false
   end
   
-  def registered?(sess)
-    return true if Registration.find(:first, :conditions => {:user_id => self.id, :session_id => sess.id})
-    return false
-  end
+
 
   protected
     # before filter 
