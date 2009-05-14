@@ -45,7 +45,7 @@
 	</div>
 
 	<div class="form_element">
-	<label class="form_label">Grade Level: </label> <%= text_field "student", "grade_level", :class => "text number", :size => 10 %>
+	<label class="form_label">Grade Level: </label> <%= text_field "student", "grade_level", :class => "text number", :size => 10 %> <%= "on Fall of #{@year}" if @season == "Summer"%>
 	</div>
 
 	<div class="form_element">

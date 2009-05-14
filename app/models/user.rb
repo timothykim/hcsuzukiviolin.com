@@ -76,6 +76,10 @@ class User < ActiveRecord::Base
     "\"#{self.fullname}\" <#{self.email}>"
   end
 
+  def to_s
+    self.fullname
+  end
+
   def fullname
     self.firstname + " " + self.lastname
   end

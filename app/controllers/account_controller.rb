@@ -83,6 +83,28 @@ class AccountController < ApplicationController
     @section_title = "Thanks for signing up, #{current_user.fullname}!"
   end
   
+  def forgot
+    @section_title = "Password Reset"
+  end
+  
+  def reset_password
+    user = User.find(:first, :conditions => {:email => params[:email]})
+    if user
+      new_pass = ActiveSupport::SecureRandom.base64(6)
+      user.password = new_pass
+      user.password_confirmation = new_pass
+      user.email_confirmation = user.email
+      if user.save
+        Notifier.deliver_reset_password_notification(user, new_pass)
+        redirect_to :action => "reset_done"
+      end
+    end
+  end
+  
+  def reset_done
+    @section_title = "Password Reset"
+  end
+  
   
   def settings
     @section_title = "Account Settings"

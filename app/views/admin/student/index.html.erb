@@ -1,0 +1,23 @@
+<h2>Student Listing</h2>
+
+<table class="admin_table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Parent</th>
+			<th>Grade</th>
+			<th>Birthday</th>
+		</tr>
+	</thead>
+	<tbody>
+
+<% @students.each do |student| %>
+		<tr class="<%= cycle("even", "odd") -%>">
+			<td><%= student %></td>
+			<td><%= student.user %></td>
+			<td><%= student.grade_level %></td>
+			<td><%= student.dob.strftime("%m/%d") %></td>
+		</tr>
+<% end %>
+	</tbody>
+</table>

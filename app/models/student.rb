@@ -1,5 +1,5 @@
 class Student < ActiveRecord::Base
-  belongs_to :users
+  belongs_to :user
   has_many :registrations
   
   def to_s

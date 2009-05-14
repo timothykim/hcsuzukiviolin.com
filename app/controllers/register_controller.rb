@@ -18,6 +18,9 @@ class RegisterController < ApplicationController
     name = params[:session].gsub(/-/, ' ')
     
     @current_session = Session.find(:first, :conditions => { :name => name })
+    
+    @season = name.split()[0]
+    @year = name.split()[1]
 
     @section_path = "Registrations &raquo; "
     @section_title = name

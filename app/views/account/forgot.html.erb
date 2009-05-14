@@ -1,0 +1,11 @@
+<h2>Forgot your password?</h2>
+
+<p>To ensure the security of your password, we encrypt your password. Which mean we do not know what your password is!</p>
+
+<p>But do not worry, you can reset your password and have it sent to your email.</p>
+
+<% form_tag "/account/reset_password" do %>
+<div class="form_box">
+Your Email Address: <%= text_field_tag "email", "", :class => "text" %> <%= submit_tag "Reset!" %>
+</div>
+<% end %>
