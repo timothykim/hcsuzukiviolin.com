@@ -85,7 +85,7 @@
 								<%= "|" if current_user.is_admin %>
 								<%= link_to "Admin", { :controller => "/admin", :action => "index" } if current_user.is_admin %>
 								| <%= link_to "Settings", { :controller => "/account", :action => "settings" } %>
-								| <%= link_to "Help", { :controller => "/account", :action => "help"} %>
+								<!--| <%= link_to "Help", { :controller => "/account", :action => "help"} %>-->
 								| <%= link_to "Logout", { :controller => "/account", :action => "logout" } %>
 							</div>
 						<% else %>
