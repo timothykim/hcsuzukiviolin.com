@@ -2,9 +2,9 @@ Hi, <%= @admin.fullname %>!<br />
 <br />
 <%= @new_account.fullname %> (<%= @new_account.email %>) just signed up for the hcsuzukiviolin.com site!<br />
 <br />
-Click <a href="http://gwsms.org/admin/user">here</a> to activate his or her account.<br />
+Click <a href="http://www.hcsuzukiviolin.com/account/remote_approve?i=<%=@new_account.id%>&amp;s=<%=@new_account.salt%>">here</a> to instantly activate his or her account.<br />
 <br />
-If you cannot click on the link, copy and paste this URL: http://hcsuzukiviolin.com/admin/user<br />
+Or you can visit here: http://hcsuzukiviolin.com/admin/user <br />
 <br />
 Sincerely,<br />
-GWSMS Administrator
+HCSuzukiViolin.com Administrator

@@ -48,7 +48,17 @@ class AccountController < ApplicationController
   end
   
   def unauthorized
-      @s = session[:return_to]
+    @s = session[:return_to]
+  end
+  
+  def remote_approve
+    user = User.find(params[:i])
+    if user.salt == params[:s]
+      user.update_attributes!({:activated => true, :email_confirmation => user.email})
+      render :text => "#{user} has been activated."
+    end
+  rescue
+    render :text => "Something went wrong... T_T ... Please visit <a href=\"http://www.hcsuzukuviolin.com/admin/user\">http://www.hcsuzukuviolin.com/admin/user</a> to activate this user."
   end
   
   
