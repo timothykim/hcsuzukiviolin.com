@@ -1,3 +1,3 @@
 class RegisteredGroupClass < ActiveRecord::Base
-  belongs_to :registration
+  #depreciated DO NOT USE
 end

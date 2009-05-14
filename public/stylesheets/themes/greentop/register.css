@@ -123,6 +123,7 @@ div#calendar table div.group_day {
 	font-size: 9px;
 	color: #f00;
 	text-align: center;
+	padding: 5px;
 }
 
 div#calendar table div.group_day label {

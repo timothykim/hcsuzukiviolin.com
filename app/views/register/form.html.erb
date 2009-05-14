@@ -111,11 +111,6 @@ end -%>
 			<li>Multiple range can be entered by separating them with commas.</li>
 			<li>You may mark a time range with an * (asterisk) to indicate preferred time.</li>
 		</ul>
-		<h4>Group Lessons</h4>
-		<ul>
-			<li>Please check ALL the group lessons that you are able to join.</li>
-		</ul>
-		
 		<div class="help">
 		<p>Example:</p>
 		<table width="110" height="100"><thead><tr><th>Tuesday</th></tr></thead><tr><td class="cell"><div class="date">MM/DD</div><div class="notes"><br /></div><textarea class="text time_range" id="sample" readonly="readonly">7-10am,
@@ -162,8 +157,8 @@ end -%>
 <%			clas = (today.date.mon % 2 == 1) ? "odd_month" : "even_month" -%>
 <%			clas = " off_day" if today.offday -%>
 <%			form = text_area_tag("times[#{today.date.strftime("%Y/%m/%d")}]", "", :class=>"text time_range", :id=>today.date.to_s) unless today.offday -%>
-<%			grpd = "<div class=\"group_day\"><input class=\"group_box\" type=\"checkbox\" id=\"#{today.date.to_s}\" name=\"groups[#{today.date.strftime("%Y/%m/%d")}]\"><label for=\"#{today.date.to_s}\"> Group Class</label></div>"  if today.group -%>
-
+<%#			grpd = "<div class=\"group_day\"><input class=\"group_box\" type=\"checkbox\" id=\"#{today.date.to_s}\" name=\"groups[#{today.date.strftime("%Y/%m/%d")}]\"><label for=\"#{today.date.to_s}\"> Group Class</label></div>" if today.group -%>
+<%			grpd = "<div class=\"group_day\">Group Class</div>" if today.group -%>
 
 					<td valign="top" class="cell <%= clas %>"><div class="date"><%= today.date.strftime("%m/%d") %></div><div class="notes"><%= today.note %><br /></div><div class="time_range_form"><%= form %></div><%= grpd %></td>
 <%			if i % 6 == 5 -%>
@@ -172,7 +167,16 @@ end -%>
 <%		end #each -%>
 			</tbody>
 		</table>
+		
+		<h4>Group Classes</h4>
+		<p><%= @current_session %> session will have group classes on following days.</p>
+		<ol>
+		<% @group_days.each do |g| %>
+			<li><%= g.date.strftime("%A - %B %d, %Y") %></li>
+		<% end %>
+		</ol>
 	</div>
+	
 <% else #if @current_session.registration_type == Session::DATE_TYPE %>
 		This type of session requires different type of calendar... T_T;;
 <% end %>

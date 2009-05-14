@@ -46,13 +46,19 @@ class RegisterController < ApplicationController
         until @dates[-1].date.wday() == 6
           @dates.push(@dates[-1] + 1)
         end
+        
+        
       else
         #yeah.. do something for day type registration
       end
       
+      
+      @group_days = @current_session.session_days.find(:all, :conditions => {:group => true}, :order => "date")
+      
+      
       @javascript_code = "var registration_id = " + (@registration.id || 0).to_s
 
-    else 
+    else
       @error = "Sorry, #{name} sessoin is either not active or no longer accepting registration."
     end
   end
@@ -138,18 +144,19 @@ class RegisterController < ApplicationController
       end
     end
     
+    #depreciated
     #finally group lessons
-    registration.registered_group_classes {|clss| clss.destroy }
-    if params[:groups]
-      params[:groups].each do |date, opt|
-        d = Date.parse(date)
-      
-        g_class = registration.registered_group_classes.new
-        g_class.class_date = d
-      
-        g_class.save
-      end
-    end
+    # registration.registered_group_classes {|clss| clss.destroy }
+    # if params[:groups]
+    #   params[:groups].each do |date, opt|
+    #     d = Date.parse(date)
+    #   
+    #     g_class = registration.registered_group_classes.new
+    #     g_class.class_date = d
+    #   
+    #     g_class.save
+    #   end
+    # end
     
     redirect_to :action => 'notice', :id => current_session.id
   end #def save

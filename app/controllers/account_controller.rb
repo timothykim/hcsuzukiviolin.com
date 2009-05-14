@@ -2,6 +2,19 @@ class AccountController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   # If you want "remember me" functionality, add this before_filter to Application Controller
 
+
+
+  def global_submenu
+    [
+      { :name => '<img src="/images/icons/users.png" class="icon" /> Account Setting', :link => "/account/settings", :selected => "selected" },
+#      { :name => '<img src="/images/icons/contact.png" class="icon" /> Parents Information', :link => "/account/parents" },
+#      { :name => '<img src="/images/icons/face-smile.png" class="icon" /> Students', :link => "/account/students" },
+    ]
+  end
+
+
+
+
   # say something nice, you goof!  something sweet.
   def index
     redirect_to(:action => 'login') unless logged_in? # || User.count > 0
@@ -72,7 +85,8 @@ class AccountController < ApplicationController
   
   
   def settings
-    @section_title = "Editing Your Personal Information"
+    @section_title = "Account Settings"
+    @submenu = global_submenu
     
     @user = self.current_user
     
