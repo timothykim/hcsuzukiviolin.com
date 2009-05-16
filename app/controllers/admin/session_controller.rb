@@ -32,7 +32,7 @@ class Admin::SessionController < AdminController
       @schools.each { |school| @availabilities[school.id] = [[],[],[],[],[],[],[]] }
       was = @session.weekly_availablities
       was.each do |wa|
-        @availabilities[wa.school_id][wa.day].push(wa.user_input) if wa.school_id
+        @availabilities[wa.school_id][wa.day].push(wa.user_input) if wa.school
       end
       
       @registration_notice = @session.registration_notes
