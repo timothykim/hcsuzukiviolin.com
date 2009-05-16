@@ -22,25 +22,25 @@ class Admin::SessionController < AdminController
     @days_of_the_week = Date::DAYNAMES[1..6]
 
     if params[:id]
-      @session = Session.find(params[:id])
-      season = ['selected="selected"', '', ''] if @session.name.match(/Spring/)
-      season = ['', 'selected="selected"', ''] if @session.name.match(/Summer/)
-      season = ['', '', 'selected="selected"'] if @session.name.match(/Fall/)
-      @year = @session.name.match(/[0-9]+/).to_s
+      @current_session = Session.find(params[:id])
+      season = ['selected="selected"', '', ''] if @current_session.name.match(/Spring/)
+      season = ['', 'selected="selected"', ''] if @current_session.name.match(/Summer/)
+      season = ['', '', 'selected="selected"'] if @current_session.name.match(/Fall/)
+      @year = @current_session.name.match(/[0-9]+/).to_s
     
       @availabilities = []
       @schools.each { |school| @availabilities[school.id] = [[],[],[],[],[],[],[]] }
-      was = @session.weekly_availablities
+      was = @current_session.weekly_availablities
       was.each do |wa|
         @availabilities[wa.school_id][wa.day].push(wa.user_input) if wa.school
       end
       
-      @registration_notice = @session.registration_notes
-      @active = @session.is_active
-      @options = @session.registration_options
+      @registration_notice = @current_session.registration_notes
+      @active = @current_session.is_active
+      @options = @current_session.registration_options
       reg_type = ['', '']
-      reg_type = ['selected="selected"', ''] if @session.registration_type == Session::DAY_TYPE
-      reg_type = ['', 'selected="selected"'] if @session.registration_type == Session::DATE_TYPE
+      reg_type = ['selected="selected"', ''] if @current_session.registration_type == Session::DAY_TYPE
+      reg_type = ['', 'selected="selected"'] if @current_session.registration_type == Session::DATE_TYPE
       
     else
       season = ['selected="selected"', '', '']

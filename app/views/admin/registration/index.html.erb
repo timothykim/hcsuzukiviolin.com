@@ -1,0 +1,38 @@
+<% @sessions.each do |sess| %>
+  <h2><%= sess.name %> registrations</h2>
+  <div class="meta">
+    <ul>
+      <li>Total Registered: <%= sess.registrations.length %></li>
+    <% @schools.each do |school| %>
+      <% r = school.registrations.find(:all, :conditions => {:session_id => sess.id}) %>
+      <li><%= school.name %>: <%= r.length %></li>
+    <% end %>
+    </ul>
+  </div>
+
+  
+  <table class="admin_table">
+    <thead>
+      <tr>
+        <th>Registered At</th>
+        <th>Student</th>
+        <th>Parent</th>
+        <th>School</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% sess.registrations.each do |r| %>
+        <tr class="<%= cycle("even", "odd") %>">
+          <td><%= r.updated_at.strftime("%m/%d %I:%M %p") %></td>
+          <td><%= r.student %></td>
+          <td><%= r.student.user %></td>
+          <td><%= r.school.name %></td>
+          <td><a href="/register/for/<%=sess.name.gsub(" ","-")%>/<%=r.student.id%>"><%= image_tag "/images/icons/write.png", :class=>"icon" %> View / Edit</a></td>
+      <% end %>
+    </tbody>
+  </table>
+
+  <button type="button" class="iconbutton"><img src="/images/icons/calendar.png" class="icon"> Work on Schedule</button>
+
+<% end %>

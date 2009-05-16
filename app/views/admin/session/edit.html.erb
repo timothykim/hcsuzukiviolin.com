@@ -3,7 +3,7 @@
 <% form_tag "/admin/session/save", :method => "post" , :id => "session_form" do -%>
 
 <% if params[:id] %>
-	<input type="hidden" id="session_id" name="id" value="<%= @session.id %>" />
+	<input type="hidden" id="session_id" name="id" value="<%= @current_session.id %>" />
 <% end %>
 <div class="form_box">
 	<%= error_messages_for :session %>
