@@ -6,3 +6,6 @@ doc/app
 public/datafiles/**/*
 .svn/*/**
 config/*.yml
+*.swp
+*.vim
+
