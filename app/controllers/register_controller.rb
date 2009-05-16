@@ -156,8 +156,8 @@ class RegisterController < ApplicationController
         
         tr = TimeRange.new(time_str)
         
-        reg_date.start = (tr.start) ? tr.start : nil
-        reg_date.end = (tr.done) ? tr.end : nil
+        reg_date.start = tr.start
+        reg_date.end = tr.done
         reg_date.date = Date.parse(date)
         
         reg_date.save

@@ -5,7 +5,6 @@ class TimeRange
     
     a = range.split(/[-~]/)
     
-    
     s, d = clean(a[0], a[1])
     
     @start = Time.parse(s)
@@ -22,8 +21,8 @@ class TimeRange
   
   def clean(s, d)
     #gasp! we are assuming s and d are pretty much in time format... -_-;;
-    s = s.gsub(/\s/,"").downcase
-    d = d.gsub(/\s/,"").downcase
+    s = s.gsub(/[\s\.]/,"").downcase
+    d = d.gsub(/[\s\.]/,"").downcase
     
     if s.match(/^[\d:]+[ap]m$/) and d.match(/^[\d:]+[ap]m$/)
       # in good format, do nothing and return
