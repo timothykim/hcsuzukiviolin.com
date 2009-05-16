@@ -128,9 +128,8 @@ class RegisterController < ApplicationController
       registration.session_id = current_session.id
     end
     registration.attributes = params[:registration]
+    registration.updated_at = Time.now
     registration.save
-    
-    
     
     #secondly the options
     registration.registered_options.each {|opt| opt.destroy }
@@ -178,7 +177,11 @@ class RegisterController < ApplicationController
     #   end
     # end
     
-    redirect_to :action => 'notice', :id => current_session.id
+    if current_user.is_admin
+      redirect_to :controller => 'admin/registration', :action => 'index'
+    else
+      redirect_to :action => 'notice', :id => current_session.id
+    end
   end #def save
   
   def notice

@@ -18,6 +18,7 @@
         <th>Student</th>
         <th>Parent</th>
         <th>School</th>
+        <th>Lesson</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -25,10 +26,11 @@
       <% sess.registrations.each do |r| %>
         <tr class="<%= cycle("even", "odd") %>">
           <td><%= r.updated_at.strftime("%m/%d %I:%M %p") %></td>
-          <td><%= r.student %></td>
+          <td><%= r.student.first_name %></td>
           <td><%= r.student.user %></td>
           <td><%= r.school.name %></td>
-          <td><a href="/register/for/<%=sess.name.gsub(" ","-")%>/<%=r.student.id%>"><%= image_tag "/images/icons/write.png", :class=>"icon" %> View / Edit</a></td>
+          <td><%= r.lesson_duration %> minutes</td>
+          <td><a href="/register/for/<%=sess.name.gsub(" ","-")%>/<%=r.student.id%>"><%= image_tag "/images/icons/write_small.png", :class=>"icon" %> View / Edit</a></td>
       <% end %>
     </tbody>
   </table>

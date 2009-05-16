@@ -41,10 +41,10 @@ table.admin_table th.selected {
 }
 
 
-
 table.admin_table td {
 	border: 1px dotted silver;
 	padding: 5px;
+    font-size: 0.8em;
 }
 
 table.admin_table tr.even td {
