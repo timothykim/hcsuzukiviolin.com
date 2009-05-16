@@ -28,12 +28,12 @@ class Admin::SessionController < AdminController
       season = ['', '', 'selected="selected"'] if @session.name.match(/Fall/)
       @year = @session.name.match(/[0-9]+/).to_s
     
-      @availabilities = []
-      @schools.each { |school| @availabilities[school.id] = [[],[],[],[],[],[],[]] }
-      was = @session.weekly_availablities
-      was.each do |wa|
-        @availabilities[wa.school_id][wa.day].push(wa.user_input)
-      end
+      # @availabilities = []
+      # @schools.each { |school| @availabilities[school.id] = [[],[],[],[],[],[],[]] }
+      # was = @session.weekly_availablities
+      # was.each do |wa|
+      #   @availabilities[wa.school_id][wa.day].push(wa.user_input)
+      # end
       
       @registration_notice = @session.registration_notes
       @active = @session.is_active
