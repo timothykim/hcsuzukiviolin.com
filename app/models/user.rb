@@ -37,7 +37,8 @@ class User < ActiveRecord::Base
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
-    u = find_by_login(login) # need to get the salt
+    #u = find_by_login(login.downcase) # need to get the salt
+    u = User.find(:first, :conditions => ["login ILIKE ?", login]) #POSTGRESQL ONLY!!! -_-;;
     u && u.authenticated?(password) ? u : nil
   end
 
