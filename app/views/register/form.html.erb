@@ -119,9 +119,10 @@ end -%>
 	<div id="calendar">
 		<h4>Individual Lessons</h4>
 		<ul>
-			<li>Please indicate ALL possible time RANGE for EACH DAY. e.g: 6-8pm, 10am~1:30pm</li>
-			<li>Multiple range can be entered by separating them with commas or new line.</li>
-			<li>You may mark a time range with an * (asterisk) to indicate preferred time.</li>
+			<li>Please indicate ALL possible time RANGE for EACH DAY.<br /><em>e.g: 6-8pm, 10am~1:30pm</em></li>
+			<li>Please write down <strong>pm</strong> or <strong>am</strong> with your times.<br /><em>e.g: 8~9am, 2~4pm but NOT 7~8</em></li>
+			<li>Multiple range can be entered per day by putting them on <strong>separate lines</strong>.</li>
+			<li>You may mark a time range with an * (asterisk) to indicate preferred time.<br /><em>e.g: 4-5pm*, *1-3:30pm</em></li>
 		</ul>
 		<div class="help">
 		<p>Example:</p>
@@ -135,7 +136,7 @@ end -%>
 		</div>
 		
 		<% if @current_user.students.length > 1 %>
-			<div style="text-align: right">
+			<div style="color: #77c;">
 			Copy Schedule from: <select onchange="updateCalendar(this.value);"><option value="0">Select a student</option>
 			<% @current_user.students.each do |s|%>
 				<% if s.id != @student.id and s.registered?(@current_session) %>

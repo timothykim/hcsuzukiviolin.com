@@ -158,3 +158,17 @@ div.help {
 
 div#calendar textarea {
 }
+
+
+div#calendar li {
+	margin-bottom: 10px;
+}
+
+div#calendar li strong {
+	color: green;
+}
+
+div#calendar li em {
+	font-size: 0.8em;
+	color: red;
+}
