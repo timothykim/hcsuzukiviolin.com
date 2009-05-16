@@ -404,4 +404,4 @@ var SortableTable = {
 	}
 }
 
-  Event.observe(window, 'load', SortableTable.load);
+Event.observe(window, 'load', SortableTable.load);

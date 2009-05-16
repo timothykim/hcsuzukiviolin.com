@@ -11,4 +11,10 @@ class Admin::RegistrationController < AdminController
 
     @javascripts = "tablesort.js"
   end
+
+  def delete
+    r = Registration.find(params[:id])
+    r.destroy if r
+    redirect_to :action => "index"
+  end
 end
