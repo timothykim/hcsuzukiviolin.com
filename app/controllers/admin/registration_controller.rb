@@ -8,5 +8,7 @@ class Admin::RegistrationController < AdminController
 
     @sessions = Session.find(:all, :conditions => {:is_active => true}, :order => "first DESC")
     @schools = School.all
+
+    @javascripts = "tablesort.js"
   end
 end

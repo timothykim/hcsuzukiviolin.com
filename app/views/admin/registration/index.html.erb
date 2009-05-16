@@ -11,26 +11,28 @@
   </div>
 
   
-  <table class="admin_table">
+  <table class="admin_table sortable">
     <thead>
       <tr>
-        <th>Registered At</th>
-        <th>Student</th>
-        <th>Parent</th>
-        <th>School</th>
-        <th>Lesson</th>
-        <th>Actions</th>
+        <th class="date-us">Registered At</th>
+        <th class="text">Student</th>
+        <th class="text">Parent</th>
+        <th class="text">School</th>
+        <th class="number">Lesson</th>
+        <th class="nosort">Actions</th>
+        <th class="nosort"></th>
       </tr>
     </thead>
     <tbody>
       <% sess.registrations.each do |r| %>
-        <tr class="<%= cycle("even", "odd") %>">
-          <td><%= r.updated_at.strftime("%m/%d %I:%M %p") %></td>
-          <td><%= r.student.first_name %></td>
-          <td><%= r.student.user %></td>
+        <tr>
+          <td><%= r.updated_at.strftime("%m/%d/%Y %I:%M %p") %></td>
+          <td><%= "#{r.student.last_name}, #{r.student.first_name}" %></td>
+          <td><%= "#{r.student.user.lastname}, #{r.student.user.firstname}" %></td>
           <td><%= r.school.name %></td>
-          <td><%= r.lesson_duration %> minutes</td>
-          <td><a href="/register/for/<%=sess.name.gsub(" ","-")%>/<%=r.student.id%>"><%= image_tag "/images/icons/write_small.png", :class=>"icon" %> View / Edit</a></td>
+          <td><%= r.lesson_duration %></td>
+          <td align="center"><a href="/register/for/<%=sess.name.gsub(" ","-")%>/<%=r.student.id%>"><%= image_tag "/images/icons/write_small.png", :class=>"icon" %> View / Edit</a></td>
+          <td align="center"><%= link_to(image_tag("/images/icons/x_small.png", :class=>"icon"), {:action=>"delete", :id=>r.id}, {:confirm=>"Are you sure?\nThis cannot be undone."}) %></td>
       <% end %>
     </tbody>
   </table>

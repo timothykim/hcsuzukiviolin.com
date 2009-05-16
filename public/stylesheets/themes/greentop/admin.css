@@ -47,11 +47,11 @@ table.admin_table td {
     font-size: 0.8em;
 }
 
-table.admin_table tr.even td {
+table.admin_table tr.even td, tr.rowodd {
 	background-color: #fcfcfc;	
 }
 
-table.admin_table tr.odd td {
+table.admin_table tr.odd td, tr.roweven {
 	background-color: #eaeaea;	
 }
 
@@ -312,5 +312,25 @@ input.inline_text:hover {
 input.inline_text:focus {
 	border: 1px solid silver;
 	background-color: white;
+}
+
+
+
+.sortcol {
+	cursor: pointer;
+	padding-right: 20px;
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+.sortasc {
+	background-color: #DDFFAC;
+	background-image: url(/images/tablesort/up.gif);
+}
+.sortdesc {
+	background-color: #B9DDFF;
+	background-image: url(/images/tablesort/down.gif);
+}
+.nosort {
+	cursor: default;
 }
 
