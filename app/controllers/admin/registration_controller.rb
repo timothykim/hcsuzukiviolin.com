@@ -14,7 +14,7 @@ class Admin::RegistrationController < AdminController
 
   def delete
     r = Registration.find(params[:id])
-    r.destroy if r
-    redirect_to :action => "index"
+    r.destroy
+    render :json => r
   end
 end
