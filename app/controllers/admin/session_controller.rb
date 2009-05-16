@@ -87,7 +87,7 @@ class Admin::SessionController < AdminController
         was.each { |wa| wa.destroy }
         
         #and remake... -_-;;
-        times.split(/[,\s]+/).each do |time_str|
+        times.split(/[,\n\r]+/).each do |time_str|
           tr = TimeRange.new(time_str)
           
           p = {}

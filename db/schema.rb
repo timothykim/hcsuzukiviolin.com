@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090513150311) do
+ActiveRecord::Schema.define(:version => 20090516033155) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -80,11 +80,12 @@ ActiveRecord::Schema.define(:version => 20090513150311) do
   end
 
   create_table "registered_dates", :force => true do |t|
-    t.integer  "registration_id"
-    t.datetime "start"
-    t.datetime "end"
-    t.text     "user_input",      :default => ""
-    t.boolean  "preferred",       :default => false
+    t.integer "registration_id"
+    t.time    "start"
+    t.time    "end"
+    t.text    "user_input",      :default => ""
+    t.boolean "preferred",       :default => false
+    t.date    "date"
   end
 
   create_table "registered_days", :force => true do |t|

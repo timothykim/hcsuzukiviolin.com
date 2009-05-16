@@ -20,4 +20,11 @@ namespace 'views' do
 end
 
 
-
+namespace 'data' do
+  desc 'Update registered_dates rows so that dates with nil will have same date as start'
+  task 'update_registered_dates' do
+    RegisteredDate.all.each do |rd|
+      puts rd.user_input
+    end
+  end
+end

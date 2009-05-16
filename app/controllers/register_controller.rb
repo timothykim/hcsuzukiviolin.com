@@ -31,6 +31,22 @@ class RegisterController < ApplicationController
       @student = Student.new
       @student = Student.find(params[:student]) if params[:student]
       
+      #make sure parents are messing with other students
+      unless current_user.is_admin
+        if params[:student]
+          unless @student.user_id == current_user.id
+            @error = "You have no privilege to modify this student's registration."
+          end
+        end
+      else
+        #if it's admin editing some other student's registration, then display parent's name
+        if params[:student]
+          unless @student.user_id == current_user.id
+            @parent = User.find(@student.user_id)
+          end
+        end
+      end
+      
       @registration = @student.current_or_new_registration @current_session
       
 
@@ -73,8 +89,8 @@ class RegisterController < ApplicationController
     dates = Registration.find(params[:id]).registered_dates
     
     dates.each do |date|
-      hash[date.start.strftime("%F")] = [] unless hash[date.start.strftime("%F")]
-      hash[date.start.strftime("%F")].push(date.user_input)
+      hash[date.date.to_s] = [] unless hash[date.date.to_s]
+      hash[date.date.to_s].push(date.user_input)
     end
     
     render :text => hash.to_json
@@ -129,10 +145,10 @@ class RegisterController < ApplicationController
     #3rd, registered dates
     registration.registered_dates.each {|date| date.destroy}
     params[:times].each do |date, times|
-      times.split(/[,\s]+/).each do |time_str|
+      times.split(/[,\n\r]+/).each do |time_str|
         reg_date = registration.registered_dates.new
         
-        reg_date.user_input = time_str
+        reg_date.user_input = time_str.strip
         if time_str.index('*')
           reg_date.preferred = true
         end
@@ -140,8 +156,9 @@ class RegisterController < ApplicationController
         
         tr = TimeRange.new(time_str)
         
-        reg_date.start = (tr.start) ? DateTime.strptime(date.to_s.gsub("/","-")+"T"+tr.start.strftime("%H:%M:%S%z"),"%FT%T%z") : nil
-        reg_date.end = (tr.done) ? DateTime.strptime(date.to_s.gsub("/","-")+"T"+tr.done.strftime("%H:%M:%S%z"),"%FT%T%z") : nil
+        reg_date.start = (tr.start) ? tr.start : nil
+        reg_date.end = (tr.done) ? tr.end : nil
+        reg_date.date = Date.parse(date)
         
         reg_date.save
       end

@@ -13,6 +13,8 @@
 
 <div class="form_box" id="student_info">
 
+
+
 	<div class="form_element">
 	<label class="form_label">Student:</label>
 	<div class="student_name">
@@ -23,6 +25,16 @@
 		<% end %>
 	</div>
 	</div>
+<% if @parent %>
+	<div class="form_element">
+	<label class="form_label">Parent:</label>
+	<div class="student_name">
+		<%= @parent %>
+	</div>
+	</div>
+<% end %>
+
+
 
 	<div class="form_element">
 	<label class="form_label">First Name:</label> <%= text_field "student", "first_name", :class => "text", :size => 20 %>
@@ -158,7 +170,7 @@ end -%>
 <%			clas = " off_day" if today.offday -%>
 <%			form = text_area_tag("times[#{today.date.strftime("%Y/%m/%d")}]", "", :class=>"text time_range", :id=>today.date.to_s) unless today.offday -%>
 <%#			grpd = "<div class=\"group_day\"><input class=\"group_box\" type=\"checkbox\" id=\"#{today.date.to_s}\" name=\"groups[#{today.date.strftime("%Y/%m/%d")}]\"><label for=\"#{today.date.to_s}\"> Group Class</label></div>" if today.group -%>
-<%			grpd = "<div class=\"group_day\">Group Class</div>" if today.group -%>
+<%			grpd = (today.group) ? "<div class=\"group_day\">Group Class</div>" : "<div class=\"group_day\"><br /></div>"  -%>
 
 					<td valign="top" class="cell <%= clas %>"><div class="date"><%= today.date.strftime("%m/%d") %></div><div class="notes"><%= today.note %><br /></div><div class="time_range_form"><%= form %></div><%= grpd %></td>
 <%			if i % 6 == 5 -%>
