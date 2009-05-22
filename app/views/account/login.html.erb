@@ -1,5 +1,5 @@
 
-<% if flash[:notice] %><div id="login_notice" class="notice"><%= flash[:notice] %></div><% end %>
+<% if flash[:notice] %><div id="login_notice" class="notice"><%= flash[:notice] %></div><% flash[:notice] = nil %><% end %>
 
 <div id="login_form_page">
 	<p>The page that you are trying to access requires an account. Please login to continue.</p>
@@ -17,14 +17,14 @@
 		<% end -%>
 	</div>
 
+</div>
+
 	<div id="login_text">
-		<p>Are you a parent but don't have an account?<br/> Then <a href="/account/signup">sign up!</a></p>
+		<p>Are you a parent but don't have an account?<br/> Then <a href="/account/signup">sign up</a> for one!</p>
 		
 		<p><a href="/account/forgot">Did you forget your password?</a></p>
 	</div>
 
-
-</div>
 
 <script type="text/javascript">
 <!--

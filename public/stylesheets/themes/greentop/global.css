@@ -283,9 +283,9 @@ div.page_nav {
 	}
 	
 	div.notice {
-		background-color: #bc0000;
-		border: 1px solid #ff4778;
-		color: white;
+		background-color: #ffeeee;
+		border: 1px solid red;
+		color: black;
 		padding: 20px;
 		margin-bottom: 20px;
 	}

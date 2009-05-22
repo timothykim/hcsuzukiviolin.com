@@ -1,3 +1,5 @@
+<% if flash[:notice] %><div class="notice"><%= flash[:notice] %></div><% end %>
+
 <h2>Forgot your password?</h2>
 
 <p>To ensure the security of your password, we encrypt your password. Which mean we do not know what your password is!</p>
@@ -6,6 +8,6 @@
 
 <% form_tag "/account/reset_password" do %>
 <div class="form_box">
-Your Email Address: <%= text_field_tag "email", "", :class => "text" %> <%= submit_tag "Reset!" %>
+Your Email Address: <%= text_field_tag "email", params[:email], :class => "text" %> <%= submit_tag "Reset!" %>
 </div>
 <% end %>

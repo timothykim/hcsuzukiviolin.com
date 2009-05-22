@@ -108,6 +108,9 @@ class AccountController < ApplicationController
         Notifier.deliver_reset_password_notification(user, new_pass)
         redirect_to :action => "reset_done"
       end
+    else
+      flash[:notice] = "Uh oh, I can't seem to find your email. Please try again.";
+      redirect_to :action => "forgot", :email => params[:email]
     end
   end
   

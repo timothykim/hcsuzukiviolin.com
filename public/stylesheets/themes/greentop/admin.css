@@ -61,10 +61,7 @@ table.admin_table tr.hightlight td {
 
 
 
-
-
-
-#body.admin_summer_add, #body.admin_summer_schedule {
+#body.admin_summer_add, #body.admin_summer_schedule, #body.registration_schedule{
 	width: 100%;
 	margin: 0px auto;
 }

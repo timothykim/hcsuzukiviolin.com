@@ -237,8 +237,8 @@ END_OF_EVENT
     end
     
     
-    @day_start = 7;
-    @day_end   = 20;
+    @day_start = 7
+    @day_end   = 20
 
     @teaching_hours = [{
       1 => [14, 20],
