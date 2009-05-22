@@ -1,3 +1,4 @@
+<% if flash[:notice] %><div class="notice"><%= flash[:notice] %></div><% flash[:notice] = nil %><% end %>
 
 <div class="form_box">
 	<%= error_messages_for :user %>
