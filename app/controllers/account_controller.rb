@@ -39,9 +39,8 @@ class AccountController < ApplicationController
       end
       
       #set last logged in
-      
       redirect_back_or_default(:controller => '/page', :action => 'index')
-      flash[:notice] = "Logged in successfully"
+      #flash[:notice] = "Logged in successfully"
     else
       flash[:notice] = "Your email, password combination is not in the system. Please try again."
     end
