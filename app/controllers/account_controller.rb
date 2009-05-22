@@ -131,7 +131,7 @@ class AccountController < ApplicationController
       params[:user][:email_confirmation] = params[:user][:email]
     end
     
-    if params[:avatar][:uploaded_data] != ""
+    if params[:avatar][:uploaded_data]
       @user.avatar.destroy if @user.avatar
       Avatar.create!(params[:avatar])
     end
