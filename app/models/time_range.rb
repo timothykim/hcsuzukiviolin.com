@@ -18,7 +18,7 @@ class TimeRange
   def TimeRange.make_new(s_time, d_time)
     return TimeRange.new(s_time.strftime("%I:%M%p") + "-" + d_time.strftime("%I:%M%p"))
   end
-  
+
   def clean(s, d)
     #gasp! we are assuming s and d are pretty much in time format... -_-;;
     s = s.gsub(/[\s\.]/,"").downcase

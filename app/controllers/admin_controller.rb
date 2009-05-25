@@ -20,10 +20,6 @@ class AdminController < ApplicationController
     ]
   end
 
-
-
-
-
 #below is all legacy stuff
   def index
     @section_title = "Administration"
