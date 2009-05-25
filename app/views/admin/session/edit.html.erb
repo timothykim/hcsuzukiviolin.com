@@ -6,7 +6,6 @@
 	<input type="hidden" id="session_id" name="id" value="<%= @current_session.id %>" />
 <% end %>
 <div class="form_box">
-	<%= error_messages_for :session %>
 	<div class="form_element">
 		<div class="check"><label>Session:</label></div>
 		<%= select_tag("session_name", @season_opt) %>
@@ -79,7 +78,7 @@
 
 	<div class="form_element">
 		<div class="check"><label>Registration Due Date:</label></div>
-		<%= date_select("session", "due_date", :start_year => Time.now.year) %>
+		<%= date_select("current_session", "due_date", :start_year => Time.now.year) %>
 	</div>
 
 

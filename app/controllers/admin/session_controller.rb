@@ -74,7 +74,7 @@ class Admin::SessionController < AdminController
     s.is_active = params[:active_reg] ? true : false;
     s.first = Date.parse(params[:session]["first(1i)"] + "/" + params[:session]["first(2i)"] + "/" + params[:session]["first(3i)"])
     s.last = Date.parse(params[:session]["last(1i)"] + "/" + params[:session]["last(2i)"] + "/" + params[:session]["last(3i)"])
-    s.due_date = Date.parse(params[:session]["due_date(1i)"] + "/" + params[:session]["due_date(2i)"] + "/" + params[:session]["due_date(3i)"])
+    s.due_date = Date.parse(params[:current_session]["due_date(1i)"] + "/" + params[:current_session]["due_date(2i)"] + "/" + params[:current_session]["due_date(3i)"])
     s.registration_notes = params[:notice]
     s.registration_type = params[:registration_type]
     s.save
