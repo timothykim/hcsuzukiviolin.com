@@ -4,7 +4,7 @@
 	<h2><%= sess.name %> Registrations</h2>
 <% days_left = sess.due_date - Date.today %>
 <% if days_left < 0 %>
-	<div class="due_date">No longer accepting registration</div>
+	<div class="due_date" style="color: red;">Registration is now past due date.</div>
 <% elsif days_left == 0 %>
 	<div class="due_date">Due TODAY!</div>
 <% elsif days_left == 1 %>
@@ -42,9 +42,9 @@
 %>
 			</td>
 			<td>
-				<% if days_left < 0 %>
-					No longer accepting registrations
-				<% else %>
+				<% #if days_left < 0 %>
+                <!-- No longer accepting registrations -->
+				<% #else %>
 					<% if student.registered? sess %>
 						<% if student.confirmed? sess %>
 							View your lesson schedule
@@ -54,7 +54,7 @@
 					<% else %>
 						<a href="/register/for/<%= sess.name.gsub(/ /, '-') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Register!</a>
 					<% end %>
-				<% end %>
+				<% # end %>
 			</td>
 		</tr>
 <% 	end %>
