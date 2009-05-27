@@ -23,8 +23,8 @@ class Admin::RegistrationController < AdminController
     @section_path = "Administration &raquo; Registrations &raquo; "
     @section_title = @current_session.name + " Schedule"
 
-    unit_height = 16.0;
-    unit_time = 30 * 60.0;
+    #unit_height = 16.0;
+    #unit_time = 30 * 60.0;
 
     @startdate = @current_session.first.next_week - 8 #start on sunday
     @enddate = @current_session.last.next_week - 2 #end on saturday
@@ -34,12 +34,18 @@ class Admin::RegistrationController < AdminController
     @week_count = (@day_count / 7.0).ceil
 
     @day_start = 7 #7 am
-    @day_end = 21 #9 pm
+    @day_end = 21 #9 pm (last hour, meaning til 10pm)
 
     @student_lessons = {}
     for student in @students
       @student_lessons[student] = 0
     end
+
+    @javascript_code = <<BLOCK
+        var DAY_START = #{@day_start};
+        var DAY_END = #{@day_end};
+        var NUMBER_OF_WEEKS = #{@week_count};
+BLOCK
 
   end
 end

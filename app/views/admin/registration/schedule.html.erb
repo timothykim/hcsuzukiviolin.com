@@ -6,7 +6,7 @@
 		<li>
 			<table cellspacing="0" cellpadding="0" border="0"><tr><td>
 				<input type="checkbox" class="checkbox" id="st_check_<%= student.id %>" title="<%= student.id %>" onclick="return update_calendar(<%= student.id %>, this);" />
-			</td><td width="110">
+			</td><td width="100">
             <label for="st_check_<%= student.id %>"><div class="studentname" style="background-color: #<%= colors(student.id) %>; overflow:clip;" title="<%= student.to_s %>"><%= student.first_name.at(0) %>. <%= student.last_name %></div></label>
 			</td><td width="20">
 				<span id="lesson_count_<%= student.id %>"><a href="#" onclick="show_lesson_list(<%= student.id %>); return false;"><%= @student_lessons[student] %></a></span>
@@ -36,6 +36,9 @@
 	<% end %>
 	</p>
 
+	<h3>Controls</h3>
+	<input type="checkbox" id="time_show" checked="checked" onclick="if (this.checked) { show_time = true; } else { show_time = false;}" /><small><label for="time_show"> Show Cursor Time Box</label></small>
+
 </div>
 
 
@@ -56,10 +59,9 @@
       <th class="flex">Saturday</th>
     </tr>	
   </thead>
-  <tbody>
+  <tbody id="tbody_start">
 <% @week_count.times do |week_no| -%>
-    <tr><td id="week<%=week_no+1%>"><td></tr>
-    <tr>
+    <tr id="week<%=week_no+1%>">
       <th><%=week_no+1%></th>
       <!-- time label -->
       <td style="padding-top: 17px" valign="top">
@@ -109,3 +111,7 @@
 
 
 </table>
+
+
+<span id="mouseover_name" style="display: none;"></span>
+<div id="xy" style="display: none;"></div>
