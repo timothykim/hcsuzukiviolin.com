@@ -1,3 +1,42 @@
+<div id="side_list">
+  <h3>Student List</h3>
+  <ul>
+	<% for student in @students %>
+		<li>
+			<table cellspacing="0" cellpadding="0" border="0"><tr><td>
+				<input type="checkbox" class="checkbox" id="st_check_<%= student.id %>" title="<%= student.id %>" onclick="return update_calendar(<%= student.id %>, this);" />
+			</td><td>
+            <label for="st_check_<%= student.id %>"><div class="studentname" style="background-color: #<%= colors(student.id) %>;" title="<%= student.to_s %>"><%= student.first_name.at(0) %>. <%= student.last_name %></div></label>
+			</td><td width="20">
+				<span id="lesson_count_<%= student.id %>"><a href="#" onclick="show_lesson_list(<%= student.id %>); return false;"><%= @student_lessons[student] %></a></span>
+				<div class="lesson_list" id="lesson_list_<%= student.id %>" style="display:none;">
+					<div style="float:right;"><a href="#" onclick="close_lesson_list(<%= student.id %>); return false;">close</a></div>
+
+					<strong><%= student.to_s %>'s Lessons</strong>
+					<ul></ul>
+					
+				</div>
+            </td>
+            </table>
+		</li>
+	<% end %>
+  </ul>
+  <p><small><a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = true; /*update_calendar(cb.title, cb);*/ }); return false;">select all</a> | <a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = false; /* update_calendar(cb.title, cb); */ }); return false;">select none</a></small></p>
+
+
+
+	<h3>Jump to Week</h3>
+	<p>
+	<% @week_count.times do |week| %>
+		<small><a href="#week<%= week + 1 %>"><%= week + 1 %></a></small>
+	<% end %>
+	</p>
+
+</div>
+
+
+
+
 
 <div id="calendar_table">
 <table class="calendar main">
@@ -14,5 +53,55 @@
     </tr>	
   </thead>
   <tbody>
+<% @week_count.times do |week_no| -%>
+    <tr><td><a name="week<%=week_no+1%>"></a><td></tr>
+    <tr>
+      <th><%=week_no+1%></th>
+      <!-- time label -->
+      <td style="padding-top: 17px" valign="top">
+<%  for i in (@day_start..@day_end)
+      t = (i > 11) ? "#{i-12}pm" : "#{i}am"
+      t = "12pm" if i == 12
+-%>
+        <div style="border-top: 1px solid silver; height: 31px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);"><%= t %></div>
+<%  end #for -%>
+      </td>
+      
+      <!-- day of the week columns -->
+<%
+	for day in (1..6)
+		today = @startdate + ((week_no * 7) + day)
+
+		if @current_session.is_offday?(today)
+			td_class = "not_active"
+			active = false
+		else
+			td_class = "active"
+			active = true
+		end	
+-%>
+      <td class="<%= td_class %>" valign="top">
+          <div class="date"><%= today.strftime('%m/%d') %></div>
+<%            for i in (@day_start..@day_end)
+                bgcolor = "" 
+                #first half hour
+                timestamp = Time.local(today.year, today.month, today.day, i).to_i
+-%>
+              <div id="t<%= timestamp %>" style="<%= bgcolor %> padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;">
+              </div>
+<%
+                #second half hour
+                i += 0.5
+                timestamp = Time.local(today.year, today.month, today.day, i, 30).to_i
+-%>
+              <div id="t<%= timestamp %>" style="<%= bgcolor %> padding:0px; margin:0px;  border-top: 1px dotted silver; height: 15px; font-size:9px;">
+              </div>
+<%            end # for each hours -%>
+      </td>
+<%  end # for days -%>
+
+<% end #@week_count.times -%>
   </tbody>
+
+
 </table>

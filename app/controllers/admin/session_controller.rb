@@ -23,6 +23,7 @@ class Admin::SessionController < AdminController
 
     if params[:id]
       @current_session = Session.find(params[:id])
+      @csession = @current_session
       season = ['selected="selected"', '', ''] if @current_session.name.match(/Spring/)
       season = ['', 'selected="selected"', ''] if @current_session.name.match(/Summer/)
       season = ['', '', 'selected="selected"'] if @current_session.name.match(/Fall/)
@@ -70,10 +71,10 @@ class Admin::SessionController < AdminController
     end
 
     #save the session
-    s.name = params[:session_name] + " " + params[:session_year]["year(1i)"]
+    s.name = params[:session_name] + " " + params[:csession_year]["year(1i)"]
     s.is_active = params[:active_reg] ? true : false;
-    s.first = Date.parse(params[:session]["first(1i)"] + "/" + params[:session]["first(2i)"] + "/" + params[:session]["first(3i)"])
-    s.last = Date.parse(params[:session]["last(1i)"] + "/" + params[:session]["last(2i)"] + "/" + params[:session]["last(3i)"])
+    s.first = Date.parse(params[:csession]["first(1i)"] + "/" + params[:csession]["first(2i)"] + "/" + params[:csession]["first(3i)"])
+    s.last = Date.parse(params[:csession]["last(1i)"] + "/" + params[:csession]["last(2i)"] + "/" + params[:csession]["last(3i)"])
     s.due_date = Date.parse(params[:current_session]["due_date(1i)"] + "/" + params[:current_session]["due_date(2i)"] + "/" + params[:current_session]["due_date(3i)"])
     s.registration_notes = params[:notice]
     s.registration_type = params[:registration_type]

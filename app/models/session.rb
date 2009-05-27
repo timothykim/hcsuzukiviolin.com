@@ -11,4 +11,10 @@ class Session < ActiveRecord::Base
   def to_s
     self.name
   end
+
+  def is_offday?(today)
+    d = self.session_days.find_by_date(today)
+    return true if d.nil?
+    return d.offday
+  end
 end

@@ -6,6 +6,34 @@ module ApplicationHelper
   rescue
     #don't render!
   end
+
+  def colors(id)
+    c = [
+      "CC3333",
+      "DD4477",
+      "994499",
+      "6633CC",
+      "336699",
+      "3366CC",
+      "22AA99",
+      "329262",
+      "0F9618",
+      "66AA00",
+      "AAAA11",
+      "D6AE00",
+      "EE8800",
+      "DD5511",
+      "A87070",
+      "8C6D8C",
+      "627487",
+      "7083A8",
+      "5C8D87",
+      "898951",
+      "B08B59"
+    ]
+
+    return c[id % c.length]
+  end
   
   
   def avatar_thumbnail_path(avatar)

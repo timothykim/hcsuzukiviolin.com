@@ -1,9 +1,9 @@
 /* actual checking is done here */
 
 function get_session_date(param) {
-	return $("session_" + param + "_1i").value + "/" +
-			$("session_" + param + "_2i").value + "/" +
-			$("session_" + param + "_3i").value;
+	return $("csession_" + param + "_1i").value + "/" +
+			$("csession_" + param + "_2i").value + "/" +
+			$("csession_" + param + "_3i").value;
 
 }
 
