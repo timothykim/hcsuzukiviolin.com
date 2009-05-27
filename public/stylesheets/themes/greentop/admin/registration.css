@@ -1,9 +1,14 @@
 div#student_list {
-  width: 150px;
+  width: 160px;
   height: 400px;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-table.main tbody td {
+div#side_list {
+  width: 160px;
+}
+
+#content_no_side.registration_schedule {
+	padding: 0 5px;
 }

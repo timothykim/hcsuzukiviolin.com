@@ -6,8 +6,8 @@
 		<li>
 			<table cellspacing="0" cellpadding="0" border="0"><tr><td>
 				<input type="checkbox" class="checkbox" id="st_check_<%= student.id %>" title="<%= student.id %>" onclick="return update_calendar(<%= student.id %>, this);" />
-			</td><td width="100">
-            <label for="st_check_<%= student.id %>"><div class="studentname" style="background-color: #<%= colors(student.id) %>; overflow:clip;" title="<%= student.to_s %>"><%= student.first_name.at(0) %>. <%= student.last_name %></div></label>
+			</td><td width="110">
+            <label for="st_check_<%= student.id %>"><div class="studentname" style="background-color: #<%= colors(student.id) %>; overflow: hidden;" title="<%= student.to_s %>"><%= student.first_name.at(0) %>. <%= student.last_name %></div></label>
 			</td><td width="20">
 				<span id="lesson_count_<%= student.id %>"><a href="#" onclick="show_lesson_list(<%= student.id %>); return false;"><%= @student_lessons[student] %></a></span>
 				<div class="lesson_list" id="lesson_list_<%= student.id %>" style="display:none;">
