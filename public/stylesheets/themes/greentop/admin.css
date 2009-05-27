@@ -178,7 +178,6 @@ div#side_list ul {
 
 div#side_list li {
 	margin: 0;
-	margin-left: 10px;
 	list-style-type: none;
 	font-size: 10px;
 }
@@ -205,7 +204,6 @@ div.studentname {
 	padding-left: 5px;
 	padding-right: 15px;
 	cursor: pointer;
-	width: 50px;
 	margin-right: 5px;
 }
 

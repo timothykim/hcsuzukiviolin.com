@@ -28,7 +28,7 @@ class Admin::RegistrationController < AdminController
 
     @startdate = @current_session.first.next_week - 8 #start on sunday
     @enddate = @current_session.last.next_week - 2 #end on saturday
-    @students = @current_session.students
+    @students = @current_session.students.sort {|x,y| x.last_name <=> y.last_name}
     
     @day_count = (@enddate - @startdate).to_i
     @week_count = (@day_count / 7.0).ceil
