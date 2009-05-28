@@ -17,11 +17,8 @@ var tempY = 0;
 //option variable
 var show_time = true;
 
-
-
 // Main function to retrieve mouse x-y pos.s
 Event.onDOMReady(function() {
-
   //update options
   HEADER_SIZE = $("tbody_start").positionedOffset()[1];
   WEEK_BLOCK_SIZE = $("week1").getHeight();
@@ -35,6 +32,69 @@ Event.onDOMReady(function() {
     }
   });
 });
+
+
+function update_calendar(id, checkbox) {
+	if (checkbox.checked) {
+		images = $$('img.bar_' + id);
+		if (images.length == 0) {
+			render_registration(id);
+		} else {
+			images.each(function(i) {
+				i.show();
+			});
+		}
+	} else {
+		images = $$('img.bar_' + id);
+		images.each(function(i) {
+			i.hide();
+		});
+	}
+}
+
+
+function render_schedule(registration_id) {
+	var url = "/admin/registration/schedule/" + registration_id +
+              "?day_start=" + DAY_START + "&day_end=" + DAY_END;
+	var student;
+	new Ajax.Request(url, {
+		method: 'get',
+		onSuccess: function(transport) {
+			registration = transport.responseText.evalJSON();
+			if (registration.events.length == 0) {
+				alert("Uh oh!\n" + registration.student.name + "'s schedule doesn't fits into your schedule at all!");
+			}
+			registration.timerange.each(function(e) {
+				render_single_event(e, registration_id, registration.student.name, registration.lesson.duration, registration.color);
+			});
+	  	}
+	});
+}
+
+function render_timerange_event(e, registration_id, student_name, duration, color) {
+	var start = e.start;
+	var end = e.finish;
+
+	var block_start = (start - (start % 1800));
+
+	var div = "t" + block_start;
+	var es = start + "-" + end;
+	var img = get_calendar_bar_image_url(color, block_start, start, end);
+    //"http://kgfamily.com/scripts/calendarbar.php?w=" + width + "&amp;uh=" + unit_height + "&amp;ut=" + unit_time + "&amp;c=" + colors[student_id % 21] + "&amp;ds=" + block_start + "&amp;es=" + es;
+
+	var style = "";
+	var insert_div = $(div);
+/*	
+	if (insert_div.childElements().length == 1) {
+		var top_div = insert_div.childElements()[0]
+		var height = top_div.getHeight();
+		style = "top: -" + (height + parseInt(top_div.style.marginTop))+ "px;";
+	}
+*/
+	var html = '<img style="cursor: pointer; ' + style + '" onclick="show_lesson_dialog(\'' + student_name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\', \'' + e.schedule_id + '\', \'' + duration + '\');" onmouseout="hidename();" onmouseover="showname(\'' + student_name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\');" class="calendar_bar bar_' + student_id + '" src="' + img + '" />';
+	insert_div.insert(html);
+}
+
 
 function get_calendar_bar_image_url(color, block_start, start, end) {
 	return img = "http://kgfamily.com/scripts/calendarbar.php?w=" + TIMEBAR_WIDTH + "&amp;uh=" + UNIT_HEIGHT + "&amp;ut=" + UNIT_TIME + "&amp;c=" + colors[student_id % 21] + "&amp;ds=" + block_start + "&amp;es=" + start + "-" + end;

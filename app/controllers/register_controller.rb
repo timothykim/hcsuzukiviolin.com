@@ -60,10 +60,15 @@ class RegisterController < ApplicationController
 
         #add buffer dates front and end so we start on sunday and end on saturday
         until @dates[0].date.wday() == 1
-          @dates.insert(0, @dates[0] - 1)
+          #logger.debug "The object is #{@dates[0].to_yaml}"
+          d = @dates[0].dup
+          d.date -= 1
+          @dates.insert(0, d)
         end
         until @dates[-1].date.wday() == 6
-          @dates.push(@dates[-1] + 1)
+          d = @dates[-1].dup
+          d.date += 1
+          @dates.push(d)
         end
         
         

@@ -36,10 +36,7 @@ class Admin::RegistrationController < AdminController
     @day_start = 7 #7 am
     @day_end = 21 #9 pm (last hour, meaning til 10pm)
 
-    @student_lessons = {}
-    for student in @students
-      @student_lessons[student] = 0
-    end
+    @registrations = @current_session.registrations.sort {|x,y| x.student.last_name <=> y.student.last_name} 
 
     @javascript_code = <<BLOCK
         var DAY_START = #{@day_start};
@@ -48,4 +45,19 @@ class Admin::RegistrationController < AdminController
 BLOCK
 
   end
+
+  def registration_json
+    session[:return_to] = ""
+    headers["Content-Type"] = "text/x-json; charset=utf-8"
+    
+    registration = Registration.find(params[:id])
+    student = registration.student
+    timeranges = []
+
+    registered_timeranges = registration.registered_dates.find(:all, :conditions => ['"start" IS NOT NULL and "end" IS NOT NULL'])
+    for timerange in registered_timeranges
+      timeranges << {:start => 0, :finish => 0, :string => 0}
+    end
+  end
+
 end
