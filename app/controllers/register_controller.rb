@@ -63,11 +63,13 @@ class RegisterController < ApplicationController
           #logger.debug "The object is #{@dates[0].to_yaml}"
           d = @dates[0].dup
           d.date -= 1
+          d.offday = true
           @dates.insert(0, d)
         end
         until @dates[-1].date.wday() == 6
           d = @dates[-1].dup
           d.date += 1
+          d.offday = true
           @dates.push(d)
         end
         

@@ -7,7 +7,7 @@
 			<table cellspacing="0" cellpadding="0" border="0"><tr><td>
 				<input type="checkbox" class="checkbox" id="st_check_<%= registration.id %>" title="<%= registration.id %>" onclick="return update_calendar(<%= registration.id %>, this);" />
 			</td><td width="110">
-            <label for="st_check_<%= registration.id %>"><div class="studentname" style="background-color: #<%= colors(registration.id) %>; overflow: hidden;" title="<%= registration.student.to_s %>"><%= registration.student.first_name.at(0) %>. <%= registration.student.last_name %></div></label>
+            <label for="st_check_<%= registration.id %>"><div class="studentname" style="background-color: #<%= Colors.one(registration.id) %>; overflow: hidden;" title="<%= registration.student.to_s %>"><%= registration.student.first_name.at(0) %>. <%= registration.student.last_name %></div></label>
 			</td><td width="20">
 				<span id="lesson_count_<%= registration.student.id %>"><a href="#" onclick="show_lesson_list(<%= registration.student.id %>); return false;">0</a></span>
 				<div class="lesson_list" id="lesson_list_<%= registration.id %>" style="display:none;">
