@@ -22,18 +22,38 @@ Event.onDOMReady(function() {
   DATE_DISPLAY_SIZE = $$("div.date")[0].getHeight() + 2;
 
   // Set-up to use getMouseXY function onMouseMove
-  document.onmousemove = getMouseXY;
+  Event.observe(document, 'mousemove', getMouseXY);
 
-
-
-  Event.observe(window, 'scroll', function() {
-    if (window.scrollY > 190) {
-      $('side_list').style.top = (window.scrollY - 190) + "px";
-    } else {
-      $('side_list').style.top = 0;
-    }
+  Event.observe(window, 'scroll', adjust_side_control_position_height);
+  Event.observe(window, 'resize', function() {
+    maximized = false;
+    adjust_side_control_position_height();
   });
+
+  adjust_side_control_position_height();
+
 });
+
+var maximized = false;
+function adjust_side_control_position_height() {
+  if(window.scrollY > HEADER_SIZE - 30) {
+    $('side_list').style.top = (window.scrollY - (HEADER_SIZE - 30)) + "px";
+
+    if(!maximized) {
+      $('side_list').style.height = document.viewport.getHeight() - 15 + 'px';
+      $('student_list').style.height = $('side_list').getHeight() - $('other_stuff').getHeight() - 50 + 'px';
+      maximized = true;
+    }
+  } else {
+    maximized = false;
+    $('side_list').style.top = 0;
+
+    var offset = $('side_list').viewportOffset()[1] + 12;
+
+    $('side_list').style.height = document.viewport.getHeight() - offset + 'px';
+    $('student_list').style.height = $('side_list').getHeight() - $('other_stuff').getHeight() - 50 + 'px';
+  }
+}
 
 
 function update_calendar(id, checkbox) {
@@ -109,6 +129,7 @@ function render_timerange(range, registration_id, data) {
   var old_color = d.style.borderColor;
 
   img.observe('mouseover', function(event) {
+    d.show();
 	d.style.borderColor = "#" + data.color;
 	$('mouseover_name').update(data.student.first_name + " " + data.student.last_name + " <small>(" + range.string + ")</small>");
     $('mouseover_name').show();
@@ -116,6 +137,9 @@ function render_timerange(range, registration_id, data) {
   });
 
   img.observe('mouseout', function(event) {
+    if(!show_time) {
+      $('xy').hide();
+    }
     $('mouseover_name').hide();
     //Effect.Shrink('mouseover_name', {'direction': 'top-left', 'duration': 0.2});
     d.style.borderColor = old_color;
@@ -166,16 +190,17 @@ function getMouseXY(e) {
   }
 
   var xy = $('xy');
+  var totalwidth = document.viewport.getWidth();
   
   if (army_time >= DAY_START && army_time < DAY_END+1 && tempX > 256 && show_time) {
     $('time').update(time_str);
-    xy.style.top = tempY + 15 + "px";
-    xy.style.left = tempX + 15 + "px";
+    xy.style.top = tempY + 20 + "px";
 
-    if (xy.positionedOffset()[0] + xy.getWidth() + 12 > $$("body")[0].getWidth()) {
-      xy.style.left = $$("body")[0].getWidth() - (xy.getWidth() + 12) + "px";
+    if (tempX + 15 + xy.getWidth() + 12 > totalwidth) {
+      xy.style.left = totalwidth - (xy.getWidth() + 12) + "px";
+    } else {
+      xy.style.left = tempX + 15 + "px";
     }
-
     xy.show();
   } else {
     xy.hide();

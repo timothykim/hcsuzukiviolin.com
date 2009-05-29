@@ -25,9 +25,8 @@
   </div>
 
 
-  <p><small><a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = true; /*update_calendar(cb.title, cb);*/ }); return false;">select all</a> | <a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = false; /* update_calendar(cb.title, cb); */ }); return false;">select none</a></small></p>
-
-
+  <div id="other_stuff">
+    <p><small><a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = true; /*update_calendar(cb.title, cb);*/ }); return false;">select all</a> | <a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = false; /* update_calendar(cb.title, cb); */ }); return false;">select none</a></small></p>
 
 	<h3>Jump to Week</h3>
 	<p>
@@ -38,6 +37,7 @@
 
 	<h3>Controls</h3>
 	<input type="checkbox" id="time_show" checked="checked" onclick="if (this.checked) { show_time = true; } else { show_time = false;}" /><small><label for="time_show"> Show Cursor Time Box</label></small>
+  </div>
 
 </div>
 

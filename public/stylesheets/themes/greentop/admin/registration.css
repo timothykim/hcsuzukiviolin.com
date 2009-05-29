@@ -1,6 +1,5 @@
 div#student_list {
   width: 160px;
-  height: 400px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -18,3 +17,4 @@ div#mouseover_name {
   white-space: nowrap;
   margin-bottom: 10px;
 }
+
