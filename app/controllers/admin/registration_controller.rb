@@ -58,7 +58,7 @@ BLOCK
     for timerange in registered_timeranges
       start = Time.local(timerange.date.year, timerange.date.month, timerange.date.day, timerange.start.hour, timerange.start.min).to_i
       finish = Time.local(timerange.date.year, timerange.date.month, timerange.date.day, timerange.end.hour, timerange.end.min).to_i
-      timeranges << {:start => start, :finish => finish, :string => timerange.user_input, :prefered => timerange.preferred}
+      timeranges << {:start => start, :finish => finish, :string => timerange.user_input, :preferred => timerange.preferred}
     end
 
     data = { :registration => registration, :student => student, :timeranges => timeranges, :color => Colors.one(registration.id) }

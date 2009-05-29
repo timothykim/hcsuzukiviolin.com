@@ -14,6 +14,7 @@ div#side_list {
 }
 
 div#mouseover_name {
-  min-width: 140px;
+  font-size: 1.5em;
+  white-space: nowrap;
   margin-bottom: 10px;
 }

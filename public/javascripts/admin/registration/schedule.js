@@ -65,7 +65,7 @@ function render_registration(registration_id) {
       data = transport.responseText.evalJSON();
 
       if (data.timeranges.length == 0) {
-        alert("Uh oh!\n" + data.student.first_name + " " + data.student.last_name + "'s registration is empty!");
+        //("Uh oh!\n" + data.student.first_name + " " + data.student.last_name + "'s registration is empty!");
       }
 
       data.timeranges.each(function(range) {
@@ -94,7 +94,8 @@ function render_timerange(range, registration_id, data) {
 
   var div = "t" + block_start;
   var es = start + "-" + end;
-  var src = get_calendar_bar_image_url(data.color, block_start, start, end);
+  var preferred = (range.preferred) ? "1" : "0";
+  var src = get_calendar_bar_image_url(data.color, block_start, start, end, preferred);
   var style = "cursor: pointer;";
   var insert_div = $(div);
 
@@ -124,8 +125,8 @@ function render_timerange(range, registration_id, data) {
 }
 
 
-function get_calendar_bar_image_url(color, block_start, start, end) {
-  return img = "http://kgfamily.com/scripts/calendarbar.php?w=" + TIMEBAR_WIDTH + "&uh=" + UNIT_HEIGHT + "&ut=" + UNIT_TIME + "&c=" + color + "&ds=" + block_start + "&es=" + start + "-" + end;
+function get_calendar_bar_image_url(color, block_start, start, end, preferred) {
+  return img = "http://kgfamily.com/scripts/calendarbar.php?w=" + TIMEBAR_WIDTH + "&uh=" + UNIT_HEIGHT + "&ut=" + UNIT_TIME + "&c=" + color + "&ds=" + block_start + "&es=" + start + "-" + end + "&sp=" + preferred;
 }
 
 
@@ -171,8 +172,8 @@ function getMouseXY(e) {
     xy.style.top = tempY + 15 + "px";
     xy.style.left = tempX + 15 + "px";
 
-    if (xy.positionedOffset()[0] + xy.getWidth() > $$("body")[0].getWidth()) {
-      xy.style.left = $$("body")[0].getWidth() - xy.getWidth() + "px";
+    if (xy.positionedOffset()[0] + xy.getWidth() + 12 > $$("body")[0].getWidth()) {
+      xy.style.left = $$("body")[0].getWidth() - (xy.getWidth() + 12) + "px";
     }
 
     xy.show();
