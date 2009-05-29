@@ -25,7 +25,7 @@
     <tbody>
       <% sess.registrations.each do |r| %>
         <tr id="r<%=r.id%>">
-          <td align="center" title="<%= r.updated_at.strftime("%I:%M %p") %>"><%= r.updated_at.strftime("%m/%d/%Y") %></td>
+          <td align="center" title="<%= r.created_at.strftime("%I:%M %p") %>"><%= r.created_at.strftime("%m/%d/%Y") %></td>
           <td><%= "#{r.student.last_name}, #{r.student.first_name}" %></td>
           <td><%= "#{r.student.user.lastname}, #{r.student.user.firstname}" %></td>
           <td><%= r.school.name %></td>
