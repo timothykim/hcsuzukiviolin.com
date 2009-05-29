@@ -10,5 +10,10 @@ div#side_list {
 }
 
 #content_no_side.registration_schedule {
-	padding: 0 5px;
+  padding: 0 5px;
+}
+
+div#mouseover_name {
+  min-width: 140px;
+  margin-bottom: 10px;
 }

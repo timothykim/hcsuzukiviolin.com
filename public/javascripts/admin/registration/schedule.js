@@ -90,32 +90,35 @@ function render_timerange(range, registration_id, data) {
     end = Math.floor(temp.setHours(DAY_END+1) / 1000);
   }
 
-
   var block_start = (start - (start % 1800)); //case when their start time is not on the hour or the half
 
   var div = "t" + block_start;
   var es = start + "-" + end;
   var src = get_calendar_bar_image_url(data.color, block_start, start, end);
-    //"http://kgfamily.com/scripts/calendarbar.php?w=" + width + "&amp;uh=" + unit_height + "&amp;ut=" + unit_time + "&amp;c=" + colors[student_id % 21] + "&amp;ds=" + block_start + "&amp;es=" + es;
-
   var style = "cursor: pointer;";
   var insert_div = $(div);
-/*  
-  if (insert_div.childElements().length == 1) {
-    var top_div = insert_div.childElements()[0]
-    var height = top_div.getHeight();
-    style = "top: -" + (height + parseInt(top_div.style.marginTop))+ "px;";
-  }
-  var html = '<img style="cursor: pointer; ' + style + '" onclick="show_lesson_dialog(\'' + student_name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\', \'' + e.schedule_id + '\', \'' + duration + '\');" onmouseout="hidename();" onmouseover="showname(\'' + student_name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\');" class="calendar_bar bar_' + student_id + '" src="' + img + '" />';
-*/
-
-  console.log(src);
 
   var img = new Element("img", {
         'style': style,
         'class': "calendar_bar " + "bar_" + registration_id,
         'src'  : src
       });
+
+  var d = $('xy');
+  var old_color = d.style.borderColor;
+
+  img.observe('mouseover', function(event) {
+	d.style.borderColor = "#" + data.color;
+	$('mouseover_name').update(data.student.first_name + " " + data.student.last_name + " <small>(" + range.string + ")</small>");
+    $('mouseover_name').show();
+    //Effect.Grow('mouseover_name', {'direction': 'top-left', 'duration': 0.2});
+  });
+
+  img.observe('mouseout', function(event) {
+    $('mouseover_name').hide();
+    //Effect.Shrink('mouseover_name', {'direction': 'top-left', 'duration': 0.2});
+    d.style.borderColor = old_color;
+  });
 
   insert_div.insert(img);
 }
@@ -156,16 +159,25 @@ function getMouseXY(e) {
   } else {
     time_str = Math.floor(time) + ":30" + p;    
   }
-  
+
+  if (time < 10) {
+    time_str = "0" + time_str;
+  }
+
+  var xy = $('xy');
   
   if (army_time >= DAY_START && army_time < DAY_END+1 && tempX > 256 && show_time) {
-    $('xy').style.display = "block";
-    $('xy').update(time_str);
-    $('xy').style.top = tempY + 15 + "px";
-    $('xy').style.left = tempX + 15 + "px";
+    $('time').update(time_str);
+    xy.style.top = tempY + 15 + "px";
+    xy.style.left = tempX + 15 + "px";
+
+    if (xy.positionedOffset()[0] + xy.getWidth() > $$("body")[0].getWidth()) {
+      xy.style.left = $$("body")[0].getWidth() - xy.getWidth() + "px";
+    }
+
+    xy.show();
   } else {
-    $('xy').style.display = "none";
-    
+    xy.hide();
   }
 
   return true;
