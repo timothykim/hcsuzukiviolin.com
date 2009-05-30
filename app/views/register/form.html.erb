@@ -135,10 +135,10 @@ end -%>
 
 		</div>
 		
-		<% if @current_user.students.length > 1 %>
+		<% if @parent.students.length > 0 %>
 			<div style="color: #77c;">
 			Copy Schedule from: <select onchange="updateCalendar(this.value);"><option value="0">Select a student</option>
-			<% @current_user.students.each do |s|%>
+			<% @parent.students.each do |s|%>
 				<% if s.id != @student.id and s.registered?(@current_session) %>
 					<option value="<%= s.get_registration(@current_session).id %>"> - <%= s %></option>
 				<% end %>

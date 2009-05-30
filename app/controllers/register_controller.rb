@@ -31,19 +31,18 @@ class RegisterController < ApplicationController
       @student = Student.new
       @student = Student.find(params[:student]) if params[:student]
       
-      #make sure parents are messing with other students
+      #make sure parents aren't messing with other students
       unless current_user.is_admin
         if params[:student]
           unless @student.user_id == current_user.id
             @error = "You have no privilege to modify this student's registration."
           end
         end
+        @parent = current_user
       else
         #if it's admin editing some other student's registration, then display parent's name
         if params[:student]
-          unless @student.user_id == current_user.id
-            @parent = User.find(@student.user_id)
-          end
+          @parent = User.find(@student.user_id)
         end
       end
       

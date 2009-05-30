@@ -154,7 +154,7 @@ function render_timerange(range, registration_id, data) {
   insert_div.insert(img);
 }
 
-function add_lesson(bar) {
+function add_lesson() {
   //process the lesson_ts value so it's easier(?) on the server side
   var lesson = $('lesson_ts').value;
   lesson = lesson.evalJSON();
@@ -168,15 +168,12 @@ function add_lesson(bar) {
   $('add_lesson').request({
     onComplete: function(transport) { 
       var lesson = transport.responseText.evalJSON();
-      console.log(lesson);
       show_lesson(lesson);
       hide_lesson_dialog();
 
       update_count(lesson.r_id);
     }
   });
-
-  bar.remove();
 }
 
 function update_count(r_id) {
@@ -305,7 +302,7 @@ function show_lesson_dialog(data, time, bar) {
   $('registration_id').value = data.registration.id;
   $('lesson_ts').value = "{'date': " + time + ", 'time': " + t + "}"; //this value HAS TO be updated when submitting
   $('add_lesson').observe('submit', function(event) {
-      add_lesson(bar);
+      add_lesson();
       Event.stop(event);
   });
 }
