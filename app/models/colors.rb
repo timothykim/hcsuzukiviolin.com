@@ -23,7 +23,17 @@ class Colors
       "B08B59" ]
   end
 
+  def self.light_all
+    [ "f2e2e2", 
+      "e2fde6",
+      "e6edf2" ]
+  end
+
   def self.one(num)
     self.all[num % self.all.length]
+  end
+
+  def self.light_one(num)
+    self.light_all[num % self.light_all.length]
   end
 end

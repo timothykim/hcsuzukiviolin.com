@@ -20,11 +20,10 @@ class Admin::RegistrationController < AdminController
   def schedule
     @current_session = Session.find(params[:id]) 
 
+    @teaching_hours = @current_session.weekly_availablities 
+
     @section_path = "Administration &raquo; Registrations &raquo; "
     @section_title = @current_session.name + " Schedule"
-
-    #unit_height = 16.0;
-    #unit_time = 30 * 60.0;
 
     @startdate = @current_session.first.next_week - 8 #start on sunday
     @enddate = @current_session.last.next_week - 2 #end on saturday
@@ -39,6 +38,7 @@ class Admin::RegistrationController < AdminController
     @registrations = @current_session.registrations.sort {|x,y| x.student.last_name <=> y.student.last_name} 
 
     @javascript_code = <<BLOCK
+        var SESSION_ID = #{params[:id]};
         var DAY_START = #{@day_start};
         var DAY_END = #{@day_end};
         var NUMBER_OF_WEEKS = #{@week_count};
@@ -46,7 +46,45 @@ BLOCK
 
   end
 
-  def get_json 
+  def add_lesson
+    session[:return_to] = ""
+    headers["Content-Type"] = "text/x-json; charset=utf-8"
+
+    recurring = Registration.find(params[:registration_id]).session.registration_type == 0 
+
+    lesson = Lesson.new
+    lesson.attributes = { :registration_id => params[:registration_id],
+                          :is_recurring => recurring,
+                          :time => Time.at(params[:date].to_i),
+                          :duration => params[:duration].to_i } 
+    lesson.save
+
+    render :text => lesson.to_json
+  end
+
+  def delete_lesson
+    lesson = Lesson.find(params[:id])
+    lesson.destroy
+    render :text => "done"
+  end
+
+
+  def lessons_json
+    session[:return_to] = ""
+    headers["Content-Type"] = "text/x-json; charset=utf-8"
+    
+    lessons = Registration.find(params[:id]).lessons
+
+    data = []
+    
+    lessons.each do |lesson|
+      data << lesson.to_json_data
+    end
+
+    render :text => data.to_json
+  end
+
+  def get_json
     session[:return_to] = ""
     headers["Content-Type"] = "text/x-json; charset=utf-8"
     
@@ -62,6 +100,7 @@ BLOCK
     end
 
     data = { :registration => registration, :student => student, :timeranges => timeranges, :color => Colors.one(registration.id) }
+
     render :text => data.to_json
   end
 

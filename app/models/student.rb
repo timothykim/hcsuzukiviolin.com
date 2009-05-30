@@ -1,6 +1,7 @@
 class Student < ActiveRecord::Base
   belongs_to :user
   has_many :registrations
+  has_many :lessons, :through => :registration
   
   def to_s
     [self.first_name, self.last_name].join(" ")

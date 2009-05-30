@@ -18,3 +18,12 @@ div#mouseover_name {
   margin-bottom: 10px;
 }
 
+div.lesson_list ol {
+  margin-top: 5px !important;
+  padding-left: 20px;
+}
+div.lesson_list ol li {
+  list-style-type: decimal !important;
+  margin: 5px !important;
+}
+

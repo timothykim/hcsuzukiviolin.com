@@ -213,4 +213,19 @@ class Admin::SessionController < AdminController
     
     render :text => h.to_json
   end
+
+  def lessons_json
+    session[:return_to] = ""
+    headers["Content-Type"] = "text/x-json; charset=utf-8"
+
+    lessons = Session.find(params[:id]).lessons
+
+    data = []
+    
+    lessons.each do |lesson|
+      data << lesson.to_json_data
+    end
+
+    render :text => data.to_json
+  end
 end

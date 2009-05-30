@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090516033155) do
+ActiveRecord::Schema.define(:version => 20090529213535) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -45,6 +45,13 @@ ActiveRecord::Schema.define(:version => 20090516033155) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "lessons", :force => true do |t|
+    t.integer  "registration_id"
+    t.datetime "time"
+    t.boolean  "is_recurring"
+    t.integer  "duration"
   end
 
   create_table "login_logs", :force => true do |t|
