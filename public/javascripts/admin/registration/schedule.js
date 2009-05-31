@@ -124,7 +124,7 @@ function render_timerange(range, registration_id, data) {
   var thin_src = get_thin_calendar_bar_image_url(data.color, block_start, start, end);
   var style = "cursor: pointer;";
   var insert_div = $(div);
-  var thin_insert_div = $('sum' + block_start);
+  var thin_insert_div = $('sum' + (block_start - (block_start % (2 * UNIT_TIME))));
 
   var img = new Element("img", {
         'style': style,
