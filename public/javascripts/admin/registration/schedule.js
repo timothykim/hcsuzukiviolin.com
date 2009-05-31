@@ -34,6 +34,9 @@ Event.onDOMReady(function() {
   adjust_side_control_position_height();
   
   load_lessons();
+
+
+  $('summary_calendar_button').observe('click', toggle_summary_calendar);
 });
 
 var maximized = false;
@@ -112,20 +115,32 @@ function render_timerange(range, registration_id, data) {
     end = Math.floor(temp.setHours(DAY_END+1) / 1000);
   }
 
-  var block_start = (start - (start % 1800)); //case when their start time is not on the hour or the half
+  var block_start = (start - (start % UNIT_TIME)); //case when their start time is not on the hour or the half
 
   var div = "t" + block_start;
   var es = start + "-" + end;
   var preferred = (range.preferred) ? "1" : "0";
   var src = get_calendar_bar_image_url(data.color, block_start, start, end, preferred);
+  var thin_src = get_thin_calendar_bar_image_url(data.color, block_start, start, end);
   var style = "cursor: pointer;";
   var insert_div = $(div);
+  var thin_insert_div = $('sum' + block_start);
 
   var img = new Element("img", {
         'style': style,
         'class': "calendar_bar " + "bar_" + registration_id,
         'src'  : src
       });
+
+  var thin_img = new Element("img", {
+        'class': "thin_calendar_bar " + "bar_" + registration_id,
+        'src'  : thin_src
+      });
+
+  /*
+  var img = '<img src="'+src+'" class="calendar_bar bar_' + registration_id + '" style="' + style + '" />';
+  var thin_img = '<img src="'+src+'" class="calendar_bar bar_' + registration_id + '" '" />';
+  */
 
   var d = $('xy');
   var old_color = d.style.borderColor;
@@ -152,6 +167,7 @@ function render_timerange(range, registration_id, data) {
   });
 
   insert_div.insert(img);
+  thin_insert_div.insert(thin_img);
 }
 
 function add_lesson() {
@@ -307,6 +323,22 @@ function show_lesson_dialog(data, time, bar) {
   });
 }
 
+function toggle_summary_calendar() {
+  var uparrow = "&#8685;";
+  var downarrow = "&#8686;";
+
+  Effect.toggle('summary_calendar_table', 'blind', {duration: 0.3});
+  var s = $('summary_calendar_button');
+  if ($('summary_calendar_table').style.display == "none") {
+    s.update(downarrow);
+  } else {
+    s.update(uparrow);
+  }
+}
+
+function get_thin_calendar_bar_image_url(color, block_start, start, end) {
+  return img = "http://kgfamily.com/scripts/calendarbar.php?w=" + 2 + "&uh=" + 1 + "&ut=" + (2*UNIT_TIME) + "&c=" + color + "&ds=" + block_start + "&es=" + start + "-" + end + "&sp=0";
+}
 
 function get_calendar_bar_image_url(color, block_start, start, end, preferred) {
   return img = "http://kgfamily.com/scripts/calendarbar.php?w=" + TIMEBAR_WIDTH + "&uh=" + UNIT_HEIGHT + "&ut=" + UNIT_TIME + "&c=" + color + "&ds=" + block_start + "&es=" + start + "-" + end + "&sp=" + preferred;

@@ -27,3 +27,42 @@ div.lesson_list ol li {
   margin: 5px !important;
 }
 
+
+div#summary_calendar {
+  z-index: 5;
+  position: fixed;
+  width: 200px;
+  bottom: 10px;
+  right: 15px;
+  background-color: black;
+  padding: 5px 15px;
+  opacity: 0.7;
+  -webkit-box-shadow: 2px 2px 10px #000;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  color: white;
+  font-size: 9px;
+}
+
+div#summary_calendar_table {
+  margin-bottom: 10px;
+}
+
+div#summary_calendar h1 {
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+div#summary_calendar .summary_hour {
+  height: 1px;
+  padding: 0;
+  margin: 0;
+}
+
+img.thin_calendar_bar {
+	margin-left: 1px;
+	float: left;
+	position: relative;
+	z-index: 6;
+    opacity: 1;
+}

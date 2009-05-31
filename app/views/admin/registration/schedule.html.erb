@@ -150,3 +150,50 @@
     <input type="hidden" name="date" id="lesson_ts" value="" />
   </form>
 </div>
+
+
+<div id="summary_calendar" onmouseover="show_time = false;" onmouseout="show_time = true;">
+  <div style="float:right"><span style="cursor:pointer; font-size: 18px;" id="summary_calendar_button">&#8686;</span></div>
+  <h1>Calendar Overview</h1>
+  <div id="summary_calendar_table">
+  <table class="main">
+    <thead>
+      <tr>
+        <th width="10">#</th>
+        <th width="30">M</th>
+        <th width="30">T</th>
+        <th width="30">W</th>
+        <th width="30">T</th>
+        <th width="30">F</th>
+        <th width="10">S</th>
+      </tr>
+    </thead>
+    <tbody>
+<% @week_count.times do |week_no| -%>
+      <tr>
+        <th valign="top"><%=week_no+1%></th>
+<%
+	for day in (1..6)
+		today = @startdate + ((week_no * 7) + day)
+		if @current_session.is_offday?(today)
+			bgcolor = "black"
+		else
+			bgcolor = "white"
+		end	
+%>
+        <td style="background-color: <%=bgcolor%>">
+<%    for i in (@day_start..@day_end) %>
+<%      timestamp = Time.local(today.year, today.month, today.day, i).to_i %>
+          <div id="sum<%=timestamp%>" class="summary_hour"></div>
+<%    end #for i in %>
+        </td>
+<%  end #for day in (1..6) %>
+      </tr>
+<% end #@week_count.times %>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+
+
