@@ -25,7 +25,7 @@
 
 
   <div id="other_stuff">
-    <p><small><a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = true; /*update_calendar(cb.title, cb);*/ }); return false;">select all</a> | <a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = false; /* update_calendar(cb.title, cb); */ }); return false;">select none</a></small></p>
+    <p><small><!--<a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = true; /*update_calendar(cb.title, cb);*/ }); return false;">select all</a> | --><a href="#" onclick="$$('input.checkbox').each(function (cb) { cb.checked = false; /* update_calendar(cb.title, cb); */ }); return false;">select none</a></small></p>
 
 	<h3>Jump to Week</h3>
 	<p>
@@ -147,7 +147,7 @@
     <input type="submit" value="Add"/> <button onclick="hide_lesson_dialog();" type="button">Cancel</button>
   </div>
     <input type="hidden" name="registration_id" id="registration_id" value="" />
-    <input type="hidden" name="date" id="lesson_ts" value="" />
+    <input type="hidden" name="date" id="dialog_date" value="" />
   </form>
 </div>
 
@@ -193,6 +193,14 @@
     </tbody>
   </table>
   </div>
+</div>
+
+<div id="loading_wrapper" style="display: none;">
+<div id="loading">
+  <h1>Loading...</h1>
+  <img src="/images/spinner.gif" />
+  <div id="loading_message"></div>
+</div>
 </div>
 
 

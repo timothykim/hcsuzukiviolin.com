@@ -55,7 +55,7 @@ BLOCK
     lesson = Lesson.new
     lesson.attributes = { :registration_id => params[:registration_id],
                           :is_recurring => recurring,
-                          :time => Time.at(params[:date].to_i),
+                          :time => Time.parse(params[:date] + " " + params[:time]),
                           :duration => params[:duration].to_i } 
     lesson.save
 

@@ -171,16 +171,6 @@ function render_timerange(range, registration_id, data) {
 }
 
 function add_lesson() {
-  //process the lesson_ts value so it's easier(?) on the server side
-  var lesson = $('lesson_ts').value;
-  lesson = lesson.evalJSON();
-
-  var s = new Date(lesson.date * 1000);
-  s.setHours(Math.floor(lesson.time), Math.floor((lesson.time % 1) * 60), 0, 0);
-
-  var start = s.getTime() / 1000;
-  $('lesson_ts').value = start;
-
   $('add_lesson').request({
     onComplete: function(transport) { 
       var lesson = transport.responseText.evalJSON();
@@ -221,8 +211,9 @@ function show_lesson(lesson) {
   lesson_bar.setStyle({
     'width' : outer_div.getWidth() - 2 + 'px',
     'height' : sec2pixel(lesson.duration * 60) - 4 + 'px', // -4 is for borders
-    'margin-top' : sec2pixel(lesson.start - id),
-    'position' : 'absolute'
+    'margin-top' : sec2pixel(lesson.start - id) + 'px',
+    'position' : 'absolute',
+    'display' : 'none'
   });
   lesson_bar.style.backgroundColor = '#' + lesson.color,
 
@@ -248,7 +239,36 @@ function show_lesson(lesson) {
   lesson_text.insert(del);
   lesson_bar.update(lesson_text);
   outer_div.update(lesson_bar);
+  Effect.Appear(lesson_bar);
 }
+
+/*
+var static_load_counter = 0;
+var static_load_message_stack = [];
+function add_loading_message(str) {
+  var l = $('loading_wrapper');
+  if (l.style.display == 'none') {
+//    Effect.Grow('loading_wrapper');
+    l.show();
+  }
+  $('loading_message').update(str);
+  static_load_message_stack.push(str);
+  static_load_counter++;
+}
+
+function done_loading() {
+  static_load_message_stack.pop(str);
+  static_load_counter--;
+
+  if (static_load_counter == 0) {
+//    Effect.Shrink('loading_wrapper');
+    l.hide();
+  } else {
+    $('loading_message').update(static_load_message_stack[static_load_message_stack.length-1]);
+  }
+}
+*/
+
 
 function load_lessons() {
   var url = "/admin/session/lessons_json/" + SESSION_ID;
@@ -302,13 +322,16 @@ function hide_lesson_dialog() {
 
 
 function show_lesson_dialog(data, time, bar) {
-  //time is the start timestamp of the img, it is used to create timestamp for the lesson start time
+  //time is the start timestamp of the img, it is used to figure out the date of this lesson
   var d = $('event_dialog');
 
   var t = getTimeUnderCursor();
   $('dialog_time').value = formatTime(t);
   $('dialog_name').update(data.student.first_name + " " + data.student.last_name);
   $('dialog_duration').value = data.registration.lesson_duration;
+  var today = new Date(time * 1000);
+  $('dialog_date').value = today.toLocaleDateString();
+
 
   d.style.left = (tempX - d.getWidth() - 20) + "px";
   d.style.top = (tempY - 30) + "px";
@@ -316,7 +339,6 @@ function show_lesson_dialog(data, time, bar) {
 
   Effect.Appear(d, {duration: 0.3});
   $('registration_id').value = data.registration.id;
-  $('lesson_ts').value = "{'date': " + time + ", 'time': " + t + "}"; //this value HAS TO be updated when submitting
   $('add_lesson').observe('submit', function(event) {
       add_lesson();
       Event.stop(event);
