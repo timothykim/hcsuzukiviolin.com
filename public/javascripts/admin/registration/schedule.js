@@ -33,8 +33,10 @@ Event.onDOMReady(function() {
 
   load_registrations();
 
-//  adjust_side_control_position_height();
-//  activate_time_bars();
+  $('add_lesson').observe('submit', function(event) {
+      Event.stop(event);
+      add_lesson();
+  });
   
   load_lessons();
 
@@ -272,6 +274,7 @@ function update_count(r_id) {
 
 function show_lesson(lesson) {
   var lesson_bar = new Element('div', { 'id': lesson.id, 'class': 'r_id_' + lesson.r_id + ' lesson_bar', 'title': lesson.full_name });
+  var lesson_number = new Element('span', { 'class' : 'numbering' });
   var lesson_text = new Element('span', { 'class' : 'lesson_text' });
   var name = new Element('span', { 'id' : 'lesson' + lesson.start, 'class' : 'n', 'style' : 'font-weight: bold;' });
   var time = new Element('span');
@@ -309,6 +312,9 @@ function show_lesson(lesson) {
     Event.stop(event);
   });
 
+  lesson_number.update(lesson.numbering);
+
+  lesson_text.insert(lesson_number);
   lesson_text.insert(name);
   lesson_text.insert(time);
   lesson_text.insert(del);
@@ -412,10 +418,6 @@ function show_lesson_dialog(data) {
 
   Effect.Appear(d, {duration: 0.3});
   $('registration_id').value = data.registration_id;
-  $('add_lesson').observe('submit', function(event) {
-      add_lesson();
-      Event.stop(event);
-  });
 }
 
 function toggle_summary_calendar() {

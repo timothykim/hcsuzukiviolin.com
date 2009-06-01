@@ -223,7 +223,7 @@ class Admin::SessionController < AdminController
     data = []
     
     lessons.each do |lesson|
-      data << lesson.to_json_data
+      data << lesson.to_hash
     end
 
     render :text => data.to_json
