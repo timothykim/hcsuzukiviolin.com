@@ -105,4 +105,23 @@ BLOCK
     render :text => data.to_json
   end
 
+  def get_all
+    session[:return_to] = ""
+    headers["Content-Type"] = "text/x-json; charset=utf-8"
+    registered_timeranges = Session.find(params[:id]).registered_dates.find(:all, :conditions => ['"start" IS NOT NULL and "end" IS NOT NULL'])
+
+    registrations = {}
+    registered_timeranges.each do |r|
+      registrations[r.id] = {
+        :student_name => r.registration.student.to_s,
+        :user_input => r.user_input,
+        :color => Colors.one(r.registration.student.user_id),
+        :date => r.date.to_s.gsub("-","/"),
+        :duration => r.registration.lesson_duration,
+        :registration_id => r.registration_id
+      }
+    end
+
+    render :text => registrations.to_json
+  end
 end

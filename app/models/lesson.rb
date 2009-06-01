@@ -3,7 +3,7 @@ class Lesson < ActiveRecord::Base
 
   def to_json_data
     data = { :start => self.time.to_i,
-             :color => Colors.one(self.registration_id),
+             :color => Colors.one(self.registration.student.user_id),
              :duration => self.duration,
              :student_name => self.registration.student.first_name.at(0) + ". " + self.registration.student.last_name,
              :full_name => self.registration.student.to_s,

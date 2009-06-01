@@ -31,6 +31,8 @@ Event.onDOMReady(function() {
   });
 
 //  adjust_side_control_position_height();
+
+  activate_time_bars();
   
   load_lessons();
 
@@ -168,6 +170,49 @@ function render_timerange(range, registration_id, data) {
   thin_insert_div.insert(thin_img);
 }
 
+function activate_time_bars() {
+  var d = $('xy');
+  var old_color = d.style.borderColor;
+
+  var l = $('loading_wrapper');
+  l.show();
+
+  new Ajax.Request("/admin/registration/get_all/" + SESSION_ID, {
+    method: 'get',
+    onSuccess: function(transport) {
+      registrations = transport.responseText.evalJSON();
+      console.log(registrations);
+
+      $$('img.calendar_bar').each( function (bar) {
+        console.log(bar);
+        var id = bar.readAttribute('alt');
+        var data = registrations[id];
+
+        bar.observe('mouseover', function(event) {
+          d.show();
+          d.style.borderColor = "#" + data.color;
+          $('mouseover_name').update(data.student_name + " <small>(" + data.user_input + ")</small>");
+          $('mouseover_name').show();
+        });
+
+        bar.observe('mouseout', function(event) {
+          if(!show_time) {
+            $('xy').hide();
+          }
+          $('mouseover_name').hide();
+          d.style.borderColor = old_color;
+        });
+
+        bar.observe('click', function(event) {
+          show_lesson_dialog(data);
+        });
+      });
+      l.hide();
+    }
+  });
+
+}
+
 function add_lesson() {
   $('add_lesson').request({
     onComplete: function(transport) { 
@@ -236,7 +281,7 @@ function show_lesson(lesson) {
   lesson_text.insert(time);
   lesson_text.insert(del);
   lesson_bar.update(lesson_text);
-  outer_div.update(lesson_bar);
+  outer_div.insert(lesson_bar);
   Effect.Appear(lesson_bar);
 }
 
@@ -319,24 +364,22 @@ function hide_lesson_dialog() {
 }
 
 
-function show_lesson_dialog(data, time, bar) {
+function show_lesson_dialog(data) {
   //time is the start timestamp of the img, it is used to figure out the date of this lesson
   var d = $('event_dialog');
 
   var t = getTimeUnderCursor();
   $('dialog_time').value = formatTime(t);
-  $('dialog_name').update(data.student.first_name + " " + data.student.last_name);
-  $('dialog_duration').value = data.registration.lesson_duration;
-  var today = new Date(time * 1000);
-  $('dialog_date').value = today.toLocaleDateString();
-
+  $('dialog_name').update(data.student_name);
+  $('dialog_duration').value = data.duration;
+  $('dialog_date').value = data.date
 
   d.style.left = (tempX - d.getWidth() - 20) + "px";
   d.style.top = (tempY - 30) + "px";
   d.style.borderColor = "#" + data.color;
 
   Effect.Appear(d, {duration: 0.3});
-  $('registration_id').value = data.registration.id;
+  $('registration_id').value = data.registration_id;
   $('add_lesson').observe('submit', function(event) {
       add_lesson();
       Event.stop(event);
@@ -411,7 +454,7 @@ function getMouseXY(e) {
   var xy = $('xy');
   var totalwidth = document.viewport.getWidth();
   
-  if (army_time >= DAY_START && army_time < DAY_END+1 && tempX > 256 && show_time) {
+  if (army_time >= DAY_START && army_time < DAY_END+1 && tempX > 68 && show_time) {
     $('time').update(time_str);
     xy.style.top = tempY + 20 + "px";
 
