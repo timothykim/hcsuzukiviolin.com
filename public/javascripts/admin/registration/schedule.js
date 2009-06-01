@@ -352,7 +352,7 @@ function show_lesson(lesson) {
   prev.observe("click", function(event) {
     Event.stop(event);
     var n = this.previous('.numbering');
-    var numbering = n.innerText;
+    var numbering = n.getInnerText();
     numbering = numbering.slice(0, numbering.indexOf('/'));
     var lesson_numbers = $$('div.numbering_' + lesson.r_id);
     if(numbering > 1) {
@@ -364,7 +364,7 @@ function show_lesson(lesson) {
   next.observe("click", function(event) {
     Event.stop(event);
     var n = this.previous('.numbering');
-    var numbering = n.innerText;
+    var numbering = n.getInnerText();
     numbering = numbering.slice(0, numbering.indexOf('/'));
     var lesson_numbers = $$('div.numbering_' + lesson.r_id);
     if(numbering < lesson_numbers.length) {
@@ -419,7 +419,7 @@ function start_loading(key, str) {
 function done_loading(key) {
   $(key).remove();
 
-  if ($('message_list').childElementCount == 0) {
+  if ($('message_list').childElements().length == 0) {
     $('header').update("Done!");
     Effect.Fade('loading_wrapper', { afterFinish: function() { $('header').update("Loading..."); }});
   }

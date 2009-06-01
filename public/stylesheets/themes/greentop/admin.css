@@ -217,6 +217,7 @@ span#mouseover_name {
 	top: 0;
 	left: 0;
 	-webkit-box-shadow: 2px 2px 10px #888;
+    -moz-box-shadow: 2px 2px 10px #888;
 	opacity: 0.8;
 	z-index: 3;
 }
@@ -236,6 +237,7 @@ div#event_dialog {
 	padding: 10px;
 	position: absolute;
 	-webkit-box-shadow: 2px 2px 10px #888;
+    -moz-box-shadow: 2px 2px 10px #888;
 	top: 500px;
 	left: 400px;
 	opacity: 0.8;
@@ -261,6 +263,7 @@ div#xy {
 	border: 5px solid orange;
 	padding: 10px;
 	-webkit-box-shadow: 2px 2px 10px #888;
+    -moz-box-shadow: 2px 2px 10px #888;
 	opacity: 0.8;
 	z-index: 3;
 }
@@ -275,6 +278,7 @@ div.lesson_list {
 	border: 5px solid silver;
 	background-color: white;
 	-webkit-box-shadow: 2px 2px 10px #888;
+    -moz-box-shadow: 2px 2px 10px #888;
 	position: absolute;
 	left: 125px;
 	padding: 10px;
