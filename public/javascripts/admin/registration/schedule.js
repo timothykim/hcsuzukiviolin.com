@@ -475,9 +475,15 @@ function show_lesson_dialog(data) {
   $('dialog_duration').value = data.duration;
   $('dialog_date').value = data.date
 
-  d.style.left = (tempX - d.getWidth() - 20) + "px";
-  d.style.top = (tempY - 30) + "px";
+  if ((tempX - d.getWidth() - 20) < 0) {
+    d.style.left = "0px";
+    d.style.top = (tempY + 30) + "px";
+  } else {
+    d.style.left = (tempX - d.getWidth() - 20) + "px";
+    d.style.top = (tempY - 30) + "px";
+  }
   d.style.borderColor = "#" + data.color;
+
 
   Effect.Appear(d, {duration: 0.3});
   $('registration_id').value = data.registration_id;

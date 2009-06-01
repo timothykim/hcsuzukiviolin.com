@@ -129,3 +129,7 @@ div.numbering {
 .lesson_bar a {
   margin-right: 3px;
 }
+
+div#event_dialog {
+  opacity: 1;
+}
