@@ -32,4 +32,27 @@ class Session < ActiveRecord::Base
                                 "date = ?",
                                 start, done, today])
   end
+
+  def sanitize_data
+    #get rid of duplicate lessons
+    sql = <<SQL
+DELETE
+FROM 	lessons
+WHERE 	id NOT IN
+	(SELECT 	MAX(dup.id)
+        FROM   		lessons As dup
+        GROUP BY 	dup.registration_id, dup.time, dup.is_recurring, dup.duration)
+SQL
+    
+    #get rid of out of scope lessons
+    self.lessons.each do |l|
+      if l.time.hour < 7 or l.time.hour > 21
+        l.destroy
+      end
+
+      if l.time < self.first or l.time > self.last
+        l.destroy
+      end
+    end
+  end
 end

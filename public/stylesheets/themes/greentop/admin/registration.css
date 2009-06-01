@@ -113,3 +113,19 @@ div.lesson_bar {
 img.preferred {
   border: 1px red dotted;
 }
+
+div.numbering {
+  float: left;
+  margin-left: -3px;
+  margin-right: 3px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  background-color: white;
+  width: 30px;
+  padding-left: 1px;
+  text-align: center;
+}
+
+.lesson_bar a {
+  margin-right: 3px;
+}

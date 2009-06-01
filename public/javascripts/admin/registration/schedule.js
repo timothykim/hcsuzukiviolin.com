@@ -260,25 +260,33 @@ function add_lesson() {
 }
 
 function update_count(r_id) {
+  /*
   var count = $('lesson_count_' + r_id);
   var lessons = $$('div.r_id_' + r_id);
   count.update(lessons.length);
-  /*
   for (var i = 0; i < lessons.length; i++) {
     var name = lessons[i].down('span.n');
     name.update('[' + (i+1) + '] ' + name.text);
-  }
+
   */
+
+  var lesson_numbers = $$('div.numbering_' + r_id);
+  for(var i = 0; i < lesson_numbers.length; i++) {
+    bar = lesson_numbers[i];
+    bar.update((i+1) + "/" + lesson_numbers.length);
+  }
 }
 
 
 function show_lesson(lesson) {
   var lesson_bar = new Element('div', { 'id': lesson.id, 'class': 'r_id_' + lesson.r_id + ' lesson_bar', 'title': lesson.full_name });
-  var lesson_number = new Element('span', { 'class' : 'numbering' });
+  var lesson_number = new Element('div', { 'class' : 'numbering numbering_' + lesson.r_id});
   var lesson_text = new Element('span', { 'class' : 'lesson_text' });
   var name = new Element('span', { 'id' : 'lesson' + lesson.start, 'class' : 'n', 'style' : 'font-weight: bold;' });
   var time = new Element('span');
   var del = new Element('a', {'href' : '#', 'style' : 'color: #900;'});
+  var prev = new Element('a', {'class': 'prev', 'href' : '#', 'style' : 'color: #fff;'});
+  var next = new Element('a', {'class': 'next', 'href' : '#', 'style' : 'color: #fff;'});
 
   var id = lesson.start - (lesson.start % (30 * 60));
   var outer_div = $('t' + id);
@@ -296,7 +304,7 @@ function show_lesson(lesson) {
   lesson_bar.style.backgroundColor = '#' + lesson.color,
 
   name.update(lesson.student_name);
-  time.update(": " + lesson.time + " | ");
+  time.update(" (" + lesson.start_time + ") ");
   del.update("x");
   del.observe("click", function(event) {
     if(confirm('Are you sure you want to delete this lesson?')) {
@@ -304,7 +312,13 @@ function show_lesson(lesson) {
         method: 'get', //this is bad.. but oh well
         onSuccess: function(transport) {
           Effect.Fade(lesson_bar, {
-            afterFinish: function() { update_count(lesson.r_id); }
+            afterFinish: function() {
+              lesson_bar.remove();
+              update_count(lesson.r_id);
+              var list = $$('div.numbering_' + lesson.r_id);
+              list[0].next('.prev').style.color = "transparent";
+              list[list.length-1].next('.next').style.color = "transparent";
+            }
           });
         }
       });
@@ -312,15 +326,63 @@ function show_lesson(lesson) {
     Event.stop(event);
   });
 
-  lesson_number.update(lesson.numbering);
+  prev.update("&#8683;");
+  prev.observe("click", function(event) {
+    Event.stop(event);
+    var n = this.previous('.numbering');
+    var numbering = n.innerText;
+    numbering = numbering.slice(0, numbering.indexOf('/'));
+    var lesson_numbers = $$('div.numbering_' + lesson.r_id);
+    if(numbering > 1) {
+      Effect.ScrollTo(lesson_numbers[numbering-2], {offset: -150});
+      Effect.Pulsate(lesson_numbers[numbering-2], {duration: 2.5});
+    }
+  });
+  next.update("&#8684;");
+  next.observe("click", function(event) {
+    Event.stop(event);
+    var n = this.previous('.numbering');
+    var numbering = n.innerText;
+    numbering = numbering.slice(0, numbering.indexOf('/'));
+    var lesson_numbers = $$('div.numbering_' + lesson.r_id);
+    if(numbering < lesson_numbers.length) {
+      Effect.ScrollTo(lesson_numbers[numbering], {offset: -150});
+      Effect.Pulsate(lesson_numbers[numbering], {duration: 2.5});
+    }
+  });
+
+  var list = $$('div.numbering_' + lesson.r_id);
+  if (lesson.numbering == 1) {
+    prev.style.color = "transparent";
+    if(page_loaded()) {
+      list[0].next('.prev').style.color = "white";
+    }
+  }
+  if (lesson.numbering == lesson.out_of) {
+    next.style.color = "transparent";
+    if(page_loaded()) {
+      list[list.length-1].next('.next').style.color = "white";
+    }
+  }
+
+
+  lesson_number.style.color = '#' + lesson.color;
+
+  lesson_number.update(lesson.numbering + "/" + lesson.out_of);
 
   lesson_text.insert(lesson_number);
   lesson_text.insert(name);
   lesson_text.insert(time);
+  lesson_text.insert(prev);
+  lesson_text.insert(next);
   lesson_text.insert(del);
   lesson_bar.update(lesson_text);
   outer_div.insert(lesson_bar);
   Effect.Appear(lesson_bar);
+}
+
+function page_loaded() {
+  return ($('loading_wrapper').style.display == "none")
 }
 
 /*
@@ -360,6 +422,7 @@ function load_lessons() {
       lessons.each(function(lesson) {
         show_lesson(lesson);
       });
+      $('loading_wrapper').hide();
     }
   });
 }
@@ -385,7 +448,7 @@ function show_lesson_list(r_id) {
       list = lesson_div.down('ol');
 
       lessons.each(function(lesson) {
-        list.insert('<li onclick="Effect.ScrollTo(\'lesson' + lesson.start + '\', {duration: 0.5});" style="cursor:pointer;">' + lesson.date + " " + lesson.time + "</li>"); 
+        list.insert('<li onclick="Effect.ScrollTo(\'lesson' + lesson.start + '\', {duration: 0.5});" style="cursor:pointer;">' + lesson.date + " " + lesson.start_time + " - " + lesson.end_time + "</li>"); 
       });
     }
   });

@@ -8,10 +8,12 @@ class Lesson < ActiveRecord::Base
              :student_name => self.registration.student.first_name.at(0) + ". " + self.registration.student.last_name,
              :full_name => self.registration.student.to_s,
              :date => self.time.strftime("%m/%d/%Y"),
-             :time => self.time.strftime("%I:%M%p") + "-" + (self.time + (self.duration * 60)).strftime("%I:%M%p"),
+             :start_time => self.time.strftime("%I:%M%p"),
+             :end_time => (self.time + (self.duration * 60)).strftime("%I:%M%p"),
              :id => self.id,
              :r_id => self.registration_id,
-             :numbering => self.registration.lessons.index(self)
+             :numbering => self.registration.lessons.index(self) + 1,
+             :out_of => self.registration.lessons.length
     }
     return data
   end
@@ -19,4 +21,5 @@ class Lesson < ActiveRecord::Base
   def to_json
     return self.to_hash.to_json
   end
+
 end
