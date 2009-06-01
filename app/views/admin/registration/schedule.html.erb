@@ -149,12 +149,41 @@
   </form>
 </div>
 
+<div class="widget right" id="availability_overview">
+  <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#8685;</span></div>
+  <h1>Availability Overview</h1>
+  <div class="body" style="display: none;">
+    <table class="widget_table">
+      <thead>
+        <tr>
+          <th>R</th>
+          <th>Parents</th>
+<% @week_count.times do |week_no| -%>
+          <th><%=week_no+1%></th>
+<% end -%>
+        </tr>
+      </thead>
+      <tbody>
+        <% @registrations.each do |r| %>
+          <tr class="<%= cycle("odd", "even") -%>">
+            <td width="15" align="center" style="border: none;" id="count_<%=r.id%>"><%=r.lessons.count%></td>
+            <td bgcolor="#<%= Colors.one(r.student.user_id)%>" align="right"><%= r.student.to_s%></td>
+<% @week_count.times do |week_no| -%>
+            <td width="15" align="center" style="border: none; color: white;"><%=r.count_registered_days(week_no+1)%></td>
+<% end -%>
+          </tr> 
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="widget_chrome"></div>
+</div>
 
-<div id="summary_calendar" class="widget" onmouseover="show_time = false;" onmouseout="show_time = true;">
-  <div style="float:right"><span style="cursor:pointer; font-size: 18px;" id="summary_calendar_button">&#8686;</span></div>
+<div id="summary_calendar" class="widget left">
+  <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#8685;</span></div>
   <h1>Calendar Overview</h1>
-  <div id="summary_calendar_table">
-  <table class="main">
+  <div class="body" style="display: none;">
+  <table class="widget_table">
     <thead>
       <tr>
         <th width="10">#</th>
@@ -168,18 +197,18 @@
     </thead>
     <tbody>
 <% @week_count.times do |week_no| -%>
-      <tr>
+      <tr style="cursor: pointer;" onclick="Effect.ScrollTo('week<%=week_no+1%>', {duration:0.5})">
         <th valign="top"><%=week_no+1%></th>
 <%
 	for day in (1..6)
 		today = @startdate + ((week_no * 7) + day)
 		if @current_session.is_offday?(today)
-			bgcolor = "black"
+			bgcolor = "transparent"
 		else
 			bgcolor = "white"
 		end	
 %>
-        <td style="background-color: <%=bgcolor%>">
+        <td style="background-color: <%=bgcolor%>;">
 <%    for i in (@day_start..@day_end) %>
 <%      timestamp = Time.local(today.year, today.month, today.day, i).to_i %>
           <div id="sum<%=timestamp%>" class="summary_hour"></div>
@@ -191,13 +220,17 @@
     </tbody>
   </table>
   </div>
+  <div class="widget_chrome"></div>
 </div>
 
-<div id="loading_wrapper">
+<div id="loading_wrapper" style="display: none;">
 <div id="loading">
-  <h1>Loading...</h1>
+  <h1 id="header">Loading...</h1>
   <img src="/images/spinner.gif" />
-  <div id="loading_message"></div>
+  <div id="loading_message" style="text-align: left;">
+    <ul id="message_list">
+    </ul>
+  </div>
 </div>
 </div>
 

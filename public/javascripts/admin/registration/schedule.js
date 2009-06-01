@@ -31,18 +31,38 @@ Event.onDOMReady(function() {
     adjust_lesson_width();
   });
 
-  load_registrations();
-
   $('add_lesson').observe('submit', function(event) {
       Event.stop(event);
       add_lesson();
   });
   
+  load_registrations();
   load_lessons();
 
-  $('summary_calendar_button').observe('click', toggle_summary_calendar);
+  var widgets = $$('div.widget');
+  widgets.each(function(widget) {
+    widget.observe('mouseover', function() { show_time = false; });
+    widget.observe('mouseout', function() { show_time = true; });
+    widget.down('.min_max').observe('click', function() { toggle_widget(widget); });
+    widget.down('.swap').observe('click', function() { swap_widgets(widgets); });
+  });
 });
 
+function swap_widgets(widgets) {
+  widgets.each(function(widget) {
+    if (widget.hasClassName('left')) {
+      widget.removeClassName('left');
+      widget.addClassName('right');
+    } else 
+    if (widget.hasClassName('right')) {
+      widget.removeClassName('right');
+      widget.addClassName('left');
+    }
+  });  
+}
+
+
+/*
 var maximized = false;
 function adjust_side_control_position_height() {
   if(window.scrollY > HEADER_SIZE - 30) {
@@ -63,8 +83,9 @@ function adjust_side_control_position_height() {
     $('student_list').style.height = $('side_list').getHeight() - $('other_stuff').getHeight() - 50 + 'px';
   }
 }
+*/
 
-
+/*
 function update_calendar(id, checkbox) {
   if (checkbox.checked) {
     images = $$('img.bar_' + id);
@@ -82,8 +103,9 @@ function update_calendar(id, checkbox) {
     });
   }
 }
+*/
 
-
+/*
 function render_registration(registration_id) {
   var url = "/admin/registration/get_json/" + registration_id +
               "?day_start=" + DAY_START + "&day_end=" + DAY_END;
@@ -103,7 +125,8 @@ function render_registration(registration_id) {
     }
   });
 }
-
+*/
+/*
 function render_timerange(range, registration_id, data) {
   var start = range.start;
   var end = range.finish;
@@ -141,10 +164,8 @@ function render_timerange(range, registration_id, data) {
         'src'  : thin_src
       });
 
-  /*
-  var img = '<img src="'+src+'" class="calendar_bar bar_' + registration_id + '" style="' + style + '" />';
-  var thin_img = '<img src="'+src+'" class="calendar_bar bar_' + registration_id + '" '" />';
-  */
+  //var img = '<img src="'+src+'" class="calendar_bar bar_' + registration_id + '" style="' + style + '" />';
+  //var thin_img = '<img src="'+src+'" class="calendar_bar bar_' + registration_id + '" '" />';
 
   var d = $('xy');
   var old_color = d.style.borderColor;
@@ -173,15 +194,19 @@ function render_timerange(range, registration_id, data) {
   insert_div.insert(img);
   thin_insert_div.insert(thin_img);
 }
+*/
 
 function time_bar_mouseover(data_id) {
-  console.log(data_id);
-  data = REGISTRATIONS[data_id];
-  var d = $('xy');
-  d.show();
-  d.style.borderColor = "#" + data.color;
-  $('mouseover_name').update(data.student_name + " <small>(" + data.user_input + ")</small>");
-  $('mouseover_name').show();
+  try {
+    data = REGISTRATIONS[data_id];
+    var d = $('xy');
+    d.show();
+    d.style.borderColor = "#" + data.color;
+    $('mouseover_name').update("<div class=\"pname\">" + data.parent_name + "'s</div>" + data.student_name + " <small>(" + data.user_input + ")</small>");
+    $('mouseover_name').show();
+  } catch (err) {
+    // no need to do anythingg
+  }
 }
 
 function time_bar_mouseout() {
@@ -199,10 +224,13 @@ function time_bar_click(data_id) {
 }
 
 function load_registrations() {
+  start_loading("load_registrations", "Retreiving parent's registrations...");
+
   new Ajax.Request("/admin/registration/get_all/" + SESSION_ID, {
     method: 'get',
     onSuccess: function(transport) {
       REGISTRATIONS = transport.responseText.evalJSON();
+      done_loading("load_registrations");
     }
   });
 }
@@ -260,15 +288,9 @@ function add_lesson() {
 }
 
 function update_count(r_id) {
-  /*
-  var count = $('lesson_count_' + r_id);
+  var count = $('count_' + r_id);
   var lessons = $$('div.r_id_' + r_id);
   count.update(lessons.length);
-  for (var i = 0; i < lessons.length; i++) {
-    var name = lessons[i].down('span.n');
-    name.update('[' + (i+1) + '] ' + name.text);
-
-  */
 
   var lesson_numbers = $$('div.numbering_' + r_id);
   for(var i = 0; i < lesson_numbers.length; i++) {
@@ -385,35 +407,28 @@ function page_loaded() {
   return ($('loading_wrapper').style.display == "none")
 }
 
-/*
-var static_load_counter = 0;
-var static_load_message_stack = [];
-function add_loading_message(str) {
+function start_loading(key, str) {
   var l = $('loading_wrapper');
   if (l.style.display == 'none') {
 //    Effect.Grow('loading_wrapper');
     l.show();
   }
-  $('loading_message').update(str);
-  static_load_message_stack.push(str);
-  static_load_counter++;
+  $('message_list').insert("<li id=\"" + key + "\">" + str + "</li>");
 }
 
-function done_loading() {
-  static_load_message_stack.pop(str);
-  static_load_counter--;
+function done_loading(key) {
+  $(key).remove();
 
-  if (static_load_counter == 0) {
-//    Effect.Shrink('loading_wrapper');
-    l.hide();
-  } else {
-    $('loading_message').update(static_load_message_stack[static_load_message_stack.length-1]);
+  if ($('message_list').childElementCount == 0) {
+    $('header').update("Done!");
+    Effect.Fade('loading_wrapper', { afterFinish: function() { $('header').update("Loading..."); }});
   }
 }
-*/
 
 
 function load_lessons() {
+  start_loading("load_lessons", "Loading already scheduled lessons..."); 
+
   var url = "/admin/session/lessons_json/" + SESSION_ID;
   new Ajax.Request(url, {
     method: 'get',
@@ -422,9 +437,16 @@ function load_lessons() {
       lessons.each(function(lesson) {
         show_lesson(lesson);
       });
-      $('loading_wrapper').hide();
+      done_loading("load_lessons");
     }
   });
+}
+
+function make_draggable() {
+    $$('div.lesson_bar').each(function(lesson_bar) {
+      console.log(lesson_bar);
+      var dragger = new Effect.Draggable(lesson_bar);
+    });
 }
 
 function adjust_lesson_width() {
@@ -433,6 +455,7 @@ function adjust_lesson_width() {
 	});	
 }
 
+/*
 function show_lesson_list(r_id) {
   var url = "/admin/registration/lessons_json/" + r_id;
   new Ajax.Request(url, {
@@ -453,7 +476,7 @@ function show_lesson_list(r_id) {
     }
   });
 }
-
+*/
 
 function sec2pixel(sec) {
   return Math.round((sec / UNIT_TIME) * UNIT_HEIGHT);
@@ -489,19 +512,22 @@ function show_lesson_dialog(data) {
   $('registration_id').value = data.registration_id;
 }
 
-function toggle_summary_calendar() {
+function toggle_widget(widget) {
   var uparrow = "&#8685;";
   var downarrow = "&#8686;";
 
-  Effect.toggle('summary_calendar_table', 'blind', {duration: 0.3});
-  var s = $('summary_calendar_button');
-  if ($('summary_calendar_table').style.display == "none") {
+  var content = widget.down('.body');
+
+  Effect.toggle(content, 'blind', {duration: 0.3});
+  var s = widget.down('.min_max');
+  if (content.style.display == "none") {
     s.update(downarrow);
   } else {
     s.update(uparrow);
   }
 }
 
+/*
 function get_thin_calendar_bar_image_url(color, block_start, start, end) {
   return img = "http://kgfamily.com/scripts/calendarbar.php?w=" + 2 + "&uh=" + 1 + "&ut=" + (2*UNIT_TIME) + "&c=" + color + "&ds=" + block_start + "&es=" + start + "-" + end + "&sp=0";
 }
@@ -509,6 +535,7 @@ function get_thin_calendar_bar_image_url(color, block_start, start, end) {
 function get_calendar_bar_image_url(color, block_start, start, end, preferred) {
   return img = "http://kgfamily.com/scripts/calendarbar.php?w=" + TIMEBAR_WIDTH + "&uh=" + UNIT_HEIGHT + "&ut=" + UNIT_TIME + "&c=" + color + "&ds=" + block_start + "&es=" + start + "-" + end + "&sp=" + preferred;
 }
+*/
 
 function getTimeUnderCursor() {
   var click_y = tempY;

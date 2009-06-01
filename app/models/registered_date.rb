@@ -53,6 +53,7 @@ BLOCK
   def to_hash
     {
         :student_name => self.registration.student.to_s,
+        :parent_name => self.registration.student.user.fullname,
         :user_input => self.user_input,
         :color => Colors.one(self.registration.student.user_id),
         :date => self.date.to_s.gsub("-","/"),

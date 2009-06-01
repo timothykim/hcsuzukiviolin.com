@@ -7,6 +7,7 @@ class Lesson < ActiveRecord::Base
              :duration => self.duration,
              :student_name => self.registration.student.first_name.at(0) + ". " + self.registration.student.last_name,
              :full_name => self.registration.student.to_s,
+             :parent_name => self.registration.student.user.fullname,
              :date => self.time.strftime("%m/%d/%Y"),
              :start_time => self.time.strftime("%I:%M%p"),
              :end_time => (self.time + (self.duration * 60)).strftime("%I:%M%p"),
