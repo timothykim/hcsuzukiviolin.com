@@ -98,9 +98,7 @@
                 timestamp = block_time.to_i
 -%>
               <div id="t<%= timestamp %>" style="<%= bgcolor %> padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;">
-                <%for block in @current_session.find_all_registered_dates_in(block_time)%>
-                  <%= block.to_img_bar(block_time, 0) %>
-                <%end%>
+                <%= @r_hash[timestamp] %>
               </div>
 <%
                 #second half hour
@@ -116,9 +114,7 @@
                 timestamp = block_time.to_i
 -%>
               <div id="t<%= timestamp %>" style="<%= bgcolor %> padding:0px; margin:0px;  border-top: 1px dotted silver; height: 15px; font-size:9px;">
-                <%for block in @current_session.find_all_registered_dates_in(block_time)%>
-                  <%= block.to_img_bar(block_time, 0) %>
-                <%end%>
+                <%= @r_hash[timestamp] %>
               </div>
 <%            end # for each hours -%>
       </td>
@@ -154,7 +150,7 @@
 </div>
 
 
-<div id="summary_calendar" onmouseover="show_time = false;" onmouseout="show_time = true;">
+<div id="summary_calendar" class="widget" onmouseover="show_time = false;" onmouseout="show_time = true;">
   <div style="float:right"><span style="cursor:pointer; font-size: 18px;" id="summary_calendar_button">&#8686;</span></div>
   <h1>Calendar Overview</h1>
   <div id="summary_calendar_table">

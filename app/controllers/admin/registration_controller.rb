@@ -37,6 +37,12 @@ class Admin::RegistrationController < AdminController
 
     @registrations = @current_session.registrations.sort {|x,y| x.student.last_name <=> y.student.last_name} 
 
+    @r_hash = {}
+    @current_session.registered_dates.find(:all, :conditions => ["start IS NOT NULL AND 'end' IS NOT NULL"]).each do |r|
+      @r_hash[r.floor.to_i] = "" if @r_hash[r.floor.to_i].nil?
+      @r_hash[r.floor.to_i] += r.to_img_bar(r.floor) + " "
+    end
+
     @javascript_code = <<BLOCK
         var SESSION_ID = #{params[:id]};
         var DAY_START = #{@day_start};
@@ -112,14 +118,7 @@ BLOCK
 
     registrations = {}
     registered_timeranges.each do |r|
-      registrations[r.id] = {
-        :student_name => r.registration.student.to_s,
-        :user_input => r.user_input,
-        :color => Colors.one(r.registration.student.user_id),
-        :date => r.date.to_s.gsub("-","/"),
-        :duration => r.registration.lesson_duration,
-        :registration_id => r.registration_id
-      }
+      registrations[r.id] = r.to_hash
     end
 
     render :text => registrations.to_json

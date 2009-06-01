@@ -5,6 +5,7 @@ var UNIT_TIME = 30 * 60; // unit_height = 30 minutes or 1800 seconds
 var HEADER_SIZE = 0; // starting position of the tobody in pixels, actual initialization done in onDOMReady
 var WEEK_BLOCK_SIZE = 0; //height of single week tr, see onDOMReady
 var DATE_DISPLAY_SIZE = 0; // mm/yy height, see onDOMReady
+var REGISTRATIONS;
 
 // Temporary variables to hold mouse x-y pos.s
 var tempX = 0;
@@ -30,9 +31,10 @@ Event.onDOMReady(function() {
     adjust_lesson_width();
   });
 
-//  adjust_side_control_position_height();
+  load_registrations();
 
-  activate_time_bars();
+//  adjust_side_control_position_height();
+//  activate_time_bars();
   
   load_lessons();
 
@@ -170,10 +172,42 @@ function render_timerange(range, registration_id, data) {
   thin_insert_div.insert(thin_img);
 }
 
+function time_bar_mouseover(data_id) {
+  console.log(data_id);
+  data = REGISTRATIONS[data_id];
+  var d = $('xy');
+  d.show();
+  d.style.borderColor = "#" + data.color;
+  $('mouseover_name').update(data.student_name + " <small>(" + data.user_input + ")</small>");
+  $('mouseover_name').show();
+}
+
+function time_bar_mouseout() {
+  var d = $('xy');
+  if(!show_time) {
+    d.hide();
+  }
+  $('mouseover_name').hide();
+  d.style.borderColor = "orange";
+}
+
+function time_bar_click(data_id) {
+  data = REGISTRATIONS[data_id];
+  show_lesson_dialog(data);
+}
+
+function load_registrations() {
+  new Ajax.Request("/admin/registration/get_all/" + SESSION_ID, {
+    method: 'get',
+    onSuccess: function(transport) {
+      REGISTRATIONS = transport.responseText.evalJSON();
+    }
+  });
+}
+  /*
 function activate_time_bars() {
   var d = $('xy');
   var old_color = d.style.borderColor;
-
   var l = $('loading_wrapper');
   l.show();
 
@@ -181,10 +215,8 @@ function activate_time_bars() {
     method: 'get',
     onSuccess: function(transport) {
       registrations = transport.responseText.evalJSON();
-      console.log(registrations);
 
       $$('img.calendar_bar').each( function (bar) {
-        console.log(bar);
         var id = bar.readAttribute('alt');
         var data = registrations[id];
 
@@ -210,9 +242,9 @@ function activate_time_bars() {
       l.hide();
     }
   });
-
 }
 
+  */
 function add_lesson() {
   $('add_lesson').request({
     onComplete: function(transport) { 
