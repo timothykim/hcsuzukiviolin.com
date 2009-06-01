@@ -19,6 +19,22 @@ namespace 'views' do
   end
 end
 
+namespace 'img' do
+  desc 'Generate single pixel png files with colors from Colors.all'
+  task 'gen_pnges' do
+    require 'app/models/colors'
+    require 'RMagick'
+    dir = "public/images/1x1/"
+    FileUtils.mkdir_p(dir)
+    Colors.all.each do |color|
+      img = Magick::Image.new(1,1)
+      brush = Magick::Draw.new
+      brush.point(1,1) { self.fill = '#' + color.upcase }
+      brush.draw(img)
+      img.write(dir+color.upcase+".png")
+    end
+  end
+end
 
 namespace 'data' do
   desc 'Update registered_dates rows so that dates with nil will have same date as start'

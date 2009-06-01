@@ -59,6 +59,10 @@ div#summary_calendar .summary_hour {
   margin: 0;
 }
 
+img.calendar_bar {
+  margin-left: 1px;
+} 
+
 img.thin_calendar_bar {
 	margin-left: 1px;
 	float: left;
@@ -87,4 +91,17 @@ div#loading {
   text-align: center;
   opacity: 0.9;
   -webkit-box-shadow: 2px 2px 10px #000;
+}
+
+
+div#calendar_table {
+  margin: 0;
+}
+
+th.flex {
+  width: 16.66666% !important;
+}
+
+div.lesson_bar {
+  opacity: 0.8;
 }

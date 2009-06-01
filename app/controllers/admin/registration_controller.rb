@@ -65,6 +65,7 @@ BLOCK
   def delete_lesson
     lesson = Lesson.find(params[:id])
     lesson.destroy
+    
     render :text => "done"
   end
 
@@ -99,7 +100,7 @@ BLOCK
       timeranges << {:start => start, :finish => finish, :string => timerange.user_input, :preferred => timerange.preferred}
     end
 
-    data = { :registration => registration, :student => student, :timeranges => timeranges, :color => Colors.one(registration.id) }
+    data = { :registration => registration, :student => student, :timeranges => timeranges, :color => Colors.one(registration.student.user_id) }
 
     render :text => data.to_json
   end

@@ -6,7 +6,6 @@ var HEADER_SIZE = 0; // starting position of the tobody in pixels, actual initia
 var WEEK_BLOCK_SIZE = 0; //height of single week tr, see onDOMReady
 var DATE_DISPLAY_SIZE = 0; // mm/yy height, see onDOMReady
 
-
 // Temporary variables to hold mouse x-y pos.s
 var tempX = 0;
 var tempY = 0;
@@ -24,17 +23,16 @@ Event.onDOMReady(function() {
   // Set-up to use getMouseXY function onMouseMove
   Event.observe(document, 'mousemove', getMouseXY);
 
-  Event.observe(window, 'scroll', adjust_side_control_position_height);
+//  Event.observe(window, 'scroll', adjust_side_control_position_height);
   Event.observe(window, 'resize', function() {
     maximized = false;
-    adjust_side_control_position_height();
+//    adjust_side_control_position_height();
     adjust_lesson_width();
   });
 
-  adjust_side_control_position_height();
+//  adjust_side_control_position_height();
   
   load_lessons();
-
 
   $('summary_calendar_button').observe('click', toggle_summary_calendar);
 });
@@ -226,7 +224,7 @@ function show_lesson(lesson) {
         method: 'get', //this is bad.. but oh well
         onSuccess: function(transport) {
           Effect.Fade(lesson_bar, {
-            afterFinish: function() { lesson_bar.remove(); update_count(lesson.r_id); }
+            afterFinish: function() { update_count(lesson.r_id); }
           });
         }
       });
