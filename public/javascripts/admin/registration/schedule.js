@@ -338,8 +338,10 @@ function show_lesson(lesson) {
               lesson_bar.remove();
               update_count(lesson.r_id);
               var list = $$('div.numbering_' + lesson.r_id);
-              list[0].next('.prev').style.color = "transparent";
-              list[list.length-1].next('.next').style.color = "transparent";
+              if (list.length > 0) {
+                list[0].next('.prev').style.color = "transparent";
+                list[list.length-1].next('.next').style.color = "transparent";
+              }
             }
           });
         }
@@ -376,13 +378,13 @@ function show_lesson(lesson) {
   var list = $$('div.numbering_' + lesson.r_id);
   if (lesson.numbering == 1) {
     prev.style.color = "transparent";
-    if(page_loaded()) {
+    if((list.length > 0) && page_loaded()) {
       list[0].next('.prev').style.color = "white";
     }
   }
   if (lesson.numbering == lesson.out_of) {
     next.style.color = "transparent";
-    if(page_loaded()) {
+    if((list.length > 0) && page_loaded()) {
       list[list.length-1].next('.next').style.color = "white";
     }
   }
