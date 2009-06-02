@@ -356,8 +356,8 @@ function show_lesson(lesson) {
     numbering = numbering.slice(0, numbering.indexOf('/'));
     var lesson_numbers = $$('div.numbering_' + lesson.r_id);
     if(numbering > 1) {
-      Effect.ScrollTo(lesson_numbers[numbering-2], {offset: -150});
-      Effect.Pulsate(lesson_numbers[numbering-2], {duration: 2.5});
+      Effect.ScrollTo(lesson_numbers[numbering-2].up('.week_anchor'));
+      Effect.Pulsate(lesson_numbers[numbering-2].up('.lesson_bar'), {duration: 2.5});
     }
   });
   next.update("&#9654;");
@@ -368,8 +368,8 @@ function show_lesson(lesson) {
     numbering = numbering.slice(0, numbering.indexOf('/'));
     var lesson_numbers = $$('div.numbering_' + lesson.r_id);
     if(numbering < lesson_numbers.length) {
-      Effect.ScrollTo(lesson_numbers[numbering], {offset: -150});
-      Effect.Pulsate(lesson_numbers[numbering], {duration: 2.5});
+      Effect.ScrollTo(lesson_numbers[numbering].up('.week_anchor'));
+      Effect.Pulsate(lesson_numbers[numbering].up('.lesson_bar'), {duration: 2.5});
     }
   });
 
