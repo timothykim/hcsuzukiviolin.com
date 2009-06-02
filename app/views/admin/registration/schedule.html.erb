@@ -185,16 +185,12 @@
   <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#9650;</span></div>
   <h1>Calendar Toolbox</h1>
   <div class="body" style="display: none;">
-    Things to add:
-    <ul>
-      <li>Download to iCal</li>
-      <li>View multiple students at once</li>
-    </ul>
+    <input type="checkbox" checked="checked" id="hide_lessons" onclick="$$('div.lesson_bar').each(function(b){b.toggle();});" /><label for="hide_lessons" style="cursor: pointer;"> Toggle Lessons</label>
   </div>
   <div class="widget_chrome"></div>
 </div>
 
-<div id="schedule_overview" style="position: fixed">
+<div id="schedule_overview" style="position: fixed; top:0; left:0;">
 </div>
 
 
