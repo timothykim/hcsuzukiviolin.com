@@ -539,7 +539,7 @@ function show_lesson_dialog(data) {
   d.style.borderColor = "#" + data.color;
 
 
-  Effect.Appear(d, {duration: 0.3});
+  Effect.Appear(d, {duration: 0.2, afterFinish: function() { $('dialog_time').focus(); }});
   $('registration_id').value = data.registration_id;
 }
 
