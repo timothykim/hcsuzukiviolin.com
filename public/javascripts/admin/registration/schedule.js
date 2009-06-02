@@ -46,7 +46,36 @@ Event.onDOMReady(function() {
     widget.down('.min_max').observe('click', function() { toggle_widget(widget); });
     widget.down('.swap').observe('click', function() { swap_widgets(widgets); });
   });
+
+  var selectors = $$('input.bar_selector');
+  selectors.each(function(selector) {
+    selector.observe('change', function() {
+      toggle_bars();
+    });
+  });
+
+  $('check_all').observe('change', function() {
+    if(this.value) {
+      $$('input.bar_selector').each(function(img) { img.checked = "true"; });
+    } else {
+      $$('input.bar_selector').each(function(img) { img.checked = false; });
+    }
+    toggle_bars();
+  });
+
 });
+
+function toggle_bars() {
+  var selectors = $$('input.bar_selector');
+  selectors.each(function(selector) {
+    var r_id = selector.title;
+    if(selector.value) {
+      $$('img.bar_' + r_id).each(function(img) { img.show(); });
+    } else {
+      $$('img.bar_' + r_id).each(function(img) { img.hide(); });
+    }
+  });
+}
 
 function swap_widgets(widgets) {
   widgets.each(function(widget) {

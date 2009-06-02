@@ -36,7 +36,7 @@ div.right {
 }
 
 div#availability_overview {
-  width: 382px;
+  width: 460px;
 }
 
 div#summary_calendar {
@@ -177,3 +177,8 @@ div#event_dialog {
   opacity: 1;
 }
 
+
+input.bar_selector {
+  margin: 0px;
+/*  -webkit-transform: scale(0.7,0.7); */
+}
