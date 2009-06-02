@@ -58,13 +58,18 @@ BLOCK
 
     recurring = Registration.find(params[:registration_id]).session.registration_type == 0 
 
-    lesson_time = Time.parse(params[:date] + " " + params[:time])
+    lesson_begin = Time.parse(params[:date] + " " + params[:time])
+    lesson_end = Time.parse(params[:date] + " " + params[:time]) + (params[:duration].to_i * 60)
 
     bad = false
     Lesson.all.each do |s|
       start = s.time
       done = s.time + (s.duration * 60)
-      if lesson_time >= start and lesson_time < done
+      if start <= lesson_begin and lesson_begin < done
+        bad = true
+        break
+      end
+      if lesson_begin <= start and start < lesson_end
         bad = true
         break
       end
