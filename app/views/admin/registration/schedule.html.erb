@@ -57,7 +57,7 @@
   <tbody id="tbody_start">
 <% @week_count.times do |week_no| -%>
     <tr id="week<%=week_no+1%>" class="week_anchor">
-      <th><%=week_no+1%></th>
+      <th><%=week_no%></th>
       <!-- time label -->
       <td style="padding-top: 17px" valign="top">
 <%  for i in (@day_start..@day_end)
@@ -160,7 +160,7 @@
           <th><input type="checkbox" checked="checked" id="check_all" /></th>
           <th>Students</th>
 <% @week_count.times do |week_no| -%>
-          <th><%=week_no+1%></th>
+          <th><%=week_no%></th>
 <% end -%>
         </tr>
       </thead>

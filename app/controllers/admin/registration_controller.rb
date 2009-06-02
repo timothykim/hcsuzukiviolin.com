@@ -58,14 +58,29 @@ BLOCK
 
     recurring = Registration.find(params[:registration_id]).session.registration_type == 0 
 
-    lesson = Lesson.new
-    lesson.attributes = { :registration_id => params[:registration_id],
-                          :is_recurring => recurring,
-                          :time => Time.parse(params[:date] + " " + params[:time]),
-                          :duration => params[:duration].to_i } 
-    lesson.save
+    lesson_time = Time.parse(params[:date] + " " + params[:time])
 
-    render :text => lesson.to_json
+    bad = false
+    Lesson.all.each do |s|
+      start = s.time
+      done = s.time + (s.duration * 60)
+      if lesson_time >= start and lesson_time < done
+        bad = true
+        break
+      end
+    end
+
+    if bad
+      render :text => { :error => true }.to_json
+    else
+      lesson = Lesson.new
+      lesson.attributes = { :registration_id => params[:registration_id],
+                            :is_recurring => recurring,
+                            :time => Time.parse(params[:date] + " " + params[:time]),
+                            :duration => params[:duration].to_i } 
+      lesson.save
+      render :text => lesson.to_json
+    end
   end
 
   def delete_lesson

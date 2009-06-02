@@ -308,10 +308,14 @@ function add_lesson() {
   $('add_lesson').request({
     onComplete: function(transport) { 
       var lesson = transport.responseText.evalJSON();
-      show_lesson(lesson);
-      hide_lesson_dialog();
+      if (lesson.error) {
+        Effect.Shake('event_dialog', {duration: 0.2, distance: 5})
+      } else {
+        show_lesson(lesson);
+        hide_lesson_dialog();
 
-      update_count(lesson.r_id);
+        update_count(lesson.r_id);
+      }
     }
   });
 }
@@ -529,7 +533,7 @@ function show_lesson_dialog(data) {
   //time is the start timestamp of the img, it is used to figure out the date of this lesson
   var d = $('event_dialog');
 
-  var t = getTimeUnderCursor();
+  var t = getTimeUnderCursor(15);
   $('dialog_time').value = formatTime(t);
   $('dialog_name').update(data.student_name);
   $('dialog_duration').value = data.duration;
@@ -573,13 +577,13 @@ function get_calendar_bar_image_url(color, block_start, start, end, preferred) {
 }
 */
 
-function getTimeUnderCursor() {
+function getTimeUnderCursor(interval) {
   var click_y = tempY;
   
   click_y -= HEADER_SIZE; //account for header
   
-  var t_count = Math.floor(((click_y % WEEK_BLOCK_SIZE) - DATE_DISPLAY_SIZE) / UNIT_HEIGHT); //number of thirty minutes since 7 am
-  var time = (DAY_START * 60) + (t_count * 30); //in minutes
+  var t_count = Math.floor(((click_y % WEEK_BLOCK_SIZE) - DATE_DISPLAY_SIZE) / (UNIT_HEIGHT/(UNIT_TIME/(interval*60)))); //number of thirty minutes since 7 am
+  var time = (DAY_START * 60) + (t_count * interval); //in minutes
   time = time / 60;
   return time;
 }
@@ -593,17 +597,11 @@ function formatTime(time) {
     p = "PM";
   }
 
-  var time_str;
-  if (time % 1 == 0) {
-    time_str = time + ":00" + p;
-  } else {
-    time_str = Math.floor(time) + ":30" + p;    
-  }
-
-  if (time < 10) {
-    time_str = "0" + time_str;
-  }
-  return time_str;
+  var hour = Math.floor(time);
+  if (hour < 10) { hour = "0" + hour; }
+  var min = (time - Math.floor(time)) * 60;
+  if (min < 10) { min = "0" + min; }
+  return hour + ":" + min + p;
 }
 
 function getMouseXY(e) {
@@ -614,7 +612,7 @@ function getMouseXY(e) {
   if (tempX < 0){tempX = 0;}
   if (tempY < 0){tempY = 0;}  
 
-  var army_time = getTimeUnderCursor();
+  var army_time = getTimeUnderCursor(15);
   var time_str = formatTime(army_time);
 
   var xy = $('xy');
