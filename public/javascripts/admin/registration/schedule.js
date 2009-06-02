@@ -424,6 +424,7 @@ function show_lesson(lesson) {
 
   toggle_bar.update("BAR");
   toggle_bar.observe('click', function(event) {
+    Event.stop(event);
     $('checkbox_' + lesson.r_id).click();
   });
 
