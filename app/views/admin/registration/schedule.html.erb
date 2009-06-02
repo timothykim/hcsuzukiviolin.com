@@ -150,7 +150,7 @@
 </div>
 
 <div class="widget right" id="availability_overview">
-  <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#8685;</span></div>
+  <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#9650;</span></div>
   <h1>Availability Overview</h1>
   <div class="body" style="display: none;">
     <table class="widget_table">
@@ -180,45 +180,14 @@
 </div>
 
 <div id="summary_calendar" class="widget left">
-  <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#8685;</span></div>
-  <h1>Calendar Overview</h1>
+  <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#9650;</span></div>
+  <h1>Calendar Toolbox</h1>
   <div class="body" style="display: none;">
-  <table class="widget_table">
-    <thead>
-      <tr>
-        <th width="10">#</th>
-        <th width="30">M</th>
-        <th width="30">T</th>
-        <th width="30">W</th>
-        <th width="30">T</th>
-        <th width="30">F</th>
-        <th width="10">S</th>
-      </tr>
-    </thead>
-    <tbody>
-<% @week_count.times do |week_no| -%>
-      <tr style="cursor: pointer;" onclick="Effect.ScrollTo('week<%=week_no+1%>', {duration:0.5})">
-        <th valign="top"><%=week_no+1%></th>
-<%
-	for day in (1..6)
-		today = @startdate + ((week_no * 7) + day)
-		if @current_session.is_offday?(today)
-			bgcolor = "transparent"
-		else
-			bgcolor = "white"
-		end	
-%>
-        <td style="background-color: <%=bgcolor%>;">
-<%    for i in (@day_start..@day_end) %>
-<%      timestamp = Time.local(today.year, today.month, today.day, i).to_i %>
-          <div id="sum<%=timestamp%>" class="summary_hour"></div>
-<%    end #for i in %>
-        </td>
-<%  end #for day in (1..6) %>
-      </tr>
-<% end #@week_count.times %>
-    </tbody>
-  </table>
+    Things to add:
+    <ul>
+      <li>Download to iCal</li>
+      <li>View multiple students at once</li>
+    </ul>
   </div>
   <div class="widget_chrome"></div>
 </div>

@@ -348,7 +348,7 @@ function show_lesson(lesson) {
     Event.stop(event);
   });
 
-  prev.update("&#8683;");
+  prev.update("&#9664;");
   prev.observe("click", function(event) {
     Event.stop(event);
     var n = this.previous('.numbering');
@@ -360,7 +360,7 @@ function show_lesson(lesson) {
       Effect.Pulsate(lesson_numbers[numbering-2], {duration: 2.5});
     }
   });
-  next.update("&#8684;");
+  next.update("&#9654;");
   next.observe("click", function(event) {
     Event.stop(event);
     var n = this.previous('.numbering');
@@ -513,11 +513,10 @@ function show_lesson_dialog(data) {
 }
 
 function toggle_widget(widget) {
-  var uparrow = "&#8685;";
-  var downarrow = "&#8686;";
+  var uparrow = "&#9650;";
+  var downarrow = "&#9660;";
 
   var content = widget.down('.body');
-
   Effect.toggle(content, 'blind', {duration: 0.3});
   var s = widget.down('.min_max');
   if (content.style.display == "none") {
