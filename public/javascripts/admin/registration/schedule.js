@@ -338,6 +338,7 @@ function show_lesson(lesson) {
   var del = new Element('a', {'href' : '#', 'style' : 'color: #900;'});
   var prev = new Element('a', {'class': 'prev', 'href' : '#', 'style' : 'color: #fff;'});
   var next = new Element('a', {'class': 'next', 'href' : '#', 'style' : 'color: #fff;'});
+  var toggle_bar = new Element('a', {'class': 'next', 'href' : '#', 'style' : 'color: #fff;'});
 
   var id = lesson.start - (lesson.start % (30 * 60));
   var outer_div = $('t' + id);
@@ -418,16 +419,20 @@ function show_lesson(lesson) {
     }
   }
 
-
   lesson_number.style.color = '#' + lesson.color;
-
   lesson_number.update(lesson.numbering + "/" + lesson.out_of);
+
+  toggle_bar.update("BAR");
+  toggle_bar.observe('click', function(event) {
+    $('checkbox_' + lesson.r_id).click();
+  });
 
   lesson_text.insert(lesson_number);
   lesson_text.insert(name);
   lesson_text.insert(time);
   lesson_text.insert(prev);
   lesson_text.insert(next);
+  lesson_text.insert(toggle_bar);
   lesson_text.insert(del);
   lesson_bar.update(lesson_text);
   outer_div.insert(lesson_bar);

@@ -168,7 +168,7 @@
         <% @registrations.each do |r| %>
           <tr class="<%= cycle("odd", "even") -%>">
             <td width="15" align="center" style="border: none;" id="count_<%=r.id%>"><%=r.lessons.count%></td>
-            <td align="center" style="border: none;"><input type="checkbox" checked="checked" class="bar_selector" title="<%=r.id%>" /></td>
+            <td align="center" style="border: none;"><input id="checkbox_<%=r.id%>" type="checkbox" checked="checked" class="bar_selector" title="<%=r.id%>" /></td>
             <td bgcolor="#<%= Colors.one(r.student.user_id)%>" align="right"><%= r.student.last_name + ", " + r.student.first_name %></td>
 <% @week_count.times do |week_no| -%>
             <td width="15" align="center" style="border: none; color: white;"><%=r.count_registered_days(week_no+1)%></td>
