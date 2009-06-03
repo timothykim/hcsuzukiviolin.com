@@ -317,6 +317,7 @@ function add_lesson() {
         hide_lesson_dialog();
 
         update_count(lesson.r_id);
+        show_lesson_list(lesson.r_id, lesson.full_name);
       }
     }
   });
@@ -378,6 +379,7 @@ function show_lesson(lesson) {
                 list[0].next('.prev').style.color = "transparent";
                 list[list.length-1].next('.next').style.color = "transparent";
               }
+              show_lesson_list(lesson.r_id, lesson.full_name);
             }
           });
         }

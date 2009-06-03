@@ -100,8 +100,8 @@ div#schedule_overview {
   margin: 0;
   width: 202px;
   position: fixed;
-  bottom: 20px;
-  right: 235px;
+  bottom: 10px;
+  right: 250px;
 }
 
 div.widget .body {
