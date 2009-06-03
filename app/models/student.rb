@@ -6,8 +6,13 @@ class Student < ActiveRecord::Base
   def to_s
     [self.first_name, self.last_name].join(" ")
   end
+
+  def age 
+    age = Date.today.year - self.dob.year
+    age -= 1 if self.dob > Date.today.years_ago(age) #if birthday has yet to pass then subtract one
+    return age
+  end
   
-  #embedding html here might be bad -_-;; oh well...
   def registered?(sess)
     return true if self.get_registration(sess)
     return false

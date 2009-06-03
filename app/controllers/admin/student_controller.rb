@@ -6,5 +6,12 @@ class Admin::StudentController < AdminController
     @submenu = global_submenu
     
     @students = Student.find(:all)
+
+    @javascripts = "tablesort.js"
+  end
+
+  def delete
+    r = Student.find(params[:id])
+    r.destroy
   end
 end

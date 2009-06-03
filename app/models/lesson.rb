@@ -8,13 +8,14 @@ class Lesson < ActiveRecord::Base
              :student_name => self.registration.student.first_name.at(0) + ". " + self.registration.student.last_name,
              :full_name => self.registration.student.to_s,
              :parent_name => self.registration.student.user.fullname,
-             :date => self.time.strftime("%m/%d/%Y"),
+             :date_id => self.time.strftime("%Y-%m-%d"),
              :start_time => self.time.strftime("%I:%M%p"),
              :end_time => (self.time + (self.duration * 60)).strftime("%I:%M%p"),
              :id => self.id,
              :r_id => self.registration_id,
              :numbering => self.registration.lessons.index(self) + 1,
-             :out_of => self.registration.lessons.length
+             :out_of => self.registration.lessons.length,
+             :date => self.time.strftime("%m/%d/%Y")
     }
     return data
   end

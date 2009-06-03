@@ -43,8 +43,10 @@ Event.onDOMReady(function() {
   widgets.each(function(widget) {
     widget.observe('mouseover', function() { show_time = false; });
     widget.observe('mouseout', function() { show_time = true; });
-    widget.down('.min_max').observe('click', function() { toggle_widget(widget); });
-    widget.down('.swap').observe('click', function() { swap_widgets(widgets); });
+    if (widget.hasClassName('controls')) {
+      widget.down('.min_max').observe('click', function() { toggle_widget(widget); });
+      widget.down('.swap').observe('click', function() { swap_widgets(widgets); });
+    }
   });
 
   var selectors = $$('input.bar_selector');
@@ -485,7 +487,6 @@ function load_lessons() {
 
 function make_draggable() {
     $$('div.lesson_bar').each(function(lesson_bar) {
-      console.log(lesson_bar);
       var dragger = new Effect.Draggable(lesson_bar);
     });
 }
@@ -496,28 +497,30 @@ function adjust_lesson_width() {
 	});	
 }
 
-/*
-function show_lesson_list(r_id) {
+
+function show_lesson_list(r_id, name) {
   var url = "/admin/registration/lessons_json/" + r_id;
   new Ajax.Request(url, {
     method: 'get',
     onSuccess: function(transport) {
       lessons = transport.responseText.evalJSON();
-
-      var lesson_div = $('lesson_list_' + r_id);
-      Effect.Appear(lesson_div, {duration: 0.3});
-
-      var list = lesson_div.down('ol');
-      list.replace('<ol></ol>');
-      list = lesson_div.down('ol');
-
-      lessons.each(function(lesson) {
-        list.insert('<li onclick="Effect.ScrollTo(\'lesson' + lesson.start + '\', {duration: 0.5});" style="cursor:pointer;">' + lesson.date + " " + lesson.start_time + " - " + lesson.end_time + "</li>"); 
+      $$('td.summary_cell').each(function(cell) {
+        if (!cell.hasClassName('offday_cell')) {
+          cell.style.backgroundColor = 'white';
+        }
       });
+
+      $('lesson_list_name').update(name);
+      $('lesson_list').update('');
+      lessons.each(function(lesson) {
+        $('d-' + lesson.date_id).style.backgroundColor = '#' + lesson.color; 
+        $('lesson_list').insert("<li>" + lesson.date + ": " + lesson.start_time + "~" + lesson.end_time);
+      });
+
+      Effect.Appear('schedule_overview', {duration: 0.3});
     }
   });
 }
-*/
 
 function sec2pixel(sec) {
   return Math.round((sec / UNIT_TIME) * UNIT_HEIGHT);

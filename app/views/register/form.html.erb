@@ -163,7 +163,7 @@ end -%>
 <%		@dates.each_with_index do |today, i| -%>
 <%			if i % 6 == 0 #index % 6 does NOT corespond to day of the week -%>
 				<tr>
-					<td class="week_no"><%= i / 6 + 1 %></td>
+					<td class="week_no"><%= i / 6  %></td>
 <%			end #if -%>
 <%			clss = "" -%>
 <%			clas = (today.date.mon % 2 == 1) ? "odd_month" : "even_month" -%>

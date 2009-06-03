@@ -36,7 +36,7 @@ div.right {
 }
 
 div#availability_overview {
-  width: 460px;
+  width: 200px;
 }
 
 div#summary_calendar {
@@ -49,7 +49,6 @@ div.left {
   bottom: 10px;
   left: 15px;
 }
-
 
 div#summary_calendar .summary_hour {
   height: 1px;
@@ -96,6 +95,15 @@ div.widget .button {
   cursor:pointer; font-size: 18px;
 }
 
+div#schedule_overview {
+  z-index: 3;
+  margin: 0;
+  width: 202px;
+  position: fixed;
+  bottom: 20px;
+  right: 235px;
+}
+
 div.widget .body {
   margin-bottom: 10px;
 }
@@ -117,8 +125,8 @@ div.widget_chrome {
   top:0;
   left:0;
   right:0;
-  bottom:0;
-  z-index:-1;
+  bottom: 0;
+  z-index: -1;
 }
 
 div.pname {

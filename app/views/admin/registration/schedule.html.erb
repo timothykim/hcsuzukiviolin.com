@@ -123,86 +123,139 @@
 <% end #@week_count.times -%>
   </tbody>
 </table>
-
-
-<div id="xy" style="display: none;">
-  <div id="mouseover_name" style="display: none;"></div>
-  <div id="time"></div>
 </div>
 
-<div id="event_dialog" style="display: none;" onmouseover="show_time = false;" onmouseout="show_time = true;">
-  <%= form_tag '/admin/registration/add_lesson', :id => 'add_lesson' %>
-    <strong>Schedule a Lesson</strong>
+<div id="tools">
 
-  <p style="margin: 5px auto; white-space: nowrap;">
-    <span id="dialog_name"></span> @ <input type="text" id="dialog_time" name="time" size="7" />
-    for 
-    <input type="text" name="duration" id="dialog_duration" size="3" value="" />
-    minutes.
-  </p>
-
-  <div style="text-align: right">
-    <input type="submit" value="Add"/> <button onclick="hide_lesson_dialog();" type="button">Cancel</button>
+  <div id="xy" style="display: none;">
+    <div id="mouseover_name" style="display: none;"></div>
+    <div id="time"></div>
   </div>
-    <input type="hidden" name="registration_id" id="registration_id" value="" />
-    <input type="hidden" name="date" id="dialog_date" value="" />
-  </form>
-</div>
 
-<div class="widget right" id="availability_overview">
-  <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#9650;</span></div>
-  <h1>Availability Overview</h1>
-  <div class="body" style="display: none;">
-    <table class="widget_table">
-      <thead>
-        <tr>
-          <th>S</th>
-          <th><input type="checkbox" checked="checked" id="check_all" /></th>
-          <th>Students</th>
-<% @week_count.times do |week_no| -%>
-          <th><%=week_no%></th>
-<% end -%>
-        </tr>
-      </thead>
-      <tbody>
-        <% @registrations.each do |r| %>
-          <tr class="<%= cycle("odd", "even") -%>">
-            <td width="15" align="center" style="border: none;" id="count_<%=r.id%>"><%=r.lessons.count%></td>
-            <td align="center" style="border: none;"><input id="checkbox_<%=r.id%>" type="checkbox" checked="checked" class="bar_selector" title="<%=r.id%>" /></td>
-            <td bgcolor="#<%= Colors.one(r.student.user_id)%>" align="right"><%= r.student.last_name + ", " + r.student.first_name %></td>
-<% @week_count.times do |week_no| -%>
-            <td width="15" align="center" style="border: none; color: white;"><%=r.count_registered_days(week_no+1)%></td>
-<% end -%>
-          </tr> 
-        <% end %>
-      </tbody>
-    </table>
+  <div id="event_dialog" style="display: none;" onmouseover="show_time = false;" onmouseout="show_time = true;">
+    <%= form_tag '/admin/registration/add_lesson', :id => 'add_lesson' %>
+      <strong>Schedule a Lesson</strong>
+
+    <p style="margin: 5px auto; white-space: nowrap;">
+      <span id="dialog_name"></span> @ <input type="text" id="dialog_time" name="time" size="7" />
+      for 
+      <input type="text" name="duration" id="dialog_duration" size="3" value="" />
+      minutes.
+    </p>
+
+    <div style="text-align: right">
+      <input type="submit" value="Add"/> <button onclick="hide_lesson_dialog();" type="button">Cancel</button>
+    </div>
+      <input type="hidden" name="registration_id" id="registration_id" value="" />
+      <input type="hidden" name="date" id="dialog_date" value="" />
+    </form>
   </div>
-  <div class="widget_chrome"></div>
-</div>
 
-<div id="summary_calendar" class="widget left">
-  <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#9650;</span></div>
-  <h1>Calendar Toolbox</h1>
-  <div class="body" style="display: none;">
-    <input type="checkbox" checked="checked" id="hide_lessons" onclick="$$('div.lesson_bar').each(function(b){b.toggle();});" /><label for="hide_lessons" style="cursor: pointer;"> Toggle Lessons</label>
+  <div class="controls widget right" id="availability_overview">
+    <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#9650;</span></div>
+    <h1>Availability Overview</h1>
+    <div class="body" style="display: none;">
+      <table class="widget_table">
+        <thead>
+          <tr>
+            <th>S</th>
+            <th><input type="checkbox" checked="checked" id="check_all" /></th>
+            <th>Students</th>
+<!--
+  <% @week_count.times do |week_no| -%>
+            <th><%=week_no%></th>
+  <% end -%>
+-->
+          </tr>
+        </thead>
+        <tbody>
+          <% @registrations.each do |r| %>
+            <tr class="<%= cycle("odd", "even") -%>">
+              <td width="15" align="center" style="border: none; cursor: pointer;" onclick="show_lesson_list(<%=r.id%>, '<%=r.student.to_s%>');" id="count_<%=r.id%>"><%=r.lessons.count%></td>
+              <td align="center" style="border: none;"><input id="checkbox_<%=r.id%>" type="checkbox" checked="checked" class="bar_selector" title="<%=r.id%>" /></td>
+              <td bgcolor="#<%= Colors.one(r.student.user_id)%>" align="right"><%= r.student.last_name + ", " + r.student.first_name %></td>
+
+              <!--
+  <% @week_count.times do |week_no| -%>
+              <td width="15" align="center" style="border: none; color: white;"><%=r.count_registered_days(week_no+1)%></td>
+  <% end -%>
+            </tr> 
+            -->
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="widget_chrome"></div>
   </div>
-  <div class="widget_chrome"></div>
-</div>
 
-<div id="schedule_overview" style="position: fixed; top:0; left:0;">
-</div>
-
-
-<div id="loading_wrapper" style="display: none;">
-<div id="loading">
-  <h1 id="header">Loading...</h1>
-  <img src="/images/spinner.gif" />
-  <div id="loading_message" style="text-align: left;">
-    <ul id="message_list">
-    </ul>
+  <div id="summary_calendar" class="widget left controls">
+    <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#9650;</span></div>
+    <h1>Calendar Toolbox</h1>
+    <div class="body" style="display: none;">
+      <input type="checkbox" checked="checked" id="hide_lessons" onclick="$$('div.lesson_bar').each(function(b){b.toggle();});" /><label for="hide_lessons" style="cursor: pointer;"> Toggle Lessons</label>
+    </div>
+    <div class="widget_chrome"></div>
   </div>
-</div>
+
+
+  <div id="schedule_overview" class="widget" style="display: none;">
+    <div style="float:right"><span class="button min_max" onclick="Effect.Fade('schedule_overview',{duration:0.3});">&#10006;</span></div>
+    <h1>Schedule Overview</h1>
+    <div class="body">
+      <div id="lesson_list_name"></div>
+      <div>
+        <ol id="lesson_list">
+        </ol>
+      </div>
+      <table class="main">
+        <thead>
+          <tr>
+            <th width="10">#</th>
+            <th width="30">M</th>
+            <th width="30">T</th>
+            <th width="30">W</th>
+            <th width="30">T</th>
+            <th width="30">F</th>
+            <th width="10">S</th>
+          </tr>
+        </thead>
+        <tbody>
+    <% @week_count.times do |week_no| -%>
+          <tr>
+            <th valign="top"><%=week_no%></th>
+    <%
+      for day in (1..6)
+        today = @startdate + ((week_no * 7) + day)
+        if @current_session.is_offday?(today)
+          cls = "offday_cell"
+          bgcolor = "black"
+        else
+          cls = ""
+          bgcolor = "white"
+        end  
+    %>
+            <td onclick="Effect.ScrollTo('<%=week_no+1%>');" class="summary_cell <%=cls%>" style="background-color: <%=bgcolor%>" id="d-<%=today.to_s%>">
+            </td>
+    <%  end #for day in (1..6) %>
+          </tr>
+    <% end #@week_count.times %>
+        </tbody>
+      </table>
+    </div>
+    <div class="widget_chrome"></div>
+  </div>
+
+  <div id="loading_wrapper" style="display: none;">
+  <div id="loading">
+    <h1 id="header">Loading...</h1>
+    <img src="/images/spinner.gif" />
+    <div id="loading_message" style="text-align: left;">
+      <ul id="message_list">
+      </ul>
+    </div>
+  </div>
+  </div>
+
 </div>
 
 
