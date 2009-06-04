@@ -56,7 +56,7 @@
   </thead>
   <tbody id="tbody_start">
 <% @week_count.times do |week_no| -%>
-    <tr id="week<%=week_no+1%>" class="week_anchor">
+    <tr id="week<%=week_no+1%>" class="week_anchor" style="page-break-after: always;">
       <th><%=week_no%></th>
       <!-- time label -->
       <td style="padding-top: 17px" valign="top">
@@ -119,7 +119,7 @@
 <%            end # for each hours -%>
       </td>
 <%  end # for days -%>
-
+    </tr>
 <% end #@week_count.times -%>
   </tbody>
 </table>

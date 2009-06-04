@@ -20,10 +20,11 @@ class Admin::RegistrationController < AdminController
   def schedule
     @current_session = Session.find(params[:id]) 
 
-    @teaching_hours = @current_session.weekly_availablities 
-
     @section_path = "Administration &raquo; Registrations &raquo; "
     @section_title = @current_session.name + " Schedule"
+
+    @teaching_hours = @current_session.weekly_availablities 
+
 
     @startdate = @current_session.first.next_week - 8 #start on sunday
     @enddate = @current_session.last.next_week - 2 #end on saturday

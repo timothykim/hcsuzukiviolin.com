@@ -342,10 +342,10 @@ function show_lesson(lesson) {
   var lesson_text = new Element('span', { 'class' : 'lesson_text' });
   var name = new Element('span', { 'id' : 'lesson' + lesson.start, 'class' : 'n', 'style' : 'font-weight: bold;' });
   var time = new Element('span');
-  var del = new Element('a', {'href' : '#', 'style' : 'color: #900;'});
-  var prev = new Element('a', {'class': 'prev', 'href' : '#', 'style' : 'color: #fff;'});
-  var next = new Element('a', {'class': 'next', 'href' : '#', 'style' : 'color: #fff;'});
-  var toggle_bar = new Element('a', {'class': 'next', 'href' : '#', 'style' : 'color: #fff;'});
+  var del = new Element('a', {'class': 'no_print', 'href' : '#', 'style' : 'color: #900;'});
+  var prev = new Element('a', {'class': 'prev no_print', 'href' : '#', 'style' : 'color: #fff;'});
+  var next = new Element('a', {'class': 'next no_print', 'href' : '#', 'style' : 'color: #fff;'});
+  var toggle_bar = new Element('a', {'class': 'toggle_bar no_print', 'href' : '#', 'style' : 'color: #fff;'});
 
   var id = lesson.start - (lesson.start % (30 * 60));
   var outer_div = $('t' + id);

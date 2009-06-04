@@ -1,4 +1,10 @@
+div#banner_wrapper, div#toolbar_wrapper {
+  display: none;
+}
 
+div.widget {
+  display: none;
+}
 
 div#student_list {
   width: 160px;
@@ -27,6 +33,22 @@ div.lesson_list ol {
 div.lesson_list ol li {
   list-style-type: decimal !important;
   margin: 5px !important;
+}
+
+tr.week_anchor {
+  page-break-before: always !important;
+}
+
+img.calendar_bar {
+  display: none;
+}
+
+.no_print {
+  display: none;
+}
+
+div.lesson_bar {
+  width: 1.6in !important;
 }
 
 

@@ -44,6 +44,9 @@
 <% levels.each do |file|
 	if FileTest.exists?(File.join("public/stylesheets", get_current_theme_css(file) + ".css")) %>
 		<%= stylesheet_link_tag(get_current_theme_css(file)) %>
+<%  end 
+	if FileTest.exists?(File.join("public/stylesheets", get_current_theme_css(file) + "_print.css")) %>
+        <%= stylesheet_link_tag(get_current_theme_css(file) + "_print.css", :media => "print") %>
 <% end end %>
 <% if defined?(@stylesheets): @stylesheets.each do |sheets| %>
 		<%= stylesheet_link_tag sheets %>
