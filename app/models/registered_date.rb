@@ -24,7 +24,7 @@ class RegisteredDate < ActiveRecord::Base
     block_height = 16
     url = "/images/1x1/" + Colors.one(self.registration.student.user_id).upcase + ".png"
     height = (((self.end_time.to_i - self.start_time.to_i) / block_seconds.to_f) * block_height).round - 1
-    offset = (((block_time.to_i - self.start_time.to_i) / block_seconds.to_f) * block_height).round
+    offset = (((self.start_time.to_i - block_time.to_i) / block_seconds.to_f) * block_height).round
     cls = ""
     if self.preferred
       cls = "preferred"
