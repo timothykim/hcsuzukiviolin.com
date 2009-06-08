@@ -57,13 +57,13 @@ class AccountController < ApplicationController
       render :text => "#{user} has been activated."
     end
   rescue
-    render :text => "Something went wrong... T_T ... Please visit <a href=\"http://www.hcsuzukuviolin.com/admin/user\">http://www.hcsuzukuviolin.com/admin/user</a> to activate this user."
+    render :text => "Something went wrong! Please visit <a href=\"http://www.hcsuzukuviolin.com/admin/user\">http://www.hcsuzukuviolin.com/admin/user</a> to activate this user."
   end
   
   
   def activate
-    @section_title = "Your account hasn't been activated, yet!" if logged_in?
     if logged_in?
+      @section_title = "Your account hasn't been activated, yet!"
       redirect_back_or_default(:controller => '/page', :action => 'index') if self.current_user.activated
     else
       redirect_to :action => 'login' 
@@ -118,30 +118,6 @@ class AccountController < ApplicationController
   end
   
   
-  def settings
-    @section_title = "Account Settings"
-    @submenu = global_submenu
-    
-    @user = self.current_user
-    
-    return unless params[:user]
-    
-    if @user.email == params[:user][:email] and params[:user][:email_confirmation] == ""
-      params[:user][:email_confirmation] = params[:user][:email]
-    end
-    
-    if params[:avatar][:uploaded_data]
-      @user.avatar.destroy if @user.avatar
-      Avatar.create!(params[:avatar])
-    end
-    
-    if @user.update_attributes(params[:user])
-      flash[:notice] = 'User was successfully updated.'
-      redirect_to :action => 'settings'
-    else
-      render :action => "settings"
-    end
-  end
   
   def illegal
       render :controller => "page", :action => "illegal"

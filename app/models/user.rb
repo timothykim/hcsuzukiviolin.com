@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
     self.lastname = self.lastname.gsub(/<\/?[^>]*>/, "")
   end
 
+  def get_registrations(sess)
+    self.registrations.find(:all, :conditions => {:session_id => sess.id})
+  end
+
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
     #u = find_by_login(login.downcase) # need to get the salt

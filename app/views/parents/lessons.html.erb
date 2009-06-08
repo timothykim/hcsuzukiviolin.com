@@ -1,0 +1,20 @@
+<h2>Lesson Schedules</h2>
+
+<% @sessions.each do |sess| %>
+  <h3><%= sess.name %></h3>
+  <% current_user.get_registrations(sess).each do |r| %>
+    <div class="student_schedule">
+      <h4><%= r.student.to_s %></h4>
+      <ol>
+      <% r.lessons.each do |lesson| %>
+        <li>
+          <div class="lesson_date"><%= lesson.get_date %></div>
+          <div class="lesson_time"><%= lesson.get_time %></div>
+        </li>
+      <% end%>
+      </ol>
+    </div>
+  <% end %>
+  <div class="clear"></div>
+  <a href="/parents/lessons/all/4"><img src="/images/icons/calendar.png" class="icon" /> See other student's schedule</a>
+<% end %>

@@ -73,9 +73,9 @@
 					<ul>
 						<% home_class = (controller.controller_name == "page" and controller.action_name == "index") ? "home" : "" %>
 						<li><%= link_to "Home", { :controller => "/page", :action => "index" }, :class => home_class %></li>
-						<li><%= link_to "For Parents", { :controller => "/page", :action => "policy_and_tuition" } %></li>
-						<li><%= link_to "Photobook", { :controller => "/photobook", :action => "index" }, :class => "photobook" %></li>
-						<li><%= link_to "Newsletter", { :controller => "/newsletter", :action => "index" }, :class => "newsletter" %></li>
+						<li><%= link_to "About Us", { :controller => "/page", :action => "about" } %></li>
+						<li><%= link_to "Prospective Parents", { :controller => "/page", :action => "policy_and_tuition" } %></li>
+						<li><%= link_to "Current Parents", { :controller => "/parents", :action => "index" }, :class => "current_parents" %></li>
 					</ul>
 				</div>
 				
@@ -87,7 +87,7 @@
 								Welcome, <strong><%= current_user.firstname + " " + current_user.lastname %></strong>!
 								<%= "|" if current_user.is_admin %>
 								<%= link_to "Admin", { :controller => "/admin", :action => "index" } if current_user.is_admin %>
-								| <%= link_to "Settings", { :controller => "/account", :action => "settings" } %>
+                                <!-- | <%= link_to "Settings", { :controller => "/account", :action => "settings" } %> -->
 								<!--| <%= link_to "Help", { :controller => "/account", :action => "help"} %>-->
 								| <%= link_to "Logout", { :controller => "/account", :action => "logout" } %>
 							</div>
@@ -128,7 +128,8 @@
 						<% @submenu.each do |menu| %>
 							<li>
 							<% if menu.has_key?(:link) %>
-								<%= link_to menu[:name], menu[:link], :class => "submenu" %>
+                                <% cls = (menu[:link] == url_for(:controller => request.path_parameters['controller'], :action => request.path_parameters['action'])) ? "selected" : "" %>
+                                <%= link_to menu[:name], menu[:link], :class => "submenu #{cls}" %>
 							<% elsif menu.has_key?(:render) %>
 								<div class="side_title"><%= menu[:name] %></div>
 								<%= render :partial => menu[:render], :locals => menu[:locals] %>

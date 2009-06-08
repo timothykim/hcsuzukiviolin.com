@@ -17,8 +17,10 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/photobook/photo/:id/:size', :controller => 'photobook', :action => 'photo'
   map.connect '/photobook/album/:id/:view', :controller => 'photobook', :action => 'album'
 
-  map.connect 'register/for/:session', :controller => 'register', :action => 'form'
-  map.connect 'register/for/:session/:student', :controller => 'register', :action => 'form'
+  map.connect '/register/for/:session', :controller => 'register', :action => 'form'
+  map.connect '/register/for/:session/:student', :controller => 'register', :action => 'form'
+
+  map.connect '/parents/lessons/all/:id', :controller => 'parents', :action => 'all_lessons'
 
   map.connect ':controller/:action/:id'
 end

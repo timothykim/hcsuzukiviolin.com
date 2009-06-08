@@ -1,0 +1,19 @@
+<h2>All Lessons for <%= @current_session %></h2>
+
+<% for registration in @current_session.registrations.sort{|a,b| a.student.last_name <=> b.student.last_name} %>
+	<div class="student_schedule">
+      <h4 style="color: #<%= Colors.one(registration.id) %>"><%= "#{registration.student.first_name} #{registration.student.last_name.at(0)}." %></h4>
+		<ol>
+<%
+    for lesson in registration.lessons
+%>
+<li><div class="lesson_date"><%= lesson.get_date %></div>
+<div class="lesson_time"><%= lesson.get_time %></div></li>
+<%
+	end
+%>
+		</ol>
+	</div>
+<%
+end
+%>

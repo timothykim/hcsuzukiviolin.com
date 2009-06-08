@@ -1,7 +1,7 @@
 class Student < ActiveRecord::Base
   belongs_to :user
   has_many :registrations
-  has_many :lessons, :through => :registration
+  has_many :lessons, :through => :registrations
   
   def to_s
     [self.first_name, self.last_name].join(" ")
@@ -26,6 +26,11 @@ class Student < ActiveRecord::Base
   
   def get_registration(sess)
     return self.registrations.find(:first, :conditions => {:session_id => sess.id})
+  end
+
+  def get_lessons(sess)
+    id = get_registration(sess).id
+    return self.lessons.find(:all, :conditions => {:registration_id => id}, :order => "time ASC")
   end
   
   def current_or_new_registration(sess)
