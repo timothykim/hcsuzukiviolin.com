@@ -1,8 +1,75 @@
 <h2>All Lessons for <%= @current_session %></h2>
 
+<script>
+function toggleView(str) {
+	if (str == 'cal') {
+		Effect.Fade($('list_view'), {duration: 0.4, afterFinish: function() { Effect.Appear($('calendar_view'), {duration: 0.4}); } });		
+	} else {
+		Effect.Fade($('calendar_view'), {duration: 0.4, afterFinish: function() { Effect.Appear($('list_view'), {duration: 0.4}); } });		
+	}
+    return false;
+}
+</script>
+  <div style="font-size: 8pt; margin-right: 20px; margin-bottom: 20px;">
+      <a href="#" onclick="return toggleView('cal');">View as Calendar</a> | 
+      <a href="#" onclick="return toggleView('list');">View as List</a>
+  </div>
+
+<div id="calendar_view">
+<table class="calendar main">
+  <thead>
+  <tr>
+    <th width="30">Week</th>
+    <th width="200">Monday</th>
+    <th width="200">Tuesday</th>
+    <th width="200">Wednesday</th>
+    <th width="200">Thursday</th>
+    <th width="200">Friday</th>
+    <th width="200">Saturday</th>
+  </tr>	
+  </thead>
+  <tbody>
+    <% @week_count.times do |week| %>
+      <tr>
+        <th><%=week+1%></th>
+      <% for day in (1..6) %>
+        <td valign="top">
+          <div class="daily_schedule">
+          <% today = (@startdate + ((week * 7) + day)) %>
+          <h3><%= today.strftime("%m/%d") %></h3>
+          <% lessons = Lesson.find(:all, :conditions => ['time > ? AND time < ?', today.to_time, (today+1).to_time]) %>
+          <% lessons.each do |lesson| %>
+            <div class="single_lesson">
+              <div class="lesson_name">
+                <%=lesson.registration.student%>
+                <% unless lesson.registration.student.first_name.downcase.include?("group") %>
+                <a href="mailto:<%=lesson.registration.student.user.email%>"><img src="/images/icons/icon_email-trans.gif" class="icon" /></a>
+                <% end %>
+              </div>
+              <div class="lesson_time"><%=lesson.get_time%></div>
+            </div>
+          <% end %>
+          <%= "No lessons" if lessons.length == 0 %>
+          </div>
+        </td>
+      <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+
+
+
+<div id="list_view" style="display: none;">
 <% for registration in @current_session.registrations.sort{|a,b| a.student.last_name <=> b.student.last_name} %>
 	<div class="student_schedule">
-      <h4 style="color: #<%= Colors.one(registration.id) %>"><%= "#{registration.student.first_name} #{registration.student.last_name.at(0)}." %></h4>
+      <h4 style="color: #<%= Colors.one(registration.id) %>"><%= "#{registration.student.first_name} #{registration.student.last_name.at(0)}." %>
+      <% unless registration.student.first_name.downcase.include?("group") %>
+      <a href="mailto:<%=registration.student.user.email%>"><img src="/images/icons/icon_email-trans.gif" class="icon" /></a>
+      <% end %>
+      
+      </h4>
 		<ol>
 <%
     for lesson in registration.lessons
@@ -17,3 +84,4 @@
 <%
 end
 %>
+</div>
