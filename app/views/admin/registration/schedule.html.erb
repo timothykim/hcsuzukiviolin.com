@@ -34,7 +34,7 @@
 	</p>
 
 	<h3>Controls</h3>
-	<input type="checkbox" id="time_show" checked="checked" onclick="if (this.checked) { show_time = true; } else { show_time = false;}" /><small><label for="time_show"> Show Cursor Time Box</label></small>
+    <input type="checkbox" id="time_show" checked="checked" onclick="if (this.checked) { show_time = true; } else { show_time = false;}" /><small><label for="time_show"> Show Cursor Time Box</label></small>
   </div>
 
 </div>
@@ -193,6 +193,7 @@
     <h1>Calendar Toolbox</h1>
     <div class="body" style="display: none;">
       <input type="checkbox" checked="checked" id="hide_lessons" onclick="$$('div.lesson_bar').each(function(b){b.toggle();});" /><label for="hide_lessons" style="cursor: pointer;"> Toggle Lessons</label>
+      <div style="margin: 4px;"><a href="/admin/registration/all_lessons_ical/<%=@current_session.name.gsub(" ", "-")%>" style="color:white; font-weight: bold;"><img src="/images/icons/ical_small.png" class="icon" /> Download iCal</a></div>
     </div>
     <div class="widget_chrome"></div>
   </div>

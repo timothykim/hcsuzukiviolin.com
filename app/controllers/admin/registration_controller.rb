@@ -53,6 +53,39 @@ BLOCK
 
   end
 
+  def all_lessons_ical
+    headers["Content-Type"] = "text/calendar; charset=utf-8"
+
+    name = params[:id].gsub(/-/, ' ')
+    @current_session = Session.find(:first, :conditions => { :name => name })
+
+    ical = <<END_OF_STRING
+BEGIN:VCALENDAR
+METHOD:PUBLISH
+X-WR-TIMEZONE:US/Eastern
+PRODID:-//SUZUKI//Lessons//EN
+X-WR-CALNAME:#{@current_session.name}
+VERSION:2.0
+END_OF_STRING
+
+    for lesson in @current_session.lessons
+      startstr = lesson.time.strftime("%Y%m%dT%H%M00")
+      finishstr = Time.at(lesson.time.to_i + (lesson.duration * 60)).strftime("%Y%m%dT%H%M00")
+      event_str = <<END_OF_EVENT
+BEGIN:VEVENT
+DTSTART;TZID=US/Eastern:#{startstr}
+SUMMARY:#{lesson.registration.student}
+DTEND;TZID=US/Eastern:#{finishstr}
+END:VEVENT
+END_OF_EVENT
+      ical += event_str
+    end
+
+    ical += "END:VCALENDAR"
+
+    render :text => ical
+  end
+
   def add_lesson
     session[:return_to] = ""
     headers["Content-Type"] = "text/x-json; charset=utf-8"
