@@ -45,7 +45,7 @@ function toggleView(str) {
           <% lessons.each do |lesson| %>
             <div class="single_lesson">
               <div class="lesson_name">
-                <%=lesson.registration.student%>
+                <%=lesson.registration.student.last_name + ", " + lesson.registration.student.first_name.at(0) + "."%>
                 <% unless lesson.registration.student.first_name.downcase.include?("group") %>
                 <a href="mailto:<%=lesson.registration.student.user.email%>"><img src="/images/icons/small_email.gif" /></a>
                 <% end %>
@@ -68,11 +68,11 @@ function toggleView(str) {
 <div id="list_view" style="display: none;">
 <% for registration in @current_session.registrations.sort{|a,b| a.student.last_name <=> b.student.last_name} %>
 	<div class="student_schedule">
-      <h4 style="color: #<%= Colors.one(registration.id) %>"><%= "#{registration.student.first_name} #{registration.student.last_name.at(0)}." %>
-      <% unless registration.student.first_name.downcase.include?("group") %>
-      <a href="mailto:<%=registration.student.user.email%>"><img src="/images/icons/small_email.gif" /></a>
-      <% end %>
-      
+      <h4 style="color: #<%= Colors.one(registration.id) %>">
+        <%= "#{registration.student.last_name}, #{registration.student.first_name.at(0)}." %>
+        <% unless registration.student.first_name.downcase.include?("group") %>
+        <a href="mailto:<%=registration.student.user.email%>"><img src="/images/icons/small_email.gif" /></a>
+        <% end %>
       </h4>
 		<ol>
 <%
