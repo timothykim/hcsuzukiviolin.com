@@ -3,9 +3,13 @@
 <script>
 function toggleView(str) {
 	if (str == 'cal') {
-		Effect.Fade($('list_view'), {duration: 0.4, afterFinish: function() { Effect.Appear($('calendar_view'), {duration: 0.4}); } });		
+      $('list_view').hide();
+      $('calendar_view').show();
+		//Effect.Fade('list_view', {duration: 0.4, afterFinish: function() { Effect.Appear('calendar_view', {duration: 0.4}); } });		
 	} else {
-		Effect.Fade($('calendar_view'), {duration: 0.4, afterFinish: function() { Effect.Appear($('list_view'), {duration: 0.4}); } });		
+      $('calendar_view').hide();
+      $('list_view').show();
+		//Effect.Fade('calendar_view', {duration: 0.4, afterFinish: function() { Effect.Appear('list_view', {duration: 0.4}); } });		
 	}
     return false;
 }
@@ -37,13 +41,13 @@ function toggleView(str) {
           <div class="daily_schedule">
           <% today = (@startdate + ((week * 7) + day)) %>
           <h3><%= today.strftime("%m/%d") %></h3>
-          <% lessons = Lesson.find(:all, :conditions => ['time > ? AND time < ?', today.to_time, (today+1).to_time]) %>
+          <% lessons = Lesson.find(:all, :conditions => ['time > ? AND time < ?', today.to_time, (today+1).to_time], :order => "time ASC") %>
           <% lessons.each do |lesson| %>
             <div class="single_lesson">
               <div class="lesson_name">
                 <%=lesson.registration.student%>
                 <% unless lesson.registration.student.first_name.downcase.include?("group") %>
-                <a href="mailto:<%=lesson.registration.student.user.email%>"><img src="/images/icons/icon_email-trans.gif" class="icon" /></a>
+                <a href="mailto:<%=lesson.registration.student.user.email%>"><img src="/images/icons/small_email.gif" /></a>
                 <% end %>
               </div>
               <div class="lesson_time"><%=lesson.get_time%></div>
@@ -66,7 +70,7 @@ function toggleView(str) {
 	<div class="student_schedule">
       <h4 style="color: #<%= Colors.one(registration.id) %>"><%= "#{registration.student.first_name} #{registration.student.last_name.at(0)}." %>
       <% unless registration.student.first_name.downcase.include?("group") %>
-      <a href="mailto:<%=registration.student.user.email%>"><img src="/images/icons/icon_email-trans.gif" class="icon" /></a>
+      <a href="mailto:<%=registration.student.user.email%>"><img src="/images/icons/small_email.gif" /></a>
       <% end %>
       
       </h4>
