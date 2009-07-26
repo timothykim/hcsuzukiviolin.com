@@ -46,7 +46,7 @@ function toggleView(str) {
             <div class="single_lesson">
               <div class="lesson_name">
                 <%=lesson.registration.student.last_name + ", " + lesson.registration.student.first_name.at(0) + "."%>
-                <% unless lesson.registration.student.first_name.downcase.include?("group") %>
+                <% unless lesson.registration.student.last_name.downcase.include?("group") %>
                   <div><small>
                       <a href="mailto:<%=lesson.registration.student.user.email%>"><%=lesson.registration.student.user.email%></a>
                   </small></div>

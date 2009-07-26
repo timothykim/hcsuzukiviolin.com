@@ -26,7 +26,7 @@ class RegisterController < ApplicationController
     @section_title = name
     @submenu = global_submenu
     
-#    if current_user.is_admin or (Date.today <= @current_session.due_date and @current_session.is_active)
+    if current_user.is_admin or (Date.today < @current_session.first and @current_session.is_active)
       
       @student = Student.new
       @student = Student.find(params[:student]) if params[:student]
@@ -82,12 +82,11 @@ class RegisterController < ApplicationController
       
       @group_days = @current_session.session_days.find(:all, :conditions => {:group => true}, :order => "date")
       
-      
       @javascript_code = "var registration_id = " + (@registration.id || 0).to_s
 
-#    else
-#      @error = "<img src=\"/images/icons/exclamation.png\" class=\"icon\"/> Sorry, #{name} session is no longer accepting registration."
-#    end
+    else
+      @error = "<img src=\"/images/icons/exclamation.png\" class=\"icon\"/> Sorry, #{name} session is no longer accepting registration."
+    end
   end
   
   

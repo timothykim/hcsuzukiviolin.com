@@ -14,6 +14,7 @@ class AdminController < ApplicationController
       { :name => '<img src="/images/icons/home.png" class="icon" /> Schools', :link => "/admin/school" },
       { :name => '<img src="/images/icons/calendar.png" class="icon" /> Sessions', :link => "/admin/session" },
       { :name => '<img src="/images/icons/write.png" class="icon" /> Registrations', :link => "/admin/registration" },
+      { :name => '<img src="/images/icons/timesheet.png" class="icon" /> Timesheets', :link => "/admin/timesheet" },
       # { :name => '<img src="/images/icons/globe.png" class="icon" /> Site', :link => "#" },
       # { :name => '<img src="/images/icons/announce.png" class="icon" /> Announcements', :link => "#" },
       # { :name => '<img src="/images/icons/news.png" class="icon" /> Newsletter', :link => "#" }

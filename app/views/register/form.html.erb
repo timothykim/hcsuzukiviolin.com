@@ -7,6 +7,52 @@
 <%= hidden_field_tag "session_id", @current_session.id %>
 
 <h2>Registering for <%= @current_session %></h2>
+
+<hr />
+
+<h3>Parent Information</h3>
+
+<div class="form_box" id="parent_info">
+  <div class="form_element">
+    <label class="form_label">First Name:</label>
+    <%= text_field :parent, :firstname, :class => "text", :size => 20 %>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Last Name:</label>
+    <%= text_field :parent, :lastname, :class => "text", :size => 20 %>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Login E-mail:</label>
+    <%= text_field :parent, :email, :class => "text", :size => 30 %>
+    <div class="form_info">
+      Please make sure that this e-mail is your primary e-mail that you daily check.
+    </div>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Alternate E-mail:</label>
+    <%= text_field :parent, :alternate_email, :class => "text", :size => 30 %>
+    <div class="form_info">
+      In the case where above e-mail does not work, please provide an alternative e-mail. i.e. Your spouse's e-mail.
+    </div>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Home Phone:</label>
+    <%= text_field :parent, :home_phone, :class => "text", :size => 20 %>
+  </div>
+  <div class="form_element">
+    <label class="form_label">Work Phone:</label>
+    <%= text_field :parent, :work_phone, :class => "text", :size => 20 %>
+  </div>
+  <div class="form_element">
+    <label class="form_label">Mobile Phone:</label>
+    <%= text_field :parent, :mobile_phone, :class => "text", :size => 20 %>
+  </div>
+</div>
+
 <hr />
 
 <h3>Student Information</h3>
@@ -25,16 +71,6 @@
 		<% end %>
 	</div>
 	</div>
-<% if @parent %>
-	<div class="form_element">
-	<label class="form_label">Parent:</label>
-	<div class="student_name">
-		<%= @parent %>
-	</div>
-	</div>
-<% end %>
-
-
 
 	<div class="form_element">
 	<label class="form_label">First Name:</label> <%= text_field "student", "first_name", :class => "text", :size => 20 %>
@@ -78,7 +114,7 @@
 	
 	<div class="form_element">
 		<label class="form_label">This registration is for:</label>
-		<%= select "registration", "school_id", School.find(:all).collect {|s| [s.name, s.id] } %>
+        <%= select "registration", "school_id", School.find(:all, :order => "id").collect {|s| [s.name, s.id] } %>
 	</div>
 
 	<div class="form_element">
@@ -180,24 +216,146 @@ end -%>
 			</tbody>
 		</table>
 		
+	</div>
+	
+<% else #if @current_session.registration_type == Session::DATE_TYPE %>
+  <ul>
+    <li>On the calendar below, by clicking and dragging, highlight ALL available lesson time frames.</li>
+    <li>If possible, please register for early afternoon times. For example if your child's school has an early release day, then please register for that time.</li>
+  </ul>
+    <table class="default_table selection_table">
+      <thead>
+          <tr>
+              <th>T</th>
+              <th width="20%">Monday</th>
+              <th width="20%">Tuesday</th>
+              <th width="20%">Wednesday</th>
+              <th width="20%">Thursday</th>
+              <th width="20%">Friday</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td>
+              <% for i in (7..21) %>
+              <% 
+                t = (i > 11) ? "#{i-12}pm" : "#{i}am"
+                t = "12pm" if i == 12
+              %>
+                <div style="border-top: 1px solid silver; height: 31px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);"><%=t%></div>
+              <% end %>
+            </td>
+            <% 5.times do |d| %>
+              <td>
+
+                <% for i in (7..21) %>
+                  <div id="d<%=d%>_<%=i%>00" style="padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;" onmouseup="click_end(this);" onmousedown="click_start(this, <%=d%>)" onmouseover="high_light(this, <%=d%>);" ondblclick="dehighlight(this)"></div>
+                  <div id="d<%=d%>_<%=i%>30" style="padding:0px; margin:0px; border-top: 1px dotted silver; height: 15px; font-size: 9px;" onmouseup="click_end(this);" onmousedown="click_start(this, <%=d%>)" onmouseover="high_light(this, <%=d%>);" ondblclick="dehighlight(this);"></div>
+                <% end %>
+
+              </td>
+            <% end %>
+
+          </tr>
+      </tbody>
+    </table>
+    
+<% end %>
+
+<hr />
+
+<div>
+
 		<h4>Group Classes</h4>
 		<p><%= @current_session %> session will have group classes on following days.</p>
 		<ol>
 		<% @group_days.each do |g| %>
-			<li><%= g.date.strftime("%A - %B %d, %Y") %></li>
+			<li><%= g.date.strftime("%m/%d/%Y - %A") %></li>
 		<% end %>
 		</ol>
-	</div>
-	
-<% else #if @current_session.registration_type == Session::DATE_TYPE %>
-		This type of session requires different type of calendar... T_T;;
-<% end %>
+
+</div>
+
+<hr />
+<h4>Tuition Information</h4>
+<div id="tuition_2" class="tuition" style="display:none;">
+  For CIFA tuition, please contact ... ?
+</div>
+
+<div id="tuition_1" class="tuition" style="display:none;">
+<table class="default_table">
+  <thead>
+    <tr>
+      <th class="blank" rowspan="2">For HC Studio Parents</th>
+      <th colspan="3">Individual Lesson Duration</th>
+    </tr>
+    <tr>
+      <th class="silver">30 min.</th>
+      <th class="silver">45 min.</th>
+      <th class="silver">60 min.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Tuition Per Lesson</th>
+      <td class="number">$37.50</td>
+      <td class="number">$56.25</td>
+      <td class="number">$75.00</td>
+    </tr>
+    <tr>
+      <th>Tuition For 16 Lesson</th>
+      <td class="number">$600.00</td>
+      <td class="number">$900.00</td>
+      <td class="number">$1,200.00</td>
+    </tr>
+    <tr>
+      <th>Tuition For 10 Group Classes<br />($25.00 per class)</th>
+      <td colspan="3" class="center">$375.00</td>
+    </tr>
+    <tr>
+      <th>Annual Registration Fee</th>
+      <td colspan="3" class="center">$40.00</td>
+    </tr>
+    <tr>
+      <th class="silver"><big>Total Tuition for returning parents</big></th>
+      <td class="number">$0.00</td>
+      <td class="number">$0.00</td>
+      <td class="number">$0.00</td>
+    </tr>
+    <tr>
+      <th>Parent Education Class</th>
+      <td colspan="3" class="number">$150.00</td>
+    </tr>
+    <tr>
+      <th class="silver"><big>Total Tuition for returning parents</big></th>
+      <td class="number">$0.00</td>
+      <td class="number">$0.00</td>
+      <td class="number">$0.00</td>
+    </tr>
+</table>
+</div>
+
+<hr />
+<h4>Photograph Agreement</h4>
+
+<div class="agreement"> 
+<input type="checkbox" name="photo_agreement"> By checking this box, 
+I do NOT authorize the use and reproduction by the Suzuki Violin Program at Falls Church, or anyone authorized by the Suzuki Violin Program at Falls Church or its representatives of any or all photographs taken of the student registered on this form at Suzuki Violin Program premises or activities.
+</div>
+
+
+<h4>Policy Agreement</h4>
+<div class="agreement"> 
+<input type="checkbox" name="user_agreement" onclick="if(this.checked) { $('form_submit').removeAttribute('disabled'); } else { $('form_submit').setAttribute('disabled', 'disabled');}"/> By checking this box,
+I hereby agree to abided by any and all policies of the Hannah Choi Suzuki Violin Program as stated in the Handbook, and I accept responsibility for all tuition and fees incurred.
+</div>
+
 
 <hr />
 
 
 <div style="text-align: right; margin-top: 20px;">
-<button class="iconbutton" id="form_submit" type="submit"><img src="/images/icons/write.png" class="icon"> Submit this Registration</button>
+<button class="iconbutton" disabled="disabled" id="form_submit" type="submit"><img src="/images/icons/write.png" class="icon"> Submit this Registration</button>
 </div>
 
 

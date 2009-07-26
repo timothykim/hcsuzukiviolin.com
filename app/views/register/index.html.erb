@@ -42,9 +42,9 @@
 %>
 			</td>
 			<td>
-				<% #if days_left < 0 %>
-                <!-- No longer accepting registrations -->
-				<% #else %>
+                <% if Date.today >= sess.first %>
+                  No longer accepting registrations.
+				<% else %>
 					<% if student.registered? sess %>
 						<% if student.confirmed? sess %>
 							View your lesson schedule
@@ -54,7 +54,7 @@
 					<% else %>
 						<a href="/register/for/<%= sess.name.gsub(/ /, '-') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Register!</a>
 					<% end %>
-				<% # end %>
+				<% end %>
 			</td>
 		</tr>
 <% 	end %>

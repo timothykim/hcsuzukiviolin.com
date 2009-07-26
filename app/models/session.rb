@@ -4,7 +4,7 @@ class Session < ActiveRecord::Base
   has_many :registration_options, :dependent => :destroy
   has_many :registrations, :order => "created_at DESC"
   has_many :registered_dates, :through => :registrations
-  has_many :students, :through => :registrations
+  has_many :students, :through => :registrations, :order => "last_name ASC"
   has_many :lessons, :through => :registrations, :order => "time ASC"
   
   DAY_TYPE = 0
@@ -18,6 +18,17 @@ class Session < ActiveRecord::Base
     d = self.session_days.find_by_date(today)
     return true if d.nil?
     return d.offday
+  end
+
+  def week(week_no)
+    monday = (self.first.next_week - 7) + ((week_no - 1) * 7)
+    saturday = monday + 6
+    return monday, saturday
+  end
+
+  def all_lessons_in_week(week_no)
+    monday, saturday = self.week(week_no)
+    self.lessons.find(:all, :conditions => { :time => monday..saturday })
   end
 
   def find_all_registered_dates_in(start)

@@ -62,6 +62,13 @@ div.form_box label small {
 	font-size: 10px;
 }
 
+div.form_info {
+    margin-left: 160px;
+    margin-top: 5px;
+    color: #f66;
+}
+
+
 div#reg label {
 	width: 280px;
 }
@@ -171,4 +178,39 @@ div#calendar li strong {
 div#calendar li em {
 	font-size: 0.8em;
 	color: red;
+}
+
+
+div.selected {
+    background-color: #fcc;
+}
+
+
+table.selection_table td {
+    padding: 0;
+}
+
+table.default_table th.blank {
+  background-color: white;
+}
+
+div.agreement {
+  margin-bottom: 30px;
+  font-size: 0.9em;
+}
+
+td.number {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}
+
+table.default_table tbody th {
+  background-color: #cfc;
+}
+
+table.default_table th.silver {
+  background-color: #eee;
 }

@@ -1,0 +1,43 @@
+<% for r in @current_session.registrations.select{|s| s.school_id == 2} %>
+  <% names = r.student.first_name.gsub(/&/,',').split(",") %>
+  <% names.each_with_index do |n, i| %>
+    <%= "#{n} #{r.student.last_name}" %><br />
+  <% end %>
+<% end %>
+
+
+<table class="admin_table">
+  <thead>
+    <tr>
+      <% for w in (1..@total_week) %>
+        <% mon, sat = @current_session.week(w) %>
+        <th>Week <%=w%> <small>(<%="#{mon.strftime("%m/%d/%Y")}~#{sat.strftime("%m/%d/%Y")}"%>)</small></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <% for w in (1..@total_week) %>
+        <td valign="top">
+          <table>
+        <% lessons = @current_session.all_lessons_in_week(w) %>
+        <% for l in lessons.select{|lesson| lesson.registration.school_id == 2} %>
+          <% names = l.registration.student.first_name.gsub(/&/,',').split(",") %>
+          <% names.each_with_index do |n, i| %>
+          <tr>
+            <td><%= "#{n} #{l.registration.student.last_name}" %></td>
+            <td><%= l.time.strftime("%a") %></td>
+            <td><%= l.time.strftime("%m/%d") %></td>
+            <% unless i > 0 %>
+              <td><%= l.to_hash[:start_time] %></td>
+              <td><%= l.to_hash[:duration] %></td>
+            <% end %>
+          </tr>
+          <% end %>
+        <% end %>
+          </table>
+        </td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>

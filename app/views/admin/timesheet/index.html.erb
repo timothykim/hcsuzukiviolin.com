@@ -1,0 +1,32 @@
+<h2>Timesheets</h2>
+
+<table class="admin_table">
+  <thead>
+    <tr>
+      <th>Session</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% for s in @sessions %>
+    <tr>
+      <td><%=s.name%></td>
+      <td>
+        <%=link_to("Timesheet for entire session", :action => "show", :id => s.id)%>
+        <!--
+        <select>
+          <option><%=s.first.strftime("%m/%Y")%></option>
+          <% current_month = s.first.month %>
+          <% s.first.upto(s.last) do |d| %>
+            <% if (d.month > current_month) %>
+              <option><%=d.strftime("%m/%Y")%></option>
+              <% current_month = d.month %>
+            <% end %>
+          <% end %>
+        </select>
+        -->
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
