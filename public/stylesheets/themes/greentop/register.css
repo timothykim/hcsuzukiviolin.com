@@ -219,3 +219,11 @@ td.big {
   font-size: 1.1em;
   font-weight: bold;
 }
+
+div#tutorial {
+  position: absolute;
+  margin-left: -60px;
+  padding: 20px;
+  border: 5px solid silver;
+  background-color: black;
+}

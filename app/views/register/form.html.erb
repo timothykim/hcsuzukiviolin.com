@@ -222,13 +222,21 @@ end -%>
 	</div>
 	
 <% else #if @current_session.registration_type == Session::DAY_TYPE %>
+
+
   <ul>
     <li>On the calendar below, by clicking and dragging, highlight ALL available lesson time frames.</li>
+    <li>To get rid of a selected time frame, just double click on the red box.</li>
     <li>Earliest possible lesson time is 7:00AM</li>
     <li>Preferred lessons times are mornings and early afternoon. So if possible, please register for those times. As for early afternoon times, if your child's school has an early release day, then please utilize that and reigster for early afternoons.</li>
     <li><span style="background-color: #cfc">Green time slots</span> are for CHMS students only.</li>
+    <li><a href="#" onclick="$('tutorial').show(); return false;">View the tutorial video</a>
   </ul>
 
+<div id="tutorial" style="display: none;">
+  <big><a href="#" onclick="$('tutorial').hide(); return false;" style="color: white;">Close this video</a></big><br /><br />
+<object width="640" height="385"><param name="movie" value="http://www.youtube.com/v/MXJEn1w0Ee0&hl=en&fs=1&rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/MXJEn1w0Ee0&hl=en&fs=1&rel=0" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="385"></embed></object>
+</div>
     <table class="default_table selection_table">
       <thead>
           <tr>
@@ -319,7 +327,7 @@ end -%>
       <td class="number">$75.00</td>
     </tr>
     <tr>
-      <th>Tuition For 16 Lesson</th>
+      <th>Tuition For 16 Lessons</th>
       <td class="number">$600.00</td>
       <td class="number">$900.00</td>
       <td class="number">$1,200.00</td>
