@@ -227,3 +227,7 @@ div#tutorial {
   border: 5px solid silver;
   background-color: black;
 }
+
+input#parent_address {
+  height: 70px;
+}
