@@ -182,7 +182,7 @@ div#calendar li em {
 
 
 div.selected {
-    background-color: #fcc;
+    background-color: #fcc !important;
 }
 
 

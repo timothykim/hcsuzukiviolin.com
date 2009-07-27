@@ -42,7 +42,7 @@
 
   <div class="form_element">
     <label class="form_label">Mailing Address:</label>
-    <%= text_area :parent, :address, :class => "text", :size => "30x1" %>
+    <%= text_area :parent, :address, :class => "text", :size => "30x2" %>
   </div>
 
   <div class="form_element">
@@ -224,7 +224,9 @@ end -%>
 <% else #if @current_session.registration_type == Session::DAY_TYPE %>
   <ul>
     <li>On the calendar below, by clicking and dragging, highlight ALL available lesson time frames.</li>
-    <li>If possible, please register for early afternoon times. For example if your child's school has an early release day, then please register for that time.</li>
+    <li>Earliest possible lesson time is 7:00AM</li>
+    <li>Preferred lessons times are mornings and early afternoon. So if possible, please register for those times. As for early afternoon times, if your child's school has an early release day, then please utilize that and reigster for early afternoons.</li>
+    <li><span style="background-color: #cfc">Green time slots</span> are for CHMS students only.</li>
   </ul>
 
     <table class="default_table selection_table">
@@ -254,13 +256,16 @@ end -%>
               <td valign="top">
 
                 <% for i in (7..19) %>
+                  <% bg = (i >= 5 && i < 12 && d == 2) ? "#cfc" : "" %>
+
+
                   <% h = (i.to_s.length == 1) ? "0#{i}" : i.to_s %>
                   <% id_1 = "d#{d}_#{h}:00" %>
                   <% id_2 = "d#{d}_#{h}:30" %>
                   <% cls = (@r_days.index(id_1)) ? "selected" : "" %>
-                  <div class="selection_<%=d%> <%=cls%>" id="<%=id_1%>" style="padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;" onmouseup="click_end();" onmousedown="click_start(this, <%=d%>)" onmouseover="high_light(this, <%=d%>);" ondblclick="dehighlight(this)"></div>
+                  <div class="calendar_div selection_<%=d%> <%=cls%>" id="<%=id_1%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;" onmouseup="click_end();" onmousedown="click_start(this, <%=d%>)" onmouseover="high_light(this, <%=d%>);" ondblclick="dehighlight(this)"></div>
                   <% cls = (@r_days.index(id_2)) ? "selected" : "" %>
-                  <div class="selection_<%=d%> <%=cls%>" id="<%=id_2%>" style="padding:0px; margin:0px; border-top: 1px dotted silver; height: 15px; font-size: 9px;" onmouseup="click_end();" onmousedown="click_start(this, <%=d%>)" onmouseover="high_light(this, <%=d%>);" ondblclick="dehighlight(this);"></div>
+                  <div class="calendar_div selection_<%=d%> <%=cls%>" id="<%=id_2%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px dotted silver; height: 15px; font-size: 9px;" onmouseup="click_end();" onmousedown="click_start(this, <%=d%>)" onmouseover="high_light(this, <%=d%>);" ondblclick="dehighlight(this);"></div>
                 <% end %>
                 <div class="selection_<%=d%>" id="d<%=d%>_20:00" style="background-color:silver; padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;"></div>
 
@@ -320,7 +325,7 @@ end -%>
       <td class="number">$1,200.00</td>
     </tr>
     <tr>
-      <th>Tuition For 15 Group Classes<br />($25.00 per class)</th>
+      <th>Tuition For 15 Group Classes</th>
       <td colspan="3" class="center">$375.00</td>
     </tr>
     <tr>
