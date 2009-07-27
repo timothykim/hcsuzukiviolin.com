@@ -47,6 +47,7 @@ class RegisterController < ApplicationController
           @parent = User.find(params[:id])
         end
       end
+
       
       @registration = @student.current_or_new_registration @current_session
       
@@ -76,7 +77,17 @@ class RegisterController < ApplicationController
         
         
       else
-        #TODO: yeah.. do something for day type registration
+        @r_days = []
+        @registration.registered_days.each do |rd|
+          s = rd.start
+          while true do
+            @r_days.push("d" + (rd.day - 1).to_s + "_" + s.strftime("%H:%M"))
+            s += 30 * 60
+            if rd.end == s
+              break
+            end
+          end
+        end
       end
       
       
@@ -107,7 +118,12 @@ class RegisterController < ApplicationController
   def save
     
     current_session = Session.find(params[:session_id])
-    
+
+    #save the parent information
+    parent = User.find(params[:parent][:id])
+    parent.attributes = params[:parent]
+    parent.email_confirmation = params[:parent][:email]
+    parent.save
     
     #first deal with the student
     if params[:new]
@@ -139,50 +155,53 @@ class RegisterController < ApplicationController
     registration.save
     
     #secondly the options
-    registration.registered_options.each {|opt| opt.destroy }
-    params[:reg_option].each do |id, value|
-      option = registration.registered_options.new
-      option.option_id = id
-      option.value = value
-      
-      option.save
-    end
-    
-    #3rd, registered dates
-    registration.registered_dates.each {|date| date.destroy}
-    params[:times].each do |date, times|
-      times.split(/[,\n\r]+/).each do |time_str|
-        reg_date = registration.registered_dates.new
+    if params[:reg_options] 
+      registration.registered_options.each {|opt| opt.destroy }
+      params[:reg_option].each do |id, value|
+        option = registration.registered_options.new
+        option.option_id = id
+        option.value = value
         
-        reg_date.user_input = time_str.strip
-        if time_str.index('*')
-          reg_date.preferred = true
-        end
-        time_str = time_str.gsub('*', '')
-        
-        tr = TimeRange.new(time_str)
-        
-        reg_date.start = tr.start
-        reg_date.end = tr.done
-        reg_date.date = Date.parse(date)
-        
-        reg_date.save
+        option.save
       end
     end
     
-    #depreciated
-    #finally group lessons
-    # registration.registered_group_classes {|clss| clss.destroy }
-    # if params[:groups]
-    #   params[:groups].each do |date, opt|
-    #     d = Date.parse(date)
-    #   
-    #     g_class = registration.registered_group_classes.new
-    #     g_class.class_date = d
-    #   
-    #     g_class.save
-    #   end
-    # end
+    #3rd, registered dates
+    if current_session.registration_type == Session::DATE_TYPE
+      registration.registered_dates.each {|date| date.destroy}
+      params[:times].each do |date, times|
+        times.split(/[,\n\r]+/).each do |time_str|
+          reg_date = registration.registered_dates.new
+          
+          reg_date.user_input = time_str.strip
+          if time_str.index('*')
+            reg_date.preferred = true
+          end
+          time_str = time_str.gsub('*', '')
+          
+          tr = TimeRange.new(time_str)
+          
+          reg_date.start = tr.start
+          reg_date.end = tr.done
+          reg_date.date = Date.parse(date)
+          
+          reg_date.save
+        end
+      end
+    else
+      registration.registered_days.each {|day| day.destroy}
+      #tokenize the input string
+      params[:schedule_selection].gsub(/\s/,'').split(',').each do |time_str|
+        reg_day = registration.registered_days.new
+        # input 0 = monday but save as 1 = monday
+        reg_day.day = time_str[1] - 47
+        tr = TimeRange.new(time_str.split('-').map{|t| t[3..7]}.join('-'));
+        reg_day.start = tr.start
+        reg_day.end = tr.done
+        reg_day.save
+      end
+    end
+    
     
     if current_user.is_admin
       redirect_to :controller => 'admin/registration', :action => 'index'

@@ -28,7 +28,7 @@ function high_light(div, day) {
         if (clicked_day == day) {
             $(div).addClassName("selected");
         } else {
-            clicked = false;
+            click_end();
         }
     }
 }
@@ -62,13 +62,43 @@ function dehighlight(div) {
 
         d.removeClassName("selected");
     }
+    click_end();
 }
 
-function click_end(div) {
+function click_end() {
     clicked = false;
+    $('schedule_selection').value = get_selection();
 }
 
-
+function get_selection() {
+    var str = "";
+    var range = "";
+    var started = false;
+    for (var i = 0; i < 5; i++) {
+        var selections = $$('div.selection_'+i);
+        for (var j = 0; j < selections.length; j++) {
+            if (started) {
+                if (!selections[j+1].hasClassName('selected')) {
+                    started = false;
+                    range += "-" + selections[j+1].id;
+                    str += range + ","
+                }
+            } else {
+                if (selections[j].hasClassName('selected')) {
+                    started = true;
+                    range = selections[j].id;
+                    //single box selection case
+                    if (!selections[j+1].hasClassName('selected')) {
+                      started = false;
+                      range += "-" + selections[j+1].id;
+                      str += range + ","
+                    }
+                }
+            }
+        }
+    }
+    return str;
+}
 
 
 function show_tuition() {
@@ -85,7 +115,15 @@ Event.onDOMReady(function() {
         updateCalendar(registration_id);
     }
 
-    show_tuition();
+    var address = $('parent_address');
+    address.observe('focus', function(e) {
+        address.select();
+    });
+    if (address.value == '') {
+        address.value = "Street Address\nCity, State ZIP";
+    }
 
+
+    show_tuition();
     $('registration_school_id').observe('change', show_tuition);
 });

@@ -13,6 +13,7 @@
 <h3>Parent Information</h3>
 
 <div class="form_box" id="parent_info">
+  <%= hidden_field "parent", "id" %>
   <div class="form_element">
     <label class="form_label">First Name:</label>
     <%= text_field :parent, :firstname, :class => "text", :size => 20 %>
@@ -27,7 +28,7 @@
     <label class="form_label">Login E-mail:</label>
     <%= text_field :parent, :email, :class => "text", :size => 30 %>
     <div class="form_info">
-      Please make sure that this e-mail is your primary e-mail that you daily check.
+      Please make sure that this e-mail is your primary e-mail that you daily check. This e-mail is what you will use to login to this website.
     </div>
   </div>
 
@@ -37,6 +38,11 @@
     <div class="form_info">
       In the case where above e-mail does not work, please provide an alternative e-mail. i.e. Your spouse's e-mail.
     </div>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Mailing Address:</label>
+    <%= text_area :parent, :address, :class => "text", :size => "30x1" %>
   </div>
 
   <div class="form_element">
@@ -58,9 +64,6 @@
 <h3>Student Information</h3>
 
 <div class="form_box" id="student_info">
-
-
-
 	<div class="form_element">
 	<label class="form_label">Student:</label>
 	<div class="student_name">
@@ -114,7 +117,7 @@
 	
 	<div class="form_element">
 		<label class="form_label">This registration is for:</label>
-        <%= select "registration", "school_id", School.find(:all, :order => "id").collect {|s| [s.name, s.id] } %>
+        <%= select "registration", "school_id", School.find(:all, :order => "id", :limit => 2).collect {|s| [s.name, s.id] } %>
 	</div>
 
 	<div class="form_element">
@@ -218,11 +221,12 @@ end -%>
 		
 	</div>
 	
-<% else #if @current_session.registration_type == Session::DATE_TYPE %>
+<% else #if @current_session.registration_type == Session::DAY_TYPE %>
   <ul>
     <li>On the calendar below, by clicking and dragging, highlight ALL available lesson time frames.</li>
     <li>If possible, please register for early afternoon times. For example if your child's school has an early release day, then please register for that time.</li>
   </ul>
+
     <table class="default_table selection_table">
       <thead>
           <tr>
@@ -236,29 +240,36 @@ end -%>
       </thead>
       <tbody>
           <tr>
-            <td>
-              <% for i in (7..21) %>
+            <td valign="top">
+              <% for i in (7..19) %>
               <% 
                 t = (i > 11) ? "#{i-12}pm" : "#{i}am"
                 t = "12pm" if i == 12
               %>
                 <div style="border-top: 1px solid silver; height: 31px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);"><%=t%></div>
               <% end %>
+                <div style="border-top: 1px solid silver; height: 15px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);">8pm</div>
             </td>
             <% 5.times do |d| %>
-              <td>
+              <td valign="top">
 
-                <% for i in (7..21) %>
-                  <div id="d<%=d%>_<%=i%>00" style="padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;" onmouseup="click_end(this);" onmousedown="click_start(this, <%=d%>)" onmouseover="high_light(this, <%=d%>);" ondblclick="dehighlight(this)"></div>
-                  <div id="d<%=d%>_<%=i%>30" style="padding:0px; margin:0px; border-top: 1px dotted silver; height: 15px; font-size: 9px;" onmouseup="click_end(this);" onmousedown="click_start(this, <%=d%>)" onmouseover="high_light(this, <%=d%>);" ondblclick="dehighlight(this);"></div>
+                <% for i in (7..19) %>
+                  <% h = (i.to_s.length == 1) ? "0#{i}" : i.to_s %>
+                  <% id_1 = "d#{d}_#{h}:00" %>
+                  <% id_2 = "d#{d}_#{h}:30" %>
+                  <% cls = (@r_days.index(id_1)) ? "selected" : "" %>
+                  <div class="selection_<%=d%> <%=cls%>" id="<%=id_1%>" style="padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;" onmouseup="click_end();" onmousedown="click_start(this, <%=d%>)" onmouseover="high_light(this, <%=d%>);" ondblclick="dehighlight(this)"></div>
+                  <% cls = (@r_days.index(id_2)) ? "selected" : "" %>
+                  <div class="selection_<%=d%> <%=cls%>" id="<%=id_2%>" style="padding:0px; margin:0px; border-top: 1px dotted silver; height: 15px; font-size: 9px;" onmouseup="click_end();" onmousedown="click_start(this, <%=d%>)" onmouseover="high_light(this, <%=d%>);" ondblclick="dehighlight(this);"></div>
                 <% end %>
+                <div class="selection_<%=d%>" id="d<%=d%>_20:00" style="background-color:silver; padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;"></div>
 
               </td>
             <% end %>
-
           </tr>
       </tbody>
     </table>
+    <%= hidden_field_tag "schedule_selection" %>
     
 <% end %>
 
@@ -279,7 +290,7 @@ end -%>
 <hr />
 <h4>Tuition Information</h4>
 <div id="tuition_2" class="tuition" style="display:none;">
-  For CIFA tuition, please contact ... ?
+    Your tuition will be billed soon. For more information, please contact Larry Claussen at lclaussen@columbiabaptist.org.
 </div>
 
 <div id="tuition_1" class="tuition" style="display:none;">
@@ -309,7 +320,7 @@ end -%>
       <td class="number">$1,200.00</td>
     </tr>
     <tr>
-      <th>Tuition For 10 Group Classes<br />($25.00 per class)</th>
+      <th>Tuition For 15 Group Classes<br />($25.00 per class)</th>
       <td colspan="3" class="center">$375.00</td>
     </tr>
     <tr>
@@ -318,21 +329,24 @@ end -%>
     </tr>
     <tr>
       <th class="silver"><big>Total Tuition for returning parents</big></th>
-      <td class="number">$0.00</td>
-      <td class="number">$0.00</td>
-      <td class="number">$0.00</td>
+      <td class="number big">$1,015.00</td>
+      <td class="number big">$1,315.00</td>
+      <td class="number big">$1,615.00</td>
     </tr>
     <tr>
       <th>Parent Education Class</th>
-      <td colspan="3" class="number">$150.00</td>
+      <td colspan="3" class="center">$150.00</td>
     </tr>
     <tr>
-      <th class="silver"><big>Total Tuition for returning parents</big></th>
-      <td class="number">$0.00</td>
-      <td class="number">$0.00</td>
-      <td class="number">$0.00</td>
+      <th class="silver"><big>Total Tuition for new parents</big></th>
+      <td class="number big">$1,165.00</td>
+      <td class="number big">$1,465.00</td>
+      <td class="number big">$1,765.00</td>
     </tr>
 </table>
+  <ul>
+    <li>Please note that once your registration has been processed, you will receive an invoice for the tuition payment.</li>
+  </ul>
 </div>
 
 <hr />

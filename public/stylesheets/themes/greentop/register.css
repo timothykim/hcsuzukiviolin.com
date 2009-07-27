@@ -214,3 +214,8 @@ table.default_table tbody th {
 table.default_table th.silver {
   background-color: #eee;
 }
+
+td.big {
+  font-size: 1.1em;
+  font-weight: bold;
+}

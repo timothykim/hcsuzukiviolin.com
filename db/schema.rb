@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090725184345) do
+ActiveRecord::Schema.define(:version => 20090726025156) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -216,6 +216,7 @@ ActiveRecord::Schema.define(:version => 20090725184345) do
     t.string   "home_phone",                              :default => ""
     t.string   "work_phone",                              :default => ""
     t.string   "mobile_phone",                            :default => ""
+    t.text     "address",                                 :default => ""
   end
 
   create_table "weekly_availablities", :force => true do |t|
