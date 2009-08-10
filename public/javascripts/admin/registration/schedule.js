@@ -6,6 +6,7 @@ var HEADER_SIZE = 0; // starting position of the tobody in pixels, actual initia
 var WEEK_BLOCK_SIZE = 0; //height of single week tr, see onDOMReady
 var DATE_DISPLAY_SIZE = 0; // mm/yy height, see onDOMReady
 var REGISTRATIONS;
+var LEFT_MARGIN = 68;
 
 // Temporary variables to hold mouse x-y pos.s
 var tempX = 0;
@@ -19,26 +20,19 @@ Event.onDOMReady(function() {
   //update options
   HEADER_SIZE = $("tbody_start").positionedOffset()[1];
   WEEK_BLOCK_SIZE = $("week1").getHeight();
-  DATE_DISPLAY_SIZE = $$("div.date")[0].getHeight() + 2;
+  if (SESSION_TYPE == "date") {
+    DATE_DISPLAY_SIZE = $$("div.date")[0].getHeight() + 2;
+  } else {
+    LEFT_MARGIN = 36;
+  }
 
   // Set-up to use getMouseXY function onMouseMove
   Event.observe(document, 'mousemove', getMouseXY);
 
-//  Event.observe(window, 'scroll', adjust_side_control_position_height);
   Event.observe(window, 'resize', function() {
     maximized = false;
-//    adjust_side_control_position_height();
     adjust_lesson_width();
   });
-
-  $('add_lesson').observe('submit', function(event) {
-      Event.stop(event);
-      add_lesson();
-  });
-  
-  load_registrations();
-  load_lessons();
-
   var widgets = $$('div.widget');
   widgets.each(function(widget) {
     widget.observe('mouseover', function() { show_time = false; });
@@ -48,6 +42,7 @@ Event.onDOMReady(function() {
       widget.down('.swap').observe('click', function() { swap_widgets(widgets); });
     }
   });
+
 
   var selectors = $$('input.bar_selector');
   selectors.each(function(selector) {
@@ -65,6 +60,13 @@ Event.onDOMReady(function() {
     toggle_bars();
   });
 
+  $('add_lesson').observe('submit', function(event) {
+      Event.stop(event);
+      add_lesson();
+  });
+
+  load_registrations();
+  load_lessons();
 });
 
 function toggle_bars() {
@@ -233,7 +235,7 @@ function time_bar_mouseover(data_id) {
     var d = $('xy');
     d.show();
     d.style.borderColor = "#" + data.color;
-    $('mouseover_name').update("<div class=\"pname\">" + data.parent_name + "'s</div>" + data.student_name + " <small>(" + data.user_input + ")</small>");
+    $('mouseover_name').update("<div class=\"pname\">" + data.parent_name + "'s</div>" + data.student_name + " <small>" + data.user_input + "</small><div class=\"comment\">" + data.student_comment +"</div>");
     $('mouseover_name').show();
   } catch (err) {
     // no need to do anythingg
@@ -335,20 +337,37 @@ function update_count(r_id) {
   }
 }
 
+function pad_zero(num) {
+  if (num < 10) {
+    return "0" + num;
+  }
+  return "" + num;
+}
 
 function show_lesson(lesson) {
+
   var lesson_bar = new Element('div', { 'id': lesson.id, 'class': 'r_id_' + lesson.r_id + ' lesson_bar', 'title': lesson.full_name });
   var lesson_number = new Element('div', { 'class' : 'numbering numbering_' + lesson.r_id});
   var lesson_text = new Element('span', { 'class' : 'lesson_text' });
   var name = new Element('span', { 'id' : 'lesson' + lesson.start, 'class' : 'n', 'style' : 'font-weight: bold;' });
   var time = new Element('span');
   var del = new Element('a', {'class': 'no_print', 'href' : '#', 'style' : 'color: #900;'});
-  var prev = new Element('a', {'class': 'prev no_print', 'href' : '#', 'style' : 'color: #fff;'});
-  var next = new Element('a', {'class': 'next no_print', 'href' : '#', 'style' : 'color: #fff;'});
+//  var prev = new Element('a', {'class': 'prev no_print', 'href' : '#', 'style' : 'color: #fff;'});
+//  var next = new Element('a', {'class': 'next no_print', 'href' : '#', 'style' : 'color: #fff;'});
   var toggle_bar = new Element('a', {'class': 'toggle_bar no_print', 'href' : '#', 'style' : 'color: #fff;'});
 
-  var id = lesson.start - (lesson.start % (30 * 60));
+  var t_floor = lesson.start - (lesson.start % (30 * 60));
+  var id = "";
+
+  if (lesson.recurring) {
+    var d = new Date(t_floor * 1000);
+    id = "" + lesson.day + pad_zero(d.getHours()) + pad_zero(d.getMinutes());
+  } else {
+    id = t_floor;
+  }
+
   var outer_div = $('t' + id);
+
 
   //the lesson doesn't belong in this calendar, get it out of here
   if (outer_div == null) return;
@@ -356,7 +375,7 @@ function show_lesson(lesson) {
   lesson_bar.setStyle({
     'width' : outer_div.getWidth() - 2 + 'px',
     'height' : sec2pixel(lesson.duration * 60) - 4 + 'px', // -4 is for borders
-    'margin-top' : sec2pixel(lesson.start - id) + 'px',
+    'margin-top' : sec2pixel(lesson.start - t_floor) + 'px',
     'position' : 'absolute',
     'display' : 'none'
   });
@@ -388,6 +407,7 @@ function show_lesson(lesson) {
     Event.stop(event);
   });
 
+  /*
   prev.update("&#9664;");
   prev.observe("click", function(event) {
     Event.stop(event);
@@ -412,8 +432,10 @@ function show_lesson(lesson) {
       Effect.Pulsate(lesson_numbers[numbering].up('.lesson_bar'), {duration: 2.5});
     }
   });
+  */
 
   var list = $$('div.numbering_' + lesson.r_id);
+  /*
   if (lesson.numbering == 1) {
     prev.style.color = "transparent";
     if((list.length > 0) && page_loaded()) {
@@ -426,6 +448,7 @@ function show_lesson(lesson) {
       list[list.length-1].next('.next').style.color = "white";
     }
   }
+  */
 
   lesson_number.style.color = '#' + lesson.color;
   lesson_number.update(lesson.numbering + "/" + lesson.out_of);
@@ -439,13 +462,15 @@ function show_lesson(lesson) {
   lesson_text.insert(lesson_number);
   lesson_text.insert(name);
   lesson_text.insert(time);
-  lesson_text.insert(prev);
-  lesson_text.insert(next);
+//  lesson_text.insert(prev);
+//  lesson_text.insert(next);
   lesson_text.insert(toggle_bar);
   lesson_text.insert(del);
   lesson_bar.update(lesson_text);
   outer_div.insert(lesson_bar);
   Effect.Appear(lesson_bar);
+
+  console.log(lesson_bar);
 }
 
 function page_loaded() {
@@ -538,6 +563,7 @@ function show_lesson_dialog(data) {
   //time is the start timestamp of the img, it is used to figure out the date of this lesson
   var d = $('event_dialog');
 
+
   var t = getTimeUnderCursor(15);
   $('dialog_time').value = formatTime(t);
   $('dialog_name').update(data.student_name);
@@ -623,7 +649,7 @@ function getMouseXY(e) {
   var xy = $('xy');
   var totalwidth = document.viewport.getWidth();
   
-  if (army_time >= DAY_START && army_time < DAY_END+1 && tempX > 68 && show_time) {
+  if (army_time >= DAY_START && army_time < DAY_END+1 && tempX > LEFT_MARGIN && show_time) {
     $('time').update(time_str);
     xy.style.top = tempY + 20 + "px";
 

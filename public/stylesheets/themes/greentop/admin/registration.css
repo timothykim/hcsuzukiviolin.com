@@ -134,6 +134,12 @@ div.widget_chrome {
 div.pname {
   font-size: 9px;
 }
+
+div.comment {
+  width: 200px;
+  white-space: normal;
+  font-size: 10px;
+}
   
 div#availability_overview tr.even {
   background-color: #777;

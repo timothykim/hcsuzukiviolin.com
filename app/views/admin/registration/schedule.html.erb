@@ -1,3 +1,7 @@
+<%
+if @current_session.registration_type == Session::DATE_TYPE
+%>
+
 <div id="side_list" style="display:none;">
   <h3>Student List</h3>
   <div id="student_list">
@@ -259,5 +263,118 @@
 
 </div>
 
+<% else %>
+<div id="calendar_table">
+<table class="calendar main">
+  <thead>
+    <tr>
+      <th width="10">hrs</th>
+      <th class="flex">Monday</th>
+      <th class="flex">Tuesday</th>
+      <th class="flex">Wednesday</th>
+      <th class="flex">Thursday</th>
+      <th class="flex">Friday</th>
+      <th class="flex">Saturday</th>
+    </tr>	
+  </thead>
+  <tbody id="tbody_start">
+    <tr id="week1">
+      <!-- time label -->
+      <td valign="top">
+<%  for i in (@day_start..@day_end)
+      t = (i > 11) ? "#{i-12}pm" : "#{i}am"
+      t = "12pm" if i == 12
+-%>
+        <div style="border-top: 1px solid silver; height: 31px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);"><%= t %></div>
+<%  end #for -%>
+      </td>
+<% 
+  for day in (1..6)
+%>
+      <!-- day of the week columns -->
+      <td class="active" valign="top">
+<%            for i in (@day_start..@day_end)
+                #first half hour
+                time = day.to_s
+                time += (i < 10) ? "0" + i.to_s + "00" : i.to_s + "00";
+                bgcolor = ""
+-%>
+              <div id="t<%= time %>" style="<%= bgcolor %> padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;">
+                <%= @r_hash[time] %>
+              </div>
+<%
+                #second half hour
+                time = time[0..2] + "30"
+                bgcolor = ""
+-%>
+              <div id="t<%= time %>" style="<%= bgcolor %> padding:0px; margin:0px;  border-top: 1px dotted silver; height: 15px; font-size:9px;">
+                <%= @r_hash[time] %>
+              </div>
+<%          end # for each hours -%>
+      </td>
+<%  end # for week days -%>
+    </tr>
+  </tbody>
+</table>
 
+<div id="tools">
+  <div id="xy" style="display: none;">
+    <div id="mouseover_name" style="display: none;"></div>
+    <div id="time"></div>
+  </div>
+  <div id="loading_wrapper" style="display: none;">
+  <div id="loading">
+    <h1 id="header">Loading...</h1>
+    <img src="/images/spinner.gif" />
+    <div id="loading_message" style="text-align: left;">
+      <ul id="message_list">
+      </ul>
+    </div>
+  </div>
+  </div>
+  <div id="event_dialog" style="display: none;" onmouseover="show_time = false;" onmouseout="show_time = true;">
+    <%= form_tag '/admin/registration/add_lesson', :id => 'add_lesson' %>
+      <strong>Schedule a Lesson</strong>
+
+    <p style="margin: 5px auto; white-space: nowrap;">
+      <span id="dialog_name"></span> @ <input type="text" id="dialog_time" name="time" size="7" />
+      for 
+      <input type="text" name="duration" id="dialog_duration" size="3" value="" />
+      minutes.
+    </p>
+
+    <div style="text-align: right">
+      <input type="submit" value="Add"/> <button onclick="hide_lesson_dialog();" type="button">Cancel</button>
+    </div>
+      <input type="hidden" name="registration_id" id="registration_id" value="" />
+      <input type="hidden" name="date" id="dialog_date" value="" />
+    </form>
+  </div>
+  <div class="controls widget right" id="availability_overview">
+    <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#9650;</span></div>
+    <h1>Availability Overview</h1>
+    <div class="body" style="display: none;">
+      <table class="widget_table">
+        <thead>
+          <tr>
+            <th>S</th>
+            <th><input type="checkbox" checked="checked" id="check_all" /></th>
+            <th>Students</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @registrations.each do |r| %>
+            <tr class="<%= cycle("odd", "even") -%>">
+              <td width="15" align="center" style="border: none; cursor: pointer;" onclick="show_lesson_list(<%=r.id%>, '<%=r.student.to_s%>');" id="count_<%=r.id%>"><%=r.lessons.count%></td>
+              <td align="center" style="border: none;"><input id="checkbox_<%=r.id%>" type="checkbox" checked="checked" class="bar_selector" title="<%=r.id%>" /></td>
+              <td bgcolor="#<%= Colors.one(r.student.user_id)%>" align="right"><%= r.student.last_name + ", " + r.student.first_name %></td>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="widget_chrome"></div>
+  </div>
+</div>
+
+<% end %>
 

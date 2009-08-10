@@ -4,6 +4,7 @@ class Session < ActiveRecord::Base
   has_many :registration_options, :dependent => :destroy
   has_many :registrations, :order => "created_at DESC"
   has_many :registered_dates, :through => :registrations
+  has_many :registered_days, :through => :registrations
   has_many :students, :through => :registrations, :order => "last_name ASC"
   has_many :lessons, :through => :registrations, :order => "time ASC"
   

@@ -22,7 +22,9 @@ class Lesson < ActiveRecord::Base
              :r_id => self.registration_id,
              :numbering => self.registration.lessons.index(self) + 1,
              :out_of => self.registration.lessons.length,
-             :date => self.time.strftime("%m/%d/%Y")
+             :date => self.time.strftime("%m/%d/%Y"),
+             :day => self.time.wday,
+             :recurring => self.is_recurring
     }
     return data
   end
