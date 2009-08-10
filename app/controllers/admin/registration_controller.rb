@@ -112,7 +112,7 @@ END_OF_EVENT
     if recurring
       #use the the first week of the session
       if params[:date].to_i < sess.first.wday 
-        params[:date] = (sess.first.next_week + params[:date].to_i).to_s
+        params[:date] = ((sess.first.next_week - 1) + params[:date].to_i).to_s
       else
         params[:date] = ((sess.first.next_week - 8) + params[:date].to_i).to_s
       end
