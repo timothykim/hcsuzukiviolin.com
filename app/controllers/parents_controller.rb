@@ -5,7 +5,7 @@ class ParentsController < ApplicationController
     [ { :name => "<img src=\"/images/icons/settings.png\" class=\"icon\" /> My Account Setting", :link => "/parents/settings" },
       { :name => "<img src=\"/images/icons/face-smile.png\" class=\"icon\" /> My Students", :link => "index" },
       { :name => "<img src=\"/images/icons/write.png\" class=\"icon\" /> My Registations", :link => "/register" },
-      { :name => "<img src=\"/images/icons/music.png\" class=\"icon\" /> My Lessons", :link => "/parents/lessons" },
+#      { :name => "<img src=\"/images/icons/music.png\" class=\"icon\" /> My Lessons", :link => "/parents/lessons" },
       { :name => "<img src=\"/images/icons/announce.png\" class=\"icon\" /> Announcements", :link => "index" },
       { :name => "<img src=\"/images/icons/news.png\" class=\"icon\" /> Newsletters", :link => "/parents/newsletters" },
       { :name => "<img src=\"/images/icons/photobook.png\" class=\"icon\" /> Photobook", :link => "/photobook" },
