@@ -21,6 +21,13 @@ class Session < ActiveRecord::Base
     return d.offday
   end
 
+  def get_note(day)
+    d = self.session_days.find_by_date(day)
+    return "" if d.nil?
+    return d.note
+  end
+
+
   def week(week_no)
     monday = (self.first.next_week - 7) + ((week_no - 1) * 7)
     saturday = monday + 6
