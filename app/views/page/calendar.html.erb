@@ -48,7 +48,7 @@
 
     if sess.is_offday? d
       cls << "offday"
-      if d.wday > 0
+      if d.wday > 0 && d >= sess.first && d <= sess.last
         notes << "No Lessons"
       end
     end
