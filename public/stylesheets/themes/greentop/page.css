@@ -272,3 +272,55 @@ div.student_lesson_list li {
 	margin-bottom: 4px;
 }
 /* @end */
+
+
+
+table.school_calendar {
+  margin: 2em 0;
+}
+table.school_calendar th {
+  width: 14%;
+}
+
+table.school_calendar td {
+  vertical-align: top;
+  height: 4em;
+}
+
+table.school_calendar div.day{
+  text-align: right;
+}
+
+table.school_calendar td.blank {
+  background-color: #ccc;
+}
+
+table.school_calendar td.offday {
+  background-color: #eee;
+}
+
+table.school_calendar td.groupday {
+  background-color: #fdd;
+}
+
+table.school_calendar td.first {
+  background-color: #ddf;
+}
+
+table.school_calendar td.last {
+  background-color: #ddf;
+}
+
+table.school_calendar td.Sunday div.day{
+  color: red;
+}
+table.school_calendar td.Saturday div.day{
+  color: navy;
+}
+
+table.school_calendar div.notes{
+  font-size: 0.7em;
+}
+table.school_calendar caption {
+  font-size: 1.8em;
+}

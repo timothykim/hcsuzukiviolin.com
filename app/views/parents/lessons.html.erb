@@ -2,10 +2,6 @@
 
 <% @sessions.each do |sess| %>
   <h3><%= sess.name %></h3>
-
-
-
-
   <% current_user.get_registrations(sess).each do |r| %>
     <div class="student_schedule">
       <h4><%= r.student.to_s %></h4>
@@ -26,11 +22,18 @@ duration = r.lessons[0].duration
 
 i = 1
 while lesson <= sess.last
-  if sess.is_offday? lesson
+  if (sess.is_offday? lesson) || (sess.is_groupday?(lesson) && lesson.hour > 15)
+    note = sess.get_note(lesson)
+    if (sess.is_groupday?(lesson)) && note == ""
+      note += "Due to group class"
+    end
+    unless note == ""
+      note = "- " + note
+    end
 %>
         <li class="no_lesson">
           <div class="lesson_date"><%= lesson.strftime("%a, %b. %d") %></div>
-          <div class="lesson_time ">No Lesson - <%= sess.get_note(lesson) %></div>
+          <div class="lesson_time ">No Lesson <%= note %></div>
         </li>
 <%
   else
@@ -51,59 +54,5 @@ end
     </div>
   <% end %>
   <div class="clear"></div>
-
-
-<%
-  # draw academic calendar
-  f = sess.first - (sess.first.day - 1)
-  l = sess.last.next_month - sess.last.next_month.day
-  for d in (f..l)
-    if (d.day == 1)
-      #new month!
-%>
-      <table class="default_table">
-          <caption><%= d.strftime("%B") %></caption>
-          <tr>
-            <th>Su</th>
-            <th>Mo</th>
-            <th>Tu</th>
-            <th>We</th>
-            <th>Th</th>
-            <th>Fr</th>
-            <th>Sa</th>
-          </tr>
-          <tr>
-<%
-      d.wday.times do |i|
-        %><td class="blank"></td><%
-      end
-    end 
-
-    cls = []
-    cls << d.strftime("%A")
-    if sess.is_offday? d
-      cls << "offday"
-    end
-
-    %><td><div class="day"><%= d.day %></div><div class="notes"><%= sess.get_note(d) %></div></td><%
-
-    if (d.wday == 6)
-        %></tr><%
-    end
-
-    if (d.next.day == 1)
-      (5-d.wday).times do |i|
-        %><td class="blank"></td><%
-      end
-      %></tr></table><%
-    end
-  end
-%>
-
-
-
-
-
-
   <hr />
 <% end %>

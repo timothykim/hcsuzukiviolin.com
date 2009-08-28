@@ -1,0 +1,77 @@
+<% @sessions.each do |sess| %>
+  <h2><%= sess.name %> Calendar</h2>
+<%
+  # draw academic calendar
+  f = sess.first - (sess.first.day - 1)
+  l = sess.last.next_month - sess.last.next_month.day
+  for d in (f..l)
+    if (d.day == 1)
+      #new month!
+%>
+      <table class="default_table school_calendar">
+          <caption><%= d.strftime("%B %Y") %></caption>
+          <tr>
+            <th>Su</th>
+            <th>Mo</th>
+            <th>Tu</th>
+            <th>We</th>
+            <th>Th</th>
+            <th>Fr</th>
+            <th>Sa</th>
+          </tr>
+          <tr>
+<%
+      d.wday.times do |i|
+        %><td class="blank"></td><%
+      end
+    end 
+
+    notes = []
+
+    cls = []
+    cls << d.strftime("%A")
+
+    if sess.first == d
+      cls << "first"
+      notes << "<strong>First Day</strong>"
+    end
+
+    if sess.last == d
+      cls << "last"
+      notes << "<strong>Last Day</strong>"
+    end
+
+    if sess.is_groupday? d
+      cls << "groupday"
+      notes << "Group Class"
+    end
+
+    if sess.is_offday? d
+      cls << "offday"
+      if d.wday > 0
+        notes << "No Lessons"
+      end
+    end
+
+    notes << sess.get_note(d) unless sess.get_note(d) == ""
+
+
+    %><td class="<%= cls.join(" ") %>"><div class="day"><%= d.day %></div><div class="notes"><%= notes.join("<br />") %></div></td><%
+
+    if (d.wday == 6)
+        %></tr><%
+    end
+
+    if (d.next.day == 1)
+      (6-d.wday).times do |i|
+        %><td class="blank"></td><%
+      end
+      %></tr></table><%
+    end
+  end
+end
+%>
+
+
+
+

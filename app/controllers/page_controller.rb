@@ -3,6 +3,12 @@ class PageController < ApplicationController
 #  include DisplayHelper
   
   before_filter :store_location #, :login_from_cookie
+
+  def global_submenu
+    [ { :name => "<img src=\"/images/icons/write.png\" class=\"icon\" /> Policy and Tuition", :link => "/page/policy_and_tuition" },
+      { :name => "<img src=\"/images/icons/help.png\" class=\"icon\" /> FAQ", :link => "/page/faq" },
+      { :name => "<img src=\"/images/icons/calendar.png\" class=\"icon\" /> School Calendar", :link => "/page/calendar" }]
+  end
   
   def index
   end
@@ -197,7 +203,22 @@ class PageController < ApplicationController
   end
   
   def policy_and_tuition
+    @section_path = "For Prospective Parents &raquo; "
     @section_title = "Policy and Tuition"
+    @submenu = global_submenu
+  end
+
+  def faq 
+    @section_path = "For Prospective Parents &raquo; "
+    @section_title = "Frequently Asked Questions"
+    @submenu = global_submenu
+  end
+
+  def calendar
+    @section_path = "For Prospective Parents &raquo; "
+    @section_title = "School Calendar"
+    @submenu = global_submenu
+    @sessions = Session.find(:all, :conditions => {:is_active => true}, :order => "first DESC")
   end
   
   def illegal

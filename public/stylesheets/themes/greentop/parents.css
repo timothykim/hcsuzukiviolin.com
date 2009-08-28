@@ -15,7 +15,7 @@ div.lesson_name {
 
 li.no_lesson {
   list-style: disc;
-  color: red;
+  color: #f88;
 }
 
 div.single_lesson {
@@ -27,7 +27,7 @@ div.lesson_date {
 }
 
 div.student_schedule {
-	width: 140px;
+	width: 200px;
 	float: left;
 	margin-right: 20px;
 }

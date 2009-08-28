@@ -21,6 +21,12 @@ class Session < ActiveRecord::Base
     return d.offday
   end
 
+  def is_groupday?(today)
+    d = self.session_days.find_by_date(today)
+    return false if d.nil?
+    return d.group
+  end
+
   def get_note(day)
     d = self.session_days.find_by_date(day)
     return "" if d.nil?
