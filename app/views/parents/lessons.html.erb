@@ -31,7 +31,7 @@ else
 
   i = 1
   while lesson <= sess.last
-    if (sess.is_offday? lesson) || (sess.is_groupday?(lesson) && lesson.hour > 15)
+    if (sess.is_offday? lesson) || (sess.is_groupday?(lesson) && lesson.hour > 12)
       note = sess.get_note(lesson)
       if (sess.is_groupday?(lesson)) && note == ""
         note += "Due to group class"
