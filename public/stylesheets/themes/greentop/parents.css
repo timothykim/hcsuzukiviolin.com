@@ -1,5 +1,6 @@
 
-div.student_schedule ol {
+div.student_schedule ol,
+div.student_schedule ul {
 	padding-left: 23px;
 	margin: 0px;
 }

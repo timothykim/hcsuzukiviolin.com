@@ -27,6 +27,10 @@ class Session < ActiveRecord::Base
     return d.group
   end
 
+  def groups
+    return self.session_days.select{|d| d.group}.sort{|a,b| a.date<=>b.date}
+  end
+
   def get_note(day)
     d = self.session_days.find_by_date(day)
     return "" if d.nil?
