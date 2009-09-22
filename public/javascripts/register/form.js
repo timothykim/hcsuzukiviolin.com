@@ -113,6 +113,8 @@ function show_tuition() {
 Event.onDOMReady(function() {
     if ($('calendar') != null) {
         updateCalendar(registration_id);
+    } else {
+        $('schedule_selection').value = get_selection();
     }
 
     var address = $('parent_address');

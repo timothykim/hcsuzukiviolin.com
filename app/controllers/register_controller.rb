@@ -26,7 +26,8 @@ class RegisterController < ApplicationController
     @section_title = name
     @submenu = global_submenu
     
-    if current_user.is_admin or (Date.today < @current_session.first and @current_session.is_active)
+    #if current_user.is_admin or (Date.today < @current_session.first and @current_session.is_active)
+    if current_user.is_admin or (@current_session.is_active)
       
       @student = Student.new
       @student = Student.find(params[:student]) if params[:student]
