@@ -1,0 +1,56 @@
+<table class="admin_table sortable">
+    <thead>
+      <tr>
+        <th class="text">Parent</th>
+        <th class="text">Student</th>
+        <th class="date-au">Birthday</th>
+        <th class="nosort">Hours</th>
+        <th class="text">Active?</th>
+        <th class="text">View</th>
+        <th class="text">Del</th>
+      </tr>
+    </thead>
+    <tbody>
+<% @regs.each do |reg| %>
+  <tr id="row<%=reg.id%>">
+    <td><%= "#{reg.lastname}, #{reg.firstname}" %></td>
+    <td><%= "#{reg.student_firstname} #{reg.student_lastname}" %></td>
+    <td><%= reg.student_dob %></td>
+    <td><%= reg.chms_hours %></td>
+    <td><%= reg.active %></td>
+    <td>
+      <div style="text-align:center;">
+      <a href="#" onclick="$('r<%=reg.id%>').show(); return false;">More</a>
+    </div>
+
+<div id="r<%=reg.id%>" style="display:none; position: absolute; margin-left: -400px; border: 5px solid #eeeeee; width: 350px; height: 300px; background-color: white; -webkit-box-shadow: black 0px 5px 20px; -moz-box-shadow: black 0px 5px 20px; padding: 5px;">
+  <div style="text-align: right; float: right;"><a href="#" onclick="$('r<%=reg.id%>').fade({ duration: 0.3 }); return false;">[CLOSE]</a></div>
+
+  <h3>Parent Information</h3>
+  <ul>
+    <li><%= "#{reg.lastname}, #{reg.firstname}" %></li>
+    <li><%= reg.email %></li>
+    <li><%= reg.address %></li>
+    <li>Home: <%= reg.home_phone %></li>
+    <li>Work: <%= reg.work_phone %></li>
+    <li>Mobile: <%= reg.mobile_phone %></li>
+  </ul>
+
+  <h3>Student Information</h3>
+  <ul>
+    <li><%= "#{reg.student_lastname}, #{reg.student_firstname}" %></li>
+    <li>Birthday: <%= reg.student_dob %></li>
+    <li>Comments: <%= textilize(reg.comments) %></li>
+  </ul>
+</div>
+    </td>
+    <td align="center">
+      
+      <%= link_to_remote(image_tag("/images/icons/x_small.png", :class=>"icon"), {:url => {:action=>"delete", :id=>reg.id}, :complete => "Effect.Fade('row#{reg.id}');", :confirm=>"Are you sure?\nThis cannot be undone."}) %>
+    </td>
+  </tr>
+<% end %>
+    </tbody>
+</table>
+
+
