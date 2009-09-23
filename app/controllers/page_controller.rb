@@ -12,6 +12,22 @@ class PageController < ApplicationController
   
   def index
   end
+
+  def chms_registration
+    @section_title = "Register for CHMS"
+
+    @registration = ChmsRegistration.new(params[:registration])
+
+    if request.post?
+      if @registration.save
+        redirect_to :action => 'thanks'
+      end
+    end
+  end
+
+  def thanks
+    @section_title = "Thanks for Registering"
+  end
   
   def summer_schedule_2008
     unit_height = 16.0

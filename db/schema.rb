@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090726025156) do
+ActiveRecord::Schema.define(:version => 20090923051826) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -37,6 +37,24 @@ ActiveRecord::Schema.define(:version => 20090726025156) do
     t.integer "size"
     t.integer "width"
     t.integer "height"
+  end
+
+  create_table "chms_registrations", :force => true do |t|
+    t.string   "firstname"
+    t.string   "lastname"
+    t.string   "email"
+    t.string   "address"
+    t.string   "home_phone"
+    t.string   "work_phone"
+    t.string   "mobile_phone"
+    t.string   "student_firstname"
+    t.string   "student_lastname"
+    t.date     "student_dob"
+    t.text     "comments"
+    t.string   "chms_hours"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "comments", :force => true do |t|
