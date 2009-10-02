@@ -7,8 +7,9 @@ class ParentsController < ApplicationController
       { :name => "<img src=\"/images/icons/write.png\" class=\"icon\" /> My Registations", :link => "/register" },
       { :name => "<img src=\"/images/icons/music.png\" class=\"icon\" /> My Lessons", :link => "/parents/lessons" },
       { :name => "<img src=\"/images/icons/calendar.png\" class=\"icon\" /> School Calendars", :link => "/page/calendar" },
-      { :name => "<img src=\"/images/icons/announce.png\" class=\"icon\" /> Announcements", :link => "index" },
-      { :name => "<img src=\"/images/icons/discussion.png\" class=\"icon\" /> Online Discussions", :link => "index" },
+#      { :name => "<img src=\"/images/icons/announce.png\" class=\"icon\" /> Announcements", :link => "index" },
+#      { :name => "<img src=\"/images/icons/discussion.png\" class=\"icon\" /> Online Discussions", :link => "index" },
+      { :name => "<img src=\"/images/icons/directory.png\" class=\"icon\" /> Directory", :link => "/parents/directory" },
       { :name => "<img src=\"/images/icons/news.png\" class=\"icon\" /> Newsletters", :link => "/parents/newsletters" },
       { :name => "<img src=\"/images/icons/photobook.png\" class=\"icon\" /> Photobook", :link => "/photobook" },
     ]
@@ -17,6 +18,17 @@ class ParentsController < ApplicationController
   def index
     @section_title = "For Current Parents"
     @submenu = global_submenu
+  end
+
+  def directory
+    @section_path = "For Current Parents &raquo; "
+    @section_title = "Directory"
+    @submenu = global_submenu
+
+    #check if the user is registerd for current session
+    @registrations = Session.current.registrations.sort {|x,y| x.student.user.lastname <=> y.student.user.lastname }
+
+    @javascripts = "tablesort.js"
   end
 
   def settings

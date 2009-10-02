@@ -1,0 +1,18 @@
+<table class="default_table sortable">
+    <thead>
+      <tr>
+        <th class="text">Parent</th>
+        <th class="text">Student</th>
+        <th class="text">Email</th>
+      </tr>
+    </thead>
+    <tbody>
+<% @registrations.each do |reg| %>
+      <tr>
+        <td><%= "#{reg.student.user.lastname}, #{reg.student.user.firstname}" %></td>
+        <td><%= "#{reg.student.first_name} #{reg.student.last_name}" %></td>
+        <td><%=reg.student.user.email%></td>
+      </tr> 
+<% end %>
+    </tbody>
+</table>

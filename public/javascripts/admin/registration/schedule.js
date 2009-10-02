@@ -470,7 +470,7 @@ function show_lesson(lesson) {
   outer_div.insert(lesson_bar);
   Effect.Appear(lesson_bar);
 
-  console.log(lesson_bar);
+  //console.log(lesson_bar);
 }
 
 function page_loaded() {

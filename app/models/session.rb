@@ -15,6 +15,10 @@ class Session < ActiveRecord::Base
     self.name
   end
 
+  def Session.current
+    Session.find(:first, :conditions => ["is_active = ?", true], :order => "first DESC");
+  end
+
   def is_offday?(today)
     d = self.session_days.find_by_date(today)
     return true if d.nil?
@@ -36,7 +40,6 @@ class Session < ActiveRecord::Base
     return "" if d.nil?
     return d.note
   end
-
 
   def week(week_no)
     monday = (self.first.next_week - 7) + ((week_no - 1) * 7)
