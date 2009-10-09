@@ -9,8 +9,22 @@ class PageController < ApplicationController
       { :name => "<img src=\"/images/icons/help.png\" class=\"icon\" /> FAQ", :link => "/page/faq" },
       { :name => "<img src=\"/images/icons/calendar.png\" class=\"icon\" /> School Calendar", :link => "/page/calendar" }]
   end
+  def about_submenu
+    [ { :name => "<img src=\"/images/icons/music.png\" class=\"icon\" /> About us", :link => "/page/aboutus" },
+      { :name => "<img src=\"/images/icons/contact.png\" class=\"icon\" /> About the Director", :link => "/page/director" }]
+  end
   
   def index
+  end
+
+  def aboutus
+    @section_title = "About us"
+    @submenu = about_submenu
+  end
+
+  def director 
+    @section_title = "About the Director"
+    @submenu = about_submenu
   end
 
   def chms_registration

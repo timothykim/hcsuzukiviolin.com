@@ -73,7 +73,7 @@
 					<ul>
 						<% home_class = (controller.controller_name == "page" and controller.action_name == "index") ? "home" : "" %>
 						<li><%= link_to "Home", { :controller => "/page", :action => "index" }, :class => home_class %></li>
-						<li><%= link_to "About Us", { :controller => "/page", :action => "about" } %></li>
+						<li><%= link_to "About Us", { :controller => "/page", :action => "aboutus" } %></li>
 						<li><%= link_to "Prospective Parents", { :controller => "/page", :action => "policy_and_tuition" } %></li>
 						<li><%= link_to "Current Parents", { :controller => "/parents", :action => "index" }, :class => "current_parents" %></li>
 					</ul>
