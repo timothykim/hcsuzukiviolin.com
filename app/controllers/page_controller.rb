@@ -17,6 +17,11 @@ class PageController < ApplicationController
   def index
   end
 
+
+  def repertoire
+    @section_title = "Fall 2009 Suzuki violin group class repertoire list"
+  end
+
   def aboutus
     @section_title = "About us"
     @submenu = about_submenu
