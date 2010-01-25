@@ -7,6 +7,7 @@ class ParentsController < ApplicationController
       { :name => "<img src=\"/images/icons/write.png\" class=\"icon\" /> My Registations", :link => "/register" },
       { :name => "<img src=\"/images/icons/music.png\" class=\"icon\" /> My Lessons", :link => "/parents/lessons" },
       { :name => "<img src=\"/images/icons/calendar.png\" class=\"icon\" /> School Calendars", :link => "/page/calendar" },
+      { :name => "<img src=\"/images/icons/group.png\" class=\"icon\" /> Group Class Info", :link => "/parents/group" },
 #      { :name => "<img src=\"/images/icons/announce.png\" class=\"icon\" /> Announcements", :link => "index" },
 #      { :name => "<img src=\"/images/icons/discussion.png\" class=\"icon\" /> Online Discussions", :link => "index" },
       { :name => "<img src=\"/images/icons/directory.png\" class=\"icon\" /> Directory", :link => "/parents/directory" },
@@ -17,6 +18,11 @@ class ParentsController < ApplicationController
 
   def index
     @section_title = "For Current Parents"
+    @submenu = global_submenu
+  end
+
+  def group 
+    @section_title = "Group Class Information"
     @submenu = global_submenu
   end
 
