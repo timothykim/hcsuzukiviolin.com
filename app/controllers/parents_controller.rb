@@ -32,7 +32,10 @@ class ParentsController < ApplicationController
     @submenu = global_submenu
 
     #check if the user is registerd for current session
-    @registrations = Session.current.registrations.sort {|x,y| x.student.user.lastname <=> y.student.user.lastname }
+    
+    @sessions = Session.find(:all, :conditions => "is_active = true")
+
+    #@registrations = Session.current.registrations.sort {|x,y| x.student.user.lastname <=> y.student.user.lastname }
 
     @javascripts = "tablesort.js"
   end

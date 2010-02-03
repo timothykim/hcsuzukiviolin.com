@@ -19,6 +19,20 @@ class Session < ActiveRecord::Base
     Session.find(:first, :conditions => ["is_active = ?", true], :order => "first DESC");
   end
 
+  def parents
+    p = []
+    users = User.find(:all)
+    users.each do |u|
+      u.registrations.each do |r|
+        if r.session_id == self.id
+          p.push(u)
+          break
+        end
+      end
+    end
+    return p.sort {|x,y| x.lastname <=> y.lastname }
+  end
+
   def is_offday?(today)
     d = self.session_days.find_by_date(today)
     return true if d.nil?
