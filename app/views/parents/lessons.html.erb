@@ -5,6 +5,9 @@
 
 <% @sessions.each do |sess| %>
   <h3><%= sess.name %></h3>
+    <div style="float: right;">
+        <a href="/parents/all_lessons/<%=sess.id%>"><img src="/images/icons/calendar.png" class="icon" /> See All Parent's Schedules</a>
+    </div>
   <% current_user.get_registrations(sess).each do |r| %>
     <div class="student_schedule">
       <h4><%= r.student.to_s %></h4>

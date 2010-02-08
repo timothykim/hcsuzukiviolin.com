@@ -85,12 +85,19 @@ class ParentsController < ApplicationController
     @section_title = "All Lessons"
     @current_session = Session.find(params[:id])
 
-    @startdate = @current_session.first.next_week - 8 #start on sunday
-    @enddate = @current_session.last.next_week - 2 #end on saturday
-    @students = @current_session.students.sort {|x,y| x.last_name <=> y.last_name}
-    
-    @day_count = (@enddate - @startdate).to_i
-    @week_count = (@day_count / 7.0).ceil
+    if @current_session.registration_type == Session::DAY_TYPE 
+      @startdate = @current_session.first.next_week - 8 #start on sunday
+      @enddate = @current_session.last.next_week - 2 #end on saturday
+      @students = @current_session.students.sort {|x,y| x.last_name <=> y.last_name}
+
+    else
+      @startdate = @current_session.first.next_week - 8 #start on sunday
+      @enddate = @current_session.last.next_week - 2 #end on saturday
+      @students = @current_session.students.sort {|x,y| x.last_name <=> y.last_name}
+      
+      @day_count = (@enddate - @startdate).to_i
+      @week_count = (@day_count / 7.0).ceil
+    end
 
     @day_start = 7 #7 am
     @day_end = 21 #9 pm (last hour, meaning til 10pm)

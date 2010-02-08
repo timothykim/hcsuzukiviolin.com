@@ -1,5 +1,50 @@
 <h2>All Lessons for <%= @current_session %></h2>
 
+<% if @current_session.registration_type == Session::DAY_TYPE %>
+
+<div id="calendar_view">
+<table class="calendar main">
+  <thead>
+  <tr>
+    <th width="200">Monday</th>
+    <th width="200">Tuesday</th>
+    <th width="200">Wednesday</th>
+    <th width="200">Thursday</th>
+    <th width="200">Friday</th>
+    <th width="200">Saturday</th>
+  </tr>	
+  </thead>
+  <tbody>
+      <% for day in (1..6) %>
+        <td valign="top">
+          <div class="daily_schedule">
+          <% today = (@startdate + day) %>
+          <h3><%= today.strftime("%m/%d") %></h3>
+          <% lessons = Lesson.find(:all, :conditions => ['time > ? AND time < ?', today.to_time, (today+1).to_time], :order => "time ASC") %>
+          <% lessons.each do |lesson| %>
+            <div class="single_lesson">
+              <div class="lesson_name">
+                <%=lesson.registration.student.last_name + ", " + lesson.registration.student.first_name.at(0) + "."%>
+                <% unless lesson.registration.student.last_name.downcase.include?("group") %>
+                  <div><small>
+                      <a href="mailto:<%=lesson.registration.student.user.email%>"><%=lesson.registration.student.user.email%></a>
+                  </small></div>
+                <% end %>
+              </div>
+              <div class="lesson_time"><%=lesson.get_time%></div>
+            </div>
+          <% end %>
+          <%= "No lessons" if lessons.length == 0 %>
+          </div>
+        </td>
+      <% end %>
+    </tbody>
+</table>
+      
+
+
+<% else %>
+
 <script>
 function toggleView(str) {
 	if (str == 'cal') {
@@ -23,7 +68,7 @@ function toggleView(str) {
 <table class="calendar main">
   <thead>
   <tr>
-    <th width="30">Week</th>
+    <th width="30">Wk</th>
     <th width="200">Monday</th>
     <th width="200">Tuesday</th>
     <th width="200">Wednesday</th>
@@ -91,3 +136,6 @@ function toggleView(str) {
 end
 %>
 </div>
+
+
+<% end %>
