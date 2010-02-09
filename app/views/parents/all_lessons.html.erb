@@ -19,8 +19,7 @@
         <td valign="top">
           <div class="daily_schedule">
           <% today = (@startdate + day) %>
-          <h3><%= today.strftime("%m/%d") %></h3>
-          <% lessons = Lesson.find(:all, :conditions => ['time > ? AND time < ?', today.to_time, (today+1).to_time], :order => "time ASC") %>
+          <% lessons = @current_session.lessons.find(:all, :conditions => ["EXTRACT('dow' from time) = ?", day], :order => "time ASC") %>
           <% lessons.each do |lesson| %>
             <div class="single_lesson">
               <div class="lesson_name">
