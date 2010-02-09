@@ -19,18 +19,24 @@
         <td valign="top">
           <div class="daily_schedule">
           <% today = (@startdate + day) %>
-          <% lessons = @current_session.lessons.find(:all, :conditions => ["EXTRACT('dow' from time) = ?", day], :order => "time ASC") %>
+          <% lessons = @current_session.lessons.find(:all, :conditions => ["EXTRACT('dow' from time) = ?", day], :order => "to_char(time, 'HH24MI') ASC") %>
           <% lessons.each do |lesson| %>
             <div class="single_lesson">
               <div class="lesson_name">
-                <%=lesson.registration.student.last_name + ", " + lesson.registration.student.first_name.at(0) + "."%>
-                <% unless lesson.registration.student.last_name.downcase.include?("group") %>
-                  <div><small>
-                      <a href="mailto:<%=lesson.registration.student.user.email%>"><%=lesson.registration.student.user.email%></a>
-                  </small></div>
-                <% end %>
+                <%=lesson.registration.student.first_name + " " + lesson.registration.student.last_name.at(0) + "." %>
               </div>
               <div class="lesson_time"><%=lesson.get_time%></div>
+              <div class="parent_name">
+                <em><%=lesson.registration.student.user%></em>
+            </div>
+                <% unless lesson.registration.student.last_name.downcase.include?("group") %>
+                  <div><small style="font-weight: normal; color: #aaa;">
+                    <%=lesson.registration.student.user.email%>
+                    <% if lesson.registration.student.user.alternate_email != "" %>
+                        <br /><%=lesson.registration.student.user.alternate_email%>
+                    <% end %>
+                  </small></div>
+                <% end %>
             </div>
           <% end %>
           <%= "No lessons" if lessons.length == 0 %>

@@ -14,13 +14,18 @@ div.lesson_name {
   font-weight: bold;
 }
 
+div.parent_name {
+    color: #89c;
+}
+
 li.no_lesson {
   list-style: disc;
   color: #f88;
 }
 
 div.single_lesson {
-  margin-bottom: 4px;
+  border-bottom: 1px solid silver;
+  margin-bottom: 14px;
 }
 
 div.lesson_date {
