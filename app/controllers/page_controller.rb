@@ -7,7 +7,8 @@ class PageController < ApplicationController
   def global_submenu
     [ { :name => "<img src=\"/images/icons/write.png\" class=\"icon\" /> Policy and Tuition", :link => "/page/policy_and_tuition" },
       { :name => "<img src=\"/images/icons/help.png\" class=\"icon\" /> FAQ", :link => "/page/faq" },
-      { :name => "<img src=\"/images/icons/calendar.png\" class=\"icon\" /> School Calendar", :link => "/page/calendar" }]
+      { :name => "<img src=\"/images/icons/calendar.png\" class=\"icon\" /> School Calendar", :link => "/page/calendar" },
+      { :name => "<img src=\"/images/icons/package.png\" class=\"icon\" /> Resources", :link => "/page/resource" }]
   end
   def about_submenu
     [ { :name => "<img src=\"/images/icons/music.png\" class=\"icon\" /> About us", :link => "/page/aboutus" },
@@ -254,6 +255,12 @@ class PageController < ApplicationController
     @section_title = "School Calendar"
     @submenu = global_submenu
     @sessions = Session.find(:all, :conditions => {:is_active => true}, :order => "first DESC")
+  end
+
+  def resource
+    @section_path = "For Prospective Parents &raquo; "
+    @section_title = "Resources"
+    @submenu = global_submenu
   end
   
   def illegal
