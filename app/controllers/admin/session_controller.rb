@@ -106,6 +106,8 @@ class Admin::SessionController < AdminController
     end #params
     
     #save each day infot
+    #clear the data first
+    s.session_days.delete_all 
     if params[:notes]
       params[:notes].each do |date_str, note|
         p = {}

@@ -175,9 +175,22 @@ div#calendar li strong {
 	color: green;
 }
 
-div#calendar li em {
+div#calendar li em.bad {
 	font-size: 0.8em;
 	color: red;
+}
+
+div#calendar li em.good {
+	font-size: 0.8em;
+	color: green;
+}
+
+div#calendar li em.bad strong {
+	color: red;
+}
+
+div#calendar li em.good strong {
+	color: green;
 }
 
 
@@ -228,3 +241,14 @@ div#tutorial {
   background-color: black;
 }
 
+div.register h3.important{
+	color: red;
+}
+
+
+div.register div#msg {
+	width: 131px;
+	height: 117px;
+	background-image: url(/images/msg.gif);
+	position: absolute;
+}

@@ -115,6 +115,9 @@
 	<%= textilize(@current_session.registration_notes) %>
 </div>
 
+
+<h3 class="important">Please fill out completely</h3>
+
 <div class="form_box" id="reg">
 	
 	<div class="form_element">
@@ -131,9 +134,22 @@
 	<% @registration_options.each do |option| -%>
 	<div class="form_element">
 <%
-o = @registration.registered_options.find(:first, :conditions => {:option_id => option.id})
-value = ""
-value = o.value if o
+    o = @registration.registered_options.find(:first, :conditions => {:option_id => option.id})
+    value = ""
+    value = o.value if o
+
+    if option.input_type == "dropdown"
+        opt_html = ""
+        choices = option.text.slice(/\[[^\[]*\]$/)
+        unless choices.nil?
+            choices[1..-2].split(",").each do |opt| 
+                selected = (value == opt && 'selected="selected"') || ""
+                opt.strip!
+                opt_html += "<option value=\"" + opt + " " + selected + "\">" + opt + "</option>"
+            end
+            option.text = option.text[0..option.text.rindex('[')-1].strip
+        end
+    end
 %>
 <%=
 case option.input_type
@@ -145,7 +161,8 @@ case option.input_type
 
 	when "checkbox"
 		'<label class="form_label">' + option.text + '</label>' + radio_button_tag("reg_option[#{option.id}]", "yes", value == "yes") + " Yes<br />" + radio_button_tag("reg_option[#{option.id}]", "no" , value == "no") + " No"
-
+    when "dropdown"
+        '<label class="form_label">' + option.text + '</label>' + select_tag("reg_option[#{option.id}]", opt_html)
 end -%>
 	</div>
 	
@@ -160,10 +177,10 @@ end -%>
 	<div id="calendar">
 		<h4>Individual Lessons</h4>
 		<ul>
-			<li>Please indicate ALL possible time RANGE for EACH DAY.<br /><em>e.g: 6-8pm, 10am~1:30pm</em></li>
-			<li>Please write down <strong>pm</strong> or <strong>am</strong> with your times.<br /><em>e.g: 8~9am, 2~4pm but NOT 7~8</em></li>
+            <li>Please indicate ALL possible time RANGE for EACH DAY.<br /><em class="good"><strong>Good</strong>: 6-8pm, 10am~1:30pm</em><br/><em class="bad"><strong>Bad</strong>: 5pm, 4</em></li>
+            <li>Please write down <strong>pm</strong> or <strong>am</strong> with your times.<br /><em class="good"><strong>Good</strong>: 8~9am, 2~4pm, 10am~1:30pm</em><br/><em class="bad"><strong>Bad</strong>: 7~8</em></li>
 			<li>Multiple range can be entered per day by putting them on <strong>separate lines</strong>.</li>
-			<li>You may mark a time range with an * (asterisk) to indicate preferred time.<br /><em>e.g: 4-5pm*, *1-3:30pm</em></li>
+            <li>You may mark a time range with an * (asterisk) to indicate preferred time.<br /><em class="good"><strong>Good</strong>: 4-5pm*, *1-3:30pm</em></li>
 		</ul>
 		<div class="help">
 		<p>Example:</p>
@@ -187,6 +204,8 @@ end -%>
 			</div>
 		<% end %>
 		
+<div id="msg" style="display:none;">
+</div>
 		
 		<table>
 			<thead>
@@ -204,12 +223,15 @@ end -%>
 <%		@dates.each_with_index do |today, i| -%>
 <%			if i % 6 == 0 #index % 6 does NOT corespond to day of the week -%>
 				<tr>
-					<td class="week_no"><%= i / 6  %></td>
+					<td class="week_no"><%= (i / 6)+1 %></td>
 <%			end #if -%>
-<%			clss = "" -%>
+<%			clas = "" -%>
 <%			clas = (today.date.mon % 2 == 1) ? "odd_month" : "even_month" -%>
 <%			clas = " off_day" if today.offday -%>
-<%			form = text_area_tag("times[#{today.date.strftime("%Y/%m/%d")}]", "", :class=>"text time_range", :id=>today.date.to_s) unless today.offday -%>
+
+<%          txt_cls = (([2,3,4,6,7,8].include?((i / 6) + 1) && [1,3].include?(today.date.wday)) && "msg") || "" #this is a hack for summer 2010 registration %>
+
+<%			form = text_area_tag("times[#{today.date.strftime("%Y/%m/%d")}]", "", :class=>"text time_range "+txt_cls, :id=>today.date.to_s) unless today.offday -%>
 <%#			grpd = "<div class=\"group_day\"><input class=\"group_box\" type=\"checkbox\" id=\"#{today.date.to_s}\" name=\"groups[#{today.date.strftime("%Y/%m/%d")}]\"><label for=\"#{today.date.to_s}\"> Group Class</label></div>" if today.group -%>
 <%			grpd = (today.group) ? "<div class=\"group_day\">Group Class</div>" : "<div class=\"group_day\"><br /></div>"  -%>
 
@@ -220,7 +242,6 @@ end -%>
 <%		end #each -%>
 			</tbody>
 		</table>
-		
 	</div>
 	
 <% else #if @current_session.registration_type == Session::DAY_TYPE %>
@@ -369,7 +390,7 @@ end -%>
 
 <div class="agreement"> 
 <input type="checkbox" name="photo_agreement"> By checking this box, 
-I do NOT authorize the use and reproduction by the Suzuki Violin Program at Falls Church, or anyone authorized by the Suzuki Violin Program at Falls Church or its representatives of any or all photographs taken of the student registered on this form at Suzuki Violin Program premises or activities.
+I do NOT authorize the use and reproduction by the Suzuki Violin Program at Falls Church, or anyone authorized by the Suzuki Violin Program at Falls Church or its representatives of any photographs taken of the student registered on this form at Suzuki Violin Program premises or activities. In short, do not use any photos of my student for the school.
 </div>
 
 

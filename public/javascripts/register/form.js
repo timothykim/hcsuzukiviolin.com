@@ -127,4 +127,31 @@ Event.onDOMReady(function() {
 
     show_tuition();
     $('registration_school_id').observe('change', show_tuition);
+
+
+    $$('textarea.msg').each(function (ta) {
+        ta.observe('focus', function (e) {
+            messageBox(ta,true);
+        });
+        ta.observe('blur', function (e) {
+            messageBox(ta,false);
+        });
+    });
 });
+
+
+function messageBox(ta,show) {
+    if (show) {
+        var pos = ta.cumulativeOffset();
+
+
+        $("msg").setStyle({
+            top: (pos[1]+ta.getHeight()-10) + "px",
+            left: (pos[0]-20) + "px"
+        });
+
+        $("msg").show();
+    } else {
+        $("msg").hide();
+    }
+}

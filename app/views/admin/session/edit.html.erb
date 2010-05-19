@@ -95,6 +95,7 @@
 				<input type="text" class="opt" name="opt_name[<%= i %>]" value="<%= opt.text %>" />
 				<select name="opt_type[<%= i %>]">
 					<option value="checkbox" <%= 'selected="selected"' if opt.input_type == "checkbox" %>>Yes/No</option>
+					<option value="dropdown" <%= 'selected="selected"' if opt.input_type == "dropdown" %>>Dropdown</option>
 					<option value="text" <%= 'selected="selected"' if opt.input_type == "text" %>>Text</option>
 					<option value="big_text" <%= 'selected="selected"' if opt.input_type == "big_text" %>>Big Text</option>
 				</select>
