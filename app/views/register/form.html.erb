@@ -135,17 +135,18 @@
 	<div class="form_element">
 <%
     o = @registration.registered_options.find(:first, :conditions => {:option_id => option.id})
-    value = ""
-    value = o.value if o
+    value = (o && o.value) || ""
+
+
 
     if option.input_type == "dropdown"
         opt_html = ""
         choices = option.text.slice(/\[[^\[]*\]$/)
         unless choices.nil?
             choices[1..-2].split(",").each do |opt| 
-                selected = (value == opt && 'selected="selected"') || ""
                 opt.strip!
-                opt_html += "<option value=\"" + opt + " " + selected + "\">" + opt + "</option>"
+                selected = (value == opt && 'selected="selected"') || ""
+                opt_html += "<option value=\"" + opt + "\" " + selected + "\">" + opt + "</option>"
             end
             option.text = option.text[0..option.text.rindex('[')-1].strip
         end

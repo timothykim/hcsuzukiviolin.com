@@ -156,13 +156,12 @@ class RegisterController < ApplicationController
     registration.save
     
     #secondly the options
-    if params[:reg_options] 
+    if params[:reg_option] 
       registration.registered_options.each {|opt| opt.destroy }
       params[:reg_option].each do |id, value|
         option = registration.registered_options.new
         option.option_id = id
         option.value = value
-        
         option.save
       end
     end
