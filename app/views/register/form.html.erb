@@ -314,79 +314,18 @@ end -%>
 
 <div>
 
-		<h4>Group Classes</h4>
-		<p><%= @current_session %> session will have group classes on following days.</p>
-		<ol>
-		<% @group_days.each do |g| %>
-			<li><%= g.date.strftime("%m/%d/%Y - %A") %></li>
-		<% end %>
-		</ol>
+    <h4>Group Classes</h4>
+    <p><%= @current_session %> session will have group classes on following days.</p>
+    <ol>
+    <% @group_days.each do |g| %>
+        <li><%= g.date.strftime("%m/%d/%Y - %A") %></li>
+    <% end %>
+    </ol>
 
 </div>
 
 <hr />
-<h4>Tuition Information</h4>
-<div id="tuition_2" class="tuition" style="display:none;">
-    Your tuition will be billed soon. For more information, please contact Larry Claussen at lclaussen@columbiabaptist.org.
-</div>
 
-<div id="tuition_1" class="tuition" style="display:none;">
-<table class="default_table">
-  <thead>
-    <tr>
-      <th class="blank" rowspan="2">For HC Studio Parents</th>
-      <th colspan="3">Individual Lesson Duration</th>
-    </tr>
-    <tr>
-      <th class="silver">30 min.</th>
-      <th class="silver">45 min.</th>
-      <th class="silver">60 min.</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Tuition Per Lesson</th>
-      <td class="number">$37.50</td>
-      <td class="number">$56.25</td>
-      <td class="number">$75.00</td>
-    </tr>
-    <tr>
-      <th>Tuition For 16 Lessons</th>
-      <td class="number">$600.00</td>
-      <td class="number">$900.00</td>
-      <td class="number">$1,200.00</td>
-    </tr>
-    <tr>
-      <th>Tuition For 15 Group Classes</th>
-      <td colspan="3" class="center">$375.00</td>
-    </tr>
-    <tr>
-      <th>Annual Registration Fee</th>
-      <td colspan="3" class="center">$40.00</td>
-    </tr>
-    <tr>
-      <th class="silver"><big>Total Tuition for returning parents</big></th>
-      <td class="number big">$1,015.00</td>
-      <td class="number big">$1,315.00</td>
-      <td class="number big">$1,615.00</td>
-    </tr>
-    <tr>
-      <th>Parent Education Class</th>
-      <td colspan="3" class="center">$150.00</td>
-    </tr>
-    <tr>
-      <th class="silver"><big>Total Tuition for new parents</big></th>
-      <td class="number big">$1,165.00</td>
-      <td class="number big">$1,465.00</td>
-      <td class="number big">$1,765.00</td>
-    </tr>
-</table>
-  <ul>
-    <li>Please note that once your registration has been processed, you will receive an invoice for the tuition payment.</li>
-  </ul>
-</div>
-
-<hr />
 <h4>Photograph Agreement</h4>
 
 <div class="agreement"> 

@@ -125,8 +125,8 @@ Event.onDOMReady(function() {
         address.value = "Street Address\nCity, State ZIP";
     }
 
-    show_tuition();
-    $('registration_school_id').observe('change', show_tuition);
+    //show_tuition();
+    //$('registration_school_id').observe('change', show_tuition);
 
 
     $$('textarea.msg').each(function (ta) {
