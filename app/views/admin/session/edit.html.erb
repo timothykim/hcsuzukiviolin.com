@@ -9,18 +9,18 @@
 	<div class="form_element">
 		<div class="check"><label>Session:</label></div>
 		<%= select_tag("session_name", @season_opt) %>
-		<%= date_select("csession_year", "year", :start_year => Time.now.year, :order => [:year], :default => {:year => @year}) %>
+		<%= date_select("csession_year", "year", :start_year => 2008, :order => [:year], :default => {:year => @year}) %>
 	</div>
 	
 	<div id="dates">
 		<div class="form_element">
 			<div class="check"><label>First day of the session:</label></div>
-			<%= date_select("csession", "first", :start_year => Time.now.year) %>
+			<%= date_select("csession", "first", :start_year => 2008) %>
 		</div>
 
 		<div class="form_element">
 			<div class="check"><label>Last day of the session:</label></div>
-			<%= date_select("csession", "last", :start_year => Time.now.year) %>
+			<%= date_select("csession", "last", :start_year => 2008) %>
 		</div>
 	</div>
 </div>
