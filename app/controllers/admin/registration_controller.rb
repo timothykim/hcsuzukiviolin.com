@@ -12,6 +12,16 @@ class Admin::RegistrationController < AdminController
     @javascripts = "tablesort.js"
   end
 
+  def all_table
+    @section_path = "Adminstration &raquo; Registrations &raquo;"
+    @section_title = "All View"
+
+    @session = Session.find(params[:id])
+    @schools = School.all
+
+    @javascripts = "tablesort.js"
+  end
+
   def delete
     r = Registration.find(params[:id])
     r.destroy
