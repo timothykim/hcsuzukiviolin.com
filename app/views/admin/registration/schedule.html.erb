@@ -61,7 +61,7 @@ if @current_session.registration_type == Session::DATE_TYPE
   <tbody id="tbody_start">
 <% @week_count.times do |week_no| -%>
     <tr id="week<%=week_no+1%>" class="week_anchor" style="page-break-after: always;">
-      <th><%=week_no%></th>
+      <th><%=week_no+1%></th>
       <!-- time label -->
       <td style="padding-top: 17px" valign="top">
 <%  for i in (@day_start..@day_end)
@@ -202,6 +202,7 @@ if @current_session.registration_type == Session::DATE_TYPE
     <div class="widget_chrome"></div>
   </div>
 
+  <%= debug(@week_count) %>
 
   <div id="schedule_overview" class="widget" style="display: none;">
     <div style="float:right"><span class="button min_max" onclick="Effect.Fade('schedule_overview',{duration:0.3});">&#10006;</span></div>
@@ -225,9 +226,9 @@ if @current_session.registration_type == Session::DATE_TYPE
           </tr>
         </thead>
         <tbody>
-    <% @week_count.times do |week_no| -%>
+<% @week_count.times do |week_no| -%>
           <tr>
-            <th valign="top"><%=week_no%></th>
+            <th valign="top"><%=week_no+1%></th>
     <%
       for day in (1..6)
         today = @startdate + ((week_no * 7) + day)
@@ -239,11 +240,11 @@ if @current_session.registration_type == Session::DATE_TYPE
           bgcolor = "white"
         end  
     %>
-            <td onclick="Effect.ScrollTo('<%=week_no+1%>');" class="summary_cell <%=cls%>" style="background-color: <%=bgcolor%>" id="d-<%=today.to_s%>">
-            </td>
-    <%  end #for day in (1..6) %>
+                <td onclick="Effect.ScrollTo('<%=week_no+1%>');" class="summary_cell <%=cls%>" style="background-color: <%=bgcolor%>" id="d-<%=today.to_s%>">
+                </td>
+    <% end #for day in (1..6) -%>
           </tr>
-    <% end #@week_count.times %>
+<% end #@week_count.times -%>
         </tbody>
       </table>
     </div>
