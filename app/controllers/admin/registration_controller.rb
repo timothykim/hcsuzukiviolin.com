@@ -12,6 +12,17 @@ class Admin::RegistrationController < AdminController
     @javascripts = "tablesort.js"
   end
 
+  def confirm
+    r = Registration.find(params[:id])
+    if (params[:confirm] == "yes")
+      r.confirmed = true
+    else
+      r.confirmed = false
+    end
+    r.save
+    render :text => "{'success': true}"
+  end
+
   def all_table
     @section_path = "Adminstration &raquo; Registrations &raquo;"
     @section_title = "All View"
