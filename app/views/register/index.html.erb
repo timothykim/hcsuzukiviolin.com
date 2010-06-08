@@ -46,11 +46,7 @@
                   <!-- No longer accepting registrations. -->
 				<% #else %>
 					<% if student.registered? sess %>
-						<% if student.confirmed? sess %>
-							View your lesson schedule
-						<% else %>
-							<a href="/register/for/<%= sess.name.gsub(/ /, '-') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Re-submit Registration</a>
-						<% end %>
+                        <a href="/register/for/<%= sess.name.gsub(/ /, '-') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Re-submit Registration</a>
 					<% else %>
 						<a href="/register/for/<%= sess.name.gsub(/ /, '-') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Register!</a>
 					<% end %>
