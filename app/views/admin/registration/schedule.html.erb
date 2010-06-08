@@ -159,6 +159,7 @@ if @current_session.registration_type == Session::DATE_TYPE
     <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#9650;</span></div>
     <h1>Availability Overview</h1>
     <div class="body" style="display: none;">
+      <div style="overflow-y: auto; height: 500px;">
       <table class="widget_table">
         <thead>
           <tr>
@@ -188,6 +189,7 @@ if @current_session.registration_type == Session::DATE_TYPE
           <% end %>
         </tbody>
       </table>
+      </div>
     </div>
     <div class="widget_chrome"></div>
   </div>
