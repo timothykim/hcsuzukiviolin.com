@@ -8,7 +8,9 @@ function updateCalendar(id) {
 		onSuccess: function(transport) {
 			var data = transport.responseText.evalJSON();
 			for (var date_id in data) {
-				$(date_id).value = data[date_id].join(",\n");
+                if ($(date_id)) {
+                    $(date_id).value = data[date_id].join(",\n");
+                }
 			}
 		}
 	});
