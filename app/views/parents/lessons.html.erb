@@ -15,7 +15,7 @@
       <% if sess.registration_type == Session::DATE_TYPE %>
         <% r.lessons.each do |lesson| %>
         <li>
-            <div class="lesson_date"><%= lesson.get_date %> @ <%= lesson.location.school.name + " " + lesson.location.room if lesson.location %></div>
+            <div class="lesson_date"><%= lesson.get_date %> <%= "@ " + lesson.location.school.name + " " + lesson.location.room if lesson.location %></div>
           <div class="lesson_time"><%= lesson.get_time %></div>
         </li>
         <% end%>
