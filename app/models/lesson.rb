@@ -1,5 +1,6 @@
 class Lesson < ActiveRecord::Base
   belongs_to :registration
+  belongs_to :location
 
   def get_date
     self.time.strftime("%a, %b. %d")

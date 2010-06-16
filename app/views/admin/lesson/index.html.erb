@@ -1,0 +1,6 @@
+<h3>Please Select a session</h3>
+<ul>
+<% @sess.each do |s| %>
+    <li><%=link_to(s.name + " <small>(#{s.registrations.length} registrations)</small>", :controller => "admin/lesson", :action => "listing", :id => s)%></li>
+<% end %>
+</ul>

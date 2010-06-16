@@ -1,0 +1,35 @@
+<% form_tag "/admin/location/save", :method=>"post" do %>
+<script>
+    var OPTIONS = "<%=escape_javascript @options%>";
+</script>
+
+<table class="admin_table">
+	<thead>
+		<tr>
+			<th>School</th>
+			<th>Room</th>
+			<th>Del</th>
+		</tr>
+	</thead>
+	<tbody id="location_body">
+<% @locations.each do |location| %>
+		<tr class="<%= cycle("even", "odd") -%>">
+            <td><%= select("location[#{location.id}]", "school_id", School.all.collect { |s| [ s.name, s.id ] }, { :selected => location.school_id }) %></td> 
+			<td><%= text_field_tag "location[#{location.id}][room]", location.room, :class=>"inline_text", :size=>17 %></td>
+			<td><% if location.lessons.length == 0 %><%= link_to(image_tag("/images/icons/x_small.png", :class=>"icon"), {:action => "delete", :id => location.id}, :confirm => "Are you sure?\nThis cannot be undone.") %><% end %></td>
+		</tr>
+<% end %>
+
+	</tbody>
+</table>
+
+<div style="margin-top: 2px;">
+<div style="float:right;">
+	<button type="submit" class="iconbutton" onclick="save_location(); return false;"><img src="/images/icons/save.png" class="icon" /> Save</button>
+</div>
+
+<button type="button" class="iconbutton" onclick="add_row(); return false;"><img src="/images/icons/add.png" class="icon" /> Add a location</button>
+<button type="button" class="iconbutton" onclick="window.location.reload(); return false;"><img src="/images/icons/processing.png" class="icon" /> Reset</button>
+</div>
+
+<% end %>
