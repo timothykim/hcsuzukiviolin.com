@@ -1,4 +1,6 @@
 class Admin::LessonController < AdminController
+  skip_before_filter :verify_authenticity_token
+
   def index
     @section_path = "Adminitration &raquo; "
     @section_title = 'Lessons'

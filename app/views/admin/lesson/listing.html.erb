@@ -40,7 +40,7 @@
             if (selection.value) {
                 var lesson_id = /\d+/.exec(selection.readAttribute('id'))[0];
                 var location_id = selection.value;
-                var url = '/admin/lesson/save_location/'+lesson_id+'?authenticity_token=' + encodeURIComponent('SFRUCpH0uAIYCaVDDofrg3fNi1gQs74K3O7lxne9Wek=') + '&location_id=' + location_id;
+                var url = '/admin/lesson/save_location/'+lesson_id+'?' + 'location_id=' + location_id;
                 new Ajax.Request(url);
             }
         });
