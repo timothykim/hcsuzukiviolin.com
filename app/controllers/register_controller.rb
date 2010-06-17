@@ -17,7 +17,7 @@ class RegisterController < ApplicationController
   def form    
     name = params[:session].gsub(/-/, ' ')
     
-    @current_session = Session.find(:first, :conditions => { :name => name })
+    @current_session = Session.find(:first, :conditions => { :name => name, :is_active => true })
     
     @season = name.split()[0]
     @year = name.split()[1]
