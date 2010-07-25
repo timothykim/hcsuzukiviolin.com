@@ -246,8 +246,8 @@ end -%>
 		</table>
 	</div>
 	
-<% else #if @current_session.registration_type == Session::DAY_TYPE %>
-
+<% end %>
+<% if @current_session.registration_type == Session::DAY_TYPE %>
 
   <ul>
     <li>On the calendar below, by clicking and dragging, highlight ALL available lesson time frames.</li>
@@ -262,6 +262,7 @@ end -%>
   <big><a href="#" onclick="$('tutorial').hide(); return false;" style="color: white;">Close this video</a></big><br /><br />
 <object width="640" height="385"><param name="movie" value="http://www.youtube.com/v/MXJEn1w0Ee0&hl=en&fs=1&rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/MXJEn1w0Ee0&hl=en&fs=1&rel=0" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="385"></embed></object>
 </div>
+
     <table class="default_table selection_table">
       <thead>
           <tr>
@@ -308,6 +309,8 @@ end -%>
       </tbody>
     </table>
     <%= hidden_field_tag "schedule_selection" %>
+
+
     
 <% end %>
 <!--
