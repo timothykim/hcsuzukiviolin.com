@@ -6,7 +6,7 @@ class Admin::RegistrationController < AdminController
 
     @submenu = global_submenu
 
-    @sessions = Session.find(:all, :conditions => {:is_active => true}, :order => "first DESC")
+    @sessions = Session.find(:all, :order => "first DESC")
     @schools = School.all
 
     @javascripts = "tablesort.js"
