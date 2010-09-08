@@ -24,8 +24,16 @@
     </ul>
   </div>
   -->
+  <h2>Semesters</h2>
+    <ul>
+<% @sessions.each do |sess| %>
+        <li><a href="#<%= sess.name.sub(/\s/,'') %>"><%= sess.name %></a>
+<% end %>
+    </ul>
 
 <% @sessions.each do |sess| %>
+    <hr /> 
+    <a name="<%= sess.name.sub(/\s/,'') %>"></a>
   <h2><%= sess.name %> Calendar</h2>
 <%
   # draw academic calendar

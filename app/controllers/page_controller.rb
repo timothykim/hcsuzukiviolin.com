@@ -254,7 +254,7 @@ class PageController < ApplicationController
     @section_path = "For Prospective Parents &raquo; "
     @section_title = "School Calendar"
     @submenu = global_submenu
-    @sessions = [Session.find(:all, :conditions => {:is_active => true}, :order => "first ASC")[0]]
+    @sessions = Session.find(:all, :conditions => {:is_active => true}, :order => "first DESC")
   end
 
   def resource
