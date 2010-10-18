@@ -37,6 +37,15 @@ class Admin::UserController < AdminController
     user.destroy
     redirect_to :action => "index"
   end
+
+  def reset
+    user = User.find(params[:id])
+    user.password = "suzuki"
+    user.password_confirmation = "suzuki"
+    user.email_confirmation = user.email
+    user.save!
+    redirect_to :action => "index"
+  end
   
   def save
     users = User.find(:all)
