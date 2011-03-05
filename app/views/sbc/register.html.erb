@@ -1,0 +1,133 @@
+<% if @show_status %>
+  <h2>Your registration status</h2>
+
+  <p>You have already registered your child, <big><%= @student%></big>.</p>
+
+  <p>
+  Your registration 
+  <%if @student.sbc_registration.approved  %>
+    has been <big>APPROVED</big>. Please check your email for more information.</p>
+  <% else %>
+    status is <big>PENDING</big>. Please wait for its approval.</p>
+
+    <p>You may modify your registration at this moment by clicking <%= link_to "here" ,:action=>'register', :student=>@student.id %>.</a></p>
+  <% end %>
+
+  <p>Plesae feel free to <a href="/sbc/contact">contact us</a> with any information.</p>
+
+<% else %>
+
+<% if @error %>
+	<%= @error %>
+<% else %>
+
+<% form_tag "/sbc/save", :method => "post" , :id => "register_form" do -%>
+
+<h2>Registering for Suzuki Baby Class</h2>
+  
+
+<p>Please fill out the form completely.</p>
+
+<hr />
+
+<h3>Parent Information</h3>
+
+<div class="form_box" id="parent_info">
+  <%= hidden_field "parent", "id" %>
+  <div class="form_element">
+    <label class="form_label">First Name:</label>
+    <%= text_field :parent, :firstname, :class => "text", :size => 20 %>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Last Name:</label>
+    <%= text_field :parent, :lastname, :class => "text", :size => 20 %>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Login E-mail:</label>
+    <%= text_field :parent, :email, :class => "text", :size => 30 %>
+    <div class="form_info">
+      Please make sure that this e-mail is your primary e-mail that you daily check. This e-mail is what you will use to login to this website.
+    </div>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Alternate E-mail:</label>
+    <%= text_field :parent, :alternate_email, :class => "text", :size => 30 %>
+    <div class="form_info">
+      In the case where above e-mail does not work, please provide an alternative e-mail. i.e. Your spouse's e-mail.
+    </div>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Mailing Address:</label>
+    <%= text_area :parent, :address, :class => "text", :size => "30x3" %>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Home Phone:</label>
+    <%= text_field :parent, :home_phone, :class => "text", :size => 20 %>
+  </div>
+  <div class="form_element">
+    <label class="form_label">Work Phone:</label>
+    <%= text_field :parent, :work_phone, :class => "text", :size => 20 %>
+  </div>
+  <div class="form_element">
+    <label class="form_label">Mobile Phone:</label>
+    <%= text_field :parent, :mobile_phone, :class => "text", :size => 20 %>
+  </div>
+</div>
+
+<hr />
+
+<h3>Child Information</h3>
+
+<div class="form_box" id="student_info">
+  <%= hidden_field "student", "id" %>
+	<div class="form_element">
+	<label class="form_label">First Name:</label> <%= text_field "student", "first_name", :class => "text", :size => 20 %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Middle Initial:</label> <%= text_field "student", "middle_initial", :class => "text", :size => 2, :maxlength => 1 %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Last Name:</label> <%= text_field "student", "last_name", :class => "text", :size => 20 %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Date of Birth:</label> <%= date_select("student", "dob", :start_year => Time.now.year - 3, :end_year => Time.now.year, :default => {:year => Time.now.year - 3, :month => 1, :day => 1}, :order => [:month, :day, :year]) %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Comments:<br /><small>(Any information that teacher should know about the student)</small></label> <%= text_area "student", "comment", :class => "text", :size => "45x3" %>
+	</div>
+</div>
+
+<hr />
+
+<h3>Policy Agreement</h3>
+<div class="agreement"> 
+<input type="checkbox" name="user_agreement" onclick="if(this.checked) { $('form_submit').removeAttribute('disabled'); } else { $('form_submit').setAttribute('disabled', 'disabled');}"/> By checking this box, I hereby agree to abided by any and all policies of the HC Suzuki Violin Studio and I accept responsibility for all tuition and fees incurred.
+</div>
+
+
+<hr />
+
+
+
+
+<div style="text-align: right; margin-top: 20px;">
+<button class="iconbutton" id="form_submit" disabled="disabled" type="submit"><img src="/images/icons/write.png" class="icon"> Submit this Registration</button>
+</div>
+
+
+
+
+
+<% end #form %>
+<% end #form error%>
+<% end #show status%>
+  

@@ -20,6 +20,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/register/for/:session', :controller => 'register', :action => 'form'
   map.connect '/register/for/:session/:student', :controller => 'register', :action => 'form'
 
+  map.connect '/sbc/register/:student', :controller => 'sbc', :action => 'register'
+
   map.connect '/parents/lessons/all/:id', :controller => 'parents', :action => 'all_lessons'
 
   map.connect ':controller/:action/:id'

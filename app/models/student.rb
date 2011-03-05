@@ -1,6 +1,7 @@
 class Student < ActiveRecord::Base
   belongs_to :user
   has_many :registrations
+  has_one :sbc_registration
   has_many :lessons, :through => :registrations
   
   def to_s

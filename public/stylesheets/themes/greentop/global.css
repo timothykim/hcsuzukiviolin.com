@@ -39,13 +39,17 @@ div#banner_wrapper {
 div#banner {
 	width: 850px;
 	margin: 0 auto;
-/*	background: url(images/title_small-trans.png) no-repeat; */
+	background: url(images/title_small-trans.png) no-repeat;
 	height: 100px;
 	display: block;
 }
 
+div#title h1 {
+  display: none;
+}
+
 div#banner.page_index {
-/*	background: url(images/title-trans.png) no-repeat; */
+	background: url(images/title-trans.png) no-repeat; 
 	height: 190px; 
 }
 
@@ -112,6 +116,15 @@ div#toolbar #menu a {
 	color: #707070;
 	text-decoration: none;
 }
+
+
+div#toolbar #menu li.baby_class {
+	background-color: #FDEEF4;
+}
+div#toolbar #menu li.baby_class a {
+  color: #ff5555;
+}
+
 
 div#toolbar #login_frame {
 	position: absolute;

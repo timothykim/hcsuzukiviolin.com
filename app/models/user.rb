@@ -107,6 +107,10 @@ class User < ActiveRecord::Base
   rescue
     return false
   end
+
+  def sbc_student
+    self.students.select {|s| s.sbc_registration } [0]
+  end
   
 
 

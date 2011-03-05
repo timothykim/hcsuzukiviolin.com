@@ -1,0 +1,72 @@
+/* @group sbc */
+
+div#menu a.sbc {
+	border-top: 5px solid red;
+}
+
+div#banner_wrapper.sbc {
+	background-color: #ffafbf;
+}
+
+div#section_title.sbc {
+	background-color: #ff769c;
+}
+
+div#body.sbc a {
+	color: #c085a9;
+	text-decoration: none;
+}
+
+
+div#content_no_side.sbc {
+	padding: 0px;
+}
+
+div#toolbar #menu.sbc li:hover {
+	background-color: #fbdfdd;
+}
+
+
+
+
+div.form_box {
+	padding: 10px 20px;
+	margin-bottom: 20px;
+}
+
+div.form_box input.text {
+	padding: 4px;
+	font-size: 14px;
+}
+
+div.form_box select {
+	font-size: 14px;
+}
+
+div.form_box .form_element {
+	margin-bottom: 20px;
+}
+
+div.form_box label {
+	margin-top: 4px;
+	margin-right: 5px;
+	width: 150px;
+	font-size: 14px;
+	float: left;
+	text-align: right;
+}
+
+div.form_box label small {
+	font-size: 10px;
+}
+
+div.form_info {
+    margin-left: 160px;
+    margin-top: 5px;
+    color: #f66;
+}
+
+
+
+/* @end */
+
