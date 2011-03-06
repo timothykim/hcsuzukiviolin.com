@@ -1,7 +1,7 @@
 class SbcController < ApplicationController
 
   before_filter :store_location
-  before_filter :login_required, :only => :register
+  before_filter :login_required, :only => [:register, :save, :done]
 
   def global_submenu
     [
