@@ -11,10 +11,12 @@
         <th class="text">Child</th>
         <th class="text">Parent</th>
         <th class="number">Age</th>
+        <th class="date-us">DoB</th>
         <th class="text">Email</th>
         <th class="text">Mobile Phone</th>
         <th class="text">Address</th>
-        <th class="nosort">Actions</th>
+        <th class="text">Comments</th>
+        <th class="nosort">Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -27,11 +29,11 @@
           <td align="center" title="<%= r.created_at.strftime("%I:%M %p") %>"><%= r.created_at.strftime("%m/%d/%Y") %></td>
           <td><%= "#{r.student.last_name}, #{r.student.first_name}" %></td>
           <td><%= "#{r.student.user.lastname}, #{r.student.user.firstname}" %></td>
-          <td align="right"><%= r.student.age %></td>
+          <td align="right"><%= r.student.age %></td><td><%= r.student.dob.strftime("%m/%d/%Y") %></td>
           <td><%= r.student.user.email %></td>
           <td><%= r.student.user.mobile_phone %></td>
           <td><%= r.student.user.address %></td>
-          
+          <td><%= (r.student.comment == "") ? "None" : r.student.comment %></td>
           <td align="center"><%= link_to_remote(image_tag("/images/icons/x_small.png", :class=>"icon"), {:url => {:action=>"delete", :id=>r.id}, :complete => "Effect.Fade('r#{r.id}');", :confirm=>"Are you sure?\nThis cannot be undone."}) %></td>
           
 
