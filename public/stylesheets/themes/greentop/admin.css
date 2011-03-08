@@ -339,3 +339,7 @@ input.inline_text:focus {
 div#body.sbc_index {
   width: 95%;
 }
+
+div#body.registration_index {
+  width: 95%;
+}

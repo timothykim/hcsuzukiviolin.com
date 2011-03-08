@@ -19,8 +19,11 @@
         <th class="date-us">Registered At</th>
         <th class="text">Student</th>
         <th class="text">Parent</th>
+        <th class="text">Email</th>
+        <th class="text">Mobile Phone</th>
+        <th class="text">Address</th>
         <th class="text">School</th>
-        <th class="number">Lesson</th>
+        <th class="number">Lesson Length</th>
         <th class="nosort" colspan="2">Actions</th>
       </tr>
     </thead>
@@ -31,6 +34,9 @@
             <td align="center" title="<%= r.created_at.strftime("%I:%M %p") %>"><%= r.created_at.strftime("%m/%d/%Y") %></td>
             <td><%= "#{r.student.last_name}, #{r.student.first_name}" %></td>
             <td><%= "#{r.student.user.lastname}, #{r.student.user.firstname}" %></td>
+            <td><%= r.student.user.email %></td>
+            <td><%= r.student.user.mobile_phone %></td>
+            <td><%= r.student.user.address %></td>
             <td><%= r.school.name %></td>
             <td><%= r.lesson_duration %></td>
             <td align="center">
