@@ -231,7 +231,7 @@ end -%>
 <%			clas = (today.date.mon % 2 == 1) ? "odd_month" : "even_month" -%>
 <%			clas = " off_day" if today.offday -%>
 
-<%          txt_cls = (([2,3,4,6,7,8].include?((i / 6) + 1) && [1,3].include?(today.date.wday)) && "msg") || "" #this is a hack for summer 2010 registration %>
+<%          txt_cls = "" #(([2,3,4,6,7,8].include?((i / 6) + 1) && [1,3].include?(today.date.wday)) && "msg") || "" #this is a hack for summer 2010 registration %>
 
 <%			form = text_area_tag("times[#{today.date.strftime("%Y/%m/%d")}]", "", :class=>"text time_range "+txt_cls, :id=>today.date.to_s) unless today.offday -%>
 <%#			grpd = "<div class=\"group_day\"><input class=\"group_box\" type=\"checkbox\" id=\"#{today.date.to_s}\" name=\"groups[#{today.date.strftime("%Y/%m/%d")}]\"><label for=\"#{today.date.to_s}\"> Group Class</label></div>" if today.group -%>
@@ -339,6 +339,11 @@ end -%>
 <h3>Tuition Information</h3> 
 
 <p>
+The tuition will be billed by end of May.
+</p>
+
+<!--
+<p>
 The tuition includes 30 individual lessons and 30 group classes. Tuition for each semester is due on the first lesson of the each semester. You will be billed accordingly upon the receipt of your registration.
 </p>
 
@@ -347,6 +352,7 @@ The tuition includes 30 individual lessons and 30 group classes. Tuition for eac
     <li>The tuition for 45-minute lesson and the group class is $2580 ($1290/semester)</li>
     <li>The tuition for 60-minute lesson and the group class is $3180 ($1590/semester)</li>
 </ul>
+-->
 
 <hr />
 

@@ -83,7 +83,9 @@ class ParentsController < ApplicationController
   def all_lessons
     @section_path = "For Current Parents &raquo; "
     @section_title = "All Lessons"
+    @submenu = global_submenu
     @current_session = Session.find(params[:id])
+    @user = self.current_user
 
     if @current_session.registration_type == Session::DAY_TYPE 
       @startdate = @current_session.first.next_week - 8 #start on sunday

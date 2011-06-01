@@ -36,6 +36,7 @@ div.student_schedule {
 	width: 200px;
 	float: left;
 	margin-right: 20px;
+  height: 300px;
 }
 
 div.student_schedule h4 {
@@ -73,6 +74,10 @@ table.calendar td h3 {
   margin: 0;
   margin-bottom: 5px;
   text-align: center;
+  font-size: 1.6em;
 }
 
 
+div#body.parents_all_lessons {
+  width: 95%;
+}

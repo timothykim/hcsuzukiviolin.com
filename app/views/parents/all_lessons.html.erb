@@ -50,6 +50,15 @@
 
 <% else %>
 
+  <style>
+    .main td {
+      height: 100px;
+    }
+    .even td {
+      background-color: #f9f9f9;
+    }
+  </style>
+
 <script>
 function toggleView(str) {
 	if (str == 'cal') {
@@ -84,7 +93,7 @@ function toggleView(str) {
   </thead>
   <tbody>
     <% @week_count.times do |week| %>
-      <tr>
+      <tr class="<%= cycle('odd', 'even') %>">
         <th><%=week+1%></th>
       <% for day in (1..6) %>
         <td valign="top">
@@ -93,10 +102,12 @@ function toggleView(str) {
           <h3><%= today.strftime("%m/%d") %></h3>
           <% lessons = Lesson.find(:all, :conditions => ['time > ? AND time < ?', today.to_time, (today+1).to_time], :order => "time ASC") %>
           <% lessons.each do |lesson| %>
+            <% if lesson.registration.student.first_name.downcase.include?("summer") then next end %>
+            
             <div class="single_lesson">
               <div class="lesson_name">
-                <%=lesson.registration.student.last_name + ", " + lesson.registration.student.first_name.at(0) + "."%>
-                <% unless lesson.registration.student.last_name.downcase.include?("group") %>
+                <div style="color: #<%= Colors.one(lesson.registration.id) %>"><%= lesson.registration.student.first_name + " " + lesson.registration.student.last_name%></div>
+                <% unless lesson.registration.student.first_name.downcase.include?("group") %>
                   <div><small>
                       <a href="mailto:<%=lesson.registration.student.user.email%>"><%=lesson.registration.student.user.email%></a>
                   </small></div>
@@ -120,9 +131,11 @@ function toggleView(str) {
 
 <div id="list_view" style="display: none;">
 <% for registration in @current_session.registrations.sort{|a,b| a.student.last_name <=> b.student.last_name} %>
+  <% if registration.student.first_name.downcase.include?("summer") then next end %>
+  
 	<div class="student_schedule" style="margin-bottom: 2em;">
       <h4 style="color: #<%= Colors.one(registration.id) %>">
-        <%= "#{registration.student.last_name}, #{registration.student.first_name.at(0)}." %>
+        <%= "#{registration.student.last_name}, #{registration.student.first_name}" %>
         <% unless registration.student.first_name.downcase.include?("group") %>
         <a href="mailto:<%=registration.student.user.email%>"><img src="/images/icons/small_email.gif" /></a>
         <% end %>
