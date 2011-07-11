@@ -120,7 +120,7 @@ function updateCalendar() {
 						       '<label for="offday' + i + '"> Off Day</label><br />';
 						
 						/* groups are on fridays and saturdays only */
-						if (d.dotw == 5 || d.dotw == 6) {
+						if (d.dotw == 1 || d.dotw == 5 || d.dotw == 6) {
 							form += '<input ' + group_checked + ' type="checkbox" onclick="processClick(this, \'groups\' , ' + d.dotw + ');" name="groups[' + d_str + ']" id="group' + i + '" class="group_box">' +
 							        ' <label for="group' + i + '">Group</label>';
 						}
