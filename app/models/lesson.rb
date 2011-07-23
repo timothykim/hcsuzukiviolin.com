@@ -5,8 +5,13 @@ class Lesson < ActiveRecord::Base
   def get_date
     self.time.strftime("%a, %b. %d")
   end
+
   def get_time
     self.time.strftime("%I:%M%p") + " - " + (self.time + (self.duration * 60)).strftime("%I:%M%p")
+  end
+
+  def get_end_time
+    self.time + (self.duration * 60)
   end
   
   def to_hash

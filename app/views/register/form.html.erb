@@ -257,7 +257,7 @@ end -%>
         <li>To get rid of a selected time frame, just double click on the red box.</li>
         <li>Earliest possible lesson time is 7:00AM and the latest possible lesson time for half hour lesson is 6:30pm, for 45 minutes is 6:15pm, for an hour lesson is 6pm. If you are not available before 7pm, I encourage you to make yourself available in the morning. No lesson will last past 7pm</li>
         <li>Preferred lessons times are mornings and early afternoons.</li>
-        <li>Mondays and Thursdays, and Friday mornings are reserved for home studio families (indicated by Green below). If your availabilty falls in only those times, your lessons will be expected to be at the home studio. The rests are held at Columbia Baptist Church.</li>
+        <li>Tuesdays and Wednesdays are reserved for home studio families (indicated by Green below). If your availabilty falls in only those times, your lessons will be expected to be at the home studio. The rests are held at Columbia Baptist Church.</li>
         <li>Please understand that the priorities are given to senior students.</li>
         <li>Group classes will be held twice on Saturday mornings (9-11:30am) and once on Friday evening (5-7:30pm) each month. Group class dates will be ready with your individual lesson schedule.</li>
         <li>You may have less number of lessons in each semester if you sign up on Fridays.</li>
@@ -266,10 +266,22 @@ end -%>
   </ul>
 
 <div id="tutorial" style="display: none;">
-  <big><a href="#" onclick="$('tutorial').hide(); return false;" style="color: white;">Close this video</a></big><br /><br />
-<object width="640" height="385"><param name="movie" value="http://www.youtube.com/v/MXJEn1w0Ee0&hl=en&fs=1&rel=0"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/MXJEn1w0Ee0&hl=en&fs=1&rel=0" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="385"></embed></object>
+  <big><a href="#" onclick="$('tutorial').hide(); return false;" style="color: white;">[×] Close this video</a></big><br /><br />
+  <iframe width="640" height="390" src="http://www.youtube.com/embed/MXJEn1w0Ee0?rel=0" frameborder="0" allowfullscreen></iframe>
 </div>
 
+
+
+		<div class="help">
+      <p>Legend</p>
+      <div class="calendar_div" style="background-color: white; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">Lessons at CIFA</div>
+      <div class="calendar_div" style="background-color: #cfc; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">Lessons at Home Studio</div>
+      <div class="calendar_div" style="background-color: #fcc; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">Your available time selection</div>
+      <div class="calendar_div" style="background-color: #eee; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">No Lessons</div>
+		</div>
+        
+
+        
     <table class="default_table selection_table">
       <thead>
           <tr>
@@ -293,20 +305,34 @@ end -%>
               <% end %>
                 <div style="border-top: 1px solid silver; height: 15px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);">7pm</div>
             </td>
+
+            <% offhours = [[7, 18], [10, 13], [10, 13], [10, 13], [10, 13]] #[ day, start, end] %>
+
             <% 5.times do |d| %>
               <td valign="top">
 
                 <% for i in (7..18) %>
                   <% #highlight green %>
-                  <% bg = (d == 0 || d == 3 || (i >= 7 && i < 11 && d == 4)) ? "#cfc" : "" %>
+                  <% bg = (d == 1 || d == 2 ) ? "#cfc" : "" %>
 
                   <% h = (i.to_s.length == 1) ? "0#{i}" : i.to_s %>
                   <% id_1 = "d#{d}_#{h}:00" %>
                   <% id_2 = "d#{d}_#{h}:30" %>
                   <% cls = (@r_days.index(id_1)) ? "selected" : "" %>
-                  <div class="calendar_div selection_<%=d%> <%=cls%>" id="<%=id_1%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;" onmouseup="click_end();" onmousedown="click_start(this, <%=d%>)" onmouseover="high_light(this, <%=d%>);" ondblclick="dehighlight(this)"></div>
+
+                  <%
+                    if offhours[d][0] <= i and i <= offhours[d][1]
+                      events = ""
+                      cls_off = "offday"
+                    else
+                      events = "onmouseup=\"click_end();\" onmousedown=\"click_start(this, " + d.to_s + ")\" onmouseover=\"high_light(this, " + d.to_s + ");\" ondblclick=\"dehighlight(this)\""
+                      cls_off = ""
+                    end
+                  %>
+
+                  <div class="calendar_div selection_<%=d%> <%=cls%> <%=cls_off%>" id="<%=id_1%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;" <%=events %>></div>
                   <% cls = (@r_days.index(id_2)) ? "selected" : "" %>
-                  <div class="calendar_div selection_<%=d%> <%=cls%>" id="<%=id_2%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px dotted silver; height: 15px; font-size: 9px;" onmouseup="click_end();" onmousedown="click_start(this, <%=d%>)" onmouseover="high_light(this, <%=d%>);" ondblclick="dehighlight(this);"></div>
+                  <div class="calendar_div selection_<%=d%> <%=cls%> <%=cls_off%>" id="<%=id_2%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px dotted silver; height: 15px; font-size: 9px;" <%=events %>></div>
                 <% end %>
                 <div class="selection_<%=d%>" id="d<%=d%>_19:00" style="background-color:silver; padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;"></div>
 
@@ -322,9 +348,7 @@ end -%>
 <% end %>
 <!--
 <hr />
-
 <div>
-
     <h4>Group Classes</h4>
     <p><%= @current_session %> session will have group classes on following days.</p>
     <ol>
@@ -332,15 +356,14 @@ end -%>
         <li><%= g.date.strftime("%m/%d/%Y - %A") %></li>
     <% end %>
     </ol>
-
 </div>
--->
 <hr />
 <h3>Tuition Information</h3> 
 
 <p>
-The tuition will be billed by end of May.
+The tuition will be billed.
 </p>
+-->
 
 <!--
 <p>

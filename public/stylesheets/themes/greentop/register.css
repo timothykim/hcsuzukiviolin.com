@@ -161,6 +161,7 @@ div#calendar table .time_range {
 div.help {
 	position: absolute;
 	margin-left: -200px;
+  width: 190px;
 }
 
 div#calendar textarea {
@@ -198,6 +199,9 @@ div.selected {
     background-color: #fcc !important;
 }
 
+div.offday {
+    background-color: #eee !important;
+}
 
 table.selection_table td {
     padding: 0;
@@ -239,6 +243,7 @@ div#tutorial {
   padding: 20px;
   border: 5px solid silver;
   background-color: black;
+  z-index: 5;
 }
 
 div.register h3.important{
