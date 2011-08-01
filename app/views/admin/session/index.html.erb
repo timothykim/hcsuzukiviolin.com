@@ -8,6 +8,7 @@
 	<th>Session Name</th>
 	<th>First Day</th>
 	<th>Last Day</th>
+	<th>Ready?</th>
 	<th>Edit</th>
 	<th>Del</th>
   </tr>
@@ -21,6 +22,7 @@
 	<td><%= sess.name %></td>
 	<td align="center"><%= sess.first %></td>
 	<td align="center"><%= sess.last %></td>
+  <td align="center"><input type="checkbox" <%= "checked=\"checked\"" if sess.is_ready%> onclick=" var url = '/admin/session/ready/<%=sess.id%>?authenticity_token=' + encodeURIComponent('<%= form_authenticity_token %>') + '&ready=' + ((this.checked) ? 'yes' : 'no'); new Ajax.Request(url); return true;"></td>
 	<td align="center"><%= link_to(image_tag("icons/write.png"), :action => "edit", :id => sess) %></td>
 	<td align="center"><%= link_to(image_tag("icons/x.png"), {:action => "delete", :id => sess}, :confirm => "Are you sure?\nThis action can NOT be undone.") %></td>
   </tr>

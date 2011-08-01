@@ -55,6 +55,17 @@ class Admin::SessionController < AdminController
     @season_opt = "<option value=\"Spring\" #{season[0]}>Spring</option><option value=\"Summer\" #{season[1]}>Summer</option><option value=\"Fall\" #{season[2]}>Fall</option>"
     @registration_type_opt = "<option value=\"0\" #{reg_type[0]}>Per Day of the Week</option><option value=\"1\" #{reg_type[1]}>Per Each Date</option>"
   end
+
+  def ready
+    sess = Session.find(params[:id])
+    if (params[:ready] == "yes")
+      sess.is_ready = true
+    else
+      sess.is_ready = false
+    end
+    sess.save
+    render :text => "{'success': true}"
+  end
   
   def delete
     if params[:id]

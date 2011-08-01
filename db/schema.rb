@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110304215943) do
+ActiveRecord::Schema.define(:version => 20110801215840) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -197,6 +197,7 @@ ActiveRecord::Schema.define(:version => 20110304215943) do
     t.text    "registration_notes"
     t.integer "registration_type"
     t.date    "due_date"
+    t.boolean "is_ready",           :default => false
   end
 
   create_table "students", :force => true do |t|
