@@ -12,9 +12,6 @@
   <% else %>
 
 
-      <div style="float: right;">
-          <a href="/parents/all_lessons/<%=sess.id%>"><img src="/images/icons/calendar.png" class="icon" /> See All Parent's Schedules</a>
-      </div>
     <% current_user.get_registrations(sess).each do |r| %>
       <div class="student_schedule">
         <h4><%= r.student.to_s %></h4>
@@ -38,6 +35,12 @@
 
               lesson = r.lessons[0].time
               duration = r.lessons[0].duration
+
+            %>
+              <li class="schedule_summary">
+                <%= lesson.strftime("%As at %I:%M%p <br /> for ") + duration.to_s + " minutes" %>
+              </li>
+            <%
 
               i = 1
               while lesson <= sess.last
@@ -72,6 +75,9 @@
         </ol>
       </div>
     <% end %>
+    <div style="clear: both; margin-bottom: 20px;">
+        <a href="/parents/all_lessons/<%=sess.id%>"><img src="/images/icons/calendar.png" class="icon" /> See All Parent's Schedules</a>
+    </div>
 
   <% end %>
 

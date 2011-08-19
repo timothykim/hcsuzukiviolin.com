@@ -18,9 +18,15 @@ div.parent_name {
     color: #89c;
 }
 
+li.schedule_summary {
+  list-style: none;
+  margin-left: -18px;
+  margin-bottom: 20px !important;
+}
+
 li.no_lesson {
   list-style: disc;
-  color: #f88;
+  color: #f00;
 }
 
 div.single_lesson {
@@ -33,10 +39,12 @@ div.lesson_date {
 }
 
 div.student_schedule {
-	width: 200px;
+	width: 180px;
 	float: left;
 	margin-right: 20px;
+  padding-right: 10px;
   height: 300px;
+  overflow: auto;
 }
 
 div.student_schedule h4 {
