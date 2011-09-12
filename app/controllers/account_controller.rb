@@ -72,11 +72,25 @@ class AccountController < ApplicationController
 
   def signup
     redirect_to :action => 'activate' if logged_in?
+
+    #generate random question
+    if session[:stupid_captcha]
+      @question = session[:stupid_captcha]
+    else
+      @question = "#{rand(10)} + #{rand(10)}"
+      session[:stupid_captcha] = @question
+    end
     
     @section_title = "Sign up for an Account"
     
     @user = User.new(params[:user])
     return unless request.post?
+
+    if eval(session[:stupid_captcha]) != params[:stupid_captcha].to_i
+      @user.errors.add("Simple math: ", "Please correct your answer.")
+      return 
+    end
+
     @user.save!
     self.current_user = @user
     
