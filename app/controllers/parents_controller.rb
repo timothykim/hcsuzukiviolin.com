@@ -24,6 +24,13 @@ class ParentsController < ApplicationController
   def group 
     @section_title = "Group Class Information"
     @submenu = global_submenu
+
+    @sessions = Session.find(:all, :conditions => {:is_active => true}, :order => "first DESC")
+    
+    @groups = {}
+    for session in @sessions
+      @groups[session] = SessionDay.find(:all, :conditions => {:group => true, :session_id => session.id}, :order => "date")
+    end
   end
 
   def directory

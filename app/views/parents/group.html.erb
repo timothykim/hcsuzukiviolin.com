@@ -32,6 +32,18 @@
 </style>
 
 
+
+<% @groups.each do |session, classes| %>
+  <h2>Group Class for <%=session.name%></h2>
+  <ol>
+    <% classes.each do |c| %>
+      <li><%=c.date.strftime("%m/%d/%Y - %A")%></li>
+    <% end %>
+  </ol>
+<% end %>
+
+
+<!--
 <h2>2011-2012 Group Classes</h2>
 
 <h3>Calendar</h3>
@@ -125,7 +137,7 @@
 
 
 <br />
-<!--
+
 <h3>Schedule</h3>
 
 

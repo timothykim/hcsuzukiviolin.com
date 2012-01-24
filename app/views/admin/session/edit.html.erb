@@ -7,9 +7,8 @@
 <% end %>
 <div class="form_box">
 	<div class="form_element">
-		<div class="check"><label>Session:</label></div>
-		<%= select_tag("session_name", @season_opt) %>
-		<%= date_select("csession_year", "year", :start_year => 2008, :order => [:year], :default => {:year => @year}) %>
+		<div class="check"><label>Session Name:</label></div>
+		<%= text_field("csession", "name") %> e.g. Fall 2012, 2011~2012 School Year
 	</div>
 	
 	<div id="dates">

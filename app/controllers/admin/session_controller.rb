@@ -82,7 +82,7 @@ class Admin::SessionController < AdminController
     end
 
     #save the session
-    s.name = params[:session_name] + " " + params[:csession_year]["year(1i)"]
+    s.name = params[:csession][:name]
     s.is_active = params[:active_reg] ? true : false;
     s.first = Date.parse(params[:csession]["first(1i)"] + "/" + params[:csession]["first(2i)"] + "/" + params[:csession]["first(3i)"])
     s.last = Date.parse(params[:csession]["last(1i)"] + "/" + params[:csession]["last(2i)"] + "/" + params[:csession]["last(3i)"])
