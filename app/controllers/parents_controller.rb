@@ -85,6 +85,12 @@ class ParentsController < ApplicationController
     @submenu = global_submenu
 
     @sessions = Session.find(:all, :conditions => {:is_active => true}, :order => "first DESC")
+
+    @parent = current_user
+    if params[:p]
+      @parent = User.find(params[:p])
+    end
+
   end
 
   def all_lessons

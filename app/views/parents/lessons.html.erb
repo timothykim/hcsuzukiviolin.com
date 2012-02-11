@@ -12,7 +12,7 @@
   <% else %>
 
 
-    <% current_user.get_registrations(sess).each do |r| %>
+    <% @parent.get_registrations(sess).each do |r| %>
       <div class="student_schedule">
         <h4><%= r.student.to_s %></h4>
         <ol>
