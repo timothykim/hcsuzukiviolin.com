@@ -81,7 +81,7 @@
       notes << "Group Class"
     end
 
-    if sess.is_offday? d
+    if sess.is_offday? d or d.wday == 0
       cls << "offday"
       if d.wday > 0 && d >= sess.first && d <= sess.last
         notes << "No Lessons"

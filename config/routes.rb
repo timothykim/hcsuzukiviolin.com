@@ -10,6 +10,17 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/admin/users/:action/:id', :controller => '/admin/users'
   map.resources :users, :path_prefix => '/admin'
 =end
+  
+  map.connect '/admin', :controller => 'admin', :action => 'index'
+  map.connect '/admin/user/:action/:id', :controller => 'admin/user'
+  map.connect '/admin/student/:action/:id', :controller => 'admin/student'
+  map.connect '/admin/school/:action/:id', :controller => 'admin/school'
+  map.connect '/admin/location/:action/:id', :controller => 'admin/location'
+  map.connect '/admin/session/:action/:id', :controller => 'admin/session'
+  map.connect '/admin/lesson/:action/:id', :controller => 'admin/lesson'
+  map.connect '/admin/registration/:action/:id', :controller => 'admin/registration'
+  map.connect '/admin/sbc/:action/:id', :controller => 'admin/sbc'
+  map.connect '/admin/timesheet/:action/:id', :controller => 'admin/timesheet'
 
 
   #album stuff

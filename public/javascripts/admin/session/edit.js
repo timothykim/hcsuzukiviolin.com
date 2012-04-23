@@ -108,7 +108,7 @@ function updateCalendar() {
 					clss += (d.group) ? " group_day" : "";
 					var form = "";
 					var note = "";
-					if (d.in_session && d.dotw != 0) { //skip sundays
+					if (d.in_session) {
 						count[d.dotw]++;
 						
 						var d_str = d.m + "/" + d.d + "/" + d.y;
@@ -116,8 +116,12 @@ function updateCalendar() {
 						var off_checked = (d.off_day) ? 'checked="checked"' : "";
 						var group_checked = (d.group) ? 'checked="checked"' : "";
 						
-						form = '<input ' + off_checked + ' type="checkbox" onclick="processClick(this, \'offday\' , ' + d.dotw + ');" name="offdays[' + d_str + ']" id="offday' + i + '" class="off_box_' + d.dotw + '">' +
+                        if (d.dotw == 0) { //let's not skip sundays
+                            form = '';
+                        } else {
+                          form = '<input ' + off_checked + ' type="checkbox" onclick="processClick(this, \'offday\' , ' + d.dotw + ');" name="offdays[' + d_str + ']" id="offday' + i + '" class="off_box_' + d.dotw + '">' +
 						       '<label for="offday' + i + '"> Off Day</label><br />';
+                        }
 						
 						/* groups are on fridays and saturdays only */
 						if (d.dotw == 1 || d.dotw == 5 || d.dotw == 6) {
@@ -127,7 +131,7 @@ function updateCalendar() {
 						
 						note = '<input type="text" name="notes[' + d_str + ']" class="notes" value="' + d.note + '"/>';
 					}					
-					
+
 					str += "<td class=\"cells " + odd_even + clss + "\"><div class=\"date\">" + d.m + "/" + d.d + "</div>" + note + form + "</td>";
 					if (i % 7 == 6) {
 						str += "</tr>";

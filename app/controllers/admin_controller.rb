@@ -12,9 +12,9 @@ class AdminController < ApplicationController
       { :name => '<img src="/images/icons/users.png" class="icon" /> Users', :link => "/admin/user", :selected => "selected" },
       { :name => '<img src="/images/icons/face-smile.png" class="icon" /> Students', :link => "/admin/student" },
       { :name => '<img src="/images/icons/home.png" class="icon" /> Schools', :link => "/admin/school" },
-      { :name => '<img src="/images/icons/home.png" class="icon" /> Locations', :link => "/admin/location" },
+      { :name => '<img src="/images/icons/globe.png" class="icon" /> Locations', :link => "/admin/location" },
       { :name => '<img src="/images/icons/calendar.png" class="icon" /> Sessions', :link => "/admin/session" },
-      { :name => '<img src="/images/icons/calendar.png" class="icon" /> Lessons', :link => "/admin/lesson" },
+      { :name => '<img src="/images/icons/music.png" class="icon" /> Lessons', :link => "/admin/lesson" },
       { :name => '<img src="/images/icons/write.png" class="icon" /> Registrations', :link => "/admin/registration" },
       # { :name => '<img src="/images/icons/write.png" class="icon" /> CHMS Registrations', :link => "/admin/chms_registration" },
       { :name => '<img src="/images/icons/contact.png" class="icon" /> SBC Registrations', :link => "/admin/sbc" },
@@ -31,6 +31,7 @@ class AdminController < ApplicationController
   end
   
 #below is all legacy stuff
+=begin
   def calendar
     if params[:calendar]
       
@@ -496,5 +497,6 @@ END_OF_EVENT
 
   end
   
+=end
   
 end
