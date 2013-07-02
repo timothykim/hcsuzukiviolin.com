@@ -3,9 +3,10 @@ class ParentsController < ApplicationController
   
   def global_submenu
     [ { :name => "<img src=\"/images/icons/settings.png\" class=\"icon\" /> My Account Setting", :link => "/parents/settings" },
-      { :name => "<img src=\"/images/icons/face-smile.png\" class=\"icon\" /> My Students", :link => "index" },
+      { :name => "<img src=\"/images/icons/exclamation.png\" class=\"icon\" /> 2012~2013 Info", :link => "/parents/index" },
       { :name => "<img src=\"/images/icons/write.png\" class=\"icon\" /> My Registations", :link => "/register" },
       { :name => "<img src=\"/images/icons/music.png\" class=\"icon\" /> My Lessons", :link => "/parents/lessons" },
+      { :name => "<img src=\"/images/icons/resources.png\" class=\"icon\" /> Resources", :link => "/parents/resources" },
       { :name => "<img src=\"/images/icons/calendar.png\" class=\"icon\" /> School Calendars", :link => "/page/calendar" },
       { :name => "<img src=\"/images/icons/group.png\" class=\"icon\" /> Group Class Info", :link => "/parents/group" },
 #      { :name => "<img src=\"/images/icons/announce.png\" class=\"icon\" /> Announcements", :link => "index" },
@@ -18,6 +19,28 @@ class ParentsController < ApplicationController
 
   def index
     @section_title = "For Current Parents"
+    @submenu = global_submenu
+  end
+
+  def rehearsal
+    if params[:students]
+      s = params[:students]
+      s.each do |sid, rid|
+        r = Rehearsal.find(rid)
+        r.student_id = sid
+        r.piece = params[:p][sid]
+        r.save!
+      end
+    end
+
+    @section_title = "Rehearsal Sign-up"
+    @rehearsals = Rehearsal.find(:all, :order => "time")
+    @user = self.current_user
+    @students = @user.students
+  end
+
+  def resources
+    @section_title = "Resources"
     @submenu = global_submenu
   end
 
@@ -85,6 +108,9 @@ class ParentsController < ApplicationController
     @submenu = global_submenu
 
     @sessions = Session.find(:all, :conditions => {:is_active => true}, :order => "first DESC")
+
+    # for pre-registration only
+    #@sessions.shift
 
     @parent = current_user
     if params[:p]

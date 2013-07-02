@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110801215840) do
+ActiveRecord::Schema.define(:version => 20121020045719) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -155,6 +155,14 @@ ActiveRecord::Schema.define(:version => 20110801215840) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "confirmed",       :default => false
+  end
+
+  create_table "rehearsals", :force => true do |t|
+    t.datetime "time"
+    t.integer  "student_id"
+    t.text     "piece"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sbc_registrations", :force => true do |t|

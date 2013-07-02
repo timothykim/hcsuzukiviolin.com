@@ -1,4 +1,6 @@
+log
 log/*.log
+tmp
 tmp/**/*
 db/backups
 .DS_Store

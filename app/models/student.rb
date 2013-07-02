@@ -3,6 +3,7 @@ class Student < ActiveRecord::Base
   has_many :registrations
   has_one :sbc_registration
   has_many :lessons, :through => :registrations
+  has_one :rehearsal
   
   def to_s
     [self.first_name, self.last_name].join(" ")

@@ -1,5 +1,5 @@
 <div id="album_navigation">
 
-	<%= render_partial "album_inner_nav", nil, :locals => { :album => @album, :photo => @photo, :paginated_photos => @paginated_photos, :per_page => @per_page} %>
+  <%= render :partial => "album_inner_nav", :locals => { :album => @album, :photo => @photo, :paginated_photos => @paginated_photos, :per_page => @per_page} %>
 </div>
 

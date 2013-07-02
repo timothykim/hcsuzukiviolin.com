@@ -52,10 +52,14 @@ Event.onDOMReady(function() {
   });
 
   $('check_all').observe('change', function() {
-    if(this.value) {
-      $$('input.bar_selector').each(function(img) { img.checked = "true"; });
+    if(this.checked) {
+      $$('input.bar_selector').each(function(img) {
+        img.checked = "true";
+      });
     } else {
-      $$('input.bar_selector').each(function(img) { img.checked = false; });
+      $$('input.bar_selector').each(function(img) {
+        img.checked = false;
+      });
     }
     toggle_bars();
   });
@@ -73,13 +77,16 @@ function toggle_bars() {
   var selectors = $$('input.bar_selector');
   selectors.each(function(selector) {
     var r_id = selector.title;
-    if(selector.value) {
+    if(selector.checked) {
       $$('img.bar_' + r_id).each(function(img) { img.show(); });
     } else {
       $$('img.bar_' + r_id).each(function(img) { img.hide(); });
     }
   });
 }
+
+
+
 
 function swap_widgets(widgets) {
   widgets.each(function(widget) {
@@ -394,9 +401,14 @@ function show_lesson(lesson) {
               lesson_bar.remove();
               update_count(lesson.r_id);
               var list = $$('div.numbering_' + lesson.r_id);
-              if (list.length > 0) {
-                list[0].next('.prev').style.color = "transparent";
-                list[list.length-1].next('.next').style.color = "transparent";
+              if (list && list.length > 0) {
+                //what does this code do?
+                if (list[0].next('.prev')) {
+                  list[0].next('.prev').style.color = "transparent";
+                }
+                if (list[list.length-1].next('.next')) {
+                  list[list.length-1].next('.next').style.color = "transparent";
+                }
               }
               show_lesson_list(lesson.r_id, lesson.full_name);
             }

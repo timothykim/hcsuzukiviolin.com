@@ -14,8 +14,8 @@ class RegisterController < ApplicationController
     @sessions = Session.find(:all, :conditions => {:is_active => true}, :order => "first DESC")
   end
   
-  def form    
-    name = params[:session].gsub(/-/, ' ')
+  def form 
+    name = params[:session].gsub(/_/, ' ')
     
     @current_session = Session.find(:first, :conditions => { :name => name, :is_active => true })
     
@@ -53,7 +53,7 @@ class RegisterController < ApplicationController
       @registration = @student.current_or_new_registration @current_session
       
 
-      @registration_options = @current_session.registration_options
+      @registration_options = @current_session.registration_options 
 
       @schools = School.find(:all)
 
@@ -61,8 +61,12 @@ class RegisterController < ApplicationController
         @dates = @current_session.session_days.sort {|a,b| a.date <=> b.date} #make sure it's sorted, else doesn't work!
                                                                               # also this should NOT be empty
 
+
+
+        @dates.each {|d| d.offday = true if d.date.wday() == 0 }
+
         #add buffer dates front and end so we start on sunday and end on saturday
-        until @dates[0].date.wday() == 1
+        until @dates[0].date.wday() == 0
           #logger.debug "The object is #{@dates[0].to_yaml}"
           d = @dates[0].dup
           d.date -= 1

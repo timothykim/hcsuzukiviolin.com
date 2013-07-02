@@ -1,38 +1,51 @@
 <style>
-    thead td{
-        font-weight: bold;
-    }
-    td {
-        vertical-align: top;
-        padding-left: 10px;
-        font-size: 0.85em;
-    }
-    td ul {
-        margin: 0;
-        padding-left: 15px;
-    }
-    td ul li {
-        margin: 0;
-        margin-bottom: 4px;
-    }
+  thead td{
+    font-weight: bold;
+  }
+  td {
+    vertical-align: top;
+    padding-left: 10px;
+    font-size: 0.85em;
+  }
+  td ul {
+    margin: 0;
+    padding-left: 15px;
+  }
+  td ul li {
+    margin: 0;
+    margin-bottom: 4px;
+  }
 
-    ol li {
-        margin-bottom: 5px;
-        margin-top: 10px;
-        font-size: 12px;
-    }
+  ol li {
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-size: 12px;
+  }
 
-    ol ul li {
-    }
+  ol ul li {
+  }
 
-    .month {
-        font-size: 1.2em;
-        font-weight: strong;
-    }
+  .month {
+    font-size: 1.2em;
+    font-weight: strong;
+  }
 </style>
 
 
+<div>
+  <h2>Group Class Time</h2>
+  <ul>
+    <li>4:00pm - Pre Twinkles</li>
+    <li>4:30pm - Young Book 1 students</li>
+    <li>5:00-5:45pm - Book 1-2 </li>
+    <li>5:45-6:30pm - Book 3-4</li>
+    <li>6:30-7:00pm - Book 5-7</li>
+  </ul>
 
+</div>
+
+
+<div>
 <% @groups.each do |session, classes| %>
   <h2>Group Class for <%=session.name%></h2>
   <ol>
@@ -41,96 +54,140 @@
     <% end %>
   </ol>
 <% end %>
+</div>
+
 
 
 <!--
+<div>
+  <h2>Fall 2012 Study List</h2>
+
+  <ul>
+    <li>Book 1</li>
+    <ul>
+      <li>Twinkle, Twinkle, Little Star Variations</li>
+      <li>Song of the wind </li>
+      <li>Long Long Ago </li>
+      <li>Etude </li>
+      <li>Minuet 3 </li>
+      <li>Gavotte by Gossec</li>
+    </ul>
+    <li>Book 2</li>
+    <ul>
+      <li>Musette</li>
+      <li>Hunter's Chorus from "Der Freisch&#252;tz"</li>
+      <li>The Two Grenadiers</li>
+      <li>Gavotte by Lully</li>
+    </ul>
+    <li>Book 3</li>
+    <ul>
+      <li>Minuet by Bach</li>
+      <li>Humoresque </li>
+      <li>Bourree by Bach</li>
+    </ul>
+    <li>Book 4</li>
+    <ul>
+      <li>Vivaldi A minor Concerto Ist mvt: Allegro</li>
+      <li>Perpetual Motion - Little Suite No. 6</li>
+    </ul>
+    <li>Book 5 </li>
+    <ul>
+      <li>Gigue from Sonata in d minor - Allegro vivace</li>
+    </ul>
+    <li>Book 6</li>
+    <ul>
+      <li>La Folia by Corelli</li>
+    </ul>
+  </ul>
+</div>
+
 <h2>2011-2012 Group Classes</h2>
 
 <h3>Calendar</h3>
 
 <table width="100%"><tr><td width="33%">
 
-<h3>2011</h3>
+      <h3>2011</h3>
 
-</td><td width="33%">
+      </td><td width="33%">
 
-<h3>2012</h3>
-</td>
+      <h3>2012</h3>
+    </td>
 
-<td width="33%">
-</td>
+    <td width="33%">
+    </td>
 
-</tr>
-<tr><td>
+  </tr>
+  <tr><td>
 
-<ul>
-    <li class="month">September</li>
-    <ul>
-        <li>10th, Saturday</li>
-        <li>17th, Saturday</li>
-        <li>30th, Friday</li>
-    </ul>
-    <li class="month">October</li>
-    <ul>
-        <li>15nd, Saturday</li>
-        <li>22th, Saturday</li>
-    </ul>
-    <li class="month">November</li>
-    <ul>
-        <li>4th, Friday</li>
-        <li>12th, Saturday</li>
-        <li>19th, Saturday</li>
-    </ul>
-    <li class="month">December</li>
-    <ul>
-        <li>3rd, Saturday</li>
-        <li>9th, Friday</li>
-        <li>17th, Saturday</li>
-    </ul>
-</ul>
+      <ul>
+        <li class="month">September</li>
+        <ul>
+          <li>10th, Saturday</li>
+          <li>17th, Saturday</li>
+          <li>30th, Friday</li>
+        </ul>
+        <li class="month">October</li>
+        <ul>
+          <li>15nd, Saturday</li>
+          <li>22th, Saturday</li>
+        </ul>
+        <li class="month">November</li>
+        <ul>
+          <li>4th, Friday</li>
+          <li>12th, Saturday</li>
+          <li>19th, Saturday</li>
+        </ul>
+        <li class="month">December</li>
+        <ul>
+          <li>3rd, Saturday</li>
+          <li>9th, Friday</li>
+          <li>17th, Saturday</li>
+        </ul>
+      </ul>
 
-</td><td>
+      </td><td>
 
-<ul>
-    <li class="month">January</li>
-    <ul>
-        <li>6th, Friday</li>
-        <li>21st, Saturday</li>
-        <li>28th, Saturday</li>
-    </ul>
-    <li class="month">February</li>
-    <ul>
-        <li>3rd, Friday</li>
-        <li>11th, Saturday</li>
-        <li>25th, Saturday</li>
-    </ul>
-    <li class="month">March</li>
-    <ul>
-        <li>2nd, Friday</li>
-        <li>17th, Saturday</li>
-        <li>23th, Friday</li>
-    </ul>
-</ul>
+      <ul>
+        <li class="month">January</li>
+        <ul>
+          <li>6th, Friday</li>
+          <li>21st, Saturday</li>
+          <li>28th, Saturday</li>
+        </ul>
+        <li class="month">February</li>
+        <ul>
+          <li>3rd, Friday</li>
+          <li>11th, Saturday</li>
+          <li>25th, Saturday</li>
+        </ul>
+        <li class="month">March</li>
+        <ul>
+          <li>2nd, Friday</li>
+          <li>17th, Saturday</li>
+          <li>23th, Friday</li>
+        </ul>
+      </ul>
 
-</td><td>
-<ul>
-    <li class="month">April</li>
-    <ul>
-        <li>14th, Saturday</li>
-        <li>21st, Saturday</li>
-    </ul>
-    <li class="month">May</li>
-    <ul>
-        <li>4th, Friday</li>
-        <li>12th, Saturday</li>
-        <li>19th, Saturday</li>
-    </ul>
-    <li class="month">June</li>
-    <ul>
-        <li>1st, Friday</li>
-        <li>9th, Saturday</li>
-    </ul>
-</ul>
+      </td><td>
+      <ul>
+        <li class="month">April</li>
+        <ul>
+          <li>14th, Saturday</li>
+          <li>21st, Saturday</li>
+        </ul>
+        <li class="month">May</li>
+        <ul>
+          <li>4th, Friday</li>
+          <li>12th, Saturday</li>
+          <li>19th, Saturday</li>
+        </ul>
+        <li class="month">June</li>
+        <ul>
+          <li>1st, Friday</li>
+          <li>9th, Saturday</li>
+        </ul>
+      </ul>
 
 
 </td></tr></table>
@@ -142,189 +199,189 @@
 
 
 <table class="default_table" style="width:300px; float: left; margin-right: 10px;">
-    <thead>
-        <tr>
-            <td colspan="3" align="center" bgcolor="#B5EAAA">
-                <h2>Friday Group Class Schedule</h2>
-            </td>
-        </tr>
-        <tr>
-            <td width="20%"  bgcolor="#FFF380">
-                Time
-            </td>
-            <td width="20%" bgcolor="#FFF380">
-                Group
-            </td>
-            <td bgcolor="#FFF380">
-                Students
-            </td>
-        </tr>
-    </thead>
+  <thead>
+    <tr>
+      <td colspan="3" align="center" bgcolor="#B5EAAA">
+        <h2>Friday Group Class Schedule</h2>
+      </td>
+    </tr>
+    <tr>
+      <td width="20%"  bgcolor="#FFF380">
+        Time
+      </td>
+      <td width="20%" bgcolor="#FFF380">
+        Group
+      </td>
+      <td bgcolor="#FFF380">
+        Students
+      </td>
+    </tr>
+  </thead>
 
-    <tbody>
-        <tr>
-            <td bgcolor="#DDDFFF"> 4:30pm </td> <td bgcolor="#EDEDFF"> Twinkles </td>
-            <td>
-                Favaro, Kate<br />
-                Lian, Daniel<br />
-                Perez, Alex<br />
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#DDDFFF"> 5:00pm </td> <td bgcolor="#EDEDFF"> Book 1A<br />Book 1B<br />Book 2 </td>
-            <td>
-                Aliaga, Grace<br />
-                Allen, Cate<br />
-                Allen, Claire<br />
-                Barbosa, David<br />
-                Brown, Elizabeth<br />
-                Burnett, Nora<br />
-                Davis, Lee<br />
-                Dunch, Catherine<br />
-                Dunch, Elisabeth<br />
-                Ehlers, Amelia<br />
-                Favaro, Robbie<br />
-                Fitzgerald, Aidan<br />
-                Fitzgerald, Robert<br />
-                Fitzgerald, Samantha<br />
-                Frigerio, Isabela<br />
-                Garces, Nina<br />
-                Holran, Gaarison<br />
-                Johnson, Audrey<br />
-                Kim, Alex<br />
-                Kim, Luke<br />
-                Kim, Sarah<br />
-                Kondapalli, Medha<br />
-                Kushan, Julia<br />
-                Lian, Joshua<br />
-                Markham, Kayla<br />
-                Mellon, Emerson<br />
-                Neil, Ishbel<br />
-                Nelson, Malina<br />
-                Pandula, Michael<br />
-                Pomponio, Daisy<br />
-                Shrewsbury, Jessica<br />
-                Southfield, Amanda<br />
-                Taiaferro, Caleb<br />
-                Ulses, Anna Grace<br />
-                Vu, Sophie<br />
-                Wong, Abby<br />
-                Wong, Alex<br />
-                Zerrusen, Ashley<br />
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#DDDFFF"> 5:45pm </td> <td bgcolor="#EDEDFF"> Book 3<br />Book 4 </td>
-            <td>
-                Baban, Adie<br/>
-                Booker, Aaliyah <br/>
-                Grossman, Aaron<br/>
-                <em>*Book 1-2 harmonies need to be at every 5pm class.</em>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#DDDFFF"> 6:15pm </td> <td bgcolor="#EDEDFF"> Book 5<br /> and up </td>
-            <td>
-                Baban, Ace<br />
-                Baban, Troy<br />
-            </td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <td bgcolor="#DDDFFF"> 4:30pm </td> <td bgcolor="#EDEDFF"> Twinkles </td>
+      <td>
+        Favaro, Kate<br />
+        Lian, Daniel<br />
+        Perez, Alex<br />
+      </td>
+    </tr>
+    <tr>
+      <td bgcolor="#DDDFFF"> 5:00pm </td> <td bgcolor="#EDEDFF"> Book 1A<br />Book 1B<br />Book 2 </td>
+      <td>
+        Aliaga, Grace<br />
+        Allen, Cate<br />
+        Allen, Claire<br />
+        Barbosa, David<br />
+        Brown, Elizabeth<br />
+        Burnett, Nora<br />
+        Davis, Lee<br />
+        Dunch, Catherine<br />
+        Dunch, Elisabeth<br />
+        Ehlers, Amelia<br />
+        Favaro, Robbie<br />
+        Fitzgerald, Aidan<br />
+        Fitzgerald, Robert<br />
+        Fitzgerald, Samantha<br />
+        Frigerio, Isabela<br />
+        Garces, Nina<br />
+        Holran, Gaarison<br />
+        Johnson, Audrey<br />
+        Kim, Alex<br />
+        Kim, Luke<br />
+        Kim, Sarah<br />
+        Kondapalli, Medha<br />
+        Kushan, Julia<br />
+        Lian, Joshua<br />
+        Markham, Kayla<br />
+        Mellon, Emerson<br />
+        Neil, Ishbel<br />
+        Nelson, Malina<br />
+        Pandula, Michael<br />
+        Pomponio, Daisy<br />
+        Shrewsbury, Jessica<br />
+        Southfield, Amanda<br />
+        Taiaferro, Caleb<br />
+        Ulses, Anna Grace<br />
+        Vu, Sophie<br />
+        Wong, Abby<br />
+        Wong, Alex<br />
+        Zerrusen, Ashley<br />
+      </td>
+    </tr>
+    <tr>
+      <td bgcolor="#DDDFFF"> 5:45pm </td> <td bgcolor="#EDEDFF"> Book 3<br />Book 4 </td>
+      <td>
+        Baban, Adie<br/>
+        Booker, Aaliyah <br/>
+        Grossman, Aaron<br/>
+        <em>*Book 1-2 harmonies need to be at every 5pm class.</em>
+      </td>
+    </tr>
+    <tr>
+      <td bgcolor="#DDDFFF"> 6:15pm </td> <td bgcolor="#EDEDFF"> Book 5<br /> and up </td>
+      <td>
+        Baban, Ace<br />
+        Baban, Troy<br />
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 <table class="default_table" style="width:300px;">
-    <thead>
-        <tr>
-            <td colspan="3" align="center" bgcolor="#B5EAAA">
-                <h2>Saturday Group Class Schedule</h2>
-            </td>
-        </tr>
-        <tr>
-            <td width="20%"  bgcolor="#FFF380">
-                Time
-            </td>
-            <td width="20%" bgcolor="#FFF380">
-                Group
-            </td>
-            <td bgcolor="#FFF380">
-                Students
-            </td>
-        </tr>
-    </thead>
+  <thead>
+    <tr>
+      <td colspan="3" align="center" bgcolor="#B5EAAA">
+        <h2>Saturday Group Class Schedule</h2>
+      </td>
+    </tr>
+    <tr>
+      <td width="20%"  bgcolor="#FFF380">
+        Time
+      </td>
+      <td width="20%" bgcolor="#FFF380">
+        Group
+      </td>
+      <td bgcolor="#FFF380">
+        Students
+      </td>
+    </tr>
+  </thead>
 
-    <tbody>
-        <tr>
-            <td bgcolor="#DDDFFF"> 09:30am </td> <td bgcolor="#EDEDFF"> Twinkles </td>
-            <td>
-                Favaro, Kate<br />
-                Lian, Daniel<br />
-                Perez, Alex<br />
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#DDDFFF"> 10:00am </td> <td bgcolor="#EDEDFF"> Book 1A </td>
-            <td>
-                Aliaga, Grace<br />
-                Allen, Cate<br />
-                Burnett, Nora<br />
-                Davis, Lee<br />
-                Dunch, Catherine<br />
-                Ehlers, Amelia<br />
-                Favaro, Robbie<br />
-                Garces, Nina<br />
-                Holran, Gaarison<br />
-                Johnson, Audrey<br />
-                Kim, Sarah<br />
-                Kondapalli, Medha<br />
-                Markham, Kayla<br />
-                Neil, Ishbel<br />
-                Pomponio, Daisy<br />
-                Taliaferro, Caleb<br />
-                Wong, Alex<br />
-                Wong, Abby<br />
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#DDDFFF"> 10:30pm </td> <td bgcolor="#EDEDFF"> Book 1B<br />Book 2 </td>
-            <td>
-                Dunch, Elisabeth<br />
-                Allen, Claire<br />
-                Barbosa, David<br />
-                Brown, Elizabeth<br />
-                Fitzgerald, Aidan<br />
-                Fitzgerald, Robert<br />
-                Fitzgerald, Samantha<br />
-                Frigerio, Isabela<br />
-                Kim, Alex<br />
-                Kim, Luke<br />
-                Kushan, Julia<br />
-                Lian, Joshua<br />
-                Mellon, Emerson<br />
-                Nelson, Malina<br />
-                Pandula, Michael<br />
-                Shrewsbury, Jessica<br />
-                Southfield, Amanda<br />
-                Ulses, Anna Grace<br />
-                Vu, Sophie<br />
-                Zerrusen, Ashley<br />
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#DDDFFF"> 11:00am </td> <td bgcolor="#EDEDFF"> Book 3<br />Book 4 </td>
-            <td>
-                Baban, Adie<br/>
-                Booker, Aaliyah <br/>
-                Grossman, Aaron<br/>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#DDDFFF"> 11:30am </td> <td bgcolor="#EDEDFF"> Book 5<br /> and up </td>
-            <td>
-                Baban, Ace<br />
-                Baban, Troy<br />
-            </td>
-        </tr>
-    </tbody>
+  <tbody>
+    <tr>
+      <td bgcolor="#DDDFFF"> 09:30am </td> <td bgcolor="#EDEDFF"> Twinkles </td>
+      <td>
+        Favaro, Kate<br />
+        Lian, Daniel<br />
+        Perez, Alex<br />
+      </td>
+    </tr>
+    <tr>
+      <td bgcolor="#DDDFFF"> 10:00am </td> <td bgcolor="#EDEDFF"> Book 1A </td>
+      <td>
+        Aliaga, Grace<br />
+        Allen, Cate<br />
+        Burnett, Nora<br />
+        Davis, Lee<br />
+        Dunch, Catherine<br />
+        Ehlers, Amelia<br />
+        Favaro, Robbie<br />
+        Garces, Nina<br />
+        Holran, Gaarison<br />
+        Johnson, Audrey<br />
+        Kim, Sarah<br />
+        Kondapalli, Medha<br />
+        Markham, Kayla<br />
+        Neil, Ishbel<br />
+        Pomponio, Daisy<br />
+        Taliaferro, Caleb<br />
+        Wong, Alex<br />
+        Wong, Abby<br />
+      </td>
+    </tr>
+    <tr>
+      <td bgcolor="#DDDFFF"> 10:30pm </td> <td bgcolor="#EDEDFF"> Book 1B<br />Book 2 </td>
+      <td>
+        Dunch, Elisabeth<br />
+        Allen, Claire<br />
+        Barbosa, David<br />
+        Brown, Elizabeth<br />
+        Fitzgerald, Aidan<br />
+        Fitzgerald, Robert<br />
+        Fitzgerald, Samantha<br />
+        Frigerio, Isabela<br />
+        Kim, Alex<br />
+        Kim, Luke<br />
+        Kushan, Julia<br />
+        Lian, Joshua<br />
+        Mellon, Emerson<br />
+        Nelson, Malina<br />
+        Pandula, Michael<br />
+        Shrewsbury, Jessica<br />
+        Southfield, Amanda<br />
+        Ulses, Anna Grace<br />
+        Vu, Sophie<br />
+        Zerrusen, Ashley<br />
+      </td>
+    </tr>
+    <tr>
+      <td bgcolor="#DDDFFF"> 11:00am </td> <td bgcolor="#EDEDFF"> Book 3<br />Book 4 </td>
+      <td>
+        Baban, Adie<br/>
+        Booker, Aaliyah <br/>
+        Grossman, Aaron<br/>
+      </td>
+    </tr>
+    <tr>
+      <td bgcolor="#DDDFFF"> 11:30am </td> <td bgcolor="#EDEDFF"> Book 5<br /> and up </td>
+      <td>
+        Baban, Ace<br />
+        Baban, Troy<br />
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 -->

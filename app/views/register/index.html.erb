@@ -46,9 +46,9 @@
                   <!-- No longer accepting registrations. -->
 				<% #else %>
 					<% if student.registered? sess %>
-                        <a href="/register/for/<%= sess.name.gsub(/ /, '-') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Re-submit Registration</a>
+                        <a href="/register/for/<%= sess.name.gsub(/ /, '_') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Re-submit Registration</a>
 					<% else %>
-						<a href="/register/for/<%= sess.name.gsub(/ /, '-') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Register!</a>
+						<a href="/register/for/<%= sess.name.gsub(/ /, '_') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Register!</a>
 					<% end %>
 				<% #end %>
 			</td>
@@ -57,7 +57,7 @@
 		</tbody>
 	</table>
 	<div style="text-align: right; margin-top: 20px;">
-		<button class="iconbutton" onclick="window.location='/register/for/<%= sess.name.gsub(/ /, '-') %>'" type="button"><img src="/images/icons/write.png" class="icon"> Register a new student!</button>
+		<button class="iconbutton" onclick="window.location='/register/for/<%= sess.name.gsub(/ /, '_') %>'" type="button"><img src="/images/icons/write.png" class="icon"> Register a new student!</button>
 	</div>
 	
 </div>

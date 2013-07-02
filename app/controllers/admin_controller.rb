@@ -29,6 +29,11 @@ class AdminController < ApplicationController
     @section_title = "Administration"
     @submenu = global_submenu
   end
+
+  def rehearsals
+    @section_title = "Rehearsals"
+    @rehearsals = Rehearsal.find(:all, :order => "time")
+  end
   
 #below is all legacy stuff
 =begin

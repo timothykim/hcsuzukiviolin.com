@@ -255,6 +255,9 @@ class PageController < ApplicationController
     @section_title = "School Calendar"
     @submenu = global_submenu
     @sessions = Session.find(:all, :conditions => {:is_active => true}, :order => "first DESC")
+
+    #for temporary remove 
+    #@sessions.shift
   end
 
   def resource

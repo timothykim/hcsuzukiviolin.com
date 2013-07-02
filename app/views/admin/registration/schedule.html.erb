@@ -242,7 +242,7 @@ if @current_session.registration_type == Session::DATE_TYPE
           bgcolor = "white"
         end  
     %>
-                <td onclick="Effect.ScrollTo('<%=week_no+1%>');" class="summary_cell <%=cls%>" style="background-color: <%=bgcolor%>" id="d-<%=today.to_s%>">
+                <td onclick="Effect.ScrollTo('week<%=week_no+1%>');" class="summary_cell <%=cls%>" style="background-color: <%=bgcolor%>; cursor: pointer;" id="d-<%=today.to_s%>">
                 </td>
     <% end #for day in (1..6) -%>
           </tr>

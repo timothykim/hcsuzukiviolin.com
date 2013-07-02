@@ -213,6 +213,7 @@ end -%>
 			<thead>
 				<tr>
 					<th>W</th>
+                    <th>Sunday</th>
 					<th>Monday</th>
 					<th>Tuesday</th>
 					<th>Wednesday</th>
@@ -223,7 +224,7 @@ end -%>
 			</thead>
 			<tbody>
 <%		@dates.each_with_index do |today, i| -%>
-<%			if i % 6 == 0 #index % 6 does NOT corespond to day of the week -%>
+<%			if i % 7 == 0 #index % 6 does NOT corespond to day of the week -%>
 				<tr>
 					<td class="week_no"><%= (i / 6)+1 %></td>
 <%			end #if -%>
@@ -238,7 +239,7 @@ end -%>
 <%			grpd = (today.group) ? "<div class=\"group_day\">Group Class</div>" : "<div class=\"group_day\"><br /></div>"  -%>
 
 					<td valign="top" class="cell <%= clas %>"><div class="date"><%= today.date.strftime("%m/%d") %></div><div class="notes"><%= today.note %><br /></div><div class="time_range_form"><%= form %></div><%= grpd %></td>
-<%			if i % 6 == 5 -%>
+<%			if i % 7 == 6 -%>
 				</tr>
 <%			end #if -%>
 <%		end #each -%>
@@ -284,12 +285,11 @@ end -%>
       <thead>
           <tr>
               <th>T</th>
-              <th width="19%">Monday<br /><small>(32 lessons)</small></th>
-              <th width="19%">Tuesday<br /><small>(34 lessons)</small></th>
-              <th width="19%">Wednesday<br /><small>(34 lessons)</small></th>
-              <th width="19%">Thursday<br /><small>(34 lessons)</small></th>
-              <th width="12%">Friday<br /><small>(Group classes)</th>
-              <th width="12%">Saturday<br /><small>(Group classes)</th>
+              <th width="20%">Monday</th>
+              <th width="20%">Tuesday</th>
+              <th width="20%">Wednesday</th>
+              <th width="20%">Thursday</th>
+              <th width="20%">Friday</th>
           </tr>
       </thead>
       <tbody>
@@ -305,9 +305,9 @@ end -%>
                 <div style="border-top: 1px solid silver; height: 15px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);">7pm</div>
             </td>
 
-            <% offhours = [[10, 13], [10, 13], [10, 13], [10, 13], [7, 18], [7, 18]] #[ day, start, end] %>
+            <% offhours = [[10, 14], [10, 14], [10, 12], [10, 14], [10, 18]] #[ day, start, end] %>
 
-            <% 6.times do |d| %>
+            <% 5.times do |d| %>
               <td valign="top">
 
                 <% for i in (7..18) %>
@@ -316,7 +316,7 @@ end -%>
 
                   <!-- this is for the group class hours -->
                   <% bg = "#FAF8CC !important" if ((d == 4) && (i == 17 || i == 18)) %>
-                  <% bg = "#FAF8CC !important" if ((d == 5) && (i == 10 || i == 11)) %>
+                  <% #bg = "#FAF8CC !important" if ((d == 5) && (i == 10 || i == 11)) %>
 
                   <% h = (i.to_s.length == 1) ? "0#{i}" : i.to_s %>
                   <% id_1 = "d#{d}_#{h}:00" %>
@@ -335,13 +335,19 @@ end -%>
 
                   <div class="calendar_div selection_<%=d%> <%=cls%> <%=cls_off%>" id="<%=id_1%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;" <%=events %>></div>
                   <% cls = (@r_days.index(id_2)) ? "selected" : "" %>
+                  
+                  <%
+                    # for 2012~2013 only: 9:30 off
+                    if i == 9
+                      events = ""
+                      cls_off = "offday"
+                    end
+                  %>
 
                   <!-- this is for the group class hours -->
                   <% text = "" %>
                   <% bg = "#FAF8CC !important" if ((d == 4) && (i == 16)) %>
                   <% text = "Group class" if ((d == 4) && (i == 16)) %>
-                  <% bg = "#FAF8CC !important" if ((d == 5) && (i == 9)) %>
-                  <% text = "Group class" if ((d == 5) && (i == 9)) %>
 
                   <div class="calendar_div selection_<%=d%> <%=cls%> <%=cls_off%>" id="<%=id_2%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px dotted silver; height: 15px; font-size: 9px;" <%=events %>><%=text%></div>
                 <% end %>
@@ -395,14 +401,14 @@ The tuition includes 30 individual lessons and 30 group classes. Tuition for eac
 <h4>Photograph Agreement</h4>
 
 <div class="agreement"> 
-<input type="checkbox" name="photo_agreement"> By checking this box, 
-I do NOT authorize the use and reproduction by the Suzuki Violin Program at Falls Church, or anyone authorized by the Suzuki Violin Program at Falls Church or its representatives of any photographs taken of the student registered on this form at Suzuki Violin Program premises or activities. In short, do not use any photos of my student for the school.
+<input type="checkbox" checked="checked" name="photo_agreement"> By checking this box, 
+I authorize the use and reproduction by the Suzuki Violin Program at Falls Church, or anyone authorized by the Suzuki Violin Program at Falls Church or its representatives of any photographs taken of the student registered on this form at Suzuki Violin Program premises or activities. In short, do not use any photos of my student for the school.
 </div>
 
 
 <h4>Policy Agreement</h4>
 <div class="agreement"> 
-<input type="checkbox" name="user_agreement" onclick="if(this.checked) { $('form_submit').removeAttribute('disabled'); } else { $('form_submit').setAttribute('disabled', 'disabled');}"/> By checking this box,
+  <!-- <input type="checkbox" name="user_agreement" onclick="if(this.checked) { $('form_submit').removeAttribute('disabled'); } else { $('form_submit').setAttribute('disabled', 'disabled');}"/> --> By submitting this registration,
 I hereby agree to abided by any and all policies of the Hannah Choi Suzuki Violin Program as stated in the Handbook, and I accept responsibility for all tuition and fees incurred.
 </div>
 
@@ -411,7 +417,7 @@ I hereby agree to abided by any and all policies of the Hannah Choi Suzuki Violi
 
 
 <div style="text-align: right; margin-top: 20px;">
-<button class="iconbutton" disabled="disabled" id="form_submit" type="submit"><img src="/images/icons/write.png" class="icon"> Submit this Registration</button>
+<button class="iconbutton"  id="form_submit" type="submit"><img src="/images/icons/write.png" class="icon"> Submit this Registration</button>
 </div>
 
 
