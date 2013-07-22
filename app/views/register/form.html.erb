@@ -305,17 +305,17 @@ end -%>
                 <div style="border-top: 1px solid silver; height: 15px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);">7pm</div>
             </td>
 
-            <% offhours = [[10, 14], [10, 14], [10, 12], [10, 14], [10, 18]] #[ day, start, end] %>
+            <% offhours = [[7, 14], [10, 14], [10, 13], [10, 14], [7, 19]] #[ day, start, end] %>
 
             <% 5.times do |d| %>
               <td valign="top">
 
-                <% for i in (7..18) %>
+                <% for i in (7..19) %>
                   <% #highlight green %>
                   <% bg = (d == 0 || d == 1 ) ? "#cfc" : "" %>
 
                   <!-- this is for the group class hours -->
-                  <% bg = "#FAF8CC !important" if ((d == 4) && (i == 17 || i == 18)) %>
+                  <% bg = "#FAF8CC !important" if ((d == 4) && (i >= 16 && i <= 18)) %>
                   <% #bg = "#FAF8CC !important" if ((d == 5) && (i == 10 || i == 11)) %>
 
                   <% h = (i.to_s.length == 1) ? "0#{i}" : i.to_s %>
@@ -332,13 +332,14 @@ end -%>
                       cls_off = ""
                     end
                   %>
+                  <% text = "Group class" if ((d == 4) && (i == 16)) %>
 
-                  <div class="calendar_div selection_<%=d%> <%=cls%> <%=cls_off%>" id="<%=id_1%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;" <%=events %>></div>
+                  <div class="calendar_div selection_<%=d%> <%=cls%> <%=cls_off%>" id="<%=id_1%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;" <%=events %>><%=text%></div>
                   <% cls = (@r_days.index(id_2)) ? "selected" : "" %>
                   
                   <%
                     # for 2012~2013 only: 9:30 off
-                    if i == 9
+                    if i == 19
                       events = ""
                       cls_off = "offday"
                     end
@@ -347,7 +348,6 @@ end -%>
                   <!-- this is for the group class hours -->
                   <% text = "" %>
                   <% bg = "#FAF8CC !important" if ((d == 4) && (i == 16)) %>
-                  <% text = "Group class" if ((d == 4) && (i == 16)) %>
 
                   <div class="calendar_div selection_<%=d%> <%=cls%> <%=cls_off%>" id="<%=id_2%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px dotted silver; height: 15px; font-size: 9px;" <%=events %>><%=text%></div>
                 <% end %>
