@@ -1,0 +1,12 @@
+
+<ul>
+  <% for r in @rehearsals %>
+    <li>
+      <%= r.student_id %> -
+      <%= r.time.strftime("%a %m/%e, %I:%M %p") %> -
+      <% if r.student %>
+        <%= r.student.first_name %> <%= r.student.last_name %>: <%= r.piece %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

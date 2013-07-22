@@ -1,0 +1,55 @@
+
+<% if @sess.registration_type == Session::DATE_TYPE %>
+<h3><%=@sess.name%></h3>
+<table class="admin_table">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Duration</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody id="lesson_body">
+    <% j = 1 %>
+    <% @lessons.each_with_index do |lesson, i| %>
+        <% if i == 0 or lesson.time.strftime("%U") != @lessons[i-1].time.strftime("%U")%>
+            <tr><td colspan="5" bgcolor="Ivory" style="text-align:center;"><strong>Week <%=j%></strong></td></tr>
+            <% j += 1 %>
+        <% end %>
+
+		<tr class="<%= cycle("even", "odd") -%>">
+            <td><%=lesson.registration.student%></td>
+            <td><%=lesson.time.strftime("%a %m/%d/%Y")%></td>
+            <td><%=lesson.time.strftime("%I:%M%p")%></td>
+            <td><%=lesson.duration%> minutes</td>
+            <td><%= select("lesson[#{lesson.id}]", "location_id", Location.all.collect { |l| [ l.school.name + " " + l.room, l.id ] }, { :include_blank => true, :selected => lesson.location_id }) %></td> 
+        </tr>
+    <% end %>
+    </tbody>
+</table>
+
+
+<script>
+    var selections = $$('#lesson_body select');
+
+    selections.each(function (selection) {
+        selection.observe('change', function (event) {
+            var that = this;
+            if (selection.value) {
+                var lesson_id = /\d+/.exec(selection.readAttribute('id'))[0];
+                var location_id = selection.value;
+                var url = '/admin/lesson/save_location/'+lesson_id+'?' + 'location_id=' + location_id;
+                new Ajax.Request(url);
+            }
+        });
+    });
+</script>
+
+
+<% else %>
+
+    lesson listing is not ready for this session type yet.. :(
+
+<% end %>

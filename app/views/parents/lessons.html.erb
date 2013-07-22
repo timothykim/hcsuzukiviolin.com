@@ -1,0 +1,87 @@
+<h2>Lesson Schedules for <%= @parent.firstname %> <%=@parent.lastname%> </h2>
+<div>
+  <a href="/page/calendar"><img src="/images/icons/calendar.png" class="icon" /> See Semester Calendar</a>
+</div>
+  <hr />
+
+<% @sessions.each do |sess| %>
+  <h3><%= sess.name %></h3>
+
+  <% if sess.is_ready == false %>
+    The schedule for this semester session is not yet ready. Please check back later. Thank you.
+  <% else %>
+
+
+    <% @parent.get_registrations(sess).each do |r| %>
+      <div class="student_schedule">
+        <h4><%= r.student.to_s %></h4>
+        <ol>
+        <% if sess.registration_type == Session::DATE_TYPE %>
+          <% r.lessons.each do |lesson| %>
+          <li>
+              <div class="lesson_date"><%= lesson.get_date %> <%= "@ " + lesson.location.school.name + " " + lesson.location.room if lesson.location %></div>
+            <div class="lesson_time"><%= lesson.get_time %></div>
+          </li>
+          <% end%>
+        <% else %>
+            <% #if recuring lessons, then let's figure out every lesson!
+            # assume one lesson per week
+
+            if r.lessons.count == 0 
+            %>
+              <small>No lesson has been scheduled.</small>
+            <%
+            else
+
+              lesson = r.lessons[0].time
+              duration = r.lessons[0].duration
+
+            %>
+              <li class="schedule_summary">
+                <%= lesson.strftime("%As at %I:%M%p <br /> for ") + duration.to_s + " minutes" %>
+              </li>
+            <%
+
+              i = 1
+              while lesson <= sess.last
+                if (sess.is_offday? lesson) || (sess.is_groupday?(lesson) && lesson.hour > 12)
+                  note = sess.get_note(lesson)
+                  if (sess.is_groupday?(lesson)) && note == ""
+                    note += "Due to group class"
+                  end
+                  unless note == ""
+                    note = "- " + note
+                  end
+              %>
+                      <li class="no_lesson">
+                        <div class="lesson_date"><%= lesson.strftime("%a, %b. %d") %></div>
+                        <div class="lesson_time ">No Lesson <%= note %></div>
+                      </li>
+              <%
+                else
+              %>
+                      <li value="<%= i %>">
+                        <div class="lesson_date"><%= lesson.strftime("%a, %b. %d") %></div>
+                        <div class="lesson_time"><%= lesson.strftime("%I:%M%p") + " - " + (lesson + (duration * 60)).strftime("%I:%M%p") %></div>
+                      </li>
+              <%
+                  i += 1
+                end
+                lesson = Time.parse((lesson.to_date + 7).to_s + " " + lesson.strftime("%H:%M"))
+              end
+            end
+            %>
+        <% end %>
+        </ol>
+      </div>
+    <% end %>
+    <div style="clear: both; margin-bottom: 20px;">
+        <a href="/parents/all_lessons/<%=sess.id%>"><img src="/images/icons/calendar.png" class="icon" /> See All Parent's Schedules</a>
+    </div>
+
+  <% end %>
+
+  <div class="clear"></div>
+  <hr />
+<% end %>
+

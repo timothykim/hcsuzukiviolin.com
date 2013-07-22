@@ -1,9 +1,16 @@
 class AdminController < ApplicationController
+<<<<<<< HEAD
   include AuthenticatedSystem
   include OptionDictionary
 
   before_filter :store_location
   before_filter :login_from_cookie
+=======
+#  include AuthenticatedSystem
+
+  before_filter :store_location
+#  before_filter :login_from_cookie
+>>>>>>> deploy
   before_filter :login_required
   before_filter :admin_required
 
@@ -11,18 +18,34 @@ class AdminController < ApplicationController
   def global_submenu
     [
       { :name => '<img src="/images/icons/users.png" class="icon" /> Users', :link => "/admin/user", :selected => "selected" },
+<<<<<<< HEAD
       { :name => '<img src="/images/icons/calendar.png" class="icon" /> Summer Schedule', :link => "/admin/summer" },
+=======
+      { :name => '<img src="/images/icons/face-smile.png" class="icon" /> Students', :link => "/admin/student" },
+      { :name => '<img src="/images/icons/home.png" class="icon" /> Schools', :link => "/admin/school" },
+      { :name => '<img src="/images/icons/globe.png" class="icon" /> Locations', :link => "/admin/location" },
+      { :name => '<img src="/images/icons/calendar.png" class="icon" /> Sessions', :link => "/admin/session" },
+      { :name => '<img src="/images/icons/music.png" class="icon" /> Lessons', :link => "/admin/lesson" },
+      { :name => '<img src="/images/icons/write.png" class="icon" /> Registrations', :link => "/admin/registration" },
+      # { :name => '<img src="/images/icons/write.png" class="icon" /> CHMS Registrations', :link => "/admin/chms_registration" },
+      { :name => '<img src="/images/icons/contact.png" class="icon" /> SBC Registrations', :link => "/admin/sbc" },
+      { :name => '<img src="/images/icons/timesheet.png" class="icon" /> Timesheets', :link => "/admin/timesheet" },
+>>>>>>> deploy
       # { :name => '<img src="/images/icons/globe.png" class="icon" /> Site', :link => "#" },
       # { :name => '<img src="/images/icons/announce.png" class="icon" /> Announcements', :link => "#" },
       # { :name => '<img src="/images/icons/news.png" class="icon" /> Newsletter', :link => "#" }
     ]
   end
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> deploy
   def index
     @section_title = "Administration"
     @submenu = global_submenu
   end
+<<<<<<< HEAD
   
   def user
     @section_path = "Adminitration &raquo; "
@@ -76,6 +99,16 @@ class AdminController < ApplicationController
   end
   
   
+=======
+
+  def rehearsals
+    @section_title = "Rehearsals"
+    @rehearsals = Rehearsal.find(:all, :order => "time")
+  end
+  
+#below is all legacy stuff
+=begin
+>>>>>>> deploy
   def calendar
     if params[:calendar]
       
@@ -97,7 +130,10 @@ class AdminController < ApplicationController
     unit_height = 16.0
     unit_time = 30 * 60.0
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> deploy
     event = SummerStudentSchedule.find(params[:schedule_id])
     update = false
     unless event.selected.nil?
@@ -132,7 +168,10 @@ class AdminController < ApplicationController
       :prev_block => 't' + prev_block.to_s,
       :image_blocks => image_blocks
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> deploy
 
     render :text => data.to_json
   end
@@ -184,7 +223,11 @@ class AdminController < ApplicationController
       schedules = SummerStudentSchedule.find(:all, :conditions => ["summer_student_id = ? and selected IS NULL", params[:id]], :order => "selected ASC")
     end
 
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> deploy
     events = []
     for event in schedules
       
@@ -210,6 +253,41 @@ class AdminController < ApplicationController
     render :text => data.to_json
   end
   
+<<<<<<< HEAD
+=======
+  def summer_schedule_ical
+    headers["Content-Type"] = "text/calendar; charset=utf-8"
+    
+    ical = <<END_OF_STRING
+BEGIN:VCALENDAR
+METHOD:PUBLISH
+X-WR-TIMEZONE:US/Eastern
+PRODID:-//GWSMS.//Summer Calendar//EN
+X-WR-CALNAME:Summer 2008
+VERSION:2.0
+END_OF_STRING
+
+    schedules = SummerStudentSchedule.find(:all, :conditions => ["selected IS NOT NULL"], :order => "selected ASC")
+    
+    for lesson in schedules
+      startstr = lesson.selected.strftime("%Y%m%dT%H%M00")
+      finishstr = Time.at(lesson.selected.to_time.to_i + (lesson.summer_student.lesson_duration * 60)).strftime("%Y%m%dT%H%M00")
+      event_str = <<END_OF_EVENT
+BEGIN:VEVENT
+DTSTART;TZID=US/Eastern:#{startstr}
+SUMMARY:#{lesson.summer_student.name}
+DTEND;TZID=US/Eastern:#{finishstr}
+END:VEVENT
+END_OF_EVENT
+      ical += event_str
+    end
+
+    ical += "END:VCALENDAR"
+
+    render :text => ical
+  end
+  
+>>>>>>> deploy
   def summer_schedule
     unit_height = 16.0
     unit_time = 30 * 60.0
@@ -217,7 +295,11 @@ class AdminController < ApplicationController
     @section_path = "Adminitration &raquo; "
     @section_title = 'Summer Schedule Edit'
     
+<<<<<<< HEAD
     @startdate = Date.new(2008, 6, 15)
+=======
+    @startdate = Date.new(2008, 6, 8)
+>>>>>>> deploy
     @enddate = Date.new(2008, 9, 2)
     
     @totaldays = (@enddate - @startdate).to_i
@@ -252,8 +334,13 @@ class AdminController < ApplicationController
     end
     
     
+<<<<<<< HEAD
     @day_start = 7;
     @day_end   = 20;
+=======
+    @day_start = 7
+    @day_end   = 20
+>>>>>>> deploy
 
     @teaching_hours = [{
       1 => [14, 20],
@@ -261,6 +348,10 @@ class AdminController < ApplicationController
       3 => [14, 19],
       4 => [14, 20],
       5 => [0, 0],
+<<<<<<< HEAD
+=======
+      6 => [0, 0],
+>>>>>>> deploy
       :color => "#e2fde6"
     },{
       1 => [0, 0],
@@ -268,6 +359,10 @@ class AdminController < ApplicationController
       3 => [7.5, 11],
       4 => [7.5, 11],
       5 => [7.5, 11],
+<<<<<<< HEAD
+=======
+      6 => [0, 0],
+>>>>>>> deploy
       :color => "#e6edf2"
     }]
     
@@ -296,7 +391,18 @@ class AdminController < ApplicationController
     				"B08B59" 
     ]
     
+<<<<<<< HEAD
     @schedule = {
+=======
+    
+    @schedule = {
+      Date.new(2008, 6, 10).yday => "",
+      Date.new(2008, 6, 11).yday => "",
+      Date.new(2008, 6, 12).yday => "",
+      Date.new(2008, 6, 13).yday => "",
+      Date.new(2008, 6, 15).yday => "",
+      Date.new(2008, 6, 16).yday => "",
+>>>>>>> deploy
         Date.new(2008, 6, 17).yday => "",
         Date.new(2008, 6, 18).yday => "",
         Date.new(2008, 6, 19).yday => "",
@@ -306,10 +412,19 @@ class AdminController < ApplicationController
         Date.new(2008, 6, 25).yday => "",
         Date.new(2008, 6, 26).yday => "",
         Date.new(2008, 6, 27).yday => "",
+<<<<<<< HEAD
+=======
+        Date.new(2008, 6, 28).yday => "",
+        
+>>>>>>> deploy
         Date.new(2008, 7, 7).yday => "",
         Date.new(2008, 7, 8).yday => "",
         Date.new(2008, 7, 9).yday => "",
         Date.new(2008, 7, 10).yday => "",
+<<<<<<< HEAD
+=======
+        Date.new(2008, 7, 12).yday => "",
+>>>>>>> deploy
         Date.new(2008, 7, 11).yday => "",
         Date.new(2008, 7, 14).yday => "",
         Date.new(2008, 7, 15).yday => "",
@@ -321,6 +436,11 @@ class AdminController < ApplicationController
         Date.new(2008, 7, 23).yday => "",
         Date.new(2008, 7, 24).yday => "",
         Date.new(2008, 7, 25).yday => "",
+<<<<<<< HEAD
+=======
+        Date.new(2008, 7, 26).yday => "",
+
+>>>>>>> deploy
         Date.new(2008, 7, 28).yday => "",
         Date.new(2008, 7, 29).yday => "",
         Date.new(2008, 7, 30).yday => "",
@@ -328,13 +448,27 @@ class AdminController < ApplicationController
         Date.new(2008, 8, 6).yday => "",
         Date.new(2008, 8, 7).yday => "",
         Date.new(2008, 8, 8).yday => "",
+<<<<<<< HEAD
         Date.new(2008, 8, 14).yday => "",
         Date.new(2008, 8, 15).yday => "",
+=======
+        Date.new(2008, 8, 9).yday => "",
+        
+        Date.new(2008, 8, 14).yday => "",
+        Date.new(2008, 8, 15).yday => "",
+        Date.new(2008, 8, 16).yday => "",
+        
+>>>>>>> deploy
         Date.new(2008, 8, 18).yday => "",
         Date.new(2008, 8, 19).yday => "",
         Date.new(2008, 8, 20).yday => "",
         Date.new(2008, 8, 21).yday => "",
         Date.new(2008, 8, 22).yday => "",
+<<<<<<< HEAD
+=======
+        Date.new(2008, 8, 23).yday => "",
+        
+>>>>>>> deploy
         Date.new(2008, 8, 25).yday => "",
         Date.new(2008, 8, 26).yday => "",
         Date.new(2008, 8, 27).yday => "",
@@ -342,6 +476,11 @@ class AdminController < ApplicationController
         Date.new(2008, 8, 29).yday => "",
         Date.new(2008, 9, 2).yday => "",
     }
+<<<<<<< HEAD
+=======
+    
+    
+>>>>>>> deploy
   end
   
   def summer_delete
@@ -404,6 +543,10 @@ class AdminController < ApplicationController
     @numberofweeks = (@totaldays / 7.0).ceil
     
     
+<<<<<<< HEAD
+=======
+    
+>>>>>>> deploy
     @schedule = {
         Date.new(2008, 6, 17).yday => "",
         Date.new(2008, 6, 18).yday => "",
@@ -414,10 +557,19 @@ class AdminController < ApplicationController
         Date.new(2008, 6, 25).yday => "",
         Date.new(2008, 6, 26).yday => "",
         Date.new(2008, 6, 27).yday => "",
+<<<<<<< HEAD
+=======
+        Date.new(2008, 6, 28).yday => "",
+        
+>>>>>>> deploy
         Date.new(2008, 7, 7).yday => "",
         Date.new(2008, 7, 8).yday => "",
         Date.new(2008, 7, 9).yday => "",
         Date.new(2008, 7, 10).yday => "",
+<<<<<<< HEAD
+=======
+        Date.new(2008, 7, 12).yday => "",
+>>>>>>> deploy
         Date.new(2008, 7, 11).yday => "",
         Date.new(2008, 7, 14).yday => "",
         Date.new(2008, 7, 15).yday => "",
@@ -429,6 +581,11 @@ class AdminController < ApplicationController
         Date.new(2008, 7, 23).yday => "",
         Date.new(2008, 7, 24).yday => "",
         Date.new(2008, 7, 25).yday => "",
+<<<<<<< HEAD
+=======
+        Date.new(2008, 7, 26).yday => "",
+
+>>>>>>> deploy
         Date.new(2008, 7, 28).yday => "",
         Date.new(2008, 7, 29).yday => "",
         Date.new(2008, 7, 30).yday => "",
@@ -436,13 +593,27 @@ class AdminController < ApplicationController
         Date.new(2008, 8, 6).yday => "",
         Date.new(2008, 8, 7).yday => "",
         Date.new(2008, 8, 8).yday => "",
+<<<<<<< HEAD
         Date.new(2008, 8, 14).yday => "",
         Date.new(2008, 8, 15).yday => "",
+=======
+        Date.new(2008, 8, 9).yday => "",
+        
+        Date.new(2008, 8, 14).yday => "",
+        Date.new(2008, 8, 15).yday => "",
+        Date.new(2008, 8, 16).yday => "",
+        
+>>>>>>> deploy
         Date.new(2008, 8, 18).yday => "",
         Date.new(2008, 8, 19).yday => "",
         Date.new(2008, 8, 20).yday => "",
         Date.new(2008, 8, 21).yday => "",
         Date.new(2008, 8, 22).yday => "",
+<<<<<<< HEAD
+=======
+        Date.new(2008, 8, 23).yday => "",
+        
+>>>>>>> deploy
         Date.new(2008, 8, 25).yday => "",
         Date.new(2008, 8, 26).yday => "",
         Date.new(2008, 8, 27).yday => "",
@@ -452,6 +623,11 @@ class AdminController < ApplicationController
     }
     
     
+<<<<<<< HEAD
+=======
+    
+    
+>>>>>>> deploy
     if params[:id]
       @student = SummerStudent.find(params[:id])
       schedule = @student.summer_student_schedule
@@ -475,5 +651,9 @@ class AdminController < ApplicationController
 
   end
   
+<<<<<<< HEAD
+=======
+=end
+>>>>>>> deploy
   
 end

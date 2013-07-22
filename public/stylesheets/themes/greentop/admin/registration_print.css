@@ -1,0 +1,216 @@
+div#banner_wrapper, div#toolbar_wrapper {
+  display: none;
+}
+
+div.widget {
+  display: none;
+}
+
+div#student_list {
+  width: 160px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+div#side_list {
+  width: 160px;
+}
+
+#content_no_side.registration_schedule {
+  padding: 0 5px;
+}
+
+div#mouseover_name {
+  font-size: 1.5em;
+  white-space: nowrap;
+  margin-bottom: 10px;
+}
+
+div.lesson_list ol {
+  margin-top: 5px !important;
+  padding-left: 20px;
+}
+div.lesson_list ol li {
+  list-style-type: decimal !important;
+  margin: 5px !important;
+}
+
+tr.week_anchor {
+  page-break-before: always !important;
+}
+
+img.calendar_bar {
+  display: none;
+}
+
+.no_print {
+  display: none;
+}
+
+div.lesson_bar {
+  width: 1.6in !important;
+}
+
+
+div.right {
+  z-index: 5;
+  position: fixed;
+  bottom: 10px;
+  right: 15px;
+}
+
+div#availability_overview {
+  width: 200px;
+}
+
+div#summary_calendar {
+  width: 200px;
+}
+
+div.left {
+  z-index: 5;
+  position: fixed;
+  bottom: 10px;
+  left: 15px;
+}
+
+div#summary_calendar .summary_hour {
+  height: 1px;
+  padding: 0;
+  margin: 0;
+}
+
+img.calendar_bar {
+  margin-left: 1px;
+} 
+
+img.thin_calendar_bar {
+	margin-left: 1px;
+	float: left;
+	position: relative;
+	z-index: 6;
+    opacity: 1;
+}
+
+
+div#loading_wrapper {
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  top:250px;
+  left:0px;
+}
+
+div#loading {
+  width: 300px;
+  height: 130px;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: white;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  text-align: center;
+  opacity: 0.9;
+  -webkit-box-shadow: 2px 2px 10px #000;
+  -moz-box-shadow: 2px 2px 10px #000;
+}
+
+div.widget .button {
+  cursor:pointer; font-size: 18px;
+}
+
+div#schedule_overview {
+  z-index: 3;
+  margin: 0;
+  width: 202px;
+  position: fixed;
+  bottom: 10px;
+  right: 250px;
+}
+
+div.widget .body {
+  margin-bottom: 10px;
+}
+
+div.widget {
+  padding: 5px 15px;
+  color: white;
+  font-size: 9px;
+}
+
+div.widget_chrome {
+  opacity: 0.7;
+  -webkit-box-shadow: 2px 2px 10px #000;
+  -moz-box-shadow: 2px 2px 10px #000;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  background:#000;
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom: 0;
+  z-index: -1;
+}
+
+div.pname {
+  font-size: 9px;
+}
+  
+div#availability_overview tr.even {
+  background-color: #777;
+}
+
+table.widget_table td {
+	border: 1px solid #eee;
+}
+
+
+div.widget h1 {
+  margin-top: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+
+div#calendar_table {
+  margin: 0;
+}
+
+th.flex {
+  width: 18.18% !important;
+}
+
+div.lesson_bar {
+  opacity: 0.8;
+}
+
+img.preferred {
+  border: 1px red dotted;
+}
+
+div.numbering {
+  float: left;
+  margin-left: -3px;
+  margin-right: 3px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  background-color: white;
+  width: 30px;
+  padding-left: 1px;
+  text-align: center;
+}
+
+.lesson_bar a {
+  margin-right: 3px;
+}
+
+div#event_dialog {
+  opacity: 1;
+}
+
+
+input.bar_selector {
+  margin: 0px;
+/*  -webkit-transform: scale(0.7,0.7); */
+}

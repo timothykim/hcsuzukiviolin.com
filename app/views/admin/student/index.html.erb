@@ -1,0 +1,27 @@
+<h2>Student Listing</h2>
+
+<table class="admin_table sortable">
+	<thead>
+		<tr>
+			<th class="text">Last Name</th>
+			<th class="text">First Name</th>
+			<th class="text">Parent</th>
+			<th class="nosort">Grade</th>
+			<th class="date">DOB</th>
+			<th class="number">Age</th>
+		</tr>
+	</thead>
+	<tbody>
+
+<% @students.each do |student| %>
+      <tr id="s_<%=student.id%>">
+        <td><%= student.last_name %></td>
+        <td><%= student.first_name %></td>
+        <td><%= student.user.lastname + ", " + student.user.firstname %></td>
+        <td><%= student.grade_level %></td>
+        <td align="center"><%= student.dob.strftime("%m/%d") %></td>
+        <td align="center"><%= student.age %></td>
+      </tr>
+<% end %>
+	</tbody>
+</table>

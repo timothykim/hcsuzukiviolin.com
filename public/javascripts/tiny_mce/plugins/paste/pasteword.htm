@@ -1,6 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<<<<<<< HEAD
 	<title>{$lang_paste_word_desc}</title>
 	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
 	<script language="javascript" type="text/javascript" src="jscripts/pasteword.js"></script>
@@ -12,16 +13,35 @@
 		<div class="title">{$lang_paste_word_desc}</div>
 
 		<div>{$lang_paste_word_title}</div>
+=======
+	<title>{#paste.paste_word_desc}</title>
+	<script type="text/javascript" src="../../tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="js/pasteword.js"></script>
+</head>
+<body onresize="PasteWordDialog.resize();" style="display:none; overflow:hidden;">
+	<form name="source" onsubmit="return PasteWordDialog.insert();" action="#">
+		<div class="title">{#paste.paste_word_desc}</div>
+
+		<div>{#paste_dlg.word_title}</div>
+>>>>>>> deploy
 
 		<div id="iframecontainer"></div>
 
 		<div class="mceActionPanel">
 			<div style="float: left">
+<<<<<<< HEAD
 				<input type="button" id="insert" name="insert" value="{$lang_insert}" onclick="saveContent();" />
 			</div>
 
 			<div style="float: right">
 				<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();" />
+=======
+				<input type="submit" id="insert" name="insert" value="{#insert}" />
+			</div>
+
+			<div style="float: right">
+				<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+>>>>>>> deploy
 			</div>
 		</div>
 	</form>

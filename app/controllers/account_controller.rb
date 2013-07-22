@@ -1,8 +1,25 @@
 class AccountController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
+<<<<<<< HEAD
   include AuthenticatedSystem
   # If you want "remember me" functionality, add this before_filter to Application Controller
   before_filter :login_from_cookie
+=======
+  # If you want "remember me" functionality, add this before_filter to Application Controller
+
+
+
+  def global_submenu
+    [
+      { :name => '<img src="/images/icons/users.png" class="icon" /> Account Setting', :link => "/account/settings", :selected => "selected" },
+#      { :name => '<img src="/images/icons/contact.png" class="icon" /> Parents Information', :link => "/account/parents" },
+#      { :name => '<img src="/images/icons/face-smile.png" class="icon" /> Students', :link => "/account/students" },
+    ]
+  end
+
+
+
+>>>>>>> deploy
 
   # say something nice, you goof!  something sweet.
   def index
@@ -28,22 +45,46 @@ class AccountController < ApplicationController
       end
       
       #set last logged in
+<<<<<<< HEAD
       
       redirect_back_or_default(:controller => '/page', :action => 'index')
       flash[:notice] = "Logged in successfully"
+=======
+      redirect_back_or_default(:controller => '/page', :action => 'index')
+      #flash[:notice] = "Logged in successfully"
+>>>>>>> deploy
     else
       flash[:notice] = "Your email, password combination is not in the system. Please try again."
     end
   end
   
   def unauthorized
+<<<<<<< HEAD
       @s = session[:return_to]
+=======
+    @s = session[:return_to]
+  end
+  
+  def remote_approve
+    user = User.find(params[:i])
+    if user.salt == params[:s]
+      user.update_attributes!({:activated => true, :email_confirmation => user.email})
+      render :text => "#{user} has been activated."
+    end
+  rescue
+    render :text => "Something went wrong! Please visit <a href=\"http://www.hcsuzukuviolin.com/admin/user\">http://www.hcsuzukuviolin.com/admin/user</a> to activate this user."
+>>>>>>> deploy
   end
   
   
   def activate
+<<<<<<< HEAD
     @section_title = "Your account hasn't been activated, yet!" if logged_in?
     if logged_in?
+=======
+    if logged_in?
+      @section_title = "Your account hasn't been activated, yet!"
+>>>>>>> deploy
       redirect_back_or_default(:controller => '/page', :action => 'index') if self.current_user.activated
     else
       redirect_to :action => 'login' 
@@ -52,11 +93,31 @@ class AccountController < ApplicationController
 
   def signup
     redirect_to :action => 'activate' if logged_in?
+<<<<<<< HEAD
+=======
+
+    #generate random question
+    if session[:stupid_captcha]
+      @question = session[:stupid_captcha]
+    else
+      @question = "#{rand(10)} + #{rand(10)}"
+      session[:stupid_captcha] = @question
+    end
+>>>>>>> deploy
     
     @section_title = "Sign up for an Account"
     
     @user = User.new(params[:user])
     return unless request.post?
+<<<<<<< HEAD
+=======
+
+    if eval(session[:stupid_captcha]) != params[:stupid_captcha].to_i
+      @user.errors.add("Simple math: ", "Please correct your answer.")
+      return 
+    end
+
+>>>>>>> deploy
     @user.save!
     self.current_user = @user
     
@@ -72,6 +133,7 @@ class AccountController < ApplicationController
     @section_title = "Thanks for signing up, #{current_user.fullname}!"
   end
   
+<<<<<<< HEAD
   
   def settings
     @section_title = "Editing Your Personal Information"
@@ -97,6 +159,35 @@ class AccountController < ApplicationController
     end
   end
   
+=======
+  def forgot
+    @section_title = "Password Reset"
+  end
+  
+  def reset_password
+    user = User.find(:first, :conditions => {:email => params[:email]})
+    if user
+      new_pass = ActiveSupport::SecureRandom.base64(6)
+      user.password = new_pass
+      user.password_confirmation = new_pass
+      user.email_confirmation = user.email
+      if user.save
+        Notifier.deliver_reset_password_notification(user, new_pass)
+        redirect_to :action => "reset_done"
+      end
+    else
+      flash[:notice] = "Uh oh, I can't seem to find your email. Please try again.";
+      redirect_to :action => "forgot", :email => params[:email]
+    end
+  end
+  
+  def reset_done
+    @section_title = "Password Reset"
+  end
+  
+  
+  
+>>>>>>> deploy
   def illegal
       render :controller => "page", :action => "illegal"
   end

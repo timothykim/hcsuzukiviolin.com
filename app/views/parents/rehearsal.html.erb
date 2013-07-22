@@ -1,0 +1,100 @@
+<style>
+  .rehearsal_dat {
+    font-size: 0.85em;
+    margin-right: 20px;
+  }
+  .time {
+    margin-bottom: 3px;
+  }
+</style>
+
+<h3>Rehearsal Registration</h3>
+
+<p>Solo concert on October 27, 2012 at 11 AM.</p>
+
+<ul>
+  <li>Please contact Larry Allen (412allen@gmail.com, 703-328-4550) for any question or concern regarding the rehearsal.</li>
+  <li>Please bring $10 per each 10 minutes of rehearsal.</li>
+</ul>
+
+<% showform = false %>
+
+<% form_tag "/parents/rehearsal", :method => "post", :id => "rehearsal" do %>
+  <input type="hidden" name="signup" value="true" />
+
+  <% for s in @students %>
+    <hr style="clear: both" />
+
+    <h4><%= s.first_name + ' ' + s.last_name %>'s Rehearsal Time Sign-up</h4>
+
+    <%if s.rehearsal %>
+      <div>
+        <ul>
+          <li><strong>Time</strong>: <%= s.rehearsal.time.strftime("%a %m/%e, %I:%M %p") %></li>
+          <li><strong>Solo Piece</strong>: <%= s.rehearsal.piece%></li>
+          <li><strong>Rehearsal Room</strong>: <%= s.rehearsal.location%></li>
+      </div>
+    <% else %>
+      <% showform = true %>
+
+      <div>
+        Solo Piece: <input name="p[<%=s.id%>]" style="font-size: 1.3em; margin-bottom: 10px;" />
+      </div>
+
+      <% for d in 1..5 %>
+        <div class="rehearsal_dat" style="float: left">
+          <% for r in @rehearsals.select {|re| re.time.to_date.cwday == d } -%>
+            <div class="time">
+              <% if r.student_id or r.time.to_date.cwday == 2 %>
+                <input type="radio" disabled="disabled"/> <strike><%= r.time.strftime("%a %m/%e, %I:%M %p") %></strike>
+              <% else %>
+                <input type="radio" name="students[<%=s.id%>]" value="<%=r.id%>" /> <%= r.time.strftime("%a %m/%e, %I:%M %p") %>
+              <% end %>
+            </div>
+          <% end -%>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%if showform %>
+
+    <div style="padding-top: 30px; clear: both; text-align: right;">
+      <input type="submit" value="Sign up!" style="width: 100px; height: 30px;" />
+    </div>
+  <% end %>
+
+<% end %>
+
+<script>
+
+  $('rehearsal').onsubmit = function () {
+    return validate();
+  };
+
+  function validate() {
+
+    var input = $('rehearsal').serialize(true);
+
+    var sids = [];
+
+    for (var key in input) {
+      if (input[key] === "") {
+        alert("Please input the name of the solo piece for all your students.");
+        return false;
+      }
+
+      if (key.substring(0,2) === "p[") {
+        var sid = key.slice(2, -1)
+        if (typeof input["students["+sid+"]"] === "undefined") {
+          alert("Please select a rehearsal time for all your students.");
+          return false;
+        } 
+      }
+    }
+
+    return true;
+  }
+
+
+</script>

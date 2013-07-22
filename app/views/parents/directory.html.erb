@@ -1,0 +1,42 @@
+<style>
+    div#body {
+        width: 90%;
+    }
+    table td {
+        font-size: 0.8em;
+    }
+</style>
+
+<% @sessions.each do |sess| %>
+    <h2><%=sess%></h2>
+    <% parents = sess.parents %>
+
+<table class="default_table sortable">
+    <thead>
+      <tr style="cursor: pointer;">
+        <th class="text">Parent</th>
+        <th class="text">Students</th>
+        <th class="text">Email</th>
+        <th class="text">Alt. Email</th>
+        <th class="text">Home</th>
+        <th class="text">Work</th>
+        <th class="text">Mobile</th>
+      </tr>
+    </thead>
+    <tbody>
+<% parents.each do |p| %>
+      <tr>
+        <td><%= "#{p.lastname}, #{p.firstname}" %></td>
+        <td><%= p.students.map{|x| x.first_name}.join(", ") %></td>
+        <td><%=p.email%></td>
+        <td><%=p.alternate_email%></td>
+        <td><%=p.home_phone%></td>
+        <td><%=p.work_phone%></td>
+        <td><%=p.mobile_phone%></td>
+      </tr> 
+<% end %>
+    </tbody>
+</table>
+
+
+<% end %>

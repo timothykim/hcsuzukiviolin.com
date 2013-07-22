@@ -1,0 +1,104 @@
+
+
+
+<style>
+  .text { font-size: 14px !important; padding: 8px !important;}
+</style>
+
+<%= error_messages_for :registration %>
+
+<% form_for :registration do |f| -%>
+
+<h3>Parent Information</h3>
+
+<div class="form_box">
+    <div class="form_element">
+        <div class="check"><label for="registration_firstname">First Name</label></div>
+        <%= f.text_field :firstname, :class => "text" %>
+    </div>
+    <div class="form_element">
+        <div class="check"><label for="registration_lastname">Last Name</label></div>
+        <%= f.text_field :lastname, :class => "text" %>
+    </div>
+    <div class="form_element">
+        <div class="check"><label for="registration_email">Email</label></div>
+        <%= f.text_field :email, :class => "text" %>
+    </div>
+    <div class="form_element">
+        <div class="check"><label for="registration_address">Mailing Address</label></div>
+        <%= f.text_area :address, :class => "text", :size => "40x3" %>
+    </div>
+    <div class="form_element">
+        <div class="check"><label for="registration_home_phone">Home Phone</label></div>
+        <%= f.text_field :home_phone, :class => "text" %>
+    </div>
+    <div class="form_element">
+        <div class="check"><label for="registration_work_phone">Work Phone</label></div>
+        <%= f.text_field :work_phone, :class => "text" %>
+    </div>
+    <div class="form_element">
+        <div class="check"><label for="registration_mobile_phone">Mobile Phone</label></div>
+        <%= f.text_field :mobile_phone, :class => "text" %>
+    </div>
+</div>
+
+<h3>Student Information</h3>
+
+<div class="form_box">
+    <div class="form_element">
+        <div class="check"><label for="registration_student_firstname">First Name</label></div>
+        <%= f.text_field :student_firstname, :class => "text" %>
+    </div>
+    <div class="form_element">
+        <div class="check"><label for="registration_lastname">Last Name</label></div>
+        <%= f.text_field :student_lastname, :class => "text" %>
+    </div>
+	<div class="form_element">
+        <div><label class="form_label">Date of Birth:</label></div>
+        <%= f.date_select(:student_dob, :start_year => Time.now.year - 30, :end_year => Time.now.year - 2, :default => {:year => Time.now.year - 10, :month => 1, :day => 1}, :order => [:month, :day, :year]) %>
+	</div>
+	<div class="form_element">
+      <div><label class="form_label">Comments <small>(Any information that teacher should know about the student)</small></label></div>
+      <%= f.text_area :comments, :class => "text", :size => "45x3" %>
+	</div>
+</div>
+
+<h3>CHMS Information</h3>
+
+<div class="form_box">
+    <div class="form_element">
+        <div class="check"><label for="registration_chms_hours">CHMS Schedule</label><br />
+          <small>Please write down your student's CHMS schedule<br />
+            e.g. Everyday 8am-3pm<br />
+            e.g. Monday, Wednesday and Friday 7:30am-6pm
+          </small>
+        </div>
+        <%= f.text_area :chms_hours, :class => "text", :size => "45x2" %>
+    </div>
+    <div class="form_element">
+      <%= f.check_box :active %><label for> Check this box if you are interested in actively participating by accompanying your child every lesson.</label>
+    </div>
+</div>
+
+<h3>Lesson Information</h3>
+<div class="form_box">
+  <div style="width: 450px;">
+  <h4>SCHEDULE</h4>
+
+  <p>Students will meet with the teacher twice each week, for half hour in the morning. Tuesday class is an individual lesson and the Thursday class is a theory game class in a small group. (To learn more about Music Mind Games, please visit <a href="http://www.musicmindgames.com/powerpoint">HERE</a>)</p>
+
+  <p>Session I (June 29-July 24)</p>
+
+  <p>Session II (July 26-August 20)</p>
+
+  
+
+<h4>TUITION</h4>
+<p>$250 for each session.</p>
+</div>
+  
+<br />
+    <div class="form_element"><%= submit_tag 'Register!', :class => "submit", :id => "form_submit" %></div>
+</div>
+
+<% end %>

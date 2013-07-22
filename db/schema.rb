@@ -1,5 +1,9 @@
 # This file is auto-generated from the current state of the database. Instead of editing this file, 
+<<<<<<< HEAD
 # please use the migrations feature of ActiveRecord to incrementally modify your database, and
+=======
+# please use the migrations feature of Active Record to incrementally modify your database, and
+>>>>>>> deploy
 # then regenerate this schema definition.
 #
 # Note that this schema.rb definition is the authoritative source for your database schema. If you need
@@ -9,7 +13,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 17) do
+=======
+ActiveRecord::Schema.define(:version => 20121020045719) do
+>>>>>>> deploy
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -39,6 +47,27 @@ ActiveRecord::Schema.define(:version => 17) do
     t.integer "height"
   end
 
+<<<<<<< HEAD
+=======
+  create_table "chms_registrations", :force => true do |t|
+    t.string   "firstname"
+    t.string   "lastname"
+    t.string   "email"
+    t.string   "address"
+    t.string   "home_phone"
+    t.string   "work_phone"
+    t.string   "mobile_phone"
+    t.string   "student_firstname"
+    t.string   "student_lastname"
+    t.date     "student_dob"
+    t.text     "comments"
+    t.string   "chms_hours"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+>>>>>>> deploy
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "photo_id"
@@ -47,6 +76,24 @@ ActiveRecord::Schema.define(:version => 17) do
     t.datetime "updated_at"
   end
 
+<<<<<<< HEAD
+=======
+  create_table "lessons", :force => true do |t|
+    t.integer  "registration_id"
+    t.datetime "time"
+    t.boolean  "is_recurring"
+    t.integer  "duration"
+    t.integer  "location_id"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.integer  "school_id"
+    t.string   "room"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+>>>>>>> deploy
   create_table "login_logs", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -79,6 +126,116 @@ ActiveRecord::Schema.define(:version => 17) do
     t.integer  "comments_count", :default => 0, :null => false
   end
 
+<<<<<<< HEAD
+=======
+  create_table "registered_dates", :force => true do |t|
+    t.integer "registration_id"
+    t.time    "start"
+    t.time    "end"
+    t.text    "user_input",      :default => ""
+    t.boolean "preferred",       :default => false
+    t.date    "date"
+  end
+
+  create_table "registered_days", :force => true do |t|
+    t.integer "registration_id"
+    t.integer "day"
+    t.time    "start"
+    t.time    "end"
+    t.text    "user_input",      :default => ""
+    t.boolean "preferred",       :default => false
+  end
+
+  create_table "registered_group_classes", :force => true do |t|
+    t.integer "registration_id"
+    t.date    "class_date"
+  end
+
+  create_table "registered_options", :force => true do |t|
+    t.integer "registration_id"
+    t.integer "option_id"
+    t.text    "value",           :default => ""
+  end
+
+  create_table "registration_options", :force => true do |t|
+    t.integer "session_id"
+    t.text    "text"
+    t.string  "input_type"
+  end
+
+  create_table "registrations", :force => true do |t|
+    t.integer  "student_id"
+    t.integer  "school_id"
+    t.integer  "session_id"
+    t.integer  "lesson_duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "confirmed",       :default => false
+  end
+
+  create_table "rehearsals", :force => true do |t|
+    t.datetime "time"
+    t.integer  "student_id"
+    t.text     "piece"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sbc_registrations", :force => true do |t|
+    t.integer  "student_id"
+    t.boolean  "approved",   :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "schools", :force => true do |t|
+    t.string "name"
+    t.string "address"
+    t.string "zip"
+  end
+
+  create_table "session_days", :force => true do |t|
+    t.integer "session_id"
+    t.date    "date"
+    t.boolean "offday"
+    t.boolean "group"
+    t.text    "note"
+  end
+
+  create_table "session_group_lessons", :force => true do |t|
+    t.integer "session_id"
+    t.date    "day"
+  end
+
+  create_table "session_off_days", :force => true do |t|
+    t.integer "session_id"
+    t.date    "day"
+    t.text    "note"
+  end
+
+  create_table "sessions", :force => true do |t|
+    t.string  "name"
+    t.date    "first"
+    t.date    "last"
+    t.boolean "is_active"
+    t.text    "registration_notes"
+    t.integer "registration_type"
+    t.date    "due_date"
+    t.boolean "is_ready",           :default => false
+  end
+
+  create_table "students", :force => true do |t|
+    t.integer "user_id"
+    t.string  "first_name"
+    t.string  "middle_initial", :limit => 1
+    t.string  "last_name"
+    t.date    "dob"
+    t.text    "comment"
+    t.string  "school"
+    t.string  "grade_level"
+  end
+
+>>>>>>> deploy
   create_table "summer_schools", :force => true do |t|
     t.string "name"
   end
@@ -114,6 +271,23 @@ ActiveRecord::Schema.define(:version => 17) do
     t.integer  "albums_count",                            :default => 0,     :null => false
     t.integer  "photos_count",                            :default => 0,     :null => false
     t.integer  "comments_count",                          :default => 0,     :null => false
+<<<<<<< HEAD
+=======
+    t.string   "alternate_email",                         :default => ""
+    t.string   "home_phone",                              :default => ""
+    t.string   "work_phone",                              :default => ""
+    t.string   "mobile_phone",                            :default => ""
+    t.text     "address",                                 :default => ""
+  end
+
+  create_table "weekly_availablities", :force => true do |t|
+    t.integer "session_id"
+    t.integer "school_id"
+    t.integer "day"
+    t.time    "start"
+    t.time    "end"
+    t.text    "user_input", :default => ""
+>>>>>>> deploy
   end
 
 end

@@ -41,6 +41,7 @@ table.admin_table th.selected {
 }
 
 
+<<<<<<< HEAD
 
 table.admin_table td {
 	border: 1px dotted silver;
@@ -52,6 +53,19 @@ table.admin_table tr.even td {
 }
 
 table.admin_table tr.odd td {
+=======
+table.admin_table td {
+	border: 1px dotted silver;
+	padding: 5px;
+    font-size: 0.8em;
+}
+
+table.admin_table tr.even td, tr.rowodd {
+	background-color: #fcfcfc;	
+}
+
+table.admin_table tr.odd td, tr.roweven {
+>>>>>>> deploy
 	background-color: #eaeaea;	
 }
 
@@ -61,10 +75,14 @@ table.admin_table tr.hightlight td {
 
 
 
+<<<<<<< HEAD
 
 
 
 #body.admin_summer_add, #body.admin_summer_schedule {
+=======
+#body.admin_summer_add, #body.admin_summer_schedule, #body.registration_schedule{
+>>>>>>> deploy
 	width: 100%;
 	margin: 0px auto;
 }
@@ -181,7 +199,10 @@ div#side_list ul {
 
 div#side_list li {
 	margin: 0;
+<<<<<<< HEAD
 	margin-left: 10px;
+=======
+>>>>>>> deploy
 	list-style-type: none;
 	font-size: 10px;
 }
@@ -194,22 +215,38 @@ img.calendar_bar {
 }
 
 div.lesson_bar {
+<<<<<<< HEAD
 	text-align: center;
+=======
+>>>>>>> deploy
 	padding-top: 1px;
 	border: 1px solid white;
 	font-size: 9px;
 	color: white;
+<<<<<<< HEAD
 	position: relative;
 	z-index: 2;
+=======
+	position: absolute;
+	z-index: 2;
+	overflow: hidden;
+>>>>>>> deploy
 }
 div.studentname {
 	color: white;
 	padding: 2px;
 	padding-left: 5px;
+<<<<<<< HEAD
 	padding-right: 15px;
 	cursor: pointer;
 	width: 50px;
 	margin-right: 5px;
+=======
+	padding-right: 2px;
+	cursor: pointer;
+	margin-right: 5px;
+    white-space: nowrap;
+>>>>>>> deploy
 }
 
 span#mouseover_name {
@@ -221,6 +258,10 @@ span#mouseover_name {
 	top: 0;
 	left: 0;
 	-webkit-box-shadow: 2px 2px 10px #888;
+<<<<<<< HEAD
+=======
+    -moz-box-shadow: 2px 2px 10px #888;
+>>>>>>> deploy
 	opacity: 0.8;
 	z-index: 3;
 }
@@ -240,6 +281,10 @@ div#event_dialog {
 	padding: 10px;
 	position: absolute;
 	-webkit-box-shadow: 2px 2px 10px #888;
+<<<<<<< HEAD
+=======
+    -moz-box-shadow: 2px 2px 10px #888;
+>>>>>>> deploy
 	top: 500px;
 	left: 400px;
 	opacity: 0.8;
@@ -255,8 +300,14 @@ div#event_dialog form {
 }
 
 div#xy {
+<<<<<<< HEAD
 	text-align: center;
 	width: 60px;
+=======
+	/*text-align: center;
+	width: 60px;
+    */
+>>>>>>> deploy
 	position: absolute;
 	top:0;
 	left:0;
@@ -264,7 +315,12 @@ div#xy {
 	border: 5px solid orange;
 	padding: 10px;
 	-webkit-box-shadow: 2px 2px 10px #888;
+<<<<<<< HEAD
 	opacity: 0.6;
+=======
+    -moz-box-shadow: 2px 2px 10px #888;
+	opacity: 0.8;
+>>>>>>> deploy
 	z-index: 3;
 }
 
@@ -278,6 +334,10 @@ div.lesson_list {
 	border: 5px solid silver;
 	background-color: white;
 	-webkit-box-shadow: 2px 2px 10px #888;
+<<<<<<< HEAD
+=======
+    -moz-box-shadow: 2px 2px 10px #888;
+>>>>>>> deploy
 	position: absolute;
 	left: 125px;
 	padding: 10px;
@@ -295,4 +355,54 @@ div.lesson_list ul li {
 	padding-top: 4px;
 }
 
+<<<<<<< HEAD
 /* @end */
+=======
+/* @end */
+
+
+
+input.inline_text {
+	border: 1px solid transparent;
+	background-color: transparent;
+	font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+	font-size: 1em;
+}
+input.inline_text:hover {
+	border: 1px solid silver;
+	background-color: yellow;
+}
+input.inline_text:focus {
+	border: 1px solid silver;
+	background-color: white;
+}
+
+
+
+.sortcol {
+	cursor: pointer;
+	padding-right: 20px;
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+.sortasc {
+	background-color: #DDFFAC;
+	background-image: url(/images/tablesort/up.gif);
+}
+.sortdesc {
+	background-color: #B9DDFF;
+	background-image: url(/images/tablesort/down.gif);
+}
+.nosort {
+	cursor: default;
+}
+
+
+div#body.sbc_index {
+  width: 95%;
+}
+
+div#body.registration_index {
+  width: 95%;
+}
+>>>>>>> deploy

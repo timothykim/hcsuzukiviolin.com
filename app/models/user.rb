@@ -7,6 +7,11 @@ class User < ActiveRecord::Base
   has_many :photos
   has_many :comments
   has_one  :avatar
+<<<<<<< HEAD
+=======
+  has_many :students
+  has_many :registrations, :through => :students
+>>>>>>> deploy
 
 
   before_validation         :use_email_as_login
@@ -33,9 +38,20 @@ class User < ActiveRecord::Base
     self.lastname = self.lastname.gsub(/<\/?[^>]*>/, "")
   end
 
+<<<<<<< HEAD
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
     u = find_by_login(login) # need to get the salt
+=======
+  def get_registrations(sess)
+    self.registrations.find(:all, :conditions => {:session_id => sess.id})
+  end
+
+  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
+  def self.authenticate(login, password)
+    #u = find_by_login(login.downcase) # need to get the salt
+    u = User.find(:first, :conditions => ["upper(login) = ?", login.upcase])
+>>>>>>> deploy
     u && u.authenticated?(password) ? u : nil
   end
 
@@ -74,6 +90,13 @@ class User < ActiveRecord::Base
     "\"#{self.fullname}\" <#{self.email}>"
   end
 
+<<<<<<< HEAD
+=======
+  def to_s
+    self.fullname
+  end
+
+>>>>>>> deploy
   def fullname
     self.firstname + " " + self.lastname
   end
@@ -97,6 +120,14 @@ class User < ActiveRecord::Base
     return false
   end
 
+<<<<<<< HEAD
+=======
+  def sbc_student
+    self.students.select {|s| s.sbc_registration } [0]
+  end
+  
+
+>>>>>>> deploy
 
   protected
     # before filter 

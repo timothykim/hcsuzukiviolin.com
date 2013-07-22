@@ -1,0 +1,112 @@
+<!--
+  <div style="
+    border: 1px solid silver;
+    padding: 10px;
+    padding-top: 0;
+    width: 200px;
+    background-color: #FFFACD;
+    position: fixed;
+    margin-left: 630px;
+    margin-top: 70px;
+  ">
+    <h3>Group Class Times</h4>
+    <strong>Fridays</strong>
+    <ul>
+      <li><strong>4:30pm ~ 5:00pm</strong><br />Pre Twinkles</li>
+      <li><strong>5:00pm ~ 6:00pm</strong><br />Twinkles and Book 1-3</li>
+      <li><strong>6:00pm ~ 6:45pm</strong><br />Book 4 and up</li>
+    </ul>
+    <strong>Saturdays</strong>
+    <ul>
+      <li><strong>09:30am ~ 10:00am</strong><br />Pre Twinkles</li>
+      <li><strong>10:00am ~ 11:00am</strong><br />Twinkles and Book 1-3</li>
+      <li><strong>11:00am ~ 11:45am</strong><br />Book 4 and up</li>
+    </ul>
+  </div>
+  -->
+  <h2>Semesters</h2>
+    <ul>
+<% @sessions.each do |sess| %>
+        <li><a href="#<%= sess.name.sub(/\s/,'') %>"><%= sess.name %></a>
+<% end %>
+    </ul>
+
+<% @sessions.each do |sess| %>
+    <hr /> 
+    <a name="<%= sess.name.sub(/\s/,'') %>"></a>
+  <h2><%= sess.name %> Calendar</h2>
+<%
+  # draw academic calendar
+  f = sess.first - (sess.first.day - 1)
+  l = sess.last.next_month - sess.last.next_month.day
+  for d in (f..l)
+    if (d.day == 1)
+      #new month!
+%>
+      <table class="default_table school_calendar">
+          <caption><%= d.strftime("%B %Y") %></caption>
+          <tr>
+            <th>Su</th>
+            <th>Mo</th>
+            <th>Tu</th>
+            <th>We</th>
+            <th>Th</th>
+            <th>Fr</th>
+            <th>Sa</th>
+          </tr>
+          <tr>
+<%
+      d.wday.times do |i|
+        %><td class="blank"></td><%
+      end
+    end 
+
+    notes = []
+
+    cls = []
+    cls << d.strftime("%A")
+
+    if sess.first == d
+      cls << "first"
+      notes << "<strong>First Day</strong>"
+    end
+
+    if sess.last == d
+      cls << "last"
+      notes << "<strong>Last Day</strong>"
+    end
+
+    if sess.is_groupday? d
+      cls << "groupday"
+      notes << "Group Class"
+    end
+
+    if sess.is_offday? d or d.wday == 0
+      cls << "offday"
+      if d.wday > 0 && d >= sess.first && d <= sess.last
+        notes << "No Lessons"
+      end
+    end
+
+    notes << sess.get_note(d) unless sess.get_note(d) == ""
+
+
+    %><td class="<%= cls.join(" ") %>"><div class="day"><%= d.day %></div><div class="notes"><%= notes.join("<br />") %></div></td><%
+
+    if (d.wday == 6)
+        %></tr><%
+    end
+
+    if (d.next.day == 1)
+      (6-d.wday).times do |i|
+        %><td class="blank"></td><%
+      end
+      %></tr></table><%
+    end
+  end
+end
+%>
+
+
+
+

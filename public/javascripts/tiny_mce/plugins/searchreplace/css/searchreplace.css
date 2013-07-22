@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* stylesheet for advsearchreplace plugin*/
 
 .panel_wrapper { height: 85px; }
@@ -18,3 +19,11 @@
 
 #replaceBtn { background: url(../images/replace_button_bg.gif); }
 #replaceAllBtn { background: url(../images/replace_all_button_bg.gif); }
+=======
+.panel_wrapper {height:85px;}
+.panel_wrapper div.current {height:85px;}
+
+/* IE */
+* html .panel_wrapper {height:100px;}
+* html .panel_wrapper div.current {height:100px;}
+>>>>>>> deploy

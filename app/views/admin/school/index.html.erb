@@ -1,0 +1,33 @@
+<% form_tag "/admin/school/save", :method=>"post" do %>
+<table class="admin_table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Address</th>
+			<th>Zip</th>
+			<th>Del</th>
+		</tr>
+	</thead>
+	<tbody id="school_body">
+
+<% @schools.each do |school| %>
+		<tr class="<%= cycle("even", "odd") -%>">
+			<td><%= text_field_tag "school[#{school.id}][name]", school.name, :class=>"inline_text", :size=>17 %></td>
+			<td><%= text_field_tag "school[#{school.id}][address]", school.address, :class=>"inline_text", :size=>40 %></td>
+			<td><%= text_field_tag "school[#{school.id}][zip]", school.zip, :class=>"inline_text", :size=>6 %></td>
+			<td><% if school.registrations.length == 0 %><%= link_to(image_tag("/images/icons/x_small.png", :class=>"icon"), {:action => "delete", :id => school.id}, :confirm => "Are you sure?\nThis cannot be undone.") %><% end %></td>
+		</tr>
+<% end %>
+	</tbody>
+</table>
+
+<div style="margin-top: 2px;">
+<div style="float:right;">
+	<button type="submit" class="iconbutton" onclick="save_schools(); return false;"><img src="/images/icons/save.png" class="icon" /> Save</button>
+</div>
+
+<button type="button" class="iconbutton" onclick="add_row(); return false;"><img src="/images/icons/add.png" class="icon" /> Add a School</button>
+<button type="button" class="iconbutton" onclick="window.location.reload(); return false;"><img src="/images/icons/processing.png" class="icon" /> Reset</button>
+</div>
+
+<% end %>

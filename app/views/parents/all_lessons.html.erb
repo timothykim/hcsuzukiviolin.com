@@ -1,0 +1,160 @@
+<h2>All Lessons for <%= @current_session %></h2>
+
+<% if @current_session.registration_type == Session::DAY_TYPE %>
+
+<div id="calendar_view">
+<table class="calendar main">
+  <thead>
+  <tr>
+    <th width="200">Monday</th>
+    <th width="200">Tuesday</th>
+    <th width="200">Wednesday</th>
+    <th width="200">Thursday</th>
+    <th width="200">Friday</th>
+    <th width="200">Saturday</th>
+  </tr>	
+  </thead>
+  <tbody>
+      <% for day in (1..6) %>
+        <td valign="top">
+          <div class="daily_schedule">
+          <% today = (@startdate + day) %>
+          <% lessons = @current_session.lessons.find(:all, :conditions => ["EXTRACT('dow' from time) = ?", day], :order => "to_char(time, 'HH24MI') ASC") %>
+          <% lessons.each do |lesson| %>
+            <div class="single_lesson">
+              <div class="lesson_name">
+                <%=lesson.registration.student.first_name + " " + lesson.registration.student.last_name.at(0) + "." %>
+              </div>
+              <div class="lesson_time"><%=lesson.get_time%></div>
+              <div class="parent_name">
+                <em><%=lesson.registration.student.user%></em>
+            </div>
+                <% unless lesson.registration.student.last_name.downcase.include?("group") %>
+                  <div><small style="font-weight: normal; color: #aaa;">
+                    <%=lesson.registration.student.user.email%>
+                    <% if lesson.registration.student.user.alternate_email != "" %>
+                        <br /><%=lesson.registration.student.user.alternate_email%>
+                    <% end %>
+                  </small></div>
+                <% end %>
+            </div>
+          <% end %>
+          <%= "No lessons" if lessons.length == 0 %>
+          </div>
+        </td>
+      <% end %>
+    </tbody>
+</table>
+      
+
+
+<% else %>
+
+  <style>
+    .main td {
+      height: 100px;
+    }
+    .even td {
+      background-color: #f9f9f9;
+    }
+  </style>
+
+<script>
+function toggleView(str) {
+	if (str == 'cal') {
+      $('list_view').hide();
+      $('calendar_view').show();
+		//Effect.Fade('list_view', {duration: 0.4, afterFinish: function() { Effect.Appear('calendar_view', {duration: 0.4}); } });		
+	} else {
+      $('calendar_view').hide();
+      $('list_view').show();
+		//Effect.Fade('calendar_view', {duration: 0.4, afterFinish: function() { Effect.Appear('list_view', {duration: 0.4}); } });		
+	}
+    return false;
+}
+</script>
+  <div style="font-size: 8pt; margin-right: 20px; margin-bottom: 20px;">
+      <a href="#" onclick="return toggleView('cal');">View as Calendar</a> | 
+      <a href="#" onclick="return toggleView('list');">View as List</a>
+  </div>
+
+<div id="calendar_view">
+<table class="calendar main">
+  <thead>
+  <tr>
+    <th width="30">Wk</th>
+    <th width="200">Monday</th>
+    <th width="200">Tuesday</th>
+    <th width="200">Wednesday</th>
+    <th width="200">Thursday</th>
+    <th width="200">Friday</th>
+    <th width="200">Saturday</th>
+  </tr>	
+  </thead>
+  <tbody>
+    <% @week_count.times do |week| %>
+      <tr class="<%= cycle('odd', 'even') %>">
+        <th><%=week+1%></th>
+      <% for day in (1..6) %>
+        <td valign="top">
+          <div class="daily_schedule">
+          <% today = (@startdate + ((week * 7) + day)) %>
+          <h3><%= today.strftime("%m/%d") %></h3>
+          <% lessons = Lesson.find(:all, :conditions => ['time > ? AND time < ?', today.to_time, (today+1).to_time], :order => "time ASC") %>
+          <% lessons.each do |lesson| %>
+            <% if lesson.registration.student.first_name.downcase.include?("summer") then next end %>
+            
+            <div class="single_lesson">
+              <div class="lesson_name">
+                <div style="color: #<%= Colors.one(lesson.registration.id) %>"><%= lesson.registration.student.first_name + " " + lesson.registration.student.last_name%></div>
+                <% unless lesson.registration.student.first_name.downcase.include?("group") %>
+                  <div><small>
+                      <a href="mailto:<%=lesson.registration.student.user.email%>"><%=lesson.registration.student.user.email%></a>
+                  </small></div>
+                <% end %>
+              </div>
+              <div class="lesson_time"><%=lesson.get_time%></div>
+              <div><em><%= "@ " + lesson.location.school.name + " " + lesson.location.room if lesson.location %></em></div>
+            </div>
+          <% end %>
+          <%= "No lessons" if lessons.length == 0 %>
+          </div>
+        </td>
+      <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+
+
+
+<div id="list_view" style="display: none;">
+<% for registration in @current_session.registrations.sort{|a,b| a.student.last_name <=> b.student.last_name} %>
+  <% if registration.student.first_name.downcase.include?("summer") then next end %>
+  
+	<div class="student_schedule" style="margin-bottom: 2em;">
+      <h4 style="color: #<%= Colors.one(registration.id) %>">
+        <%= "#{registration.student.last_name}, #{registration.student.first_name}" %>
+        <% unless registration.student.first_name.downcase.include?("group") %>
+        <a href="mailto:<%=registration.student.user.email%>"><img src="/images/icons/small_email.gif" /></a>
+        <% end %>
+      </h4>
+		<ol>
+<%
+    for lesson in registration.lessons
+%>
+<li><div class="lesson_date"><%= lesson.get_date %> <%= "@ " + lesson.location.school.name + " " + lesson.location.room if lesson.location %></div>
+<div class="lesson_time"><%= lesson.get_time %></div></li>
+<%
+	end
+%>
+		</ol>
+	</div>
+<%
+end
+%>
+</div>
+
+
+<% end %>

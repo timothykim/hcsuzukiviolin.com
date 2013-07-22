@@ -1,0 +1,91 @@
+
+div.student_schedule ol,
+div.student_schedule ul {
+	padding-left: 23px;
+	margin: 0px;
+}
+
+div.student_schedule li, div.daily_schedule {
+	font-size: 10px;
+	margin-bottom: 4px;
+}
+
+div.lesson_name {
+  font-weight: bold;
+}
+
+div.parent_name {
+    color: #89c;
+}
+
+li.schedule_summary {
+  list-style: none;
+  margin-left: -18px;
+  margin-bottom: 20px !important;
+}
+
+li.no_lesson {
+  list-style: disc;
+  color: #f00;
+}
+
+div.single_lesson {
+  border-bottom: 1px solid silver;
+  margin-bottom: 14px;
+}
+
+div.lesson_date {
+  font-weight: bold;
+}
+
+div.student_schedule {
+	width: 180px;
+	float: left;
+	margin-right: 20px;
+  padding-right: 10px;
+  height: 300px;
+  overflow: auto;
+}
+
+div.student_schedule h4 {
+  margin: 0;
+  margin-bottom: 5px;
+  padding-left: 5px;
+  border-bottom: 1px solid silver;
+}
+
+table.calendar {
+	width: 100%;
+	border-width: 1px 1px 1px 1px;
+	border-spacing: 2px;
+	border-style: solid solid solid solid;
+	border-color: gray gray gray gray;
+	border-collapse: collapse;
+	background-color: white;
+}
+
+table.calendar th {
+	border-width: 1px 1px 1px 1px;
+	padding: 5px 5px 5px 5px;
+	border-style: dotted;
+	border-color: gray gray gray gray;
+	background-color: #ddddff;
+}
+
+table.calendar td {
+	border: 1px dotted silver;
+	padding: 5px;
+}
+
+table.calendar td h3 {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 5px;
+  text-align: center;
+  font-size: 1.6em;
+}
+
+
+div#body.parents_all_lessons {
+  width: 95%;
+}

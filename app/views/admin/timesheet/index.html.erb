@@ -1,0 +1,82 @@
+<h2>Timesheets</h2>
+
+<table class="admin_table">
+  <thead>
+    <tr>
+      <th>Session</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% for s in @sessions %>
+    <tr>
+      <td><%=s.name%></td>
+      <td>
+
+<%
+  # draw academic calendar
+  f = s.first - (s.first.day - 1)
+  l = s.last.next_month - s.last.next_month.day
+  for d in (f..l)
+    if (d.day == 1)
+      #new month!
+%>
+<div class="timesheet_calendar_wrapper">
+      <table class="timesheet_calendar">
+          <caption><%= d.strftime("%B %Y") %></caption>
+          <tr>
+            <th>Su</th>
+            <th>Mo</th>
+            <th>Tu</th>
+            <th>We</th>
+            <th>Th</th>
+            <th>Fr</th>
+            <th>Sa</th>
+          </tr>
+          <tr>
+<%
+      d.wday.times do |i|
+        %><td class="blank"></td><%
+      end
+    end 
+
+    cls = []
+    cls << d.strftime("%A")
+
+    if s.first == d
+      cls << "first"
+    end
+
+    if s.last == d
+      cls << "last"
+    end
+
+    if s.is_groupday? d
+      cls << "groupday"
+    end
+
+    if s.is_offday? d
+      cls << "offday"
+    end
+
+
+    %><td class="<%= cls.join(" ") %>"><div class="day"><%= d.day %></div></td><%
+
+    if (d.wday == 6)
+        %></tr><%
+    end
+
+    if (d.next.day == 1)
+      (6-d.wday).times do |i|
+        %><td class="blank"></td><%
+      end
+      %></tr></table></div><%
+    end
+  end
+%>
+
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

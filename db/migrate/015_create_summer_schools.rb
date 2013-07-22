@@ -8,8 +8,11 @@ class CreateSummerSchools < ActiveRecord::Migration
     SummerSchool.create :name => "CHMS"
   end
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> deploy
   def self.down
     drop_table :summer_schools
   end

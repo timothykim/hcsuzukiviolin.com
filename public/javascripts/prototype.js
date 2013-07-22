@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 /*  Prototype JavaScript framework, version 1.6.0.1
  *  (c) 2005-2007 Sam Stephenson
+=======
+/*  Prototype JavaScript framework, version 1.6.0.3
+ *  (c) 2005-2008 Sam Stephenson
+>>>>>>> deploy
  *
  *  Prototype is freely distributable under the terms of an MIT-style license.
  *  For details, see the Prototype web site: http://www.prototypejs.org/
@@ -7,6 +12,7 @@
  *--------------------------------------------------------------------------*/
 
 var Prototype = {
+<<<<<<< HEAD
   Version: '1.6.0.1',
 
   Browser: {
@@ -14,16 +20,36 @@ var Prototype = {
     Opera:  !!window.opera,
     WebKit: navigator.userAgent.indexOf('AppleWebKit/') > -1,
     Gecko:  navigator.userAgent.indexOf('Gecko') > -1 && navigator.userAgent.indexOf('KHTML') == -1,
+=======
+  Version: '1.6.0.3',
+
+  Browser: {
+    IE:     !!(window.attachEvent &&
+      navigator.userAgent.indexOf('Opera') === -1),
+    Opera:  navigator.userAgent.indexOf('Opera') > -1,
+    WebKit: navigator.userAgent.indexOf('AppleWebKit/') > -1,
+    Gecko:  navigator.userAgent.indexOf('Gecko') > -1 &&
+      navigator.userAgent.indexOf('KHTML') === -1,
+>>>>>>> deploy
     MobileSafari: !!navigator.userAgent.match(/Apple.*Mobile.*Safari/)
   },
 
   BrowserFeatures: {
     XPath: !!document.evaluate,
+<<<<<<< HEAD
     ElementExtensions: !!window.HTMLElement,
     SpecificElementExtensions:
       document.createElement('div').__proto__ &&
       document.createElement('div').__proto__ !==
         document.createElement('form').__proto__
+=======
+    SelectorsAPI: !!document.querySelector,
+    ElementExtensions: !!window.HTMLElement,
+    SpecificElementExtensions:
+      document.createElement('div')['__proto__'] &&
+      document.createElement('div')['__proto__'] !==
+        document.createElement('form')['__proto__']
+>>>>>>> deploy
   },
 
   ScriptFragment: '<script[^>]*>([\\S\\s]*?)<\/script>',
@@ -83,12 +109,22 @@ Class.Methods = {
       var property = properties[i], value = source[property];
       if (ancestor && Object.isFunction(value) &&
           value.argumentNames().first() == "$super") {
+<<<<<<< HEAD
         var method = value, value = Object.extend((function(m) {
           return function() { return ancestor[m].apply(this, arguments) };
         })(property).wrap(method), {
           valueOf:  function() { return method },
           toString: function() { return method.toString() }
         });
+=======
+        var method = value;
+        value = (function(m) {
+          return function() { return ancestor[m].apply(this, arguments) };
+        })(property).wrap(method);
+
+        value.valueOf = method.valueOf.bind(method);
+        value.toString = method.toString.bind(method);
+>>>>>>> deploy
       }
       this.prototype[property] = value;
     }
@@ -110,7 +146,11 @@ Object.extend(Object, {
     try {
       if (Object.isUndefined(object)) return 'undefined';
       if (object === null) return 'null';
+<<<<<<< HEAD
       return object.inspect ? object.inspect() : object.toString();
+=======
+      return object.inspect ? object.inspect() : String(object);
+>>>>>>> deploy
     } catch (e) {
       if (e instanceof RangeError) return '...';
       throw e;
@@ -167,11 +207,20 @@ Object.extend(Object, {
   },
 
   isElement: function(object) {
+<<<<<<< HEAD
     return object && object.nodeType == 1;
   },
 
   isArray: function(object) {
     return object && object.constructor === Array;
+=======
+    return !!(object && object.nodeType == 1);
+  },
+
+  isArray: function(object) {
+    return object != null && typeof object == "object" &&
+      'splice' in object && 'join' in object;
+>>>>>>> deploy
   },
 
   isHash: function(object) {
@@ -197,7 +246,12 @@ Object.extend(Object, {
 
 Object.extend(Function.prototype, {
   argumentNames: function() {
+<<<<<<< HEAD
     var names = this.toString().match(/^[\s\(]*function[^(]*\((.*?)\)/)[1].split(",").invoke("strip");
+=======
+    var names = this.toString().match(/^[\s\(]*function[^(]*\(([^\)]*)\)/)[1]
+      .replace(/\s+/g, '').split(',');
+>>>>>>> deploy
     return names.length == 1 && !names[0] ? [] : names;
   },
 
@@ -231,6 +285,14 @@ Object.extend(Function.prototype, {
     }, timeout);
   },
 
+<<<<<<< HEAD
+=======
+  defer: function() {
+    var args = [0.01].concat($A(arguments));
+    return this.delay.apply(this, args);
+  },
+
+>>>>>>> deploy
   wrap: function(wrapper) {
     var __method = this;
     return function() {
@@ -247,8 +309,11 @@ Object.extend(Function.prototype, {
   }
 });
 
+<<<<<<< HEAD
 Function.prototype.defer = Function.prototype.delay.curry(0.01);
 
+=======
+>>>>>>> deploy
 Date.prototype.toJSON = function() {
   return '"' + this.getUTCFullYear() + '-' +
     (this.getUTCMonth() + 1).toPaddedString(2) + '-' +
@@ -529,7 +594,11 @@ if (Prototype.Browser.WebKit || Prototype.Browser.IE) Object.extend(String.proto
     return this.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   },
   unescapeHTML: function() {
+<<<<<<< HEAD
     return this.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+=======
+    return this.stripTags().replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+>>>>>>> deploy
   }
 });
 
@@ -546,7 +615,11 @@ Object.extend(String.prototype.escapeHTML, {
   text: document.createTextNode('')
 });
 
+<<<<<<< HEAD
 with (String.prototype.escapeHTML) div.appendChild(text);
+=======
+String.prototype.escapeHTML.div.appendChild(String.prototype.escapeHTML.text);
+>>>>>>> deploy
 
 var Template = Class.create({
   initialize: function(template, pattern) {
@@ -578,7 +651,11 @@ var Template = Class.create({
       }
 
       return before + String.interpret(ctx);
+<<<<<<< HEAD
     }.bind(this));
+=======
+    });
+>>>>>>> deploy
   }
 });
 Template.Pattern = /(^|.|\r|\n)(#\{(.*?)\})/;
@@ -588,10 +665,16 @@ var $break = { };
 var Enumerable = {
   each: function(iterator, context) {
     var index = 0;
+<<<<<<< HEAD
     iterator = iterator.bind(context);
     try {
       this._each(function(value) {
         iterator(value, index++);
+=======
+    try {
+      this._each(function(value) {
+        iterator.call(context, value, index++);
+>>>>>>> deploy
       });
     } catch (e) {
       if (e != $break) throw e;
@@ -600,47 +683,79 @@ var Enumerable = {
   },
 
   eachSlice: function(number, iterator, context) {
+<<<<<<< HEAD
     iterator = iterator ? iterator.bind(context) : Prototype.K;
     var index = -number, slices = [], array = this.toArray();
+=======
+    var index = -number, slices = [], array = this.toArray();
+    if (number < 1) return array;
+>>>>>>> deploy
     while ((index += number) < array.length)
       slices.push(array.slice(index, index+number));
     return slices.collect(iterator, context);
   },
 
   all: function(iterator, context) {
+<<<<<<< HEAD
     iterator = iterator ? iterator.bind(context) : Prototype.K;
     var result = true;
     this.each(function(value, index) {
       result = result && !!iterator(value, index);
+=======
+    iterator = iterator || Prototype.K;
+    var result = true;
+    this.each(function(value, index) {
+      result = result && !!iterator.call(context, value, index);
+>>>>>>> deploy
       if (!result) throw $break;
     });
     return result;
   },
 
   any: function(iterator, context) {
+<<<<<<< HEAD
     iterator = iterator ? iterator.bind(context) : Prototype.K;
     var result = false;
     this.each(function(value, index) {
       if (result = !!iterator(value, index))
+=======
+    iterator = iterator || Prototype.K;
+    var result = false;
+    this.each(function(value, index) {
+      if (result = !!iterator.call(context, value, index))
+>>>>>>> deploy
         throw $break;
     });
     return result;
   },
 
   collect: function(iterator, context) {
+<<<<<<< HEAD
     iterator = iterator ? iterator.bind(context) : Prototype.K;
     var results = [];
     this.each(function(value, index) {
       results.push(iterator(value, index));
+=======
+    iterator = iterator || Prototype.K;
+    var results = [];
+    this.each(function(value, index) {
+      results.push(iterator.call(context, value, index));
+>>>>>>> deploy
     });
     return results;
   },
 
   detect: function(iterator, context) {
+<<<<<<< HEAD
     iterator = iterator.bind(context);
     var result;
     this.each(function(value, index) {
       if (iterator(value, index)) {
+=======
+    var result;
+    this.each(function(value, index) {
+      if (iterator.call(context, value, index)) {
+>>>>>>> deploy
         result = value;
         throw $break;
       }
@@ -649,17 +764,27 @@ var Enumerable = {
   },
 
   findAll: function(iterator, context) {
+<<<<<<< HEAD
     iterator = iterator.bind(context);
     var results = [];
     this.each(function(value, index) {
       if (iterator(value, index))
+=======
+    var results = [];
+    this.each(function(value, index) {
+      if (iterator.call(context, value, index))
+>>>>>>> deploy
         results.push(value);
     });
     return results;
   },
 
   grep: function(filter, iterator, context) {
+<<<<<<< HEAD
     iterator = iterator ? iterator.bind(context) : Prototype.K;
+=======
+    iterator = iterator || Prototype.K;
+>>>>>>> deploy
     var results = [];
 
     if (Object.isString(filter))
@@ -667,7 +792,11 @@ var Enumerable = {
 
     this.each(function(value, index) {
       if (filter.match(value))
+<<<<<<< HEAD
         results.push(iterator(value, index));
+=======
+        results.push(iterator.call(context, value, index));
+>>>>>>> deploy
     });
     return results;
   },
@@ -695,9 +824,14 @@ var Enumerable = {
   },
 
   inject: function(memo, iterator, context) {
+<<<<<<< HEAD
     iterator = iterator.bind(context);
     this.each(function(value, index) {
       memo = iterator(memo, value, index);
+=======
+    this.each(function(value, index) {
+      memo = iterator.call(context, memo, value, index);
+>>>>>>> deploy
     });
     return memo;
   },
@@ -710,10 +844,17 @@ var Enumerable = {
   },
 
   max: function(iterator, context) {
+<<<<<<< HEAD
     iterator = iterator ? iterator.bind(context) : Prototype.K;
     var result;
     this.each(function(value, index) {
       value = iterator(value, index);
+=======
+    iterator = iterator || Prototype.K;
+    var result;
+    this.each(function(value, index) {
+      value = iterator.call(context, value, index);
+>>>>>>> deploy
       if (result == null || value >= result)
         result = value;
     });
@@ -721,10 +862,17 @@ var Enumerable = {
   },
 
   min: function(iterator, context) {
+<<<<<<< HEAD
     iterator = iterator ? iterator.bind(context) : Prototype.K;
     var result;
     this.each(function(value, index) {
       value = iterator(value, index);
+=======
+    iterator = iterator || Prototype.K;
+    var result;
+    this.each(function(value, index) {
+      value = iterator.call(context, value, index);
+>>>>>>> deploy
       if (result == null || value < result)
         result = value;
     });
@@ -732,10 +880,17 @@ var Enumerable = {
   },
 
   partition: function(iterator, context) {
+<<<<<<< HEAD
     iterator = iterator ? iterator.bind(context) : Prototype.K;
     var trues = [], falses = [];
     this.each(function(value, index) {
       (iterator(value, index) ?
+=======
+    iterator = iterator || Prototype.K;
+    var trues = [], falses = [];
+    this.each(function(value, index) {
+      (iterator.call(context, value, index) ?
+>>>>>>> deploy
         trues : falses).push(value);
     });
     return [trues, falses];
@@ -750,19 +905,33 @@ var Enumerable = {
   },
 
   reject: function(iterator, context) {
+<<<<<<< HEAD
     iterator = iterator.bind(context);
     var results = [];
     this.each(function(value, index) {
       if (!iterator(value, index))
+=======
+    var results = [];
+    this.each(function(value, index) {
+      if (!iterator.call(context, value, index))
+>>>>>>> deploy
         results.push(value);
     });
     return results;
   },
 
   sortBy: function(iterator, context) {
+<<<<<<< HEAD
     iterator = iterator.bind(context);
     return this.map(function(value, index) {
       return {value: value, criteria: iterator(value, index)};
+=======
+    return this.map(function(value, index) {
+      return {
+        value: value,
+        criteria: iterator.call(context, value, index)
+      };
+>>>>>>> deploy
     }).sort(function(left, right) {
       var a = left.criteria, b = right.criteria;
       return a < b ? -1 : a > b ? 1 : 0;
@@ -806,12 +975,17 @@ Object.extend(Enumerable, {
 function $A(iterable) {
   if (!iterable) return [];
   if (iterable.toArray) return iterable.toArray();
+<<<<<<< HEAD
   var length = iterable.length, results = new Array(length);
+=======
+  var length = iterable.length || 0, results = new Array(length);
+>>>>>>> deploy
   while (length--) results[length] = iterable[length];
   return results;
 }
 
 if (Prototype.Browser.WebKit) {
+<<<<<<< HEAD
   function $A(iterable) {
     if (!iterable) return [];
     if (!(Object.isFunction(iterable) && iterable == '[object NodeList]') &&
@@ -820,6 +994,20 @@ if (Prototype.Browser.WebKit) {
     while (length--) results[length] = iterable[length];
     return results;
   }
+=======
+  $A = function(iterable) {
+    if (!iterable) return [];
+    // In Safari, only use the `toArray` method if it's not a NodeList.
+    // A NodeList is a function, has an function `item` property, and a numeric
+    // `length` property. Adapted from Google Doctype.
+    if (!(typeof iterable === 'function' && typeof iterable.length ===
+        'number' && typeof iterable.item === 'function') && iterable.toArray)
+      return iterable.toArray();
+    var length = iterable.length || 0, results = new Array(length);
+    while (length--) results[length] = iterable[length];
+    return results;
+  };
+>>>>>>> deploy
 }
 
 Array.from = $A;
@@ -962,8 +1150,13 @@ Object.extend(Number.prototype, {
     return this + 1;
   },
 
+<<<<<<< HEAD
   times: function(iterator) {
     $R(0, this, true).each(iterator);
+=======
+  times: function(iterator, context) {
+    $R(0, this, true).each(iterator, context);
+>>>>>>> deploy
     return this;
   },
 
@@ -1010,7 +1203,13 @@ var Hash = Class.create(Enumerable, (function() {
     },
 
     get: function(key) {
+<<<<<<< HEAD
       return this._object[key];
+=======
+      // simulating poorly supported hasOwnProperty
+      if (this._object[key] !== Object.prototype[key])
+        return this._object[key];
+>>>>>>> deploy
     },
 
     unset: function(key) {
@@ -1050,14 +1249,24 @@ var Hash = Class.create(Enumerable, (function() {
     },
 
     toQueryString: function() {
+<<<<<<< HEAD
       return this.map(function(pair) {
+=======
+      return this.inject([], function(results, pair) {
+>>>>>>> deploy
         var key = encodeURIComponent(pair.key), values = pair.value;
 
         if (values && typeof values == 'object') {
           if (Object.isArray(values))
+<<<<<<< HEAD
             return values.map(toQueryPair.curry(key)).join('&');
         }
         return toQueryPair(key, values);
+=======
+            return results.concat(values.map(toQueryPair.curry(key)));
+        } else results.push(toQueryPair(key, values));
+        return results;
+>>>>>>> deploy
       }).join('&');
     },
 
@@ -1298,7 +1507,11 @@ Ajax.Request = Class.create(Ajax.Base, {
 
       var contentType = response.getHeader('Content-type');
       if (this.options.evalJS == 'force'
+<<<<<<< HEAD
           || (this.options.evalJS && contentType
+=======
+          || (this.options.evalJS && this.isSameOrigin() && contentType
+>>>>>>> deploy
           && contentType.match(/^\s*(text|application)\/(x-)?(java|ecma)script(;.*)?\s*$/i)))
         this.evalResponse();
     }
@@ -1316,9 +1529,24 @@ Ajax.Request = Class.create(Ajax.Base, {
     }
   },
 
+<<<<<<< HEAD
   getHeader: function(name) {
     try {
       return this.transport.getResponseHeader(name);
+=======
+  isSameOrigin: function() {
+    var m = this.url.match(/^\s*https?:\/\/[^\/]*/);
+    return !m || (m[0] == '#{protocol}//#{domain}#{port}'.interpolate({
+      protocol: location.protocol,
+      domain: document.domain,
+      port: location.port ? ':' + location.port : ''
+    }));
+  },
+
+  getHeader: function(name) {
+    try {
+      return this.transport.getResponseHeader(name) || null;
+>>>>>>> deploy
     } catch (e) { return null }
   },
 
@@ -1391,7 +1619,12 @@ Ajax.Response = Class.create({
     if (!json) return null;
     json = decodeURIComponent(escape(json));
     try {
+<<<<<<< HEAD
       return json.evalJSON(this.request.options.sanitizeJSON);
+=======
+      return json.evalJSON(this.request.options.sanitizeJSON ||
+        !this.request.isSameOrigin());
+>>>>>>> deploy
     } catch (e) {
       this.request.dispatchException(e);
     }
@@ -1404,7 +1637,12 @@ Ajax.Response = Class.create({
         this.responseText.blank())
           return null;
     try {
+<<<<<<< HEAD
       return this.responseText.evalJSON(options.sanitizeJSON);
+=======
+      return this.responseText.evalJSON(options.sanitizeJSON ||
+        !this.request.isSameOrigin());
+>>>>>>> deploy
     } catch (e) {
       this.request.dispatchException(e);
     }
@@ -1546,6 +1784,10 @@ if (!Node.ELEMENT_NODE) {
     return Element.writeAttribute(cache[tagName].cloneNode(false), attributes);
   };
   Object.extend(this.Element, element || { });
+<<<<<<< HEAD
+=======
+  if (element) this.Element.prototype = element.prototype;
+>>>>>>> deploy
 }).call(window);
 
 Element.cache = { };
@@ -1562,12 +1804,22 @@ Element.Methods = {
   },
 
   hide: function(element) {
+<<<<<<< HEAD
     $(element).style.display = 'none';
+=======
+    element = $(element);
+    element.style.display = 'none';
+>>>>>>> deploy
     return element;
   },
 
   show: function(element) {
+<<<<<<< HEAD
     $(element).style.display = '';
+=======
+    element = $(element);
+    element.style.display = '';
+>>>>>>> deploy
     return element;
   },
 
@@ -1608,6 +1860,7 @@ Element.Methods = {
         Object.isElement(insertions) || (insertions && (insertions.toElement || insertions.toHTML)))
           insertions = {bottom:insertions};
 
+<<<<<<< HEAD
     var content, t, range;
 
     for (position in insertions) {
@@ -1618,14 +1871,36 @@ Element.Methods = {
       if (content && content.toElement) content = content.toElement();
       if (Object.isElement(content)) {
         t.insert(element, content);
+=======
+    var content, insert, tagName, childNodes;
+
+    for (var position in insertions) {
+      content  = insertions[position];
+      position = position.toLowerCase();
+      insert = Element._insertionTranslations[position];
+
+      if (content && content.toElement) content = content.toElement();
+      if (Object.isElement(content)) {
+        insert(element, content);
+>>>>>>> deploy
         continue;
       }
 
       content = Object.toHTML(content);
 
+<<<<<<< HEAD
       range = element.ownerDocument.createRange();
       t.initializeRange(element, range);
       t.insert(element, range.createContextualFragment(content.stripScripts()));
+=======
+      tagName = ((position == 'before' || position == 'after')
+        ? element.parentNode : element).tagName.toUpperCase();
+
+      childNodes = Element._getContentFromAnonymousElement(tagName, content.stripScripts());
+
+      if (position == 'top' || position == 'after') childNodes.reverse();
+      childNodes.each(insert.curry(element));
+>>>>>>> deploy
 
       content.evalScripts.bind(content).defer();
     }
@@ -1670,7 +1945,11 @@ Element.Methods = {
   },
 
   descendants: function(element) {
+<<<<<<< HEAD
     return $(element).getElementsBySelector("*");
+=======
+    return $(element).select("*");
+>>>>>>> deploy
   },
 
   firstDescendant: function(element) {
@@ -1709,32 +1988,52 @@ Element.Methods = {
     element = $(element);
     if (arguments.length == 1) return $(element.parentNode);
     var ancestors = element.ancestors();
+<<<<<<< HEAD
     return expression ? Selector.findElement(ancestors, expression, index) :
       ancestors[index || 0];
+=======
+    return Object.isNumber(expression) ? ancestors[expression] :
+      Selector.findElement(ancestors, expression, index);
+>>>>>>> deploy
   },
 
   down: function(element, expression, index) {
     element = $(element);
     if (arguments.length == 1) return element.firstDescendant();
+<<<<<<< HEAD
     var descendants = element.descendants();
     return expression ? Selector.findElement(descendants, expression, index) :
       descendants[index || 0];
+=======
+    return Object.isNumber(expression) ? element.descendants()[expression] :
+      Element.select(element, expression)[index || 0];
+>>>>>>> deploy
   },
 
   previous: function(element, expression, index) {
     element = $(element);
     if (arguments.length == 1) return $(Selector.handlers.previousElementSibling(element));
     var previousSiblings = element.previousSiblings();
+<<<<<<< HEAD
     return expression ? Selector.findElement(previousSiblings, expression, index) :
       previousSiblings[index || 0];
+=======
+    return Object.isNumber(expression) ? previousSiblings[expression] :
+      Selector.findElement(previousSiblings, expression, index);
+>>>>>>> deploy
   },
 
   next: function(element, expression, index) {
     element = $(element);
     if (arguments.length == 1) return $(Selector.handlers.nextElementSibling(element));
     var nextSiblings = element.nextSiblings();
+<<<<<<< HEAD
     return expression ? Selector.findElement(nextSiblings, expression, index) :
       nextSiblings[index || 0];
+=======
+    return Object.isNumber(expression) ? nextSiblings[expression] :
+      Selector.findElement(nextSiblings, expression, index);
+>>>>>>> deploy
   },
 
   select: function() {
@@ -1848,11 +2147,15 @@ Element.Methods = {
 
   descendantOf: function(element, ancestor) {
     element = $(element), ancestor = $(ancestor);
+<<<<<<< HEAD
     var originalAncestor = ancestor;
+=======
+>>>>>>> deploy
 
     if (element.compareDocumentPosition)
       return (element.compareDocumentPosition(ancestor) & 8) === 8;
 
+<<<<<<< HEAD
     if (element.sourceIndex && !Prototype.Browser.Opera) {
       var e = element.sourceIndex, a = ancestor.sourceIndex,
        nextAncestor = ancestor.nextSibling;
@@ -1865,6 +2168,14 @@ Element.Methods = {
 
     while (element = element.parentNode)
       if (element == originalAncestor) return true;
+=======
+    if (ancestor.contains)
+      return ancestor.contains(element) && ancestor !== element;
+
+    while (element = element.parentNode)
+      if (element == ancestor) return true;
+
+>>>>>>> deploy
     return false;
   },
 
@@ -1879,7 +2190,11 @@ Element.Methods = {
     element = $(element);
     style = style == 'float' ? 'cssFloat' : style.camelize();
     var value = element.style[style];
+<<<<<<< HEAD
     if (!value) {
+=======
+    if (!value || value == 'auto') {
+>>>>>>> deploy
       var css = document.defaultView.getComputedStyle(element, null);
       value = css ? css[style] : null;
     }
@@ -1918,7 +2233,11 @@ Element.Methods = {
 
   getDimensions: function(element) {
     element = $(element);
+<<<<<<< HEAD
     var display = $(element).getStyle('display');
+=======
+    var display = element.getStyle('display');
+>>>>>>> deploy
     if (display != 'none' && display != null) // Safari bug
       return {width: element.offsetWidth, height: element.offsetHeight};
 
@@ -1947,7 +2266,11 @@ Element.Methods = {
       element.style.position = 'relative';
       // Opera returns the offset relative to the positioning context, when an
       // element is position relative but top and left have not been defined
+<<<<<<< HEAD
       if (window.opera) {
+=======
+      if (Prototype.Browser.Opera) {
+>>>>>>> deploy
         element.style.top = 0;
         element.style.left = 0;
       }
@@ -2002,9 +2325,15 @@ Element.Methods = {
       valueL += element.offsetLeft || 0;
       element = element.offsetParent;
       if (element) {
+<<<<<<< HEAD
         if (element.tagName == 'BODY') break;
         var p = Element.getStyle(element, 'position');
         if (p == 'relative' || p == 'absolute') break;
+=======
+        if (element.tagName.toUpperCase() == 'BODY') break;
+        var p = Element.getStyle(element, 'position');
+        if (p !== 'static') break;
+>>>>>>> deploy
       }
     } while (element);
     return Element._returnOffset(valueL, valueT);
@@ -2012,7 +2341,11 @@ Element.Methods = {
 
   absolutize: function(element) {
     element = $(element);
+<<<<<<< HEAD
     if (element.getStyle('position') == 'absolute') return;
+=======
+    if (element.getStyle('position') == 'absolute') return element;
+>>>>>>> deploy
     // Position.prepare(); // To be done manually by Scripty when it needs it.
 
     var offsets = element.positionedOffset();
@@ -2036,7 +2369,11 @@ Element.Methods = {
 
   relativize: function(element) {
     element = $(element);
+<<<<<<< HEAD
     if (element.getStyle('position') == 'relative') return;
+=======
+    if (element.getStyle('position') == 'relative') return element;
+>>>>>>> deploy
     // Position.prepare(); // To be done manually by Scripty when it needs it.
 
     element.style.position = 'relative';
@@ -2087,7 +2424,11 @@ Element.Methods = {
 
     element = forElement;
     do {
+<<<<<<< HEAD
       if (!Prototype.Browser.Opera || element.tagName == 'BODY') {
+=======
+      if (!Prototype.Browser.Opera || (element.tagName && (element.tagName.toUpperCase() == 'BODY'))) {
+>>>>>>> deploy
         valueT -= element.scrollTop  || 0;
         valueL -= element.scrollLeft || 0;
       }
@@ -2153,6 +2494,7 @@ Element._attributeTranslations = {
   }
 };
 
+<<<<<<< HEAD
 
 if (!document.createRange || Prototype.Browser.Opera) {
   Element.Methods.insert = function(element, insertions) {
@@ -2193,6 +2535,8 @@ if (!document.createRange || Prototype.Browser.Opera) {
   };
 }
 
+=======
+>>>>>>> deploy
 if (Prototype.Browser.Opera) {
   Element.Methods.getStyle = Element.Methods.getStyle.wrap(
     function(proceed, element, style) {
@@ -2237,12 +2581,45 @@ if (Prototype.Browser.Opera) {
 }
 
 else if (Prototype.Browser.IE) {
+<<<<<<< HEAD
   $w('positionedOffset getOffsetParent viewportOffset').each(function(method) {
     Element.Methods[method] = Element.Methods[method].wrap(
       function(proceed, element) {
         element = $(element);
         var position = element.getStyle('position');
         if (position != 'static') return proceed(element);
+=======
+  // IE doesn't report offsets correctly for static elements, so we change them
+  // to "relative" to get the values, then change them back.
+  Element.Methods.getOffsetParent = Element.Methods.getOffsetParent.wrap(
+    function(proceed, element) {
+      element = $(element);
+      // IE throws an error if element is not in document
+      try { element.offsetParent }
+      catch(e) { return $(document.body) }
+      var position = element.getStyle('position');
+      if (position !== 'static') return proceed(element);
+      element.setStyle({ position: 'relative' });
+      var value = proceed(element);
+      element.setStyle({ position: position });
+      return value;
+    }
+  );
+
+  $w('positionedOffset viewportOffset').each(function(method) {
+    Element.Methods[method] = Element.Methods[method].wrap(
+      function(proceed, element) {
+        element = $(element);
+        try { element.offsetParent }
+        catch(e) { return Element._returnOffset(0,0) }
+        var position = element.getStyle('position');
+        if (position !== 'static') return proceed(element);
+        // Trigger hasLayout on the offset parent so that IE6 reports
+        // accurate offsetTop and offsetLeft values for position: fixed.
+        var offsetParent = element.getOffsetParent();
+        if (offsetParent && offsetParent.getStyle('position') === 'fixed')
+          offsetParent.setStyle({ zoom: 1 });
+>>>>>>> deploy
         element.setStyle({ position: 'relative' });
         var value = proceed(element);
         element.setStyle({ position: position });
@@ -2251,6 +2628,17 @@ else if (Prototype.Browser.IE) {
     );
   });
 
+<<<<<<< HEAD
+=======
+  Element.Methods.cumulativeOffset = Element.Methods.cumulativeOffset.wrap(
+    function(proceed, element) {
+      try { element.offsetParent }
+      catch(e) { return Element._returnOffset(0,0) }
+      return proceed(element);
+    }
+  );
+
+>>>>>>> deploy
   Element.Methods.getStyle = function(element, style) {
     element = $(element);
     style = (style == 'float' || style == 'cssFloat') ? 'styleFloat' : style.camelize();
@@ -2324,7 +2712,14 @@ else if (Prototype.Browser.IE) {
   };
 
   Element._attributeTranslations.write = {
+<<<<<<< HEAD
     names: Object.clone(Element._attributeTranslations.read.names),
+=======
+    names: Object.extend({
+      cellpadding: 'cellPadding',
+      cellspacing: 'cellSpacing'
+    }, Element._attributeTranslations.read.names),
+>>>>>>> deploy
     values: {
       checked: function(element, value) {
         element.checked = !!value;
@@ -2339,7 +2734,11 @@ else if (Prototype.Browser.IE) {
   Element._attributeTranslations.has = {};
 
   $w('colSpan rowSpan vAlign dateTime accessKey tabIndex ' +
+<<<<<<< HEAD
       'encType maxLength readOnly longDesc').each(function(attr) {
+=======
+      'encType maxLength readOnly longDesc frameBorder').each(function(attr) {
+>>>>>>> deploy
     Element._attributeTranslations.write.names[attr.toLowerCase()] = attr;
     Element._attributeTranslations.has[attr.toLowerCase()] = attr;
   });
@@ -2392,7 +2791,11 @@ else if (Prototype.Browser.WebKit) {
       (value < 0.00001) ? 0 : value;
 
     if (value == 1)
+<<<<<<< HEAD
       if(element.tagName == 'IMG' && element.width) {
+=======
+      if(element.tagName.toUpperCase() == 'IMG' && element.width) {
+>>>>>>> deploy
         element.width++; element.width--;
       } else try {
         var n = document.createTextNode(' ');
@@ -2444,7 +2847,11 @@ if (Prototype.Browser.IE || Prototype.Browser.Opera) {
   };
 }
 
+<<<<<<< HEAD
 if (document.createElement('div').outerHTML) {
+=======
+if ('outerHTML' in document.createElement('div')) {
+>>>>>>> deploy
   Element.Methods.replace = function(element, content) {
     element = $(element);
 
@@ -2482,12 +2889,20 @@ Element._returnOffset = function(l, t) {
 
 Element._getContentFromAnonymousElement = function(tagName, html) {
   var div = new Element('div'), t = Element._insertionTranslations.tags[tagName];
+<<<<<<< HEAD
   div.innerHTML = t[0] + html + t[1];
   t[2].times(function() { div = div.firstChild });
+=======
+  if (t) {
+    div.innerHTML = t[0] + html + t[1];
+    t[2].times(function() { div = div.firstChild });
+  } else div.innerHTML = html;
+>>>>>>> deploy
   return $A(div.childNodes);
 };
 
 Element._insertionTranslations = {
+<<<<<<< HEAD
   before: {
     adjacency: 'beforeBegin',
     insert: function(element, node) {
@@ -2521,6 +2936,19 @@ Element._insertionTranslations = {
     initializeRange: function(element, range) {
       range.setStartAfter(element);
     }
+=======
+  before: function(element, node) {
+    element.parentNode.insertBefore(node, element);
+  },
+  top: function(element, node) {
+    element.insertBefore(node, element.firstChild);
+  },
+  bottom: function(element, node) {
+    element.appendChild(node);
+  },
+  after: function(element, node) {
+    element.parentNode.insertBefore(node, element.nextSibling);
+>>>>>>> deploy
   },
   tags: {
     TABLE:  ['<table>',                '</table>',                   1],
@@ -2532,7 +2960,10 @@ Element._insertionTranslations = {
 };
 
 (function() {
+<<<<<<< HEAD
   this.bottom.initializeRange = this.top.initializeRange;
+=======
+>>>>>>> deploy
   Object.extend(this.tags, {
     THEAD: this.tags.TBODY,
     TFOOT: this.tags.TBODY,
@@ -2544,7 +2975,11 @@ Element.Methods.Simulated = {
   hasAttribute: function(element, attribute) {
     attribute = Element._attributeTranslations.has[attribute] || attribute;
     var node = $(element).getAttributeNode(attribute);
+<<<<<<< HEAD
     return node && node.specified;
+=======
+    return !!(node && node.specified);
+>>>>>>> deploy
   }
 };
 
@@ -2553,9 +2988,15 @@ Element.Methods.ByTag = { };
 Object.extend(Element, Element.Methods);
 
 if (!Prototype.BrowserFeatures.ElementExtensions &&
+<<<<<<< HEAD
     document.createElement('div').__proto__) {
   window.HTMLElement = { };
   window.HTMLElement.prototype = document.createElement('div').__proto__;
+=======
+    document.createElement('div')['__proto__']) {
+  window.HTMLElement = { };
+  window.HTMLElement.prototype = document.createElement('div')['__proto__'];
+>>>>>>> deploy
   Prototype.BrowserFeatures.ElementExtensions = true;
 }
 
@@ -2570,7 +3011,11 @@ Element.extend = (function() {
         element.nodeType != 1 || element == window) return element;
 
     var methods = Object.clone(Methods),
+<<<<<<< HEAD
       tagName = element.tagName, property, value;
+=======
+      tagName = element.tagName.toUpperCase(), property, value;
+>>>>>>> deploy
 
     // extend methods for specific tags
     if (ByTag[tagName]) Object.extend(methods, ByTag[tagName]);
@@ -2666,7 +3111,11 @@ Element.addMethods = function(methods) {
     if (window[klass]) return window[klass];
 
     window[klass] = { };
+<<<<<<< HEAD
     window[klass].prototype = document.createElement(tagName).__proto__;
+=======
+    window[klass].prototype = document.createElement(tagName)['__proto__'];
+>>>>>>> deploy
     return window[klass];
   }
 
@@ -2692,12 +3141,27 @@ Element.addMethods = function(methods) {
 
 document.viewport = {
   getDimensions: function() {
+<<<<<<< HEAD
     var dimensions = { };
     var B = Prototype.Browser;
     $w('width height').each(function(d) {
       var D = d.capitalize();
       dimensions[d] = (B.WebKit && !document.evaluate) ? self['inner' + D] :
         (B.Opera) ? document.body['client' + D] : document.documentElement['client' + D];
+=======
+    var dimensions = { }, B = Prototype.Browser;
+    $w('width height').each(function(d) {
+      var D = d.capitalize();
+      if (B.WebKit && !document.evaluate) {
+        // Safari <3.0 needs self.innerWidth/Height
+        dimensions[d] = self['inner' + D];
+      } else if (B.Opera && parseFloat(window.opera.version()) < 9.5) {
+        // Opera <9.5 needs document.body.clientWidth/Height
+        dimensions[d] = document.body['client' + D]
+      } else {
+        dimensions[d] = document.documentElement['client' + D];
+      }
+>>>>>>> deploy
     });
     return dimensions;
   },
@@ -2716,14 +3180,32 @@ document.viewport = {
       window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop);
   }
 };
+<<<<<<< HEAD
 /* Portions of the Selector class are derived from Jack Slocum’s DomQuery,
+=======
+/* Portions of the Selector class are derived from Jack Slocum's DomQuery,
+>>>>>>> deploy
  * part of YUI-Ext version 0.40, distributed under the terms of an MIT-style
  * license.  Please see http://www.yui-ext.com/ for more information. */
 
 var Selector = Class.create({
   initialize: function(expression) {
     this.expression = expression.strip();
+<<<<<<< HEAD
     this.compileMatcher();
+=======
+
+    if (this.shouldUseSelectorsAPI()) {
+      this.mode = 'selectorsAPI';
+    } else if (this.shouldUseXPath()) {
+      this.mode = 'xpath';
+      this.compileXPathMatcher();
+    } else {
+      this.mode = "normal";
+      this.compileMatcher();
+    }
+
+>>>>>>> deploy
   },
 
   shouldUseXPath: function() {
@@ -2738,16 +3220,40 @@ var Selector = Class.create({
 
     // XPath can't do namespaced attributes, nor can it read
     // the "checked" property from DOM nodes
+<<<<<<< HEAD
     if ((/(\[[\w-]*?:|:checked)/).test(this.expression))
+=======
+    if ((/(\[[\w-]*?:|:checked)/).test(e))
+>>>>>>> deploy
       return false;
 
     return true;
   },
 
+<<<<<<< HEAD
   compileMatcher: function() {
     if (this.shouldUseXPath())
       return this.compileXPathMatcher();
 
+=======
+  shouldUseSelectorsAPI: function() {
+    if (!Prototype.BrowserFeatures.SelectorsAPI) return false;
+
+    if (!Selector._div) Selector._div = new Element('div');
+
+    // Make sure the browser treats the selector as valid. Test on an
+    // isolated element to minimize cost of this check.
+    try {
+      Selector._div.querySelector(this.expression);
+    } catch(e) {
+      return false;
+    }
+
+    return true;
+  },
+
+  compileMatcher: function() {
+>>>>>>> deploy
     var e = this.expression, ps = Selector.patterns, h = Selector.handlers,
         c = Selector.criteria, le, p, m;
 
@@ -2765,7 +3271,11 @@ var Selector = Class.create({
         p = ps[i];
         if (m = e.match(p)) {
           this.matcher.push(Object.isFunction(c[i]) ? c[i](m) :
+<<<<<<< HEAD
     	      new Template(c[i]).evaluate(m));
+=======
+            new Template(c[i]).evaluate(m));
+>>>>>>> deploy
           e = e.replace(m[0], '');
           break;
         }
@@ -2804,8 +3314,32 @@ var Selector = Class.create({
 
   findElements: function(root) {
     root = root || document;
+<<<<<<< HEAD
     if (this.xpath) return document._getElementsByXPath(this.xpath, root);
     return this.matcher(root);
+=======
+    var e = this.expression, results;
+
+    switch (this.mode) {
+      case 'selectorsAPI':
+        // querySelectorAll queries document-wide, then filters to descendants
+        // of the context element. That's not what we want.
+        // Add an explicit context to the selector if necessary.
+        if (root !== document) {
+          var oldId = root.id, id = $(root).identify();
+          e = "#" + id + " " + e;
+        }
+
+        results = $A(root.querySelectorAll(e)).map(Element.extend);
+        root.id = oldId;
+
+        return results;
+      case 'xpath':
+        return document._getElementsByXPath(this.xpath, root);
+      default:
+       return this.matcher(root);
+    }
+>>>>>>> deploy
   },
 
   match: function(element) {
@@ -2896,10 +3430,17 @@ Object.extend(Selector, {
       'first-child': '[not(preceding-sibling::*)]',
       'last-child':  '[not(following-sibling::*)]',
       'only-child':  '[not(preceding-sibling::* or following-sibling::*)]',
+<<<<<<< HEAD
       'empty':       "[count(*) = 0 and (count(text()) = 0 or translate(text(), ' \t\r\n', '') = '')]",
       'checked':     "[@checked]",
       'disabled':    "[@disabled]",
       'enabled':     "[not(@disabled)]",
+=======
+      'empty':       "[count(*) = 0 and (count(text()) = 0)]",
+      'checked':     "[@checked]",
+      'disabled':    "[(@disabled) and (@type!='hidden')]",
+      'enabled':     "[not(@disabled) and (@type!='hidden')]",
+>>>>>>> deploy
       'not': function(m) {
         var e = m[6], p = Selector.patterns,
             x = Selector.xpath, le, v;
@@ -2959,6 +3500,7 @@ Object.extend(Selector, {
   },
 
   criteria: {
+<<<<<<< HEAD
     tagName:      'n = h.tagName(n, r, "#{1}", c);   c = false;',
     className:    'n = h.className(n, r, "#{1}", c); c = false;',
     id:           'n = h.id(n, r, "#{1}", c);        c = false;',
@@ -2966,6 +3508,15 @@ Object.extend(Selector, {
     attr: function(m) {
       m[3] = (m[5] || m[6]);
       return new Template('n = h.attr(n, r, "#{1}", "#{3}", "#{2}"); c = false;').evaluate(m);
+=======
+    tagName:      'n = h.tagName(n, r, "#{1}", c);      c = false;',
+    className:    'n = h.className(n, r, "#{1}", c);    c = false;',
+    id:           'n = h.id(n, r, "#{1}", c);           c = false;',
+    attrPresence: 'n = h.attrPresence(n, r, "#{1}", c); c = false;',
+    attr: function(m) {
+      m[3] = (m[5] || m[6]);
+      return new Template('n = h.attr(n, r, "#{1}", "#{3}", "#{2}", c); c = false;').evaluate(m);
+>>>>>>> deploy
     },
     pseudo: function(m) {
       if (m[6]) m[6] = m[6].replace(/"/g, '\\"');
@@ -2989,8 +3540,14 @@ Object.extend(Selector, {
     tagName:      /^\s*(\*|[\w\-]+)(\b|$)?/,
     id:           /^#([\w\-\*]+)(\b|$)/,
     className:    /^\.([\w\-\*]+)(\b|$)/,
+<<<<<<< HEAD
     pseudo:       /^:((first|last|nth|nth-last|only)(-child|-of-type)|empty|checked|(en|dis)abled|not)(\((.*?)\))?(\b|$|(?=\s)|(?=:))/,
     attrPresence: /^\[([\w]+)\]/,
+=======
+    pseudo:
+/^:((first|last|nth|nth-last|only)(-child|-of-type)|empty|checked|(en|dis)abled|not)(\((.*?)\))?(\b|$|(?=\s|[:+~>]))/,
+    attrPresence: /^\[((?:[\w]+:)?[\w]+)\]/,
+>>>>>>> deploy
     attr:         /\[((?:[\w-]*:)?[\w-]+)\s*(?:([!^$*~|]?=)\s*((['"])([^\4]*?)\4|([^'"][^\]]*?)))?\]/
   },
 
@@ -3014,7 +3571,11 @@ Object.extend(Selector, {
 
     attr: function(element, matches) {
       var nodeValue = Element.readAttribute(element, matches[1]);
+<<<<<<< HEAD
       return Selector.operators[matches[2]](nodeValue, matches[3]);
+=======
+      return nodeValue && Selector.operators[matches[2]](nodeValue, matches[5] || matches[6]);
+>>>>>>> deploy
     }
   },
 
@@ -3029,14 +3590,24 @@ Object.extend(Selector, {
 
     // marks an array of nodes for counting
     mark: function(nodes) {
+<<<<<<< HEAD
       for (var i = 0, node; node = nodes[i]; i++)
         node._counted = true;
+=======
+      var _true = Prototype.emptyFunction;
+      for (var i = 0, node; node = nodes[i]; i++)
+        node._countedByPrototype = _true;
+>>>>>>> deploy
       return nodes;
     },
 
     unmark: function(nodes) {
       for (var i = 0, node; node = nodes[i]; i++)
+<<<<<<< HEAD
         node._counted = undefined;
+=======
+        node._countedByPrototype = undefined;
+>>>>>>> deploy
       return nodes;
     },
 
@@ -3044,6 +3615,7 @@ Object.extend(Selector, {
     // "ofType" flag indicates whether we're indexing for nth-of-type
     // rather than nth-child
     index: function(parentNode, reverse, ofType) {
+<<<<<<< HEAD
       parentNode._counted = true;
       if (reverse) {
         for (var nodes = parentNode.childNodes, i = nodes.length - 1, j = 1; i >= 0; i--) {
@@ -3053,6 +3625,17 @@ Object.extend(Selector, {
       } else {
         for (var i = 0, j = 1, nodes = parentNode.childNodes; node = nodes[i]; i++)
           if (node.nodeType == 1 && (!ofType || node._counted)) node.nodeIndex = j++;
+=======
+      parentNode._countedByPrototype = Prototype.emptyFunction;
+      if (reverse) {
+        for (var nodes = parentNode.childNodes, i = nodes.length - 1, j = 1; i >= 0; i--) {
+          var node = nodes[i];
+          if (node.nodeType == 1 && (!ofType || node._countedByPrototype)) node.nodeIndex = j++;
+        }
+      } else {
+        for (var i = 0, j = 1, nodes = parentNode.childNodes; node = nodes[i]; i++)
+          if (node.nodeType == 1 && (!ofType || node._countedByPrototype)) node.nodeIndex = j++;
+>>>>>>> deploy
       }
     },
 
@@ -3061,8 +3644,13 @@ Object.extend(Selector, {
       if (nodes.length == 0) return nodes;
       var results = [], n;
       for (var i = 0, l = nodes.length; i < l; i++)
+<<<<<<< HEAD
         if (!(n = nodes[i])._counted) {
           n._counted = true;
+=======
+        if (!(n = nodes[i])._countedByPrototype) {
+          n._countedByPrototype = Prototype.emptyFunction;
+>>>>>>> deploy
           results.push(Element.extend(n));
         }
       return Selector.handlers.unmark(results);
@@ -3102,7 +3690,11 @@ Object.extend(Selector, {
 
     nextElementSibling: function(node) {
       while (node = node.nextSibling)
+<<<<<<< HEAD
 	      if (node.nodeType == 1) return node;
+=======
+        if (node.nodeType == 1) return node;
+>>>>>>> deploy
       return null;
     },
 
@@ -3114,7 +3706,11 @@ Object.extend(Selector, {
 
     // TOKEN FUNCTIONS
     tagName: function(nodes, root, tagName, combinator) {
+<<<<<<< HEAD
       tagName = tagName.toUpperCase();
+=======
+      var uTagName = tagName.toUpperCase();
+>>>>>>> deploy
       var results = [], h = Selector.handlers;
       if (nodes) {
         if (combinator) {
@@ -3127,7 +3723,11 @@ Object.extend(Selector, {
           if (tagName == "*") return nodes;
         }
         for (var i = 0, node; node = nodes[i]; i++)
+<<<<<<< HEAD
           if (node.tagName.toUpperCase() == tagName) results.push(node);
+=======
+          if (node.tagName.toUpperCase() === uTagName) results.push(node);
+>>>>>>> deploy
         return results;
       } else return root.getElementsByTagName(tagName);
     },
@@ -3174,16 +3774,28 @@ Object.extend(Selector, {
       return results;
     },
 
+<<<<<<< HEAD
     attrPresence: function(nodes, root, attr) {
       if (!nodes) nodes = root.getElementsByTagName("*");
+=======
+    attrPresence: function(nodes, root, attr, combinator) {
+      if (!nodes) nodes = root.getElementsByTagName("*");
+      if (nodes && combinator) nodes = this[combinator](nodes);
+>>>>>>> deploy
       var results = [];
       for (var i = 0, node; node = nodes[i]; i++)
         if (Element.hasAttribute(node, attr)) results.push(node);
       return results;
     },
 
+<<<<<<< HEAD
     attr: function(nodes, root, attr, value, operator) {
       if (!nodes) nodes = root.getElementsByTagName("*");
+=======
+    attr: function(nodes, root, attr, value, operator, combinator) {
+      if (!nodes) nodes = root.getElementsByTagName("*");
+      if (nodes && combinator) nodes = this[combinator](nodes);
+>>>>>>> deploy
       var handler = Selector.operators[operator], results = [];
       for (var i = 0, node; node = nodes[i]; i++) {
         var nodeValue = Element.readAttribute(node, attr);
@@ -3262,7 +3874,11 @@ Object.extend(Selector, {
       var h = Selector.handlers, results = [], indexed = [], m;
       h.mark(nodes);
       for (var i = 0, node; node = nodes[i]; i++) {
+<<<<<<< HEAD
         if (!node.parentNode._counted) {
+=======
+        if (!node.parentNode._countedByPrototype) {
+>>>>>>> deploy
           h.index(node.parentNode, reverse, ofType);
           indexed.push(node.parentNode);
         }
@@ -3289,7 +3905,11 @@ Object.extend(Selector, {
     'empty': function(nodes, value, root) {
       for (var i = 0, results = [], node; node = nodes[i]; i++) {
         // IE treats comments as element nodes
+<<<<<<< HEAD
         if (node.tagName == '!' || (node.firstChild && !node.innerHTML.match(/^\s*$/))) continue;
+=======
+        if (node.tagName == '!' || node.firstChild) continue;
+>>>>>>> deploy
         results.push(node);
       }
       return results;
@@ -3300,14 +3920,23 @@ Object.extend(Selector, {
       var exclusions = new Selector(selector).findElements(root);
       h.mark(exclusions);
       for (var i = 0, results = [], node; node = nodes[i]; i++)
+<<<<<<< HEAD
         if (!node._counted) results.push(node);
+=======
+        if (!node._countedByPrototype) results.push(node);
+>>>>>>> deploy
       h.unmark(exclusions);
       return results;
     },
 
     'enabled': function(nodes, value, root) {
       for (var i = 0, results = [], node; node = nodes[i]; i++)
+<<<<<<< HEAD
         if (!node.disabled) results.push(node);
+=======
+        if (!node.disabled && (!node.type || node.type !== 'hidden'))
+          results.push(node);
+>>>>>>> deploy
       return results;
     },
 
@@ -3327,6 +3956,7 @@ Object.extend(Selector, {
   operators: {
     '=':  function(nv, v) { return nv == v; },
     '!=': function(nv, v) { return nv != v; },
+<<<<<<< HEAD
     '^=': function(nv, v) { return nv.startsWith(v); },
     '$=': function(nv, v) { return nv.endsWith(v); },
     '*=': function(nv, v) { return nv.include(v); },
@@ -3339,6 +3969,31 @@ Object.extend(Selector, {
     h.mark(matches);
     for (var i = 0, results = [], element; element = elements[i]; i++)
       if (element._counted) results.push(element);
+=======
+    '^=': function(nv, v) { return nv == v || nv && nv.startsWith(v); },
+    '$=': function(nv, v) { return nv == v || nv && nv.endsWith(v); },
+    '*=': function(nv, v) { return nv == v || nv && nv.include(v); },
+    '$=': function(nv, v) { return nv.endsWith(v); },
+    '*=': function(nv, v) { return nv.include(v); },
+    '~=': function(nv, v) { return (' ' + nv + ' ').include(' ' + v + ' '); },
+    '|=': function(nv, v) { return ('-' + (nv || "").toUpperCase() +
+     '-').include('-' + (v || "").toUpperCase() + '-'); }
+  },
+
+  split: function(expression) {
+    var expressions = [];
+    expression.scan(/(([\w#:.~>+()\s-]+|\*|\[.*?\])+)\s*(,|$)/, function(m) {
+      expressions.push(m[1].strip());
+    });
+    return expressions;
+  },
+
+  matchElements: function(elements, expression) {
+    var matches = $$(expression), h = Selector.handlers;
+    h.mark(matches);
+    for (var i = 0, results = [], element; element = elements[i]; i++)
+      if (element._countedByPrototype) results.push(element);
+>>>>>>> deploy
     h.unmark(matches);
     return results;
   },
@@ -3351,11 +4006,15 @@ Object.extend(Selector, {
   },
 
   findChildElements: function(element, expressions) {
+<<<<<<< HEAD
     var exprs = expressions.join(',');
     expressions = [];
     exprs.scan(/(([\w#:.~>+()\s-]+|\*|\[.*?\])+)\s*(,|$)/, function(m) {
       expressions.push(m[1].strip());
     });
+=======
+    expressions = Selector.split(expressions.join(','));
+>>>>>>> deploy
     var results = [], h = Selector.handlers;
     for (var i = 0, l = expressions.length, selector; i < l; i++) {
       selector = new Selector(expressions[i].strip());
@@ -3366,6 +4025,7 @@ Object.extend(Selector, {
 });
 
 if (Prototype.Browser.IE) {
+<<<<<<< HEAD
   // IE returns comment nodes on getElementsByTagName("*").
   // Filter them out.
   Selector.handlers.concat = function(a, b) {
@@ -3373,6 +4033,24 @@ if (Prototype.Browser.IE) {
       if (node.tagName !== "!") a.push(node);
     return a;
   };
+=======
+  Object.extend(Selector.handlers, {
+    // IE returns comment nodes on getElementsByTagName("*").
+    // Filter them out.
+    concat: function(a, b) {
+      for (var i = 0, node; node = b[i]; i++)
+        if (node.tagName !== "!") a.push(node);
+      return a;
+    },
+
+    // IE improperly serializes _countedByPrototype in (inner|outer)HTML.
+    unmark: function(nodes) {
+      for (var i = 0, node; node = nodes[i]; i++)
+        node.removeAttribute('_countedByPrototype');
+      return nodes;
+    }
+  });
+>>>>>>> deploy
 }
 
 function $$() {
@@ -3392,7 +4070,11 @@ var Form = {
     var data = elements.inject({ }, function(result, element) {
       if (!element.disabled && element.name) {
         key = element.name; value = $(element).getValue();
+<<<<<<< HEAD
         if (value != null && (element.type != 'submit' || (!submitted &&
+=======
+        if (value != null && element.type != 'file' && (element.type != 'submit' || (!submitted &&
+>>>>>>> deploy
             submit !== false && (!submit || key == submit) && (submitted = true)))) {
           if (key in result) {
             // a key is already present; construct an array of values
@@ -3553,7 +4235,10 @@ Form.Element.Methods = {
 
   disable: function(element) {
     element = $(element);
+<<<<<<< HEAD
     element.blur();
+=======
+>>>>>>> deploy
     element.disabled = true;
     return element;
   },
@@ -3593,6 +4278,7 @@ Form.Element.Serializers = {
     else element.value = value;
   },
 
+<<<<<<< HEAD
   select: function(element, index) {
     if (Object.isUndefined(index))
       return this[element.type == 'select-one' ?
@@ -3604,11 +4290,28 @@ Form.Element.Serializers = {
         value = this.optionValue(opt);
         if (single) {
           if (value == index) {
+=======
+  select: function(element, value) {
+    if (Object.isUndefined(value))
+      return this[element.type == 'select-one' ?
+        'selectOne' : 'selectMany'](element);
+    else {
+      var opt, currentValue, single = !Object.isArray(value);
+      for (var i = 0, length = element.length; i < length; i++) {
+        opt = element.options[i];
+        currentValue = this.optionValue(opt);
+        if (single) {
+          if (currentValue == value) {
+>>>>>>> deploy
             opt.selected = true;
             return;
           }
         }
+<<<<<<< HEAD
         else opt.selected = index.include(value);
+=======
+        else opt.selected = value.include(currentValue);
+>>>>>>> deploy
       }
     }
   },
@@ -3779,8 +4482,28 @@ Event.Methods = (function() {
     isRightClick:  function(event) { return isButton(event, 2) },
 
     element: function(event) {
+<<<<<<< HEAD
       var node = Event.extend(event).target;
       return Element.extend(node.nodeType == Node.TEXT_NODE ? node.parentNode : node);
+=======
+      event = Event.extend(event);
+
+      var node          = event.target,
+          type          = event.type,
+          currentTarget = event.currentTarget;
+
+      if (currentTarget && currentTarget.tagName) {
+        // Firefox screws up the "click" event when moving between radio buttons
+        // via arrow keys. It also screws up the "load" and "error" events on images,
+        // reporting the document as the target instead of the original image.
+        if (type === 'load' || type === 'error' ||
+          (type === 'click' && currentTarget.tagName.toLowerCase() === 'input'
+            && currentTarget.type === 'radio'))
+              node = currentTarget;
+      }
+      if (node.nodeType == Node.TEXT_NODE) node = node.parentNode;
+      return Element.extend(node);
+>>>>>>> deploy
     },
 
     findElement: function(event, expression) {
@@ -3791,11 +4514,23 @@ Event.Methods = (function() {
     },
 
     pointer: function(event) {
+<<<<<<< HEAD
       return {
         x: event.pageX || (event.clientX +
           (document.documentElement.scrollLeft || document.body.scrollLeft)),
         y: event.pageY || (event.clientY +
           (document.documentElement.scrollTop || document.body.scrollTop))
+=======
+      var docElement = document.documentElement,
+      body = document.body || { scrollLeft: 0, scrollTop: 0 };
+      return {
+        x: event.pageX || (event.clientX +
+          (docElement.scrollLeft || body.scrollLeft) -
+          (docElement.clientLeft || 0)),
+        y: event.pageY || (event.clientY +
+          (docElement.scrollTop || body.scrollTop) -
+          (docElement.clientTop || 0))
+>>>>>>> deploy
       };
     },
 
@@ -3840,7 +4575,11 @@ Event.extend = (function() {
     };
 
   } else {
+<<<<<<< HEAD
     Event.prototype = Event.prototype || document.createEvent("HTMLEvents").__proto__;
+=======
+    Event.prototype = Event.prototype || document.createEvent("HTMLEvents")['__proto__'];
+>>>>>>> deploy
     Object.extend(Event.prototype, methods);
     return Prototype.K;
   }
@@ -3850,9 +4589,15 @@ Object.extend(Event, (function() {
   var cache = Event.cache;
 
   function getEventID(element) {
+<<<<<<< HEAD
     if (element._eventID) return element._eventID;
     arguments.callee.id = arguments.callee.id || 1;
     return element._eventID = ++arguments.callee.id;
+=======
+    if (element._prototypeEventID) return element._prototypeEventID[0];
+    arguments.callee.id = arguments.callee.id || 1;
+    return element._prototypeEventID = [++arguments.callee.id];
+>>>>>>> deploy
   }
 
   function getDOMEventName(eventName) {
@@ -3880,7 +4625,11 @@ Object.extend(Event, (function() {
           return false;
 
       Event.extend(event);
+<<<<<<< HEAD
       handler.call(element, event)
+=======
+      handler.call(element, event);
+>>>>>>> deploy
     };
 
     wrapper.handler = handler;
@@ -3905,10 +4654,26 @@ Object.extend(Event, (function() {
         cache[id][eventName] = null;
   }
 
+<<<<<<< HEAD
+=======
+
+  // Internet Explorer needs to remove event handlers on page unload
+  // in order to avoid memory leaks.
+>>>>>>> deploy
   if (window.attachEvent) {
     window.attachEvent("onunload", destroyCache);
   }
 
+<<<<<<< HEAD
+=======
+  // Safari has a dummy event handler on page unload so that it won't
+  // use its bfcache. Safari <= 3.1 has an issue with restoring the "document"
+  // object when page is returned to via the back button using its bfcache.
+  if (Prototype.Browser.WebKit) {
+    window.addEventListener('unload', Prototype.emptyFunction, false);
+  }
+
+>>>>>>> deploy
   return {
     observe: function(element, eventName, handler) {
       element = $(element);
@@ -3962,11 +4727,20 @@ Object.extend(Event, (function() {
       if (element == document && document.createEvent && !element.dispatchEvent)
         element = document.documentElement;
 
+<<<<<<< HEAD
       if (document.createEvent) {
         var event = document.createEvent("HTMLEvents");
         event.initEvent("dataavailable", true, true);
       } else {
         var event = document.createEventObject();
+=======
+      var event;
+      if (document.createEvent) {
+        event = document.createEvent("HTMLEvents");
+        event.initEvent("dataavailable", true, true);
+      } else {
+        event = document.createEventObject();
+>>>>>>> deploy
         event.eventType = "ondataavailable";
       }
 
@@ -3995,13 +4769,19 @@ Element.addMethods({
 Object.extend(document, {
   fire:          Element.Methods.fire.methodize(),
   observe:       Element.Methods.observe.methodize(),
+<<<<<<< HEAD
   stopObserving: Element.Methods.stopObserving.methodize()
+=======
+  stopObserving: Element.Methods.stopObserving.methodize(),
+  loaded:        false
+>>>>>>> deploy
 });
 
 (function() {
   /* Support for the DOMContentLoaded event is based on work by Dan Webb,
      Matthias Miller, Dean Edwards and John Resig. */
 
+<<<<<<< HEAD
   var timer, fired = false;
 
   function fireContentLoadedEvent() {
@@ -4009,6 +4789,15 @@ Object.extend(document, {
     if (timer) window.clearInterval(timer);
     document.fire("dom:loaded");
     fired = true;
+=======
+  var timer;
+
+  function fireContentLoadedEvent() {
+    if (document.loaded) return;
+    if (timer) window.clearInterval(timer);
+    document.fire("dom:loaded");
+    document.loaded = true;
+>>>>>>> deploy
   }
 
   if (document.addEventListener) {

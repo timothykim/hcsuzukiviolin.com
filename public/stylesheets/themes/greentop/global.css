@@ -44,9 +44,19 @@ div#banner {
 	display: block;
 }
 
+<<<<<<< HEAD
 div#banner.page_index {
 	background: url(images/title-trans.png) no-repeat;
 	height: 190px;
+=======
+div#title h1 {
+  display: none;
+}
+
+div#banner.page_index {
+	background: url(images/title-trans.png) no-repeat; 
+	height: 190px; 
+>>>>>>> deploy
 }
 
 div#title.page_index {
@@ -54,10 +64,31 @@ div#title.page_index {
 	background: url(images/violin_piano_icon-trans.png) no-repeat;	
 }
 
+<<<<<<< HEAD
 div#title h1 {
 	display: none;
 }
 
+=======
+
+div#banner.page_index h1 {
+	position: absolute;
+	top: 100px;
+	color: white;	
+	font-size: 20pt;
+}
+
+div#title h1 {
+/*	display: none;*/
+	position: absolute;
+	top: 28px;
+	color: white;
+	font-size: 16pt;
+}
+
+
+
+>>>>>>> deploy
 div#toolbar_wrapper {
 	width: 800px;
 	margin: 0 auto;
@@ -81,7 +112,11 @@ div#toolbar #menu li {
 	font-size: 12px;
 	color: white;
 	width: 80px;
+<<<<<<< HEAD
 	height: 37px;
+=======
+	height: 52px;
+>>>>>>> deploy
 	list-style-type: none;
 	background-color: white;
 	text-align: center;
@@ -99,6 +134,18 @@ div#toolbar #menu a {
 	text-decoration: none;
 }
 
+<<<<<<< HEAD
+=======
+
+div#toolbar #menu li.baby_class {
+	background-color: #FDEEF4;
+}
+div#toolbar #menu li.baby_class a {
+  color: #ff5555;
+}
+
+
+>>>>>>> deploy
 div#toolbar #login_frame {
 	position: absolute;
 	top: 5px;
@@ -188,6 +235,12 @@ div#submenu {
 	width: 190px;
 	margin-bottom: 20px;
 	float: left;
+<<<<<<< HEAD
+=======
+    min-height: 440px;
+    padding-right: 20px;
+    border-right: 1px solid silver;
+>>>>>>> deploy
 }
 
 span#section_path {
@@ -228,7 +281,11 @@ div#submenu li div.side_title {
 }
 
 div#content {
+<<<<<<< HEAD
 	margin-left: 205px;
+=======
+	margin-left: 235px;
+>>>>>>> deploy
 }
 
 div#content_no_side {
@@ -264,11 +321,22 @@ div.page_nav {
 }
 
 	/* @group forms */
+<<<<<<< HEAD
 	
 	div.notice {
 		background-color: #bc0000;
 		border: 1px solid #ff4778;
 		color: white;
+=======
+	textarea {
+		overflow: auto;
+	}
+	
+	div.notice {
+		background-color: #ffeeee;
+		border: 1px solid red;
+		color: black;
+>>>>>>> deploy
 		padding: 20px;
 		margin-bottom: 20px;
 	}
@@ -302,8 +370,13 @@ div.page_nav {
 	
 	div.form_box {
 		padding: 20px;
+<<<<<<< HEAD
 		background-color: #d5efff;
 		border: 1px solid #a5ccff;
+=======
+		background-color: #eff3fc;
+		border: 1px solid #c9d9ef;
+>>>>>>> deploy
 	}
 
 	div.form_box .form_element {
@@ -396,3 +469,54 @@ div#latest_news span.news_date {
 /* @end */
 
 
+<<<<<<< HEAD
+=======
+.red {
+	color: red;
+}
+
+
+
+/* table */
+
+table.default_table {
+	width: 100%;
+	border-width: 1px 1px 1px 1px;
+	border-spacing: 2px;
+	border-style: solid solid solid solid;
+	border-color: gray gray gray gray;
+	border-collapse: collapse;
+	background-color: white;
+}
+
+table.default_table th {
+	border-width: 1px 1px 1px 1px;
+	padding: 5px 5px 5px 5px;
+	border-style: dotted;
+	border-color: gray gray gray gray;
+	background-color: #d1eefe;
+}
+
+table.default_table th.selected {
+	background-color: #d1fdd3;
+}
+
+
+
+table.default_table td {
+	border: 1px dotted silver;
+	padding: 5px;
+}
+
+table.default_table tr.even td {
+	background-color: #fcfcfc;	
+}
+
+table.default_table tr.odd td {
+	background-color: #eaeaea;	
+}
+
+table.default_table tr.hightlight td {
+	background-color: #ead887;	
+}
+>>>>>>> deploy

@@ -32,6 +32,12 @@ var colors = [
 				"B08B59" 
 			];
 
+<<<<<<< HEAD
+=======
+
+var resizeTimer = null;
+
+>>>>>>> deploy
 Event.onDOMReady(function() {
 	Event.observe(window, 'scroll', function() {
 		if (window.scrollY > 190) {
@@ -40,8 +46,27 @@ Event.onDOMReady(function() {
 			$('side_list').style.top = 0;
 		}
 	});
+<<<<<<< HEAD
 });
 
+=======
+	
+	Event.observe(window, 'resize', function() {
+	    if (resizeTimer) clearTimeout(resizeTimer);
+	    resizeTimer = setTimeout(adjust_lesson_width, 100);
+	});
+	
+	if (resizeTimer) clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(adjust_lesson_width, 100);
+});
+
+function adjust_lesson_width() {
+	$$('div.lesson_bar').each(function(bar) {
+		bar.style.width = (bar.up('div').getWidth() - 2) + "px";
+	});	
+}
+
+>>>>>>> deploy
 function close_lesson_list(id) {
 	Effect.Fade($('lesson_list_' + id), { duration: 0.5 });
 }
@@ -89,7 +114,11 @@ function add_lesson() {
 		onComplete: function(transport){
 			var data = transport.responseText.evalJSON();
 			hide_dialog();
+<<<<<<< HEAD
 			var div = '<div class="lesson_bar" style="margin-top: ' + data.offset + 'px; height: ' + (data.duration - 3 - 1) + 'px; background-color: #' + get_color(data.student_id) + '"><span class="lesson_text" style="position: absolute;">' + data.string + '</span></div>';
+=======
+			var div = '<div class="lesson_bar" style="width: ' + ($(data.block).getWidth() - 2) + 'px; margin-top: ' + data.offset + 'px; height: ' + (data.duration - 3 - 1) + 'px; background-color: #' + get_color(data.student_id) + '"><span class="lesson_text" style="position: absolute;">' + data.string + '</span></div>';
+>>>>>>> deploy
 
 			if (data.update) {
 				$(data.prev_block).down('div').remove();
@@ -101,7 +130,14 @@ function add_lesson() {
 			$(data.block).insert(div);
 			
 			data.image_blocks.each(function(b) {
+<<<<<<< HEAD
 				Effect.Fade($(b).down('img'), { duration: 0.5, afterFinish: function() { $(b).down('img').remove() } });
+=======
+				var img = $(b).down('img.bar_' + data.student_id);
+				
+				
+				Effect.Fade(img, { duration: 0.5, afterFinish: function() { img.remove(); } });
+>>>>>>> deploy
 			});
 		}
 	});
@@ -211,12 +247,22 @@ function render_single_event(e, student_id, student_name, duration) {
 	var style = "";
 	
 	var insert_div = $(div);
+<<<<<<< HEAD
 	
+=======
+/*	
+>>>>>>> deploy
 	if (insert_div.childElements().length == 1) {
 		var top_div = insert_div.childElements()[0]
 		var height = top_div.getHeight();
 		style = "top: -" + (height + parseInt(top_div.style.marginTop))+ "px;";
 	}
+<<<<<<< HEAD
+=======
+*/
+	
+	
+>>>>>>> deploy
 
 	var html = '<img style="cursor: pointer; ' + style + '" onclick="show_lesson_dialog(\'' + student_name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\', \'' + e.schedule_id + '\', \'' + duration + '\');" onmouseout="hidename();" onmouseover="showname(\'' + student_name + '\', colors[' + student_id + ' % 21], \'' + e.string + '\');" class="calendar_bar bar_' + student_id + '" src="' + img + '" />';
 
@@ -320,8 +366,13 @@ function getMouseXY(e) {
 	if (army_time >= day_start && army_time < day_end && tempX > 256 && show_time) {
 		$('xy').style.display = "block";
 		$('xy').update(time_str);
+<<<<<<< HEAD
 		$('xy').style.top = tempY - 60 + "px";
 		$('xy').style.left = tempX - 100 + "px";
+=======
+		$('xy').style.top = tempY + 15 + "px";
+		$('xy').style.left = tempX + 15 + "px";
+>>>>>>> deploy
 	} else {
 		$('xy').style.display = "none";
 		

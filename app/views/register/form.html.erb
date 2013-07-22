@@ -1,0 +1,428 @@
+<% if @error %>
+	<%= @error %>
+<% else %>
+
+
+<% form_tag "/register/save", :method => "post" , :id => "register_form" do -%>
+<%= hidden_field_tag "session_id", @current_session.id %>
+
+<h2>Registering for <%= @current_session %></h2>
+
+<hr />
+
+<h3>Parent Information</h3>
+
+<div class="form_box" id="parent_info">
+  <%= hidden_field "parent", "id" %>
+  <div class="form_element">
+    <label class="form_label">First Name:</label>
+    <%= text_field :parent, :firstname, :class => "text", :size => 20 %>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Last Name:</label>
+    <%= text_field :parent, :lastname, :class => "text", :size => 20 %>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Login E-mail:</label>
+    <%= text_field :parent, :email, :class => "text", :size => 30 %>
+    <div class="form_info">
+      Please make sure that this e-mail is your primary e-mail that you daily check. This e-mail is what you will use to login to this website.
+    </div>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Alternate E-mail:</label>
+    <%= text_field :parent, :alternate_email, :class => "text", :size => 30 %>
+    <div class="form_info">
+      In the case where above e-mail does not work, please provide an alternative e-mail. i.e. Your spouse's e-mail.
+    </div>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Mailing Address:</label>
+    <%= text_area :parent, :address, :class => "text", :size => "30x3" %>
+  </div>
+
+  <div class="form_element">
+    <label class="form_label">Home Phone:</label>
+    <%= text_field :parent, :home_phone, :class => "text", :size => 20 %>
+  </div>
+  <div class="form_element">
+    <label class="form_label">Work Phone:</label>
+    <%= text_field :parent, :work_phone, :class => "text", :size => 20 %>
+  </div>
+  <div class="form_element">
+    <label class="form_label">Mobile Phone:</label>
+    <%= text_field :parent, :mobile_phone, :class => "text", :size => 20 %>
+  </div>
+</div>
+
+<hr />
+
+<h3>Student Information</h3>
+
+<div class="form_box" id="student_info">
+	<div class="form_element">
+	<label class="form_label">Student:</label>
+	<div class="student_name">
+		<% if @student.id.nil? %>
+			New Student <input type="hidden" name="new" value="true" />
+		<% else %>
+			<%= @student %> <%= hidden_field "student", "id" %>
+		<% end %>
+	</div>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">First Name:</label> <%= text_field "student", "first_name", :class => "text", :size => 20 %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Middle Initial:</label> <%= text_field "student", "middle_initial", :class => "text", :size => 2, :maxlength => 1 %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Last Name:</label> <%= text_field "student", "last_name", :class => "text", :size => 20 %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Date of Birth:</label> <%= date_select("student", "dob", :start_year => Time.now.year - 30, :end_year => Time.now.year - 2, :default => {:year => Time.now.year - 10, :month => 1, :day => 1}, :order => [:month, :day, :year]) %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Attending School:</label> <%= text_field "student", "school", :class => "text", :size => 20 %>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Grade Level: </label> <%= text_field "student", "grade_level", :class => "text number", :size => 10 %> <%= "on Fall of #{@year}" if @season == "Summer"%>
+	</div>
+
+	<div class="form_element">
+	<label class="form_label">Comments:<br /><small>(Any information that teacher should know about the student)</small></label> <%= text_area "student", "comment", :class => "text", :size => "45x3" %>
+	</div>
+</div>
+
+<hr />
+
+
+<h3>Registration Information</h3>
+
+<!--<div class="date"><strong>Lessons</strong>: <%= @current_session.first.strftime("%B %d, %Y") %> ~ <%= @current_session.last.strftime("%B %d, %Y") %></div>-->
+
+<div id="notice">
+	<%= textilize(@current_session.registration_notes) %>
+</div>
+
+
+<h3 class="important">Please fill out completely</h3>
+
+<div class="form_box" id="reg">
+	
+	<div class="form_element">
+		<label class="form_label">This registration is for:</label>
+        <%= select "registration", "school_id", School.find(:all, :order => "id", :limit => 2).collect {|s| [s.name, s.id] } %>
+	</div>
+
+	<div class="form_element">
+		<label class="form_label">Single Lesson Duration:</label>
+		<%= text_field "registration", "lesson_duration", :class=>"text", :style=>"text-align:right;", :size=>3, :maxlength=>3 %> minutes
+	</div>
+	
+	
+	<% @registration_options.each do |option| -%>
+	<div class="form_element">
+<%
+    o = @registration.registered_options.find(:first, :conditions => {:option_id => option.id})
+    value = (o && o.value) || ""
+
+
+
+    if option.input_type == "dropdown"
+        opt_html = ""
+        choices = option.text.slice(/\[[^\[]*\]$/)
+        unless choices.nil?
+            choices[1..-2].split(",").each do |opt| 
+                opt.strip!
+                selected = (value == opt && 'selected="selected"') || ""
+                opt_html += "<option value=\"" + opt + "\" " + selected + "\">" + opt + "</option>"
+            end
+            option.text = option.text[0..option.text.rindex('[')-1].strip
+        end
+    end
+%>
+<%=
+case option.input_type
+	when "text"
+		'<label class="form_label">' + option.text + '</label>' + text_field_tag("reg_option[#{option.id}]", value.to_s, :class => "text", :size => 20)
+
+	when "big_text"
+		'<label class="form_label">' + option.text + '</label>' + text_area_tag("reg_option[#{option.id}]", value.to_s, :class => "text", :size => "30x3")
+
+	when "checkbox"
+		'<label class="form_label">' + option.text + '</label>' + radio_button_tag("reg_option[#{option.id}]", "yes", value == "yes") + " Yes<br />" + radio_button_tag("reg_option[#{option.id}]", "no" , value == "no") + " No"
+    when "dropdown"
+        '<label class="form_label">' + option.text + '</label>' + select_tag("reg_option[#{option.id}]", opt_html)
+end -%>
+	</div>
+	
+	<% end -%>
+</div>
+
+<hr />
+
+<h3>Scheduling</h3>
+
+<% if @current_session.registration_type == Session::DATE_TYPE %>
+	<div id="calendar">
+		<h4>Individual Lessons</h4>
+		<ul>
+            <li>Please indicate ALL possible time RANGE for EACH DAY.<br /><em>Examples:</em><br />
+            <em class="good"><strong>Do write</strong>: 6-8pm, 10am~1:30pm</em><br/><em class="bad"><strong>Do not write</strong>: 5pm, 4, after 7pm, 3pm or later</em></li>
+            <li>Please write down <strong>pm</strong> or <strong>am</strong> with your times.<br /><em>Examples:</em><br /><em class="good"><strong>Do write</strong>: 8~9am, 2~4pm, 10am~1:30pm</em><br/><em class="bad"><strong>Do not write</strong>: 7~8</em></li>
+			<li>Multiple range can be entered per day by putting them on <strong>separate lines</strong>.</li>
+            <li>You may mark a time range with an * (asterisk) to indicate preferred time.<br /><em>Examples:</em><br /><em class="good"><strong>Do write</strong>: 4-5pm*, *1-3:30pm</em></li>
+		</ul>
+		<div class="help">
+		<p>Example:</p>
+		<table width="110" height="100"><thead><tr><th>Tuesday</th></tr></thead><tr><td class="cell"><div class="date">MM/DD</div><div class="notes"><br /></div><textarea class="text time_range" id="sample" readonly="readonly">7-10am,
+11am~3:30pm,
+6-7pm*</textarea></td></tr></table>
+
+		<p>Legend:</p>
+		<table width="110" height="100"><thead><tr><th>Off Day</th></tr></thead><tr><td valign="top" class="cell off_day"><div class="date">MM/DD</div><div class="notes"><br /></div></td></tr></table>
+
+		</div>
+		
+        <% other_students = @parent.students.find_all{|s| s.id != @student.id and s.registered?(@current_session)} %>
+        <% if other_students.length > 0 %>
+			<div style="color: #77c;">
+			Copy Schedule from: <select onchange="updateCalendar(this.value);"><option value="0">Select a student</option>
+			<% other_students.each do |s|%>
+              <option value="<%= s.get_registration(@current_session).id %>"> - <%= s %></option>
+			<% end %>
+			</select>
+			</div>
+		<% end %>
+		
+<div id="msg" style="display:none;">
+</div>
+		
+		<table>
+			<thead>
+				<tr>
+					<th>W</th>
+                    <th>Sunday</th>
+					<th>Monday</th>
+					<th>Tuesday</th>
+					<th>Wednesday</th>
+					<th>Thursday</th>
+					<th>Friday</th>
+					<th>Saturday</th>
+				</tr>
+			</thead>
+			<tbody>
+<%		@dates.each_with_index do |today, i| -%>
+<%			if i % 7 == 0 #index % 6 does NOT corespond to day of the week -%>
+				<tr>
+					<td class="week_no"><%= (i / 6)+1 %></td>
+<%			end #if -%>
+<%			clas = "" -%>
+<%			clas = (today.date.mon % 2 == 1) ? "odd_month" : "even_month" -%>
+<%			clas = " off_day" if today.offday -%>
+
+<%          txt_cls = "" #(([2,3,4,6,7,8].include?((i / 6) + 1) && [1,3].include?(today.date.wday)) && "msg") || "" #this is a hack for summer 2010 registration %>
+
+<%			form = text_area_tag("times[#{today.date.strftime("%Y/%m/%d")}]", "", :class=>"text time_range "+txt_cls, :id=>today.date.to_s) unless today.offday -%>
+<%#			grpd = "<div class=\"group_day\"><input class=\"group_box\" type=\"checkbox\" id=\"#{today.date.to_s}\" name=\"groups[#{today.date.strftime("%Y/%m/%d")}]\"><label for=\"#{today.date.to_s}\"> Group Class</label></div>" if today.group -%>
+<%			grpd = (today.group) ? "<div class=\"group_day\">Group Class</div>" : "<div class=\"group_day\"><br /></div>"  -%>
+
+					<td valign="top" class="cell <%= clas %>"><div class="date"><%= today.date.strftime("%m/%d") %></div><div class="notes"><%= today.note %><br /></div><div class="time_range_form"><%= form %></div><%= grpd %></td>
+<%			if i % 7 == 6 -%>
+				</tr>
+<%			end #if -%>
+<%		end #each -%>
+			</tbody>
+		</table>
+	</div>
+	
+<% end %>
+<% if @current_session.registration_type == Session::DAY_TYPE %>
+
+<h3 class="important">Please read ALL the bullet items.</h3>
+    
+  <ul id="scheduling_info">
+        <li>Use the schedule chart below to indicate ALL possible lesson times for your child.</li>
+        <li>Indicate your availability by clicking and dragging.</li>
+        <li>To get rid of a selected time frame, just double click on the red box.</li>
+        <li>Preferred lessons times are mornings and early afternoons.</li>
+        <li>Mondays and Tuesdays are reserved for home studio families (indicated by Green below). If your availabilty falls in only those times, your lessons will be expected to be at the home studio. The rests are held at Columbia Baptist Church.</li>
+        <li>Again <span style="background-color: #cfc">Green time slots</span> are for home studio families.</li>
+        <li><big><a href="#" onclick="$('tutorial').show(); return false;" style="color:red;">Click here to view the tutorial video for using the scheduling chart.</a></big></li>
+  </ul>
+
+<div id="tutorial" style="display: none;">
+  <big><a href="#" onclick="$('tutorial').hide(); return false;" style="color: white;">[×] Close this video</a></big><br /><br />
+  <iframe width="640" height="390" src="http://www.youtube.com/embed/MXJEn1w0Ee0?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
+
+
+
+		<div class="help">
+      <p>Legend</p>
+      <div class="calendar_div" style="background-color: white; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">Lessons at CIFA</div>
+      <div class="calendar_div" style="background-color: #cfc; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">Lessons at Home Studio</div>
+      <div class="calendar_div" style="background-color: #fcc; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">Your time selection</div>
+      <div class="calendar_div" style="background-color: #eee; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">No Lessons</div>
+      <div class="calendar_div" style="background-color: #FAF8CC; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">Group Class</div>
+
+		</div>
+        
+
+        
+    <table class="default_table selection_table">
+      <thead>
+          <tr>
+              <th>T</th>
+              <th width="20%">Monday</th>
+              <th width="20%">Tuesday</th>
+              <th width="20%">Wednesday</th>
+              <th width="20%">Thursday</th>
+              <th width="20%">Friday</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td valign="top">
+              <% for i in (7..18) # 7am ~ 7pm %>
+              <% 
+                t = (i > 11) ? "#{i-12}pm" : "#{i}am"
+                t = "12pm" if i == 12
+              %>
+                <div style="border-top: 1px solid silver; height: 31px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);"><%=t%></div>
+              <% end %>
+                <div style="border-top: 1px solid silver; height: 15px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);">7pm</div>
+            </td>
+
+            <% offhours = [[7, 14], [10, 14], [10, 13], [10, 14], [7, 19]] #[ day, start, end] %>
+
+            <% 5.times do |d| %>
+              <td valign="top">
+
+                <% for i in (7..19) %>
+                  <% #highlight green %>
+                  <% bg = (d == 0 || d == 1 ) ? "#cfc" : "" %>
+
+                  <!-- this is for the group class hours -->
+                  <% bg = "#FAF8CC !important" if ((d == 4) && (i >= 16 && i <= 18)) %>
+                  <% #bg = "#FAF8CC !important" if ((d == 5) && (i == 10 || i == 11)) %>
+
+                  <% h = (i.to_s.length == 1) ? "0#{i}" : i.to_s %>
+                  <% id_1 = "d#{d}_#{h}:00" %>
+                  <% id_2 = "d#{d}_#{h}:30" %>
+                  <% cls = (@r_days.index(id_1)) ? "selected" : "" %>
+
+                  <%
+                    if offhours[d][0] <= i and i <= offhours[d][1]
+                      events = ""
+                      cls_off = "offday"
+                    else
+                      events = "onmouseup=\"click_end();\" onmousedown=\"click_start(this, " + d.to_s + ")\" onmouseover=\"high_light(this, " + d.to_s + ");\" ondblclick=\"dehighlight(this)\""
+                      cls_off = ""
+                    end
+                  %>
+                  <% text = "Group class" if ((d == 4) && (i == 16)) %>
+
+                  <div class="calendar_div selection_<%=d%> <%=cls%> <%=cls_off%>" id="<%=id_1%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;" <%=events %>><%=text%></div>
+                  <% cls = (@r_days.index(id_2)) ? "selected" : "" %>
+                  
+                  <%
+                    # for 2012~2013 only: 9:30 off
+                    if i == 19
+                      events = ""
+                      cls_off = "offday"
+                    end
+                  %>
+
+                  <!-- this is for the group class hours -->
+                  <% text = "" %>
+                  <% bg = "#FAF8CC !important" if ((d == 4) && (i == 16)) %>
+
+                  <div class="calendar_div selection_<%=d%> <%=cls%> <%=cls_off%>" id="<%=id_2%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px dotted silver; height: 15px; font-size: 9px;" <%=events %>><%=text%></div>
+                <% end %>
+                <div class="selection_<%=d%>" id="d<%=d%>_19:00" style="background-color:silver; padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;"></div>
+
+              </td>
+            <% end %>
+          </tr>
+      </tbody>
+    </table>
+    <%= hidden_field_tag "schedule_selection" %>
+
+
+    
+<% end %>
+
+<hr />
+<h3>Tuition Information</h3> 
+
+<p>
+The tuition will be billed.
+</p>
+<!--
+<hr />
+<div>
+    <h4>Group Classes</h4>
+    <p><%= @current_session %> session will have group classes on following days.</p>
+    <ol>
+    <% @group_days.each do |g| %>
+        <li><%= g.date.strftime("%m/%d/%Y - %A") %></li>
+    <% end %>
+    </ol>
+</div>
+<hr />
+-->
+
+<!--
+<p>
+The tuition includes 30 individual lessons and 30 group classes. Tuition for each semester is due on the first lesson of the each semester. You will be billed accordingly upon the receipt of your registration.
+</p>
+
+<ul>
+    <li>The tuition for 30-minute lesson and the group class is $1980 ($990/semester)</li>
+    <li>The tuition for 45-minute lesson and the group class is $2580 ($1290/semester)</li>
+    <li>The tuition for 60-minute lesson and the group class is $3180 ($1590/semester)</li>
+</ul>
+-->
+
+<hr />
+
+<h4>Photograph Agreement</h4>
+
+<div class="agreement"> 
+<input type="checkbox" checked="checked" name="photo_agreement"> By checking this box, 
+I authorize the use and reproduction by the Suzuki Violin Program at Falls Church, or anyone authorized by the Suzuki Violin Program at Falls Church or its representatives of any photographs taken of the student registered on this form at Suzuki Violin Program premises or activities. In short, do not use any photos of my student for the school.
+</div>
+
+
+<h4>Policy Agreement</h4>
+<div class="agreement"> 
+  <!-- <input type="checkbox" name="user_agreement" onclick="if(this.checked) { $('form_submit').removeAttribute('disabled'); } else { $('form_submit').setAttribute('disabled', 'disabled');}"/> --> By submitting this registration,
+I hereby agree to abided by any and all policies of the Hannah Choi Suzuki Violin Program as stated in the Handbook, and I accept responsibility for all tuition and fees incurred.
+</div>
+
+
+<hr />
+
+
+<div style="text-align: right; margin-top: 20px;">
+<button class="iconbutton"  id="form_submit" type="submit"><img src="/images/icons/write.png" class="icon"> Submit this Registration</button>
+</div>
+
+
+
+<% end #form %>
+
+
+<% end #for error %>

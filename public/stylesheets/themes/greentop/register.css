@@ -1,0 +1,263 @@
+div.divider {
+	text-align: center;
+	margin: 50px 0;
+}
+
+
+div.session h2 {
+	margin: 0px;
+	margin-top: 20px;
+}
+
+div.session .date {
+	font-size: 0.8em;
+	margin-top: 5px;
+}
+
+div.session .due_date {
+	font-size: 1.5em;
+	float: right;
+}
+
+div.session table {
+	margin: 20px 0;
+}
+
+div.session td {
+	padding-left: 20px;
+}
+
+div.student_name {
+	font-size: 20px;
+}
+
+div.form_box {
+	padding: 10px 20px;
+	margin-bottom: 20px;
+}
+
+div.form_box input.text {
+	padding: 4px;
+	font-size: 14px;
+}
+
+div.form_box select {
+	font-size: 14px;
+}
+
+div.form_box .form_element {
+	margin-bottom: 20px;
+}
+
+div.form_box label {
+	margin-top: 4px;
+	margin-right: 5px;
+	width: 150px;
+	font-size: 14px;
+	float: left;
+	text-align: right;
+}
+
+div.form_box label small {
+	font-size: 10px;
+}
+
+div.form_info {
+    margin-left: 160px;
+    margin-top: 5px;
+    color: #f66;
+}
+
+
+div#reg label {
+	width: 280px;
+}
+
+
+div#calendar table {
+	border-collapse: collapse;
+	border: 1px solid silver;
+	background-color: white;	
+}
+
+div#calendar table th {
+	background-color: #afc;
+	border: 1px solid silver;	
+	border-bottom: 2px solid silver;	
+}
+
+div#calendar table td {
+	border: 1px solid silver;
+}
+
+div#calendar table td.cells {
+	vertical-align: top;
+	font-size: 0.8em;
+}
+
+div#calendar table td.off_day {
+	background-color: #ddd !important;
+}
+
+div#calendar table td.group_day {
+	background-color: #fcc !important;
+}
+
+div#calendar table td div.date {
+	text-align: center;
+	font-weight: bold;
+	width: 102px;
+	padding-top: 10px;
+}
+
+div#calendar table td.week_no {
+	background-color: #eee;
+	vertical-align: middle;
+	text-align: center;
+	font-weight: bold;	
+	height: 100px;
+}
+
+div#calendar table td.odd_month {
+	background-color: #fff;
+}
+
+div#calendar table td.even_month {
+	background-color: #efe;
+}
+
+div#calendar table div.group_day {
+	font-size: 9px;
+	color: #f00;
+	text-align: center;
+	padding: 5px;
+}
+
+div#calendar table div.group_day label {
+	cursor: pointer;
+}
+
+div#calendar table div.time_range_form {
+	height: 55px;
+}
+
+div#calendar .notes {
+	text-align:center;
+	font-size: 10px;
+	margin-bottom: 5px;
+}
+
+div#calendar table .time_range {
+	width: 85px;
+	height: 45px;
+	display: block;
+	margin: 0 auto;
+	font-size: 10px;
+	padding-top: 2px;
+	padding-left: 4px;
+	font-family: 'Tahoma';
+}
+
+div.help {
+	position: absolute;
+	margin-left: -200px;
+  width: 190px;
+}
+
+div#calendar textarea {
+}
+
+
+div#calendar li {
+	margin-bottom: 10px;
+}
+
+div#calendar li strong {
+	color: green;
+}
+
+div#calendar li em.bad {
+	font-size: 0.8em;
+	color: red;
+}
+
+div#calendar li em.good {
+	font-size: 0.8em;
+	color: green;
+}
+
+div#calendar li em.bad strong {
+	color: red;
+}
+
+div#calendar li em.good strong {
+	color: green;
+}
+
+
+div.selected {
+    background-color: #fcc !important;
+}
+
+div.offday {
+    background-color: #eee !important;
+}
+
+table.selection_table td {
+    padding: 0;
+}
+
+table.default_table th.blank {
+  background-color: white;
+}
+
+div.agreement {
+  margin-bottom: 30px;
+  font-size: 0.9em;
+}
+
+td.number {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}
+
+table.default_table tbody th {
+  background-color: #cfc;
+}
+
+table.default_table th.silver {
+  background-color: #eee;
+}
+
+td.big {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+div#tutorial {
+  position: absolute;
+  margin-left: -60px;
+  padding: 20px;
+  border: 5px solid silver;
+  background-color: black;
+  z-index: 5;
+}
+
+div.register h3.important{
+	color: red;
+}
+
+
+div.register div#msg {
+	width: 131px;
+	height: 117px;
+	background-image: url(/images/msg.gif);
+	position: absolute;
+}
+
+ul#scheduling_info li {
+    margin-bottom: 5px;
+}

@@ -1,0 +1,1 @@
+/usr/bin/mongrel_rails cluster::start -C /home/highwind/sites/gwsms.org/rails/studio/current/config/mongrel_cluster.yml

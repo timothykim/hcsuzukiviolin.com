@@ -10,6 +10,20 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/admin/users/:action/:id', :controller => '/admin/users'
   map.resources :users, :path_prefix => '/admin'
 =end
+<<<<<<< HEAD
+=======
+  
+  map.connect '/admin', :controller => 'admin', :action => 'index'
+  map.connect '/admin/user/:action/:id', :controller => 'admin/user'
+  map.connect '/admin/student/:action/:id', :controller => 'admin/student'
+  map.connect '/admin/school/:action/:id', :controller => 'admin/school'
+  map.connect '/admin/location/:action/:id', :controller => 'admin/location'
+  map.connect '/admin/session/:action/:id', :controller => 'admin/session'
+  map.connect '/admin/lesson/:action/:id', :controller => 'admin/lesson'
+  map.connect '/admin/registration/:action/:id', :controller => 'admin/registration'
+  map.connect '/admin/sbc/:action/:id', :controller => 'admin/sbc'
+  map.connect '/admin/timesheet/:action/:id', :controller => 'admin/timesheet'
+>>>>>>> deploy
 
 
   #album stuff
@@ -17,6 +31,15 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/photobook/photo/:id/:size', :controller => 'photobook', :action => 'photo'
   map.connect '/photobook/album/:id/:view', :controller => 'photobook', :action => 'album'
 
+<<<<<<< HEAD
+=======
+  map.connect '/register/for/:session', :controller => 'register', :action => 'form'
+  map.connect '/register/for/:session/:student', :controller => 'register', :action => 'form'
+
+  map.connect '/sbc/register/:student', :controller => 'sbc', :action => 'register'
+
+  map.connect '/parents/lessons/all/:id', :controller => 'parents', :action => 'all_lessons'
+>>>>>>> deploy
 
   map.connect ':controller/:action/:id'
 end

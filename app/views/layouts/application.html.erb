@@ -1,16 +1,33 @@
+<<<<<<< HEAD
+=======
+<%		
+		#assume that sub controllers go only one level deep
+		levels = [controller.controller_path.split('/')[0], controller.controller_path]	
+		levels.pop if levels[0] == levels[1]
+-%>
+>>>>>>> deploy
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
+<<<<<<< HEAD
 		<title>Greater Washington Suzuki Music School <%= "- #{@section_title}" if defined? @section_title %></title>
 		
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="Leading Suzuki music school in the greater Washington D.C metro politan area." />
 		<meta name="keywords" content="violin, music, music school, violin school, music educaiton, school, Washington D.C., Hannah Choi" />
+=======
+		<title>Suzuki Violin Studio of Hannah Choi <%= "- #{@section_title}" if defined? @section_title %></title>
+		
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="Leading Suzuki music school in the greater Washington D.C metro politan area." />
+		<meta name="keywords" content="violin, music, music school, violin school, music educaiton, early childhood education, baby class, baby, children, school, Washington D.C., Hannah Choi" />
+>>>>>>> deploy
 		<meta name="author" content="Hannah Choi" />
 		
 		<link rel="shortcut icon" href="/images/favicon.png" type="image/png" />
 		<link rel="icon" href="/images/favicon.png" type="image/png" /> 
+<<<<<<< HEAD
 		
 		<%= javascript_include_tag :defaults %>
 		<%= javascript_include_tag "json2" %>
@@ -19,10 +36,29 @@
 			<%= javascript_include_tag File.join(controller.controller_name, controller.action_name + ".js") %>
 		<% end %>
 		<% if defined?(@javascripts): @javascripts.each { |script| javascript_include_tag script } end %>
+=======
+
+		<% if defined?(@javascript_code) %>
+				<script type="text/javascript">
+					<%= @javascript_code %>
+				</script> 
+		<% end %>
+		
+		<%= javascript_include_tag "tiny_mce/tiny_mce.js" if @use_tiny_mce %>
+		<%= javascript_include_tag :defaults %>
+		<%= javascript_include_tag "domready" %>
+<% if FileTest.exists?(File.join("public/javascripts", controller.controller_path, controller.action_name + ".js")) %>
+		<%= javascript_include_tag File.join(controller.controller_path, controller.action_name + ".js") %>
+<% end %>
+<% if defined?(@javascripts): @javascripts.each do |script| %>
+ 		<%= javascript_include_tag script %>
+<% end end %>
+>>>>>>> deploy
 		<!--[if lte IE 6]>
 			<%= javascript_include_tag "supersleight-min" %>
 		<![endif]-->
 		
+<<<<<<< HEAD
 		<%= conditional_render_partial "addphotos" if controller.action_name == "addphotos" %>
 	 
 		<%= stylesheet_link_tag("default") %>
@@ -32,16 +68,41 @@
 	<% end %>
 	
 		
+=======
+		
+		<%= conditional_render_partial "addphotos" if controller.action_name == "addphotos" -%>
+
+		<%= stylesheet_link_tag("default") %>
+		<%= stylesheet_link_tag(get_current_theme_css()) %>
+<% levels.each do |file|
+	if FileTest.exists?(File.join("public/stylesheets", get_current_theme_css(file) + ".css")) %>
+		<%= stylesheet_link_tag(get_current_theme_css(file)) %>
+<%  end 
+	if FileTest.exists?(File.join("public/stylesheets", get_current_theme_css(file) + "_print.css")) %>
+        <%= stylesheet_link_tag(get_current_theme_css(file) + "_print.css", :media => "print") %>
+<% end end %>
+<% if defined?(@stylesheets): @stylesheets.each do |sheets| %>
+		<%= stylesheet_link_tag sheets %>
+<% end end %>
+
+>>>>>>> deploy
 	</head>
 
 	<body>
 		<a name="top"></a>
 		
 		<div id="frame">
+<<<<<<< HEAD
 			<div id="banner_wrapper" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
 			<div id="banner" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
 				<div id="title" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
 					<h1>Hannah Choi's Suzuki Violin Studio</h1>
+=======
+			<div id="banner_wrapper" class="<%= get_css_class(controller) %>">
+			<div id="banner" class="<%= get_css_class(controller) %>">
+				<div id="title" class="<%= get_css_class(controller) %>">
+					<h1>Suzuki Violin Studio of<br />Hannah Choi</h1>
+>>>>>>> deploy
 				</div>
 			</div>
 			</div>
@@ -49,25 +110,45 @@
 			<div id="toolbar_wrapper">
 			<div id="toolbar">
 				<!-- TODO -->
+<<<<<<< HEAD
 				<div id="menu" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
 					<ul>
 						<% home_class = (controller.controller_name == "page" and controller.action_name == "index") ? "home" : "" %>
 						<li><%= link_to "Home", { :controller => "/page", :action => "index" }, :class => home_class %></li>
 						<li><%= link_to "Photobook", { :controller => "/photobook", :action => "index" }, :class => "photobook" %></li>
 						<li><%= link_to "Newsletter", { :controller => "/newsletter", :action => "index" }, :class => "newsletter" %></li>
+=======
+				<div id="menu" class="<%= get_css_class(controller) %>">
+					<ul>
+						<% home_class = (controller.controller_name == "page" and controller.action_name == "index") ? "home" : "" %>
+						<li><%= link_to "Home", { :controller => "/page", :action => "index" }, :class => home_class %></li>
+						<li><%= link_to "About Us", { :controller => "/page", :action => "aboutus" } %></li>
+						<li><%= link_to "Prospective Parents", { :controller => "/page", :action => "policy_and_tuition" } %></li>
+						<li><%= link_to "Current Parents", { :controller => "/parents", :action => "index" }, :class => "current_parents" %></li>
+            <li class="baby_class"><%= link_to "<strong>Suzki Baby Class</strong>", { :controller => "/sbc", :action => "index" }, :class => "baby_class" %></li>
+>>>>>>> deploy
 					</ul>
 				</div>
 				
 				<!-- login form -->
+<<<<<<< HEAD
 				<div id="login_frame" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
+=======
+				<div id="login_frame" class="<%= get_css_class(controller) %>">
+>>>>>>> deploy
 					<% unless current_page?(:controller => '/account', :action => 'login') %>
 						<% if logged_in? -%>
 							<div id="logged_in">
 								Welcome, <strong><%= current_user.firstname + " " + current_user.lastname %></strong>!
 								<%= "|" if current_user.is_admin %>
 								<%= link_to "Admin", { :controller => "/admin", :action => "index" } if current_user.is_admin %>
+<<<<<<< HEAD
 								| <%= link_to "Settings", { :controller => "/account", :action => "settings" } %>
 								| <%= link_to "Help", { :controller => "/account", :action => "help"} %>
+=======
+                                <!-- | <%= link_to "Settings", { :controller => "/account", :action => "settings" } %> -->
+								<!--| <%= link_to "Help", { :controller => "/account", :action => "help"} %>-->
+>>>>>>> deploy
 								| <%= link_to "Logout", { :controller => "/account", :action => "logout" } %>
 							</div>
 						<% else %>
@@ -92,10 +173,17 @@
 			</div>
 			</div>
 			
+<<<<<<< HEAD
 			<div id="body" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
 
 <% if defined? @section_title %>
 				<div id="section_title" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
+=======
+			<div id="body" class="<%= get_css_class(controller) %>">
+
+<% if defined? @section_title %>
+				<div id="section_title" class="<%= get_css_class(controller) %>">
+>>>>>>> deploy
 					<h2><span id="section_path"><%= @section_path %></span> <%= @section_title if defined? @section_title %></h2>
 				</div>
 <% end %>
@@ -107,7 +195,12 @@
 						<% @submenu.each do |menu| %>
 							<li>
 							<% if menu.has_key?(:link) %>
+<<<<<<< HEAD
 								<%= link_to menu[:name], menu[:link], :class => "submenu" %>
+=======
+                                <% cls = (menu[:link] == url_for(:controller => request.path_parameters['controller'], :action => request.path_parameters['action'])) ? "selected" : "" %>
+                                <%= link_to menu[:name], menu[:link], :class => "submenu #{cls}" %>
+>>>>>>> deploy
 							<% elsif menu.has_key?(:render) %>
 								<div class="side_title"><%= menu[:name] %></div>
 								<%= render :partial => menu[:render], :locals => menu[:locals] %>
@@ -119,7 +212,11 @@
 <% end %>
 				</div>
 
+<<<<<<< HEAD
 				<div id="<%= defined?(@submenu) ? "content" : "content_no_side" %>" class="<%= controller.controller_name %> <%= controller.controller_name + "_" + controller.action_name %>">
+=======
+				<div id="<%= defined?(@submenu) ? "content" : "content_no_side" %>" class="<%= get_css_class(controller) %>">
+>>>>>>> deploy
 <%= yield %>
 				</div>
 
@@ -132,15 +229,29 @@
 			
 			
 		</div>
+<<<<<<< HEAD
 		
+=======
+
+
+>>>>>>> deploy
 		<script type="text/javascript">
 		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 		</script>
 		<script type="text/javascript">
+<<<<<<< HEAD
 		var pageTracker = _gat._getTracker("UA-2039529-2");
 		pageTracker._initData();
 		pageTracker._trackPageview();
 		</script>
 	</body>
 </html>
+=======
+		try {
+		var pageTracker = _gat._getTracker("UA-2039529-2");
+		pageTracker._trackPageview();
+		} catch(err) {}</script>
+	</body>
+</html>
+>>>>>>> deploy
