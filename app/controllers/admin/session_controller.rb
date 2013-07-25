@@ -21,6 +21,7 @@ class Admin::SessionController < AdminController
     
     @days_of_the_week = Date::DAYNAMES[1..6]
 
+
     if params[:id]
       @current_session = Session.find(params[:id])
       @csession = @current_session
@@ -39,10 +40,12 @@ class Admin::SessionController < AdminController
       @registration_notice = @current_session.registration_notes
       @active = @current_session.is_active
       @options = @current_session.registration_options
+      @pricings = @current_session.pricings
+
       reg_type = ['', '']
       reg_type = ['selected="selected"', ''] if @current_session.registration_type == Session::DAY_TYPE
       reg_type = ['', 'selected="selected"'] if @current_session.registration_type == Session::DATE_TYPE
-      
+
     else
       season = ['selected="selected"', '', '']
       reg_type = ['selected="selected"', '']
@@ -50,8 +53,9 @@ class Admin::SessionController < AdminController
       @registration_notice = ""
       @active = false
       @options = []
+      @pricings = []
     end
-    
+
     #@season_opt = "<option value=\"Spring\" #{season[0]}>Spring</option><option value=\"Summer\" #{season[1]}>Summer</option><option value=\"Fall\" #{season[2]}>Fall</option>"
     @registration_type_opt = "<option value=\"0\" #{reg_type[0]}>Per Day of the Week</option><option value=\"1\" #{reg_type[1]}>Per Each Date</option>"
   end
@@ -83,10 +87,14 @@ class Admin::SessionController < AdminController
 
     #save the session
     s.name = params[:csession][:name]
+    s.lesson_count = params[:csession][:lesson_count]
+    s.group_count = params[:csession][:group_count]
+    s.invoice_message = params[:csession][:invoice_message]
     s.is_active = params[:active_reg] ? true : false;
     s.first = Date.parse(params[:csession]["first(1i)"] + "/" + params[:csession]["first(2i)"] + "/" + params[:csession]["first(3i)"])
     s.last = Date.parse(params[:csession]["last(1i)"] + "/" + params[:csession]["last(2i)"] + "/" + params[:csession]["last(3i)"])
     s.due_date = Date.parse(params[:current_session]["due_date(1i)"] + "/" + params[:current_session]["due_date(2i)"] + "/" + params[:current_session]["due_date(3i)"])
+    s.invoice_due = Date.parse(params[:current_session]["invoice_due(1i)"] + "/" + params[:current_session]["invoice_due(2i)"] + "/" + params[:current_session]["invoice_due(3i)"])
     s.registration_notes = params[:notice]
     s.registration_type = params[:registration_type]
     s.save
@@ -158,13 +166,29 @@ class Admin::SessionController < AdminController
           p[:text] = name
           p[:input_type] = params[:opt_type]["#{key}"]
           ro = RegistrationOption.new(p)
-      
           ro.save
         end
       end
     end
     
-    
+    #save the pricing
+    #purge the existing pricing because we got new ones!
+    pricings = Pricing.find(:all, :conditions => { :session_id => s.id })
+    pricings.each do |pricing|
+      pricing.destroy
+    end
+    #now add the new ones
+    if params[:pricing_types]
+      params[:pricing_types].each do |key, name|
+        p = {}
+        p[:session_id] = s.id
+        p[:pricing_type] = name
+        p[:duration] = params[:pricing_durations]["#{key}"].to_i
+        p[:price] = (params[:pricing_amounts]["#{key}"].to_f * 100).to_i
+        pricing  = Pricing.new(p)
+        pricing.save
+      end
+    end
     redirect_to :action => 'index'
   end
   

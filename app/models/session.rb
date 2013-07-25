@@ -7,6 +7,7 @@ class Session < ActiveRecord::Base
   has_many :registered_days, :through => :registrations
   has_many :students, :through => :registrations, :order => "last_name ASC"
   has_many :lessons, :through => :registrations, :order => "time ASC"
+  has_many :pricings
   
   DAY_TYPE = 0
   DATE_TYPE = 1

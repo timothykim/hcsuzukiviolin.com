@@ -9,7 +9,11 @@ class AdminController < ApplicationController
 #  include AuthenticatedSystem
 
   before_filter :store_location
+<<<<<<< HEAD
 #  before_filter :login_from_cookie
+>>>>>>> deploy
+=======
+  before_filter :login_from_cookie
 >>>>>>> deploy
   before_filter :login_required
   before_filter :admin_required

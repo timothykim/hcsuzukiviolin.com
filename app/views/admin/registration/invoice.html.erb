@@ -1,0 +1,94 @@
+<style>
+  #add_row {
+    text-align: right;
+    margin: 20px 0 0 0;
+  }
+  tbody td {
+    text-align: center;
+  }
+  #total_field {
+    text-align: right;
+    margin: 5px;
+  }
+
+  textarea {
+    margin-top: 20px;
+    width: 100%;
+    height: 100px;
+  }
+</style>
+
+<% form_for @invoice, :url => { :action => "invoice_save" } do |invoice_form| %>
+
+<input type="hidden" name="invoice_id" value="<%=@invoice.id%>" />
+
+<h1>Invoice <%= @sess.name %></h1>
+
+<div>
+  <strong>To:</strong> <%= @reg.student.user.fullname %>
+</div>
+<div>
+  <strong>For:</strong> <%= @reg.student.to_s %>
+</div>
+<div>
+  <strong>Invoice Date:</strong> <%= Date.today.to_s %>
+</div>
+<div>
+  <strong>Payment Due Date:</strong> <%= @sess.invoice_due %>
+</div>
+
+<div id="add_row">
+  <input name="submit_type" type="submit" value="Add Row" />
+</div>
+<table class="admin_table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Description</th>
+      <th>Unit Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @invoice.invoice_items.each_with_index do |item, i| %>
+    <tr id="invoice_item_<%=i%>">
+      <td>
+        <button type="button" onClick="$('invoice_item_<%=i%>').remove();">Remove</button>
+      </td>
+      <td>
+        <input type="text" size="30" name="item_descs[<%=i%>]" value="<%=item.description%>" />
+      </td>
+      <td>
+        $<input type="number" size="5" name="item_unit_prices[<%=i%>]" value="<%=item.unit_price_in_dollar%>" />
+      </td>
+      <td>
+        <input type="number" size="3" name="item_quantities[<%=i%>]" value="<%=item.quantity%>" />
+      </td>
+      <td>
+        <%=number_to_currency(item.total.to_f / 100)%>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<div id="total_field">
+  <strong>Total:</strong> <span id="total"><%= number_to_currency(@invoice.total/100) %></span>
+</div>
+
+<div>
+  <textarea name="message"><% if @invoice.message && @invoice.message != ""%><%= @invoice.message %><% else %><%= @sess.invoice_message %><% end %></textarea>
+</div>
+
+<div>
+  <input name="submit_type" type="submit" value="Save" />
+  <a href="/admin/registration/reset_invoice/<%=@invoice.id%>"><button type="button">Reset Invoice</button></a>
+</div>
+
+<div style="margin-top: 100px; text-align: right;">
+  <%= @invoice.registration.student.user.email %><br/>
+  <input name="submit_type" type="submit" value="Send" />
+</div>
+
+<% end %>

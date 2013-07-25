@@ -24,7 +24,7 @@
         <th class="text">Address</th>
         <th class="text">School</th>
         <th class="number">Lesson Length</th>
-        <th class="nosort" colspan="2">Actions</th>
+        <th class="nosort" colspan="3">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -39,6 +39,9 @@
             <td><%= r.student.user.address %></td>
             <td><%= r.school.name %></td>
             <td><%= r.lesson_duration %></td>
+            <td align="center">
+                <a href="/admin/registration/invoice/<%=r.id%>">Invoice</a>
+            </td>
             <td align="center">
                 <a href="/register/for/<%=sess.name%>/<%=r.student.id%>"><%= image_tag "/images/icons/write_small.png", :class=>"icon" %> View/Edit</a>
             </td>

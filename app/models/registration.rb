@@ -6,6 +6,7 @@ class Registration < ActiveRecord::Base
   has_many :registered_days, :dependent => :destroy
   has_many :registered_dates, :dependent => :destroy
   has_many :registered_options, :dependent => :destroy
+  has_one :invoice
 
   def count_registered_days(week_no)
     week_start = self.session.first - self.session.first.wday

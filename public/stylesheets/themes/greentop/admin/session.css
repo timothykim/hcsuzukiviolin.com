@@ -102,3 +102,6 @@ input.opt {
 	width: 350px;
 }
 
+tr.pricing td {
+  text-align: center;
+}
