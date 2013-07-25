@@ -2,7 +2,7 @@ class AdminController < ApplicationController
 #  include AuthenticatedSystem
 
   before_filter :store_location
-#  before_filter :login_from_cookie
+  before_filter :login_from_cookie
   before_filter :login_required
   before_filter :admin_required
 

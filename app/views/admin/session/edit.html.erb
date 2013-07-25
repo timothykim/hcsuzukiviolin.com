@@ -106,6 +106,71 @@
 	</div>
 </div>
 
+<h3>Invoice Info</h3>
+<div class="form_box">
+	<div class="form_element">
+		<div class="check"><label>Invoice Due Date:</label></div>
+		<%= date_select("current_session", "invoice_due", :start_year => Time.now.year) %>
+	</div>
+
+	<div class="form_element">
+		<div class="check"><label>Number of Lessons to be billed:</label></div>
+        <%= text_field("csession", "lesson_count",  :size => 3) %>
+	</div>
+
+	<div class="form_element">
+		<div class="check"><label>Number of group classes to be billed:</label></div>
+        <%= text_field("csession", "group_count", :size => 3) %>
+	</div>
+
+    <p>Parents do NOT see the pricing information on the registration.</p>
+	<div class="form_element">
+        <table class="admin_table">
+          <thead>
+          <tr>
+            <th></th>
+            <th>Type</th>
+            <th>Duration</th>
+            <th>Unit Price</th>
+          </tr>
+          </thead>
+          <tbody id="pricing_table">
+          <% @pricings.each_with_index do |pricing, i| %>
+            <!-- <%=debug pricing%> -->
+          <tr id="pricing_<%=i%>" class="pricing">
+            <td><button type="button" onClick="removePricing('pricing_<%=i%>');">Remove</button></td>
+            <td>
+              <%=pricing[:pricing_type]%>
+              <input type="hidden" name="pricing_types[<%= i %>]" value="<%=pricing[:pricing_type]%>" />
+            </td>
+            <td>
+              <% if pricing[:pricing_type] == Pricing::INDIVIDUAL %>
+                <input type="number" size="3" name="pricing_durations[<%= i %>]" value="<%=pricing.duration%>" /> Minutes
+              <% else %>
+                N/A
+                <input type="hidden" name="pricing_durations[<%= i %>]" value="0" />
+              <% end %>
+            </td>
+            <td>$<input type="number" size="5" name="pricing_amounts[<%= i %>]" value="<%=pricing.price.to_f / 100%><%="0" if pricing.price & 10 == 0 %>" /></td>
+          </tr>
+          <% end %>
+          </tbody>
+        </table>
+
+        <select id="pricing_type">
+          <option value="<%=Pricing::INDIVIDUAL%>"><%=Pricing::INDIVIDUAL%></option>
+          <option value="<%=Pricing::GROUP%>"><%=Pricing::GROUP%></option>
+          <option value="<%=Pricing::REGISTRATION_FEE%>"><%=Pricing::REGISTRATION_FEE%></option>
+        </select>
+		<a href="#" onclick="addPricing(); return false;"><img src="/images/icons/add_small.png" class="icon"> Add Pricing</a>
+	</div>
+    
+	<div class="form_element">
+		<div class="check"><label>Invoice Message:</label></div>
+        <%= text_area("csession", "invoice_message", :style => "width: 100%; height: 100px;") %>
+	</div>
+</div>
+
 
 <div style="text-align: right; margin-top: 20px;">
 <button class="iconbutton" id="form_submit" type="submit"><img src="/images/icons/calendar.png" class="icon"> Save this Session!</button>

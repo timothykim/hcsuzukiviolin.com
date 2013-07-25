@@ -1,0 +1,66 @@
+<div style="max-width: 500px; width: 100%;">
+<h1>Invoice <%= @sess.name %></h1>
+
+<div>
+  <strong>To:</strong> <%= @reg.student.user.fullname %>
+</div>
+<div>
+  <strong>For:</strong> <%= @reg.student.to_s %>
+</div>
+<div>
+  <strong>Invoice Date:</strong> <%= Date.today.to_s %>
+</div>
+<div>
+  <strong>Payment Due Date:</strong> <%= @sess.invoice_due %>
+</div>
+
+<table class="invoice_table" style=" margin: 30px 0; width: 100%; border-width: 1px 1px 1px 1px; border-spacing: 2px; border-style: solid solid solid solid; border-color: gray gray gray gray; border-collapse: collapse; background-color: white; ">
+  <thead>
+    <tr>
+      <th style=" border-width: 1px 1px 1px 1px; padding: 5px 5px 5px 5px; border-style: dotted; border-color: gray gray gray gray; background-color: #b1cefe; ">
+    Description</th>
+      <th style=" border-width: 1px 1px 1px 1px; padding: 5px 5px 5px 5px; border-style: dotted; border-color: gray gray gray gray; background-color: #b1cefe; width: 1px;">
+    Unit Price</th>
+      <th style=" border-width: 1px 1px 1px 1px; padding: 5px 5px 5px 5px; border-style: dotted; border-color: gray gray gray gray; background-color: #b1cefe; width: 1px;">
+    Quantity</th>
+      <th style=" border-width: 1px 1px 1px 1px; padding: 5px 5px 5px 5px; border-style: dotted; border-color: gray gray gray gray; background-color: #b1cefe; width: 1px;">
+    Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @invoice.invoice_items.each_with_index do |item, i| %>
+      <tr id="invoice_item_<%=i%>">
+        <td style=" text-align: left; border: 1px dotted silver; padding: 5px; ">
+          <%=item.description%>
+        </td>
+        <td style=" text-align: right; border: 1px dotted silver; padding: 5px; ">
+          $<%=item.unit_price_in_dollar%>
+        </td>
+        <td style=" text-align: right; border: 1px dotted silver; padding: 5px; ">
+          <%=item.quantity%>
+        </td>
+        <td style=" text-align: right; border: 1px dotted silver; padding: 5px; ">
+          <%=number_to_currency(item.total.to_f / 100)%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div id="total_field" style="margin-bottom: 50px; text-align: right; font-size: 1.3em;">
+  <strong>Total:</strong> <span id="total"><%= number_to_currency(@invoice.total/100) %></span>
+</div>
+
+<div>
+  <%= @invoice.message %>
+</div>
+
+<p>
+Sincerely,<br/>
+Timothy Kim<br/>
+admin@hcsuzukiviolin.com<br/>
+http://www.hcsuzukiviloin.com<br/>
+240-671-2985<br/>
+</p>
+
+</div>

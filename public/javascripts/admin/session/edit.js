@@ -45,7 +45,7 @@ function updateCounters() {
 			if (!input.checked)
 				count++;
 		});
-
+d
 		$('d_count_' + day).update(count);		
 	}
 	
@@ -71,6 +71,25 @@ function addOption() {
 
 	$("option_list").insert(str);
 	Effect.BlindDown(id, { duration: 0.3 });
+}
+
+function addPricing() {
+  var i = 0;
+  var rows = $$('tr.pricing');
+  if (rows.length > 0) {
+    var last_row = rows.last();
+    i = parseInt(last_row.identify().match(/pricing_(\d+)/)[1]) + 1;
+  }
+  var type = $("pricing_type").value;
+  var str = '<tr class="pricing" id="pricing_'+i+'">' +
+            '<td><button type="button" onClick="removePricing(\'pricing_'+i+'\');">Remove</button></td>'+
+    '<td>'+ type+ '<input type="hidden" name="pricing_types['+i+']" value="'+type+'" /> </td> <td>' +
+    (type == "Individual" ? '<input type="number" size="3" name="pricing_durations[' + i + ']" value="" /> Minutes':'N/A<input type="hidden" name="pricing_durations['+i+']" value="0" />') + '</td><td>$<input type="number" size="5" name="pricing_amounts['+i+']" value="0" /></td> </tr>';
+  $("pricing_table").insert(str);
+}
+
+function removePricing(id) {
+  $(id).remove();
 }
 
 function resetCalednar() {

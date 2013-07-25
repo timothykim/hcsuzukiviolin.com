@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121020045719) do
+ActiveRecord::Schema.define(:version => 20130725071325) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -65,6 +65,24 @@ ActiveRecord::Schema.define(:version => 20121020045719) do
     t.datetime "updated_at"
   end
 
+  create_table "invoice_items", :force => true do |t|
+    t.integer  "invoice_id"
+    t.string   "description"
+    t.integer  "unit_price"
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "invoices", :force => true do |t|
+    t.integer  "registration_id"
+    t.boolean  "sent"
+    t.date     "sent_date"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "lessons", :force => true do |t|
     t.integer  "registration_id"
     t.datetime "time"
@@ -110,6 +128,15 @@ ActiveRecord::Schema.define(:version => 20121020045719) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "comments_count", :default => 0, :null => false
+  end
+
+  create_table "pricings", :force => true do |t|
+    t.integer  "session_id"
+    t.string   "pricing_type"
+    t.integer  "duration"
+    t.integer  "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "registered_dates", :force => true do |t|
@@ -163,6 +190,7 @@ ActiveRecord::Schema.define(:version => 20121020045719) do
     t.text     "piece"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "location",   :default => "", :null => false
   end
 
   create_table "sbc_registrations", :force => true do |t|
@@ -206,6 +234,10 @@ ActiveRecord::Schema.define(:version => 20121020045719) do
     t.integer "registration_type"
     t.date    "due_date"
     t.boolean "is_ready",           :default => false
+    t.date    "invoice_due"
+    t.integer "lesson_count"
+    t.integer "group_count"
+    t.text    "invoice_message"
   end
 
   create_table "students", :force => true do |t|
