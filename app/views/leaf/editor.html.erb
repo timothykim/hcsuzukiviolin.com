@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head><!-- CDN hosted by Cachefly -->
+    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <script>
+      tinymce.init({
+        selector:'textarea',
+        menubar: false,
+        height: 400,
+        width: 800,
+        plugins: "textcolor image link",
+        toolbar: "undo redo | styleselect | bold italic underline | forecolor | bullist numlist blockquote | outdent indent | link image"
+      });
+    </script>
+  </head>
+  <body>
+  <% form_for :content, @content, :url => {:action => "content_save"} do |f| %>
+    <h1><%= @content.name %></h1>
+    <%= hidden_field :content, :name %>
+    <%= hidden_field_tag 'referral', @referral %>
+    <%= text_area :content, :html %>
+    <%= submit_tag 'Save' %>
+    <button onclick="history.go(-1);" type="button">Back to the page</button>
+  <% end %>
+    
+  </body>
+</html>
+

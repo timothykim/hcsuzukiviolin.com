@@ -24,6 +24,7 @@ class Admin::SessionController < AdminController
 
     if params[:id]
       @current_session = Session.find(params[:id])
+      logger.debug(@current_session)
       @csession = @current_session
       season = ['selected="selected"', '', ''] if @current_session.name.match(/Spring/)
       season = ['', 'selected="selected"', ''] if @current_session.name.match(/Summer/)

@@ -42,15 +42,20 @@
 %>
 			</td>
 			<td>
-                <% #if Date.today >= sess.first %>
-                  <!-- No longer accepting registrations. -->
-				<% #else %>
+                <% if days_left < 0 %>
+                  <!--The registration is now closed. Late registration will open next week.-->
 					<% if student.registered? sess %>
                         <a href="/register/for/<%= sess.name.gsub(/ /, '_') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Re-submit Registration</a>
 					<% else %>
 						<a href="/register/for/<%= sess.name.gsub(/ /, '_') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Register!</a>
 					<% end %>
-				<% #end %>
+				<% else %>
+					<% if student.registered? sess %>
+                        <a href="/register/for/<%= sess.name.gsub(/ /, '_') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Re-submit Registration</a>
+					<% else %>
+						<a href="/register/for/<%= sess.name.gsub(/ /, '_') %>/<%= student.id %>"><img src="/images/icons/write.png" class="icon" /> Register!</a>
+					<% end %>
+				<% end %>
 			</td>
 		</tr>
 <% 	end %>

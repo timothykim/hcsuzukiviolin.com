@@ -1,9 +1,5 @@
 # This file is auto-generated from the current state of the database. Instead of editing this file, 
-<<<<<<< HEAD
-# please use the migrations feature of ActiveRecord to incrementally modify your database, and
-=======
 # please use the migrations feature of Active Record to incrementally modify your database, and
->>>>>>> deploy
 # then regenerate this schema definition.
 #
 # Note that this schema.rb definition is the authoritative source for your database schema. If you need
@@ -13,15 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 17) do
-=======
-ActiveRecord::Schema.define(:version => 20121020045719) do
->>>>>>> deploy
-=======
-ActiveRecord::Schema.define(:version => 20130725071325) do
->>>>>>> deploy
+ActiveRecord::Schema.define(:version => 20160908022551) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -40,6 +28,14 @@ ActiveRecord::Schema.define(:version => 20130725071325) do
     t.datetime "updated_at"
   end
 
+  create_table "attendences", :force => true do |t|
+    t.integer  "student_id"
+    t.date     "date"
+    t.string   "attendence"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "avatars", :force => true do |t|
     t.integer "user_id"
     t.integer "parent_id"
@@ -51,8 +47,6 @@ ActiveRecord::Schema.define(:version => 20130725071325) do
     t.integer "height"
   end
 
-<<<<<<< HEAD
-=======
   create_table "chms_registrations", :force => true do |t|
     t.string   "firstname"
     t.string   "lastname"
@@ -71,7 +65,6 @@ ActiveRecord::Schema.define(:version => 20130725071325) do
     t.datetime "updated_at"
   end
 
->>>>>>> deploy
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "photo_id"
@@ -80,29 +73,31 @@ ActiveRecord::Schema.define(:version => 20130725071325) do
     t.datetime "updated_at"
   end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
+  create_table "contents", :force => true do |t|
+    t.string   "name"
+    t.text     "html"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "invoice_items", :force => true do |t|
     t.integer  "invoice_id"
     t.string   "description"
-    t.integer  "unit_price"
-    t.integer  "quantity"
+    t.integer  "unit_price",  :default => 0, :null => false
+    t.integer  "quantity",    :default => 0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "invoices", :force => true do |t|
     t.integer  "registration_id"
-    t.boolean  "sent"
+    t.boolean  "sent",            :default => false
     t.date     "sent_date"
     t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
->>>>>>> deploy
   create_table "lessons", :force => true do |t|
     t.integer  "registration_id"
     t.datetime "time"
@@ -118,7 +113,6 @@ ActiveRecord::Schema.define(:version => 20130725071325) do
     t.datetime "updated_at"
   end
 
->>>>>>> deploy
   create_table "login_logs", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -151,10 +145,6 @@ ActiveRecord::Schema.define(:version => 20130725071325) do
     t.integer  "comments_count", :default => 0, :null => false
   end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
   create_table "pricings", :force => true do |t|
     t.integer  "session_id"
     t.string   "pricing_type"
@@ -164,7 +154,6 @@ ActiveRecord::Schema.define(:version => 20130725071325) do
     t.datetime "updated_at"
   end
 
->>>>>>> deploy
   create_table "registered_dates", :force => true do |t|
     t.integer "registration_id"
     t.time    "start"
@@ -277,7 +266,6 @@ ActiveRecord::Schema.define(:version => 20130725071325) do
     t.string  "grade_level"
   end
 
->>>>>>> deploy
   create_table "summer_schools", :force => true do |t|
     t.string "name"
   end
@@ -313,8 +301,6 @@ ActiveRecord::Schema.define(:version => 20130725071325) do
     t.integer  "albums_count",                            :default => 0,     :null => false
     t.integer  "photos_count",                            :default => 0,     :null => false
     t.integer  "comments_count",                          :default => 0,     :null => false
-<<<<<<< HEAD
-=======
     t.string   "alternate_email",                         :default => ""
     t.string   "home_phone",                              :default => ""
     t.string   "work_phone",                              :default => ""
@@ -329,7 +315,7 @@ ActiveRecord::Schema.define(:version => 20130725071325) do
     t.time    "start"
     t.time    "end"
     t.text    "user_input", :default => ""
->>>>>>> deploy
   end
 
 end
+

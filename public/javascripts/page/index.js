@@ -1,14 +1,14 @@
 // this is a test
 
-
-
 document.observe("dom:loaded", function() {
   var apikey = "AIzaSyCMTiZkmZrwhpLM1vDewJIfBmptvVEyHKI";
   var url = "https://www.googleapis.com/plus/v1/people/114358390409109642812/activities/public?alt=json&key=" + apikey;
 
 
   var render = function (p) {
-    var rendering = '<div class="post"><div class="date">' + new Date(p.published).toDateString() + '</div><div class="content">' + p.object.content + '</div></div></div>';
+    var date = new Date(p.published);
+    var displayDate = (date.getMonth() + 1) + "/" + date.getDate();
+    var rendering = '<div class="post"><div class="date">' + displayDate + '</div><div class="content">' + p.object.content + '</div></div></div>';
     return rendering;
   };
 

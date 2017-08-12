@@ -45,7 +45,6 @@ function updateCounters() {
 			if (!input.checked)
 				count++;
 		});
-d
 		$('d_count_' + day).update(count);		
 	}
 	
@@ -83,8 +82,8 @@ function addPricing() {
   var type = $("pricing_type").value;
   var str = '<tr class="pricing" id="pricing_'+i+'">' +
             '<td><button type="button" onClick="removePricing(\'pricing_'+i+'\');">Remove</button></td>'+
-    '<td>'+ type+ '<input type="hidden" name="pricing_types['+i+']" value="'+type+'" /> </td> <td>' +
-    (type == "Individual" ? '<input type="number" size="3" name="pricing_durations[' + i + ']" value="" /> Minutes':'N/A<input type="hidden" name="pricing_durations['+i+']" value="0" />') + '</td><td>$<input type="number" size="5" name="pricing_amounts['+i+']" value="0" /></td> </tr>';
+    '<td><input type="text" name="pricing_types['+i+']" value="'+type+'" /> </td> <td>' +
+    (type == "Individual" ? '<input type="number" style="width: 80px;" size="3" name="pricing_durations[' + i + ']" value="" /> Minutes':'N/A<input type="hidden" name="pricing_durations['+i+']" value="0" />') + '</td><td>$<input type="number" style="width: 80px;" step="any" size="5" name="pricing_amounts['+i+']" value="0" /></td> </tr>';
   $("pricing_table").insert(str);
 }
 

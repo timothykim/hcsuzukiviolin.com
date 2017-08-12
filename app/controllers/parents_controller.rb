@@ -1,15 +1,14 @@
 class ParentsController < ApplicationController
   before_filter :login_required
-  
+
   def global_submenu
-    [ { :name => "<img src=\"/images/icons/settings.png\" class=\"icon\" /> My Account Setting", :link => "/parents/settings" },
-      { :name => "<img src=\"/images/icons/exclamation.png\" class=\"icon\" /> 2012~2013 Info", :link => "/parents/index" },
+    [ { :name => "<img src=\"/images/icons/settings.png\" class=\"icon\" /> My Account Setting", :link => "/parents/settings" }, { :name => "<img src=\"/images/icons/exclamation.png\" class=\"icon\" /> Semester Info", :link => "/parents/index" },
       { :name => "<img src=\"/images/icons/write.png\" class=\"icon\" /> My Registations", :link => "/register" },
       { :name => "<img src=\"/images/icons/music.png\" class=\"icon\" /> My Lessons", :link => "/parents/lessons" },
       { :name => "<img src=\"/images/icons/resources.png\" class=\"icon\" /> Resources", :link => "/parents/resources" },
       { :name => "<img src=\"/images/icons/calendar.png\" class=\"icon\" /> School Calendars", :link => "/page/calendar" },
       { :name => "<img src=\"/images/icons/group.png\" class=\"icon\" /> Group Class Info", :link => "/parents/group" },
-#      { :name => "<img src=\"/images/icons/announce.png\" class=\"icon\" /> Announcements", :link => "index" },
+      { :name => "<img src=\"/images/icons/heart.png\" class=\"icon\" /> Recitals", :link => "/parents/recitals" },
 #      { :name => "<img src=\"/images/icons/discussion.png\" class=\"icon\" /> Online Discussions", :link => "index" },
       { :name => "<img src=\"/images/icons/directory.png\" class=\"icon\" /> Directory", :link => "/parents/directory" },
       { :name => "<img src=\"/images/icons/news.png\" class=\"icon\" /> Newsletters", :link => "/parents/newsletters" },
@@ -20,6 +19,13 @@ class ParentsController < ApplicationController
   def index
     @section_title = "For Current Parents"
     @submenu = global_submenu
+    @content = Content.f("semester_information")
+  end
+
+  def recitals
+    @section_title = "Recital Information"
+    @submenu = global_submenu
+    @content = Content.f("recital_information")
   end
 
   def rehearsal
@@ -42,6 +48,7 @@ class ParentsController < ApplicationController
   def resources
     @section_title = "Resources"
     @submenu = global_submenu
+    @content = Content.f("parent_resources")
   end
 
   def group 
@@ -54,6 +61,8 @@ class ParentsController < ApplicationController
     for session in @sessions
       @groups[session] = SessionDay.find(:all, :conditions => {:group => true, :session_id => session.id}, :order => "date")
     end
+
+    @content = Content.f("group_info")
   end
 
   def directory

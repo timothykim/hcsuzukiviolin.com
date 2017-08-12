@@ -140,18 +140,17 @@
           <tr id="pricing_<%=i%>" class="pricing">
             <td><button type="button" onClick="removePricing('pricing_<%=i%>');">Remove</button></td>
             <td>
-              <%=pricing[:pricing_type]%>
-              <input type="hidden" name="pricing_types[<%= i %>]" value="<%=pricing[:pricing_type]%>" />
+              <input type="text" name="pricing_types[<%= i %>]" value="<%=pricing[:pricing_type]%>" />
             </td>
             <td>
               <% if pricing[:pricing_type] == Pricing::INDIVIDUAL %>
-                <input type="number" size="3" name="pricing_durations[<%= i %>]" value="<%=pricing.duration%>" /> Minutes
+                <input type="number" style="width: 80px;" size="3" name="pricing_durations[<%= i %>]" value="<%=pricing.duration%>" /> Minutes
               <% else %>
                 N/A
                 <input type="hidden" name="pricing_durations[<%= i %>]" value="0" />
               <% end %>
             </td>
-            <td>$<input type="number" size="5" name="pricing_amounts[<%= i %>]" value="<%=pricing.price.to_f / 100%><%="0" if pricing.price & 10 == 0 %>" /></td>
+            <td>$<input type="number" style="width: 80px;" step="any" size="5" name="pricing_amounts[<%= i %>]" value="<%=pricing.price.to_f / 100%><%="0" if pricing.price & 10 == 0 %>" /></td>
           </tr>
           <% end %>
           </tbody>
@@ -161,6 +160,7 @@
           <option value="<%=Pricing::INDIVIDUAL%>"><%=Pricing::INDIVIDUAL%></option>
           <option value="<%=Pricing::GROUP%>"><%=Pricing::GROUP%></option>
           <option value="<%=Pricing::REGISTRATION_FEE%>"><%=Pricing::REGISTRATION_FEE%></option>
+          <option value="other">other</option>
         </select>
 		<a href="#" onclick="addPricing(); return false;"><img src="/images/icons/add_small.png" class="icon"> Add Pricing</a>
 	</div>

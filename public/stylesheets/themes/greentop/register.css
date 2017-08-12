@@ -169,6 +169,7 @@ div#calendar textarea {
 
 
 div#calendar li {
+    font-size: 18px;
 	margin-bottom: 10px;
 }
 
@@ -177,12 +178,10 @@ div#calendar li strong {
 }
 
 div#calendar li em.bad {
-	font-size: 0.8em;
 	color: red;
 }
 
 div#calendar li em.good {
-	font-size: 0.8em;
 	color: green;
 }
 

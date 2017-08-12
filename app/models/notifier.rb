@@ -1,16 +1,15 @@
 class Notifier < ActionMailer::Base
 
-  def invoice(invoice)
+  def invoice(invoice, email)
     r = invoice.registration
     s = r.session
 
-    recipients "tkim202@gmail.com"
-    #recipients r.student.user.email
+    #recipients "tkim202@gmail.com"
+    recipients email
     from       "\"HCSuzukiViolin.com Administrator\" <admin@hcsuzukiviolin.com>"
     cc ["admin@hcsuzukiviolin.com","choi.hanna@gmail.com"]
 
-
-    subject    "[HC Suzuki Studio] Invoice " + s.name
+    subject    "[HC Suzuki Studio] Invoice " + s.name + " for " + r.student.user.fullname
     body       :invoice => invoice, :sess => s, :reg => r
     content_type "text/html"
   end

@@ -16,11 +16,22 @@
     width: 100%;
     height: 100px;
   }
+
+  input[type='number'] {
+    width: 50px;
+  }
+
 </style>
 
 <% form_for @invoice, :url => { :action => "invoice_save" } do |invoice_form| %>
 
 <input type="hidden" name="invoice_id" value="<%=@invoice.id%>" />
+
+<% if @invoice.sent %>
+  <h2>This Invoice was sent on <%= @invoice.sent_date.to_s %></h2>
+<% end %>
+
+
 
 <h1>Invoice <%= @sess.name %></h1>
 
@@ -60,7 +71,7 @@
         <input type="text" size="30" name="item_descs[<%=i%>]" value="<%=item.description%>" />
       </td>
       <td>
-        $<input type="number" size="5" name="item_unit_prices[<%=i%>]" value="<%=item.unit_price_in_dollar%>" />
+        $<input type="number" step="any" size="5" name="item_unit_prices[<%=i%>]" value="<%=item.unit_price_in_dollar%>" />
       </td>
       <td>
         <input type="number" size="3" name="item_quantities[<%=i%>]" value="<%=item.quantity%>" />
@@ -74,7 +85,7 @@
 </table>
 
 <div id="total_field">
-  <strong>Total:</strong> <span id="total"><%= number_to_currency(@invoice.total/100) %></span>
+  <strong>Total:</strong> <span id="total"><%= number_to_currency(@invoice.total.to_f/100) %></span>
 </div>
 
 <div>
@@ -83,11 +94,11 @@
 
 <div>
   <input name="submit_type" type="submit" value="Save" />
-  <a href="/admin/registration/reset_invoice/<%=@invoice.id%>"><button type="button">Reset Invoice</button></a>
+  <a href="/admin/registration/reset_invoice/<%=@invoice.id%>"><button type="button">Default Invoice</button></a>
 </div>
 
 <div style="margin-top: 100px; text-align: right;">
-  <%= @invoice.registration.student.user.email %><br/>
+  Send Invoice To: <input type="email" size="20" name="sendto" value="<%= @invoice.registration.student.user.email %>" /><br/>
   <input name="submit_type" type="submit" value="Send" />
 </div>
 
