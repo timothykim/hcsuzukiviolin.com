@@ -35,5 +35,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect '/parents/lessons/all/:id', :controller => 'parents', :action => 'all_lessons'
 
+  map.connect '/attendance/checkin/:code', :controller => 'attendance', :action =>'checkin'
+
   map.connect ':controller/:action/:id'
 end

@@ -28,6 +28,7 @@ class Admin::RegistrationController < AdminController
     if @invoice.nil?
       r.invoice = Invoice.new
       @invoice = r.invoice
+
       pricing = Pricing.find(:first, :conditions => "session_id = #{s.id} AND duration = #{duration}")
       if pricing
         description = duration.to_s + " minute lesson"
@@ -44,6 +45,11 @@ class Admin::RegistrationController < AdminController
       if rfee
         description = "Registration Fee"
         @invoice.invoice_items << InvoiceItem.new(:description => description, :unit_price => rfee.price, :quantity => 1)
+      end
+
+      others = Pricing.find(:all, :conditions => "session_id = #{s.id} AND pricing_type != '#{Pricing::INDIVIDUAL}' and pricing_type != '#{Pricing::GROUP}' and pricing_type != '#{Pricing::REGISTRATION_FEE}'")
+      others.each do |other|
+        @invoice.invoice_items << InvoiceItem.new(:description => other.pricing_type, :unit_price => other.price, :quantity => 1)
       end
 
       @invoice.save
@@ -86,10 +92,13 @@ class Admin::RegistrationController < AdminController
     if params[:submit_type] == "Send"
       invoice.sent = true
       invoice.sent_date = Date.today
-      Notifier.deliver_invoice(invoice)
+      email = params[:sendto]
+      Notifier.deliver_invoice(invoice, email)
+      invoice.save
+      redirect_to :action => 'index'
+    else
+      redirect_to :action => 'invoice', :id => invoice.registration.id
     end
-
-    redirect_to :action => 'invoice', :id => invoice.registration.id
   end
 
   def confirm
@@ -126,7 +135,7 @@ class Admin::RegistrationController < AdminController
 
     @teaching_hours = @current_session.weekly_availablities 
 
-    @day_start = 7 #7 am
+    @day_start = 6 #7 am
     @day_end = 21 #9 pm (last hour, meaning til 10pm)
     @javascript_code = <<BLOCK
         var SESSION_ID = #{params[:id]};
@@ -173,8 +182,11 @@ BLOCK
   def all_lessons_ical
     headers["Content-Type"] = "text/calendar; charset=utf-8"
 
-    name = params[:id].gsub(/-/, ' ')
-    @current_session = Session.find(:first, :conditions => { :name => name })
+    id = params[:id]
+    #name = params[:id].gsub(/-/, ' ')
+    @current_session = Session.find(id) #:first, :conditions => { :name => name })
+
+    headers["Content-Disposition"] = "attachment; filename=\"" + @current_session.name + ".ics\""
 
     ical = <<END_OF_STRING
 BEGIN:VCALENDAR
@@ -184,15 +196,19 @@ PRODID:-//SUZUKI//Lessons//EN
 X-WR-CALNAME:#{@current_session.name}
 VERSION:2.0
 END_OF_STRING
-
     for lesson in @current_session.lessons
       startstr = lesson.time.strftime("%Y%m%dT%H%M00")
+      endstr = @current_session.last.strftime("%Y%m%dT%H%M00")
       finishstr = Time.at(lesson.time.to_i + (lesson.duration * 60)).strftime("%Y%m%dT%H%M00")
+      if lesson.is_recurring
+        recurr_str = "RRULE:FREQ=WEEKLY;INTERVAL=1;UNTIL=#{endstr}"
+      end
       event_str = <<END_OF_EVENT
 BEGIN:VEVENT
 DTSTART;TZID=US/Eastern:#{startstr}
 SUMMARY:#{lesson.registration.student}
 DTEND;TZID=US/Eastern:#{finishstr}
+#{recurr_str}
 END:VEVENT
 END_OF_EVENT
       ical += event_str

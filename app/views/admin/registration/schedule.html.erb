@@ -199,12 +199,10 @@ if @current_session.registration_type == Session::DATE_TYPE
     <h1>Calendar Toolbox</h1>
     <div class="body" style="display: none;">
       <input type="checkbox" checked="checked" id="hide_lessons" onclick="$$('div.lesson_bar').each(function(b){b.toggle();});" /><label for="hide_lessons" style="cursor: pointer;"> Toggle Lessons</label>
-      <div style="margin: 4px;"><a href="/admin/registration/all_lessons_ical/<%=@current_session.name.gsub(" ", "-")%>" style="color:white; font-weight: bold;"><img src="/images/icons/ical_small.png" class="icon" /> Download iCal</a></div>
+      <div style="margin: 4px;"><a href="/admin/registration/all_lessons_ical/<%=@current_session.id%>" style="color:white; font-weight: bold;"><img src="/images/icons/ical_small.png" class="icon" /> Calendar Export</a></div>
     </div>
     <div class="widget_chrome"></div>
   </div>
-
-  <%= debug(@week_count) %>
 
   <div id="schedule_overview" class="widget" style="display: none;">
     <div style="float:right"><span class="button min_max" onclick="Effect.Fade('schedule_overview',{duration:0.3});">&#10006;</span></div>
@@ -353,6 +351,17 @@ if @current_session.registration_type == Session::DATE_TYPE
       <input type="hidden" name="date" id="dialog_date" value="" />
     </form>
   </div>
+
+  <div id="summary_calendar" class="widget left controls">
+    <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#9650;</span></div>
+    <h1>Calendar Toolbox</h1>
+    <div class="body" style="display: none;">
+      <input type="checkbox" checked="checked" id="hide_lessons" onclick="$$('div.lesson_bar').each(function(b){b.toggle();});" /><label for="hide_lessons" style="cursor: pointer;"> Toggle Lessons</label>
+      <div style="margin: 4px;"><a href="/admin/registration/all_lessons_ical/<%=@current_session.id%>" style="color:white; font-weight: bold;"><img src="/images/icons/ical_small.png" class="icon" /> Calendar Export</a></div>
+    </div>
+    <div class="widget_chrome"></div>
+  </div>
+
   <div class="controls widget right" id="availability_overview">
     <div style="float:right"><span class="button swap">&#8644;</span> <span class="button min_max">&#9650;</span></div>
     <h1>Availability Overview</h1>

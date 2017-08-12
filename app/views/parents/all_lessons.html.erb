@@ -103,7 +103,6 @@ function toggleView(str) {
           <% lessons = Lesson.find(:all, :conditions => ['time > ? AND time < ?', today.to_time, (today+1).to_time], :order => "time ASC") %>
           <% lessons.each do |lesson| %>
             <% if lesson.registration.student.first_name.downcase.include?("summer") then next end %>
-            
             <div class="single_lesson">
               <div class="lesson_name">
                 <div style="color: #<%= Colors.one(lesson.registration.id) %>"><%= lesson.registration.student.first_name + " " + lesson.registration.student.last_name%></div>

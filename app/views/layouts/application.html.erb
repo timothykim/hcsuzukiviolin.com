@@ -1,3 +1,7 @@
+<% if controller.controller_name == "leaf" or controller.controller_name =="attendance" %>
+  <%= yield %>
+<% else %>
+
 <%		
 		#assume that sub controllers go only one level deep
 		levels = [controller.controller_path.split('/')[0], controller.controller_path]	
@@ -143,7 +147,19 @@
 				</div>
 
 				<div id="<%= defined?(@submenu) ? "content" : "content_no_side" %>" class="<%= get_css_class(controller) %>">
-<%= yield %>
+
+
+                  <% if defined?(@content) and not @content.nil? %>
+                    <% if logged_in? and current_user.is_admin %>
+                      <div class="edit_page" style="float:right;">
+                        <a href="/leaf/editor?name=<%=@content.name%>&url=<%=request.url%>">Edit this page</a>
+                      </div>
+                    <% end %>
+                    <%= @content.html  %>
+                  <% end %>
+
+                  <%= yield %>
+
 				</div>
 
 			</div>
@@ -168,3 +184,5 @@
 		} catch(err) {}</script>
 	</body>
 </html>
+
+<% end %>

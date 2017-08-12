@@ -114,6 +114,7 @@ class AccountController < ApplicationController
     user = User.find(:first, :conditions => {:email => params[:email]})
     if user
       new_pass = ActiveSupport::SecureRandom.base64(6)
+      logger.info new_pass
       user.password = new_pass
       user.password_confirmation = new_pass
       user.email_confirmation = user.email

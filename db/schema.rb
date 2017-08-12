@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130725071325) do
+ActiveRecord::Schema.define(:version => 20160908022551) do
 
   create_table "albums", :force => true do |t|
     t.string   "name",         :limit => 80
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(:version => 20130725071325) do
 
   create_table "announcements", :force => true do |t|
     t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "attendences", :force => true do |t|
+    t.integer  "student_id"
+    t.date     "date"
+    t.string   "attendence"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -65,18 +73,25 @@ ActiveRecord::Schema.define(:version => 20130725071325) do
     t.datetime "updated_at"
   end
 
+  create_table "contents", :force => true do |t|
+    t.string   "name"
+    t.text     "html"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "invoice_items", :force => true do |t|
     t.integer  "invoice_id"
     t.string   "description"
-    t.integer  "unit_price"
-    t.integer  "quantity"
+    t.integer  "unit_price",  :default => 0, :null => false
+    t.integer  "quantity",    :default => 0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "invoices", :force => true do |t|
     t.integer  "registration_id"
-    t.boolean  "sent"
+    t.boolean  "sent",            :default => false
     t.date     "sent_date"
     t.text     "message"
     t.datetime "created_at"

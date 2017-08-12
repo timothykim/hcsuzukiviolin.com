@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    <style>
+      #inner {
+          width: 500px;
+          margin: 0 auto;
+      }
+
+      .input-xl {
+          height: 100px;
+          padding: 10px 16px;
+          font-size: 50px;
+          line-height: 1.3333333;
+          border-radius: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h1>Attendance for Today - <%= Time.now.strftime("%m/%d/%Y") %></h1>
+      <div id="inner">
+        <h2>Please enter your code</h2>
+        <div class="form-group">
+          <input type="number" class="form-control input-xl" id="parent_code" min="10000" max="99999" placeholder="#####" maxlength="5">
+        </div>
+        <button id="next" type="button" style="font-size: 44px;" class="btn btn-primary btn-lg">Next <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button> 
+      </div>
+    </div>
+
+<script>
+
+$(function () {
+    $("#next").click(function () {
+        var code = $("#parent_code").val();
+        if (!code || code.length != 5 || !code.startsWith('11')) {
+            alert("Invalid code. Please try again.")
+        } else {
+            window.location = "/attendance/checkin/" + code
+        }
+    });
+});
+</script>
+  </body>
+</html>
+      

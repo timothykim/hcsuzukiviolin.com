@@ -219,7 +219,7 @@ end -%>
 					<th>Wednesday</th>
 					<th>Thursday</th>
 					<th>Friday</th>
-					<th>Saturday</th>
+                    <th>Saturday</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -257,8 +257,6 @@ end -%>
         <li>Indicate your availability by clicking and dragging.</li>
         <li>To get rid of a selected time frame, just double click on the red box.</li>
         <li>Preferred lessons times are mornings and early afternoons.</li>
-        <li>Mondays and Tuesdays are reserved for home studio families (indicated by Green below). If your availabilty falls in only those times, your lessons will be expected to be at the home studio. The rests are held at Columbia Baptist Church.</li>
-        <li>Again <span style="background-color: #cfc">Green time slots</span> are for home studio families.</li>
         <li><big><a href="#" onclick="$('tutorial').show(); return false;" style="color:red;">Click here to view the tutorial video for using the scheduling chart.</a></big></li>
   </ul>
 
@@ -271,8 +269,7 @@ end -%>
 
 		<div class="help">
       <p>Legend</p>
-      <div class="calendar_div" style="background-color: white; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">Lessons at CIFA</div>
-      <div class="calendar_div" style="background-color: #cfc; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">Lessons at Home Studio</div>
+      <div class="calendar_div" style="background-color: white; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">Possible Lesson Times</div>
       <div class="calendar_div" style="background-color: #fcc; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">Your time selection</div>
       <div class="calendar_div" style="background-color: #eee; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">No Lessons</div>
       <div class="calendar_div" style="background-color: #FAF8CC; padding:0px; padding-left: 5px; margin:0px; border: 1px solid silver; height: 15px; font-size: 9px;">Group Class</div>
@@ -295,14 +292,14 @@ end -%>
       <tbody>
           <tr>
             <td valign="top">
-              <% for i in (7..18) # 7am ~ 7pm %>
+              <% for i in (7..19) # 7am ~ 7pm %>
               <% 
                 t = (i > 11) ? "#{i-12}pm" : "#{i}am"
                 t = "12pm" if i == 12
               %>
                 <div style="border-top: 1px solid silver; height: 31px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);"><%=t%></div>
               <% end %>
-                <div style="border-top: 1px solid silver; height: 15px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);">7pm</div>
+                <div style="border-top: 1px solid silver; height: 15px; text-align:right; font-size:10px; background-color:rgb(232, 238, 247);">8pm</div>
             </td>
 
             <% offhours = [[7, 14], [10, 14], [10, 13], [10, 14], [7, 19]] #[ day, start, end] %>
@@ -310,12 +307,12 @@ end -%>
             <% 5.times do |d| %>
               <td valign="top">
 
-                <% for i in (7..19) %>
+                <% for i in (7..20) %>
                   <% #highlight green %>
-                  <% bg = (d == 0 || d == 1 ) ? "#cfc" : "" %>
+                  <% bg = "" %>
 
                   <!-- this is for the group class hours -->
-                  <% bg = "#FAF8CC !important" if ((d == 4) && (i >= 16 && i <= 18)) %>
+                  <% bg = "#FAF8CC !important" if ((d == 4) && (i >= 17 && i <= 19)) %>
                   <% #bg = "#FAF8CC !important" if ((d == 5) && (i == 10 || i == 11)) %>
 
                   <% h = (i.to_s.length == 1) ? "0#{i}" : i.to_s %>
@@ -324,30 +321,31 @@ end -%>
                   <% cls = (@r_days.index(id_1)) ? "selected" : "" %>
 
                   <%
-                    if offhours[d][0] <= i and i <= offhours[d][1]
-                      events = ""
-                      cls_off = "offday"
-                    else
+                    #if offhours[d][0] <= i and i <= offhours[d][1]
+                    #  events = ""
+                    #  cls_off = "offday"
+                    #else
                       events = "onmouseup=\"click_end();\" onmousedown=\"click_start(this, " + d.to_s + ")\" onmouseover=\"high_light(this, " + d.to_s + ");\" ondblclick=\"dehighlight(this)\""
                       cls_off = ""
-                    end
+                    #end
                   %>
-                  <% text = "Group class" if ((d == 4) && (i == 16)) %>
+                  <% text = "" %>
 
                   <div class="calendar_div selection_<%=d%> <%=cls%> <%=cls_off%>" id="<%=id_1%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px solid silver; height: 15px; font-size: 9px;" <%=events %>><%=text%></div>
                   <% cls = (@r_days.index(id_2)) ? "selected" : "" %>
                   
                   <%
                     # for 2012~2013 only: 9:30 off
-                    if i == 19
+                    if i == 20
                       events = ""
                       cls_off = "offday"
                     end
                   %>
 
+                  <% text = "Group class" if ((d == 4) && (i == 16)) %>
+
                   <!-- this is for the group class hours -->
-                  <% text = "" %>
-                  <% bg = "#FAF8CC !important" if ((d == 4) && (i == 16)) %>
+                  <% bg = "#FAF8CC !important" if ((d == 4) && (i >= 16 && i <= 18)) %>
 
                   <div class="calendar_div selection_<%=d%> <%=cls%> <%=cls_off%>" id="<%=id_2%>" style="background-color: <%=bg%>; padding:0px; margin:0px; border-top: 1px dotted silver; height: 15px; font-size: 9px;" <%=events %>><%=text%></div>
                 <% end %>

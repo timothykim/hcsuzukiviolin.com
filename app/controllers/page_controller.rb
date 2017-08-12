@@ -26,11 +26,15 @@ class PageController < ApplicationController
   def aboutus
     @section_title = "About us"
     @submenu = about_submenu
+    page_name = "aboutus"
+    @content = Content.f(page_name)
   end
 
   def director 
     @section_title = "About the Director"
     @submenu = about_submenu
+    page_name = "about_the_director"
+    @content = Content.f(page_name)
   end
 
   def chms_registration
@@ -242,12 +246,14 @@ class PageController < ApplicationController
     @section_path = "For Prospective Parents &raquo; "
     @section_title = "Policy and Tuition"
     @submenu = global_submenu
+    @content = Content.f("policies")
   end
 
   def faq 
     @section_path = "For Prospective Parents &raquo; "
     @section_title = "Frequently Asked Questions"
     @submenu = global_submenu
+    @content = Content.f("faqs")
   end
 
   def calendar
@@ -264,6 +270,7 @@ class PageController < ApplicationController
     @section_path = "For Prospective Parents &raquo; "
     @section_title = "Resources"
     @submenu = global_submenu
+    @content = Content.f("prospective_parent_resources")
   end
   
   def illegal
