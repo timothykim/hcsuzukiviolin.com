@@ -42,10 +42,13 @@ div#signup_box input.text {
 	width: 390px;
 }
 
+<<<<<<< HEAD
+=======
 div#login_text {
   width: 420px;
   margin: 0 auto;
   font-size: 1.5em;
 }
 
+>>>>>>> deploy
 /* @end */

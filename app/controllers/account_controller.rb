@@ -1,5 +1,10 @@
 class AccountController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
+<<<<<<< HEAD
+  include AuthenticatedSystem
+  # If you want "remember me" functionality, add this before_filter to Application Controller
+  before_filter :login_from_cookie
+=======
   # If you want "remember me" functionality, add this before_filter to Application Controller
 
 
@@ -14,6 +19,7 @@ class AccountController < ApplicationController
 
 
 
+>>>>>>> deploy
 
   # say something nice, you goof!  something sweet.
   def index
@@ -39,14 +45,23 @@ class AccountController < ApplicationController
       end
       
       #set last logged in
+<<<<<<< HEAD
+      
+      redirect_back_or_default(:controller => '/page', :action => 'index')
+      flash[:notice] = "Logged in successfully"
+=======
       redirect_back_or_default(:controller => '/page', :action => 'index')
       #flash[:notice] = "Logged in successfully"
+>>>>>>> deploy
     else
       flash[:notice] = "Your email, password combination is not in the system. Please try again."
     end
   end
   
   def unauthorized
+<<<<<<< HEAD
+      @s = session[:return_to]
+=======
     @s = session[:return_to]
   end
   
@@ -58,12 +73,18 @@ class AccountController < ApplicationController
     end
   rescue
     render :text => "Something went wrong! Please visit <a href=\"http://www.hcsuzukuviolin.com/admin/user\">http://www.hcsuzukuviolin.com/admin/user</a> to activate this user."
+>>>>>>> deploy
   end
   
   
   def activate
+<<<<<<< HEAD
+    @section_title = "Your account hasn't been activated, yet!" if logged_in?
+    if logged_in?
+=======
     if logged_in?
       @section_title = "Your account hasn't been activated, yet!"
+>>>>>>> deploy
       redirect_back_or_default(:controller => '/page', :action => 'index') if self.current_user.activated
     else
       redirect_to :action => 'login' 
@@ -72,6 +93,8 @@ class AccountController < ApplicationController
 
   def signup
     redirect_to :action => 'activate' if logged_in?
+<<<<<<< HEAD
+=======
 
     #generate random question
     if session[:stupid_captcha]
@@ -80,17 +103,21 @@ class AccountController < ApplicationController
       @question = "#{rand(10)} + #{rand(10)}"
       session[:stupid_captcha] = @question
     end
+>>>>>>> deploy
     
     @section_title = "Sign up for an Account"
     
     @user = User.new(params[:user])
     return unless request.post?
+<<<<<<< HEAD
+=======
 
     if eval(session[:stupid_captcha]) != params[:stupid_captcha].to_i
       @user.errors.add("Simple math: ", "Please correct your answer.")
       return 
     end
 
+>>>>>>> deploy
     @user.save!
     self.current_user = @user
     
@@ -106,6 +133,33 @@ class AccountController < ApplicationController
     @section_title = "Thanks for signing up, #{current_user.fullname}!"
   end
   
+<<<<<<< HEAD
+  
+  def settings
+    @section_title = "Editing Your Personal Information"
+    
+    @user = self.current_user
+    
+    return unless params[:user]
+    
+    if @user.email == params[:user][:email] and params[:user][:email_confirmation] == ""
+      params[:user][:email_confirmation] = params[:user][:email]
+    end
+    
+    if params[:avatar][:uploaded_data] != ""
+      @user.avatar.destroy if @user.avatar
+      Avatar.create!(params[:avatar])
+    end
+    
+    if @user.update_attributes(params[:user])
+      flash[:notice] = 'User was successfully updated.'
+      redirect_to :action => 'settings'
+    else
+      render :action => "settings"
+    end
+  end
+  
+=======
   def forgot
     @section_title = "Password Reset"
   end
@@ -134,6 +188,7 @@ class AccountController < ApplicationController
   
   
   
+>>>>>>> deploy
   def illegal
       render :controller => "page", :action => "illegal"
   end

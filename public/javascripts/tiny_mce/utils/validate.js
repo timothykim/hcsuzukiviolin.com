@@ -1,10 +1,18 @@
 /**
+<<<<<<< HEAD
+ * $Id: validate.js 65 2006-08-24 15:54:55Z spocke $
+=======
  * $Id: validate.js 758 2008-03-30 13:53:29Z spocke $
+>>>>>>> deploy
  *
  * Various form validation methods.
  *
  * @author Moxiecode
+<<<<<<< HEAD
+ * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
+=======
  * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.
+>>>>>>> deploy
  */
 
 /**
@@ -31,7 +39,11 @@ var Validator = {
 	},
 
 	isSize : function(s) {
+<<<<<<< HEAD
+		return this.test(s, '^[0-9]+(px|%)?$');
+=======
 		return this.test(s, '^[0-9]+(%|in|cm|mm|em|ex|pt|pc|px)?$');
+>>>>>>> deploy
 	},
 
 	isId : function(s) {
@@ -110,7 +122,11 @@ var AutoValidator = {
 	},
 
 	reset : function(e) {
+<<<<<<< HEAD
+		var t = new Array('label', 'input', 'select', 'textarea');
+=======
 		var t = ['label', 'input', 'select', 'textarea'];
+>>>>>>> deploy
 		var i, j, nl, s = this.settings;
 
 		if (e == null)

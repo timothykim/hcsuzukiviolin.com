@@ -19,6 +19,10 @@ namespace 'views' do
   end
 end
 
+<<<<<<< HEAD
+
+
+=======
 namespace 'img' do
   desc 'Generate single pixel png files with colors from Colors.all'
   task 'gen_pnges' do
@@ -44,3 +48,4 @@ namespace 'data' do
     end
   end
 end
+>>>>>>> deploy

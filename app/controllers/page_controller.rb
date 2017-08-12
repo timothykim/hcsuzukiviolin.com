@@ -1,4 +1,14 @@
 class PageController < ApplicationController
+<<<<<<< HEAD
+  include AuthenticatedSystem
+  include DisplayHelper
+  
+  before_filter :store_location, :login_from_cookie
+  
+  def index
+  end
+  
+=======
 #  include AuthenticatedSystem
 #  include DisplayHelper
   
@@ -237,11 +247,14 @@ class PageController < ApplicationController
     
     
   end
+>>>>>>> deploy
   
   def jesuslovesme
     @section_title = "Music Downloads"
   end
   
+<<<<<<< HEAD
+=======
   def policy_and_tuition
     @section_path = "For Prospective Parents &raquo; "
     @section_title = "Policy and Tuition"
@@ -273,6 +286,7 @@ class PageController < ApplicationController
     @content = Content.f("prospective_parent_resources")
   end
   
+>>>>>>> deploy
   def illegal
     @section_title = "You can't do that!"
   end

@@ -3,6 +3,11 @@ module ApplicationHelper
   
   def conditional_render_partial(partial)
     render_partial partial
+<<<<<<< HEAD
+  rescue ActionView::ActionViewError
+    #don't render!
+  end
+=======
   rescue
     #don't render!
   end
@@ -34,6 +39,7 @@ module ApplicationHelper
 
     return c[id % c.length]
   end
+>>>>>>> deploy
   
   
   def avatar_thumbnail_path(avatar)
@@ -50,8 +56,12 @@ module ApplicationHelper
   end
   
   
+<<<<<<< HEAD
+  
+=======
   def get_css_class(controller)
     return controller.controller_path.split('/')[0] + " " + controller.controller_name + " " + controller.controller_name + "_" + controller.action_name
   end
 
+>>>>>>> deploy
 end

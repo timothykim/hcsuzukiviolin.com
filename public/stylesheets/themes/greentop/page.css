@@ -1,4 +1,8 @@
 div#menu a.home {
+<<<<<<< HEAD
+	border-top: 5px solid green;
+}
+=======
   border-top: 5px solid green;
 }
 
@@ -342,3 +346,4 @@ table.school_calendar div.notes{
 table.school_calendar caption {
   font-size: 1.8em;
 }
+>>>>>>> deploy

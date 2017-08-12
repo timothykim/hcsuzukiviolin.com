@@ -1,12 +1,20 @@
+<<<<<<< HEAD
+
+<div class="form_box">
+=======
 <% if flash[:notice] %><div class="flash"><%= flash[:notice] %></div><% flash[:notice] = nil %><% end %>
 
+>>>>>>> deploy
 	<%= error_messages_for :user %>
 
 <% form_for @user, :url => { :action => "settings" }, :html => { :multipart => true } do |f| %>
 	<%= f.hidden_field :id %>
 
+<<<<<<< HEAD
+=======
     <h3>Personal Information</h3>
 <div class="form_box">
+>>>>>>> deploy
 	<p><%= label(:user, :firstname, "First Name") %><br/>
 	<%= f.text_field :firstname, :class => "text" %></p>
 
@@ -29,7 +37,22 @@
 
 	<p><%= label(:user, :password_confirmation, "Password Confirmation") %><br/>
 	<%= f.password_field :password_confirmation, :class => "text" %></p>
+<<<<<<< HEAD
+
+    <p><%= f.submit "Save!", :class => "submit" %></p>
+<% end %>
+</div>
+
+
+<% if flash[:notice] %>
+<script type="text/javascript">
+<!--
+	alert("Save Complete!");
+-->
+</script>
+=======
 </div>
 
     <p><%= f.submit "Save!", :class => "submit" %></p>
+>>>>>>> deploy
 <% end %>

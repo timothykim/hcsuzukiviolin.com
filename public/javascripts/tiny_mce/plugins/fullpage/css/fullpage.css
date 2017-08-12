@@ -53,10 +53,13 @@
 	height: 20px;
 }
 
+<<<<<<< HEAD
+=======
 #doctypes {
 	width: 200px;
 }
 
+>>>>>>> deploy
 .addbutton:hover, .removebutton:hover, .moveupbutton:hover, .movedownbutton:hover {
 	border: 1px solid #0A246A;
 	background-color: #B6BDD2;
@@ -174,9 +177,12 @@
 	width: 22px;
 	height: 22px;
 }
+<<<<<<< HEAD
+=======
 
 textarea {
 	height: 55px;
 }
 
 .panel_wrapper div.current {height:420px;}
+>>>>>>> deploy

@@ -1,14 +1,26 @@
 /**
+<<<<<<< HEAD
+ * $Id: mctabs.js 18 2006-06-29 14:11:23Z spocke $
+=======
  * $Id: mctabs.js 758 2008-03-30 13:53:29Z spocke $
+>>>>>>> deploy
  *
  * Moxiecode DHTML Tabs script.
  *
  * @author Moxiecode
+<<<<<<< HEAD
+ * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
+ */
+
+function MCTabs() {
+	this.settings = new Array();
+=======
  * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.
  */
 
 function MCTabs() {
 	this.settings = [];
+>>>>>>> deploy
 };
 
 MCTabs.prototype.init = function(settings) {
@@ -28,6 +40,19 @@ MCTabs.prototype.getParam = function(name, default_value) {
 };
 
 MCTabs.prototype.displayTab = function(tab_id, panel_id) {
+<<<<<<< HEAD
+	var panelElm = document.getElementById(panel_id);
+	var panelContainerElm = panelElm ? panelElm.parentNode : null;
+	var tabElm = document.getElementById(tab_id);
+	var tabContainerElm = tabElm ? tabElm.parentNode : null;
+	var selectionClass = this.getParam('selection_class', 'current');
+
+	if (tabElm && tabContainerElm) {
+		var nodes = tabContainerElm.childNodes;
+
+		// Hide all other tabs
+		for (var i=0; i<nodes.length; i++) {
+=======
 	var panelElm, panelContainerElm, tabElm, tabContainerElm, selectionClass, nodes, i;
 
 	panelElm= document.getElementById(panel_id);
@@ -41,6 +66,7 @@ MCTabs.prototype.displayTab = function(tab_id, panel_id) {
 
 		// Hide all other tabs
 		for (i = 0; i < nodes.length; i++) {
+>>>>>>> deploy
 			if (nodes[i].nodeName == "LI")
 				nodes[i].className = '';
 		}
@@ -50,10 +76,17 @@ MCTabs.prototype.displayTab = function(tab_id, panel_id) {
 	}
 
 	if (panelElm && panelContainerElm) {
+<<<<<<< HEAD
+		var nodes = panelContainerElm.childNodes;
+
+		// Hide all other panels
+		for (var i=0; i<nodes.length; i++) {
+=======
 		nodes = panelContainerElm.childNodes;
 
 		// Hide all other panels
 		for (i = 0; i < nodes.length; i++) {
+>>>>>>> deploy
 			if (nodes[i].nodeName == "DIV")
 				nodes[i].className = 'panel';
 		}

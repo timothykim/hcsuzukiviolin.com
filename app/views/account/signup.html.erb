@@ -1,6 +1,10 @@
 
 <div id="signup_box">
+<<<<<<< HEAD
+	<% if error_messages_for(:user) != '' %><div id="signup_notice" class="notice"><%= error_messages_for :user, :message => nil %></div><% end %>
+=======
 	<% if error_messages_for(:user) != '' %><div id="signup_notice" class="notice" style="padding: 5px 10px;"><%= error_messages_for :user, :message => nil %></div><% end %>
+>>>>>>> deploy
 
 
 	<div class="form_box">
@@ -35,6 +39,12 @@
 			<%= f.password_field :password_confirmation, :class => "text" %>
 		</div>
 
+<<<<<<< HEAD
+		<div class="form_element"><%= submit_tag 'Sign up', :disabled => "disabled", :class => "submit", :id => "form_submit" %></div>
+	<% end -%>
+	</div>
+</div>
+=======
 		<div class="form_element">
       <div class="check"><label>Please solve the following simple math. <small>So we can prevent spam!</small></label></div>
       <%=@question%> = <input type="text" name="stupid_captcha" class="text" style="width: 140px;" />
@@ -46,3 +56,4 @@
 	</div>
 </div>
 
+>>>>>>> deploy

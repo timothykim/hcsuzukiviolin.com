@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+
+=======
+>>>>>>> deploy
 # Be sure to restart your server when you modify this file
 
 # Uncomment below to force Rails into production mode when
@@ -5,7 +9,11 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
+<<<<<<< HEAD
+RAILS_GEM_VERSION = '2.0.2' unless defined? RAILS_GEM_VERSION
+=======
 RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
+>>>>>>> deploy
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -41,7 +49,11 @@ Rails::Initializer.run do |config|
     :secret      => '666104e125ea8034450eec04ccd8f1c629ab97439318b38c1d018eb6acc0758bc6292fc6dd599c95edf3bb71f80053420c838323464a59fdcce3da9831b3182e'
   }
   
+<<<<<<< HEAD
+  config.action_controller.session_store = :p_store
+=======
   #config.action_controller.session_store = :p_store
+>>>>>>> deploy
 
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
@@ -58,7 +70,10 @@ Rails::Initializer.run do |config|
 
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
+<<<<<<< HEAD
+=======
   config.gem "RedCloth"
+>>>>>>> deploy
 end
 
 

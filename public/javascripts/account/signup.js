@@ -6,7 +6,11 @@ function check(text, type) {
 		break;
 		
 		case "email":
+<<<<<<< HEAD
+			var re = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+=======
 			var re = /@/;
+>>>>>>> deploy
 			return text.match(re);
 		break;
 		
@@ -56,7 +60,11 @@ function check_form() {
 		emc.up().removeClassName("nok");
 		emc.up().addClassName("ok");
 	} else {
+<<<<<<< HEAD
+		fn.up().removeClassName("fieldWithErrors");
+=======
 		emc.up().removeClassName("fieldWithErrors");
+>>>>>>> deploy
 		emc.up().removeClassName("ok");
 		emc.up().addClassName("nok");
 	}

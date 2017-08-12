@@ -1,14 +1,22 @@
+<<<<<<< HEAD
+log/*.log
+tmp/**/*
+=======
 log
 log/*.log
 tmp
 tmp/**/*
 db/backups
+>>>>>>> deploy
 .DS_Store
 doc/api
 doc/app
 public/datafiles/**/*
 .svn/*/**
 config/*.yml
+<<<<<<< HEAD
+=======
 *.swp
 *.vim
 
+>>>>>>> deploy

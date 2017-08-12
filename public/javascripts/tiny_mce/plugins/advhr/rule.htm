@@ -1,3 +1,19 @@
+<<<<<<< HEAD
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{$lang_insert_advhr_desc}</title>
+	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
+	<script language="javascript" type="text/javascript" src="jscripts/rule.js"></script>
+	<script language="javascript" type="text/javascript" src="../../utils/mctabs.js"></script>
+	<link href="css/advhr.css" rel="stylesheet" type="text/css" />
+	<base target="_self" />
+</head>
+<body onload="tinyMCEPopup.executeOnLoad('init();');">
+<form onsubmit="insertHR();return false;" action="#">
+	<div class="tabs">
+		<ul>
+			<li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">{$lang_insert_advhr_desc}</a></span></li>
+=======
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -13,6 +29,7 @@
 	<div class="tabs">
 		<ul>
 			<li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">{#advhr.advhr_desc}</a></span></li>
+>>>>>>> deploy
 		</ul>
 	</div>
 
@@ -20,9 +37,15 @@
 		<div id="general_panel" class="panel current">
 			<table border="0" cellpadding="4" cellspacing="0">
                     <tr>
+<<<<<<< HEAD
+                        <td><label for="width">{$lang_insert_advhr_width}</label></td>
+                        <td nowrap="nowrap">
+                            <input id="width" name="width" type="text" value="" />
+=======
                         <td><label for="width">{#advhr_dlg.width}</label></td>
                         <td class="nowrap">
                             <input id="width" name="width" type="text" value="" class="mceFocus" />
+>>>>>>> deploy
                             <select name="width2" id="width2">
                                 <option value="">px</option>
                                 <option value="%">%</option>
@@ -30,7 +53,11 @@
                         </td>
                     </tr>
                     <tr>
+<<<<<<< HEAD
+                        <td><label for="size">{$lang_insert_advhr_size}</label></td>
+=======
                         <td><label for="size">{#advhr_dlg.size}</label></td>
+>>>>>>> deploy
                         <td><select id="size" name="size">
                             <option value="">Normal</option>
                             <option value="1">1</option>
@@ -41,7 +68,11 @@
                         </select></td>
                     </tr>
                     <tr>
+<<<<<<< HEAD
+                        <td><label for="noshade">{$lang_insert_advhr_noshade}</label></td>
+=======
                         <td><label for="noshade">{#advhr_dlg.noshade}</label></td>
+>>>>>>> deploy
                         <td><input type="checkbox" name="noshade" id="noshade" class="radio" /></td>
                     </tr>
             </table>
@@ -50,11 +81,19 @@
 
 	<div class="mceActionPanel">
 		<div style="float: left">
+<<<<<<< HEAD
+			<input type="button" id="insert" name="insert" value="{$lang_insert}" onclick="insertHR();" />
+		</div>
+
+		<div style="float: right">
+			<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();" />
+=======
 			<input type="submit" id="insert" name="insert" value="{#insert}" />
 		</div>
 
 		<div style="float: right">
 			<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+>>>>>>> deploy
 		</div>
 	</div>
 </form>

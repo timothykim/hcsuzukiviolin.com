@@ -16,9 +16,15 @@
 					<ul></ul>
 					
 				</div>
+<<<<<<< HEAD
+			</td><td>
+				<%= link_to "edit", :action => "summer_add", :id => student.id %></small>
+			</td></tr></table>
+=======
 			</td><!--<td>
 				<%= link_to "edit", :action => "summer_add", :id => student.id %></small>
 			</td></tr>--></table>
+>>>>>>> deploy
 		</li>
 	<% end %>
 	</ul>
@@ -29,6 +35,18 @@
 	<h3>Jump to Week</h3>
 	<p>
 	<% @numberofweeks.times do |week| %>
+<<<<<<< HEAD
+		<small><a href="#week<%= week %>"><%= week+1 %></a></small>
+	<% end %>
+	</p>
+	
+	<h3>Legend</h3>
+	<div class="legend" style="background-color: #e2fde6;">Your CIFA schedule</div>
+	<div class="legend" style="background-color: #e6edf2;">Your CHMS schedule</div>
+
+	<h3>Controls</h3>
+	<input type="checkbox" id="time_show" checked="checked" onclick="if (this.checked) { show_time = true; } else { show_time = false;}" /><small><label for="time_show"> Show Cursor Time Box</label></small>
+=======
 		<small><a href="#week<%= week %>"><%= week %></a></small>
 	<% end %>
 	</p>
@@ -41,6 +59,7 @@
 	<input type="checkbox" id="time_show" checked="checked" onclick="if (this.checked) { show_time = true; } else { show_time = false;}" /><small><label for="time_show"> Show Cursor Time Box</label></small>
 	
 	<p><small><a href="/admin/summer_schedule_ical"><img src="/images/icons/ical_small.png" class="icon" /> Download for iCal</a></small></p>
+>>>>>>> deploy
 </div>
 
 <div id="calendar_table">
@@ -54,7 +73,10 @@
 		<th class="flex">Wednesday</th>
 		<th class="flex">Thursday</th>
 		<th class="flex">Friday</th>
+<<<<<<< HEAD
+=======
 		<th class="flex">Saturday</th>
+>>>>>>> deploy
 	</tr>	
 	</thead>
 	<tbody>
@@ -64,7 +86,11 @@
 		<tr><td><a name="week<%= week %>"></a></td></tr>
 		<tr>
 			<th>
+<<<<<<< HEAD
+			<%= week + 1 %></th>
+=======
 			<%= week %></th>
+>>>>>>> deploy
 			<td  style="padding-top: 17px" valign="top">
 				<% for i in (@day_start..@day_end)
 						t = (i > 11) ? "#{i-12}pm" : "#{i}am"
@@ -74,7 +100,11 @@
 				<% end %>
 			</td>
 <%
+<<<<<<< HEAD
+	for day in (1..5)
+=======
 	for day in (1..6)
+>>>>>>> deploy
 		today = @startdate + ((week * 7) + day)
 		if @schedule[today.yday].nil?
 			td_class = "not_active"
@@ -119,12 +149,21 @@
 					timestamp = Time.local(today.year, today.month, today.day, i, 30).to_i
 			%>
 				<div id="t<%= timestamp %>" style="<%= bgcolor %> padding:0px; margin:0px;  border-top: 1px dotted silver; height: 15px; font-size:9px;">
+<<<<<<< HEAD
+				
+=======
+>>>>>>> deploy
 					<%
 						if @all_lessons[timestamp]
 					%>
 					<div class="lesson_bar" style="margin-top: <%= @all_lessons[timestamp][:offset] %>px; height: <%= @all_lessons[timestamp][:duration] - 3 - 1 %>px; background-color: #<%= @colors[@all_lessons[timestamp][:student_id] % 21] %>"><span class="lesson_text"><%= @all_lessons[timestamp][:string] %></span></div>
 
 					<% end %>
+<<<<<<< HEAD
+				
+					
+=======
+>>>>>>> deploy
 				</div>
 			<% end %>
 		
